@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useDispatch} from 'react-redux';
 
 import {emitMouseInput} from '../actions';
-import {EntityTypes} from '../common/dataModelDefinitions';
+import {CardDataModel} from '../common/dataModelDefinitions';
 import {useTypedSelector} from '../store';
 
 const cardDim = {
@@ -10,18 +10,11 @@ const cardDim = {
     y: 88
 }
 
-type Props = {
-    entityId: string,
-    width?: number,
-    height?: number,
-    positionX: number,
-    positionY: number,
-    scale?: number
-}
+type Props = CardDataModel;
 
-export function Card({height = cardDim.y ,width = cardDim.x, scale = 1, positionX, positionY, entityId}:Props) {
+export function Card({height = cardDim.y ,width = cardDim.x, scale = 1, positionX, positionY, entityId, entityType}:Props) {
     const dispatch = useDispatch();
-    const entityTypeRef = React.useRef(EntityTypes.CARD);
+    const entityTypeRef = React.useRef(entityType);
 
     const clientId = useTypedSelector(state => state.clientInfo?.clientId)
 

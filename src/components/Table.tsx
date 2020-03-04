@@ -32,7 +32,7 @@ export function Table({width, height}: Props) {
         onMouseMove={
             ev => {
                 if(clientId){
-                    dispatch(emitMouseInput(ev, clientId, undefined, undefined))
+                    dispatch(emitMouseInput(ev, clientId, null, null))
                 }
             }
         }
@@ -40,7 +40,7 @@ export function Table({width, height}: Props) {
             ev => {
                 ev.preventDefault();
                 if(clientId){
-                    dispatch(emitMouseInput(ev, clientId, undefined, undefined))
+                    dispatch(emitMouseInput(ev, clientId, null, null))
                 }
             }
         }

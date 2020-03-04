@@ -6,7 +6,7 @@ import {
     EntityTypes
 } from './common/dataModelDefinitions';
 import { MouseEvent as SyntheticMouseEvent} from 'react';
-import { MaybeUndefined } from './common/genericTypes';
+import { MaybeNull } from './common/genericTypes';
 
 enum WhichButton {
     LEFT = 1,
@@ -20,7 +20,7 @@ enum MouseEventTypes {
     MOUSE_MOVE = 'mousemove'
 }
 
-export function mouseInputEventFactory(event: SyntheticMouseEvent, clientId: string, entityId: MaybeUndefined<string>, entityType: MaybeUndefined<EntityTypes>) {
+export function mouseInputEventFactory(event: SyntheticMouseEvent, clientId: string, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>) {
     const cursorX = event.clientX;
     const cursorY = event.clientY;
     let input: MouseInput;

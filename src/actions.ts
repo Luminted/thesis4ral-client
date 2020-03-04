@@ -2,7 +2,7 @@ import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions'
 import {MouseInput} from './common/mouseEventTypes';
 import {mouseInputEventFactory} from './controller'
 import { MouseEvent as SyntheticMouseEvent } from 'react';
-import {MaybeUndefined} from './common/genericTypes'
+import {MaybeNull} from './common/genericTypes'
 
 
 export enum ActionTypeKeys {
@@ -46,7 +46,7 @@ export function connectToSocket(socket: SocketIOClient.Socket){
     }
 }
 
-export function emitMouseInput(event: SyntheticMouseEvent, clientId: string, entityId: MaybeUndefined<string>, entityType: MaybeUndefined<EntityTypes>){
+export function emitMouseInput(event: SyntheticMouseEvent, clientId: string, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>){
     const input = mouseInputEventFactory(event, clientId, entityId, entityType);
     if(input)
     {

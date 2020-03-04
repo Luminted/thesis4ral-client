@@ -1,4 +1,5 @@
-import { MaybeUndefined } from './genericTypes'
+import {EntityTypes} from './dataModelDefinitions'
+import {MaybeNull} from './genericTypes'
 
 export enum MouseInputTypes {
     LEFT_BUTTON_DOWN= 'LEFT_BUTTON_DOWN',
@@ -18,9 +19,9 @@ export enum MouseInputTypes {
 
 export interface MouseInput {
     type: MouseInputTypes,
-    entityId: MaybeUndefined<string>,
+    entityId:MaybeNull<string>,
+    entityType: MaybeNull<string>,
     clientId: string,
-    entityType:  MaybeUndefined<string>,
     cursorX: number,
     cursorY: number
 }

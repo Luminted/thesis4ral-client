@@ -1,12 +1,13 @@
 import {MaybeNull} from './genericTypes'
 
-export interface CardDataModel {
+export type CardDataModel = {
     entityId: string,
     entityType: EntityTypes.CARD
     positionX: number,
     positionY: number,
     width: number,
     height: number
+    scale: number
 }
 
 export enum EntityTypes {
