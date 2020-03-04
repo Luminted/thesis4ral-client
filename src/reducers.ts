@@ -1,30 +1,47 @@
-import {AnyAction} from 'redux';
-import {SYNC, SyncActionPayload} from './actions';
-import {CardDataModel} from './dataModelTypedefinitions'
+import {produce} from 'immer';
+import {ActionTypeKeys, ActionTypes} from './actions';
+import {CardDataModel, GameState, ClientInfo} from './common/dataModelDefinitions' 
+import {MaybeNull} from './common/genericTypes'
 
-const initialState = {
-    cards: [
-    {
-        positionX: 0,
-        positionY: 0,
-    },
-    {
-        positionX: 100,
-        positionY: 0,
-    },
-    {
-        positionX: 0,
-        positionY: 100,
-    }
-    ] as CardDataModel[]
+type InitialStateType = {
+    gameState: GameState,
+    socket: MaybeNull<SocketIOClient.Socket>
+    clientInfo: MaybeNull<ClientInfo>
 }
 
-export function cards(state = initialState.cards, action: AnyAction) {
+const initialState: InitialStateType = {
+    gameState: {
+        cards: new Array<CardDataModel>(),
+        clients: []
+    },
+    socket: null,
+    clientInfo: null
+}
+
+export const gameState = (state = initialState.gameState, action: ActionTypes) =>
+    produce(state, draft => {
+        switch(action.type){
+            case ActionTypeKeys.SYNC:
+                draft.cards = action.gameState.cards;
+                break;
+        }
+    })
+
+export const socket = (state = initialState.socket, action: ActionTypes) => {
     switch(action.type){
-        case SYNC: 
-            const payload : SyncActionPayload = action.payload;
-            return payload.cards;
+        case ActionTypeKeys.CONNECT_TO_SOCKET:
+            return action.socket;
         default:
             return state;
     }
-} 
+}
+
+export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {
+    switch(action.type){
+        case ActionTypeKeys.SET_CLIENT_INFO:
+            return action.clientInfo;
+        default:
+            return state;
+    }
+}
+
