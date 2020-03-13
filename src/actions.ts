@@ -1,8 +1,11 @@
+import { Dispatch } from 'redux';
 import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions';
-import {MouseInput} from './common/mouseEventTypes';
-import {mouseInputEventFactory} from './controller'
+import {verbFactory, mouseInputTypeFactory} from './controller'
 import { MouseEvent as SyntheticMouseEvent } from 'react';
 import {MaybeNull} from './common/genericTypes'
+import { Verb } from './common/verbTypes';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from './store';
 
 
 export enum ActionTypeKeys {
@@ -10,18 +13,20 @@ export enum ActionTypeKeys {
     CONNECT_TO_SOCKET = 'CONNECT_TO_SOCKET',
     SET_CLIENT_INFO = 'SET_CLIENT_INFO',
 
-    EMIT_MOUSE_INPUT = 'emit/MOUSE_INPUT',
+    EMIT_VERB = 'emit/VERB',
 }
 
+export type ThunkResult<R> = ThunkAction<R, RootState, null, ActionTypes>
+
 export type ActionTypes = 
-emitMouseInput |
+EmitVerb |
 SyncAction |
 ConnectToSocketAction |
 SetClientInfoAction;
 
-interface emitMouseInput {
-    type: ActionTypeKeys.EMIT_MOUSE_INPUT,
-    input: MouseInput
+interface EmitVerb {
+    type: ActionTypeKeys.EMIT_VERB,
+    verb: Verb
 }
 
 interface SyncAction {
@@ -46,13 +51,22 @@ export function connectToSocket(socket: SocketIOClient.Socket){
     }
 }
 
-export function emitMouseInput(event: SyntheticMouseEvent, clientId: string, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>){
-    const input = mouseInputEventFactory(event, clientId, entityId, entityType);
-    if(input)
-    {
-        return {
-            type: ActionTypeKeys.EMIT_MOUSE_INPUT,
-            input
+export function emitVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<EmitVerb | void>{
+    return (dispatch, getStore) => {
+        const store = getStore();
+        const cursorX = event.clientX;
+        const cursorY = event.clientY;
+        const clientId = store.clientInfo?.clientId;
+    
+        const mouseInputType = mouseInputTypeFactory(event);
+        if(clientId){
+            const verb = verbFactory(mouseInputType, entityType, entityId, clientId, cursorX, cursorY);
+            if(verb !== null) {
+               dispatch({
+                   type: ActionTypeKeys.EMIT_VERB,
+                   verb
+               });
+            }
         }
     }
 }

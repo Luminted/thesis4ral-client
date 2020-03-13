@@ -29,9 +29,9 @@ function socketEmitterMiddleware (store) {
             const socket = state.socket;
             if(socket !== null){
                 switch(action.type){
-                    case ActionTypeKeys.EMIT_MOUSE_INPUT:
-                        socket.emit(SocketEventTypes.MOUSE_INPUT, action.input);
-                        console.log(`socket event emitted: type=${SocketEventTypes.MOUSE_INPUT}, input=${action.input}, inputType=${action.input.type}`  );
+                    case ActionTypeKeys.EMIT_VERB:
+                        socket.emit(SocketEventTypes.VERB, action.verb);
+                        console.log(`socket event emitted: type=${SocketEventTypes.VERB}, input=${action.verb}, inputType=${action.verb}`  );
                 }
             }
         }

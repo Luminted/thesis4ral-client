@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useTypedSelector} from '../store';
 import {CardDataModel} from '../common/dataModelDefinitions'
 import {Card} from './Card';
-import {emitMouseInput} from '../actions';
+import {emitVerb} from '../actions';
 
 type Props = {
     width: number,
@@ -18,7 +18,8 @@ export function Table({width, height}: Props) {
     const dispatch = useDispatch();
 
     const cards = useTypedSelector<CardDataModel[]>((store) => store.gameState.cards);
-    const clientId = useTypedSelector(store => store.clientInfo?.clientId);
+    const clientId = useTypedSelector(store => store.clientInfo?.clientId) || 'asd';
+    const grabbedEntity = useTypedSelector(store => store.gameState.clients[clientId]?.grabbedEntity)
 
     const cardRender = cards.map((card) => {
         const {entityId} = card;
@@ -31,8 +32,8 @@ export function Table({width, height}: Props) {
         <div id={tableElementId}
         onMouseMove={
             ev => {
-                if(clientId){
-                    dispatch(emitMouseInput(ev, clientId, null, null))
+                if(clientId && grabbedEntity){
+                    dispatch(emitVerb(ev, null, null))
                 }
             }
         }
@@ -40,7 +41,7 @@ export function Table({width, height}: Props) {
             ev => {
                 ev.preventDefault();
                 if(clientId){
-                    dispatch(emitMouseInput(ev, clientId, null, null))
+                    dispatch(emitVerb(ev, null, null))
                 }
             }
         }

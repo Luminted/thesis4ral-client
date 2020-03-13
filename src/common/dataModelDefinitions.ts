@@ -11,7 +11,8 @@ export type CardDataModel = {
 }
 
 export enum EntityTypes {
-    CARD = 'CARD'
+    CARD = 'CARD',
+    DECK = 'DECK'
 }
 
 export type GrabbedEntity = MaybeNull<{
