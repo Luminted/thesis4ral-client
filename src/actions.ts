@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions';
 import {verbFactory, mouseInputTypeFactory} from './controller'
 import { MouseEvent as SyntheticMouseEvent } from 'react';
@@ -61,6 +60,7 @@ export function emitVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string
         const mouseInputType = mouseInputTypeFactory(event);
         if(clientId){
             const verb = verbFactory(mouseInputType, entityType, entityId, clientId, cursorX, cursorY);
+            console.log('Emitting verb: ', verb)
             if(verb !== null) {
                dispatch({
                    type: ActionTypeKeys.EMIT_VERB,

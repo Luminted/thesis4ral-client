@@ -6,7 +6,7 @@ import {MaybeNull} from './common/genericTypes'
 type InitialStateType = {
     gameState: GameState,
     socket: MaybeNull<SocketIOClient.Socket>
-    clientInfo: MaybeNull<ClientInfo>
+    clientInfo: ClientInfo
 }
 
 const initialState: InitialStateType = {
@@ -15,7 +15,10 @@ const initialState: InitialStateType = {
         clients: []
     },
     socket: null,
-    clientInfo: null
+    clientInfo: {
+        clientId: 'undefined',
+        clientName: 'undefined'
+    }
 }
 
 export const gameState = (state = initialState.gameState, action: ActionTypes) =>
@@ -23,6 +26,7 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
         switch(action.type){
             case ActionTypeKeys.SYNC:
                 draft.cards = action.gameState.cards;
+                draft.clients = action.gameState.clients;
                 break;
         }
     })

@@ -2,21 +2,21 @@ import { EntityTypes } from "./dataModelDefinitions";
 import { MaybeNull } from "./genericTypes";
 
 export enum SharedVerbTypes {
-    GRAB,
-    MOVE,
-    RELEASE,
-    REMOVE,
-    ADD,
+    GRAB = 'GRAB',
+    MOVE = 'MOVE',
+    RELEASE = 'RELEASE',
+    REMOVE = 'REMOVE',
+    ADD = 'ADD',
 }
 
 export enum CardVerbTypes {
-    FLIP,
-    PUT_IN_HAND,
+    FLIP = 'FLIP',
+    PUT_IN_HAND = 'PUT_IN_HAND',
 }
 
 export enum DeckVerbTypes {
-    DRAW_FACE_UP,
-    DRAW_FACE_DOWN,
+    DRAW_FACE_UP = 'DRAW_FACE_UP',
+    DRAW_FACE_DOWN = 'DRAW_FACE_DOWN',
 }
 
 export type VerbTypes = SharedVerbTypes | CardVerbTypes | DeckVerbTypes;
@@ -31,17 +31,17 @@ interface VerbCommonalities {
 }
 
 export interface CardVerb extends VerbCommonalities {
-    type: CardVerbTypes,
+    type: CardVerbTypes | SharedVerbTypes,
     entityType: MaybeNull<EntityTypes.CARD>
 }
 
 export interface DeckVerb extends VerbCommonalities{
-    type: DeckVerbTypes,
+    type: DeckVerbTypes | SharedVerbTypes,
     entityType: MaybeNull<EntityTypes.DECK>,
 }
 
 export interface SharedVerb extends VerbCommonalities {
-    type: SharedVerbTypes
+    type: SharedVerbTypes,
 }
 
 export type Verb = CardVerb | DeckVerb | SharedVerb;

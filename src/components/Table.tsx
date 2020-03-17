@@ -5,6 +5,7 @@ import {useTypedSelector} from '../store';
 import {CardDataModel} from '../common/dataModelDefinitions'
 import {Card} from './Card';
 import {emitVerb} from '../actions';
+import { selectGrabbedEntityByClientId } from '../selectors';
 
 type Props = {
     width: number,
@@ -18,8 +19,8 @@ export function Table({width, height}: Props) {
     const dispatch = useDispatch();
 
     const cards = useTypedSelector<CardDataModel[]>((store) => store.gameState.cards);
-    const clientId = useTypedSelector(store => store.clientInfo?.clientId) || 'asd';
-    const grabbedEntity = useTypedSelector(store => store.gameState.clients[clientId]?.grabbedEntity)
+    const clientId = useTypedSelector(store => store.clientInfo.clientId);
+    const grabbedEntity = useTypedSelector(selectGrabbedEntityByClientId(clientId));
 
     const cardRender = cards.map((card) => {
         const {entityId} = card;
@@ -32,16 +33,19 @@ export function Table({width, height}: Props) {
         <div id={tableElementId}
         onMouseMove={
             ev => {
-                if(clientId && grabbedEntity){
-                    dispatch(emitVerb(ev, null, null))
+                ev.preventDefault();
+                if(grabbedEntity){
+                    const {entityId, entityType} = grabbedEntity;
+                    dispatch(emitVerb(ev, entityId, entityType));
                 }
             }
         }
         onMouseUp={
             ev => {
                 ev.preventDefault();
-                if(clientId){
-                    dispatch(emitVerb(ev, null, null))
+                if(grabbedEntity){
+                    const {entityId, entityType} = grabbedEntity;
+                    dispatch(emitVerb(ev, entityId, entityType));
                 }
             }
         }
