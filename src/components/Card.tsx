@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import {emitVerb} from '../actions';
-import {CardDataModel} from '../common/dataModelDefinitions';
+import {emitDerivedVerb} from '../actions';
+import {CardEntity} from '../common/dataModelDefinitions';
 import {useTypedSelector} from '../store';
 
 const cardDim = {
@@ -10,18 +10,21 @@ const cardDim = {
     y: 88
 }
 
-type Props = CardDataModel;
+type Props = CardEntity;
 
-export function Card({height = cardDim.y ,width = cardDim.x, scale = 1, positionX, positionY, entityId, entityType}:Props) {
+export function Card({face, height = cardDim.y ,width = cardDim.x, scale = 1, positionX, positionY, entityId, entityType}:Props) {
     const dispatch = useDispatch();
 
     return (
+        <div style={{
+            display: 'flex',
+        }}>
         <div  
             onMouseDown={
                 (ev) => {
                     ev.preventDefault();
                     ev.stopPropagation();
-                        dispatch(emitVerb(ev, entityId, entityType));
+                    dispatch(emitDerivedVerb(ev, entityId, entityType));
                 }
             }
             style={{
@@ -32,7 +35,9 @@ export function Card({height = cardDim.y ,width = cardDim.x, scale = 1, position
                 width: width * scale,
                 height: height * scale
         }}>
-            Card
+            {face}
+        </div>
+
         </div>
     )
 }

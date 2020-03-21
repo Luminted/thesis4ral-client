@@ -1,11 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import {useDispatch} from 'react-redux';
 
 import {useTypedSelector} from '../store';
-import {CardDataModel} from '../common/dataModelDefinitions'
+import {CardEntity, DeckEntity} from '../common/dataModelDefinitions'
 import {Card} from './Card';
-import {emitVerb} from '../actions';
+import {Deck} from './Deck'
+import {emitDerivedVerb, emitSharedVerb} from '../actions';
 import { selectGrabbedEntityByClientId } from '../selectors';
+import { SharedVerbTypes } from '../common/verbTypes';
 
 type Props = {
     width: number,
@@ -18,14 +20,22 @@ export function Table({width, height}: Props) {
 
     const dispatch = useDispatch();
 
-    const cards = useTypedSelector<CardDataModel[]>((store) => store.gameState.cards);
+    const cards = useTypedSelector<CardEntity[]>((store) => store.gameState.cards);
+    const decks = useTypedSelector<DeckEntity[]>((store) => store.gameState.decks);
     const clientId = useTypedSelector(store => store.clientInfo.clientId);
     const grabbedEntity = useTypedSelector(selectGrabbedEntityByClientId(clientId));
 
-    const cardRender = cards.map((card) => {
+    const renderedCards = cards.map((card) => {
         const {entityId} = card;
         return <Card key={entityId} {...card} />
     });
+
+    const renderedDecks = decks.map(deck => {
+        const {entityId} = deck;
+        return <Deck key={entityId} {...deck} />
+    })
+
+
 
     // TODO: DESTRUCT EVENT LISTENERS
     
@@ -36,7 +46,7 @@ export function Table({width, height}: Props) {
                 ev.preventDefault();
                 if(grabbedEntity){
                     const {entityId, entityType} = grabbedEntity;
-                    dispatch(emitVerb(ev, entityId, entityType));
+                    dispatch(emitDerivedVerb(ev, entityId, entityType));
                 }
             }
         }
@@ -45,7 +55,7 @@ export function Table({width, height}: Props) {
                 ev.preventDefault();
                 if(grabbedEntity){
                     const {entityId, entityType} = grabbedEntity;
-                    dispatch(emitVerb(ev, entityId, entityType));
+                    dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.RELEASE, entityId, entityType));
                 }
             }
         }
@@ -56,7 +66,8 @@ export function Table({width, height}: Props) {
             height,
             backgroundColor: 'green'
         }}>
-            {cardRender}
+            {renderedCards}
+            {renderedDecks}
         </div>
     )
 }

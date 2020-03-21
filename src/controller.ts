@@ -7,7 +7,7 @@ import {
 } from './common/dataModelDefinitions';
 import { MouseEvent as SyntheticMouseEvent} from 'react';
 import { MaybeNull } from './common/genericTypes';
-import { CardVerbTypes, Verb, SharedVerbTypes, SharedVerb, VerbTypes } from './common/verbTypes';
+import { CardVerbTypes, Verb, SharedVerbTypes, SharedVerb, VerbTypes, DeckVerbTypes } from './common/verbTypes';
 
 enum WhichButton {
     LEFT = 1,
@@ -23,33 +23,46 @@ enum MouseEventTypes {
 
 const cardInteractionMapping: {[key in MouseInputTypes]?: CardVerbTypes | SharedVerbTypes} = {
     LEFT_BUTTON_DOWN: SharedVerbTypes.GRAB,
-    LEFT_BUTTON_UP: SharedVerbTypes.RELEASE,
+    MOUSE_MOVE: SharedVerbTypes.MOVE
+}
+
+const deckInteractionMapping: {[key in MouseInputTypes]?: DeckVerbTypes | SharedVerbTypes} = {
+    CTRL_LEFT_BUTTON_DOWN: SharedVerbTypes.GRAB,
+    LEFT_BUTTON_UP: DeckVerbTypes.DRAW_FACE_UP,
     MOUSE_MOVE: SharedVerbTypes.MOVE
 }
 
 
 export function verbFactory(mouseInputType: MouseInputTypes, entityType: MaybeNull<EntityTypes>, entityId: MaybeNull<string>, clientId: string, cursorX: number, cursorY: number): MaybeNull<Verb>{
 
-    switch(entityType){
-        case EntityTypes.CARD:
-            const verbType = cardInteractionMapping[mouseInputType];
-            if(verbType){
-                return {
-                    type: verbType,
-                    entityType,
-                    entityId,
-                    clientId,
-                    cursorX,
-                    cursorY
-                }
+    if(entityType === EntityTypes.CARD){
+        const verbType = cardInteractionMapping[mouseInputType];
+        if(verbType){
+            return {
+                type:verbType,
+                clientId,
+                cursorX,
+                cursorY,
+                entityId,
+                entityType
             }
-        case EntityTypes.DECK:
-            return null;
-        default:
-            return null;
+        }
+    }
+    else if(entityType === EntityTypes.DECK){
+        const verbType = deckInteractionMapping[mouseInputType];
+        if(verbType){
+            return{
+                type: verbType,
+                clientId,
+                cursorX,
+                cursorY,
+                entityId,
+                entityType
+            }
+        }
     }
 
-    
+    return null;
 }
 
 export function mouseInputTypeFactory(event: SyntheticMouseEvent): MouseInputTypes {

@@ -2,7 +2,7 @@ import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions'
 import {verbFactory, mouseInputTypeFactory} from './controller'
 import { MouseEvent as SyntheticMouseEvent } from 'react';
 import {MaybeNull} from './common/genericTypes'
-import { Verb } from './common/verbTypes';
+import { Verb, SharedVerbTypes, CardVerbTypes, DeckVerbTypes } from './common/verbTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from './store';
 
@@ -25,7 +25,7 @@ SetClientInfoAction;
 
 interface EmitVerb {
     type: ActionTypeKeys.EMIT_VERB,
-    verb: Verb
+    verb: MaybeNull<Verb>
 }
 
 interface SyncAction {
@@ -50,7 +50,64 @@ export function connectToSocket(socket: SocketIOClient.Socket){
     }
 }
 
-export function emitVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<EmitVerb | void>{
+function emitVerb(verb: MaybeNull<Verb>): EmitVerb{
+    return {
+        type: ActionTypeKeys.EMIT_VERB,
+        verb
+    }
+}
+
+export function emitSharedVerb(cursorX: number, cursorY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
+    return (dispatch, getStore) => {
+        const store = getStore();
+        const clientId = store.clientInfo?.clientId;
+        const verb: Verb = {
+            type: verbType,
+            entityType,
+            clientId,
+            cursorX,
+            cursorY,
+            entityId,
+        }
+        dispatch(emitVerb(verb));
+    } 
+}
+
+export function emitCardVerb(cursorX: number, cursorY: number, verbType: CardVerbTypes | SharedVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
+    return (dispatch, getStore) => {
+        const store = getStore();
+        const clientId = store.clientInfo?.clientId;
+        const verb: Verb = {
+            type: verbType,
+            entityType: EntityTypes.CARD,
+            clientId,
+            cursorX,
+            cursorY,
+            entityId,
+        }
+        console.log('Emitting verb: ', verb)
+        dispatch(emitVerb(verb));
+    }
+}
+
+export function emitDeckVerb(cursorX: number, cursorY: number, verbType: DeckVerbTypes | SharedVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
+    return (dispatch, getStore) => {
+        const store = getStore();
+        const clientId = store.clientInfo?.clientId;
+        const verb: Verb = {
+            type: verbType,
+            entityType: EntityTypes.DECK,
+            clientId,
+            cursorX,
+            cursorY,
+            entityId,
+        }
+        console.log('Emitting verb: ', verb)
+        dispatch(emitVerb(verb));
+    }
+}
+
+export function emitDerivedVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void>{
     return (dispatch, getStore) => {
         const store = getStore();
         const cursorX = event.clientX;
@@ -61,12 +118,7 @@ export function emitVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string
         if(clientId){
             const verb = verbFactory(mouseInputType, entityType, entityId, clientId, cursorX, cursorY);
             console.log('Emitting verb: ', verb)
-            if(verb !== null) {
-               dispatch({
-                   type: ActionTypeKeys.EMIT_VERB,
-                   verb
-               });
-            }
+            dispatch(emitVerb(verb));
         }
     }
 }

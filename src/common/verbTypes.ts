@@ -42,6 +42,7 @@ export interface DeckVerb extends VerbCommonalities{
 
 export interface SharedVerb extends VerbCommonalities {
     type: SharedVerbTypes,
+    entityType: MaybeNull<EntityTypes.DECK | EntityTypes.CARD>
 }
 
 export type Verb = CardVerb | DeckVerb | SharedVerb;

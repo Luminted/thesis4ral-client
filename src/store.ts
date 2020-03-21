@@ -31,7 +31,7 @@ function socketEmitterMiddleware (store) {
                 switch(action.type){
                     case ActionTypeKeys.EMIT_VERB:
                         socket.emit(SocketEventTypes.VERB, action.verb);
-                        console.log(`socket event emitted: type=${SocketEventTypes.VERB}, input=${action.verb}, inputType=${action.verb}`  );
+                        console.log(`socket event emitted: type=${SocketEventTypes.VERB}, verb type=${action.verb?.type}`  );
                 }
             }
         }

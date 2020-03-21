@@ -1,6 +1,6 @@
 import {produce} from 'immer';
 import {ActionTypeKeys, ActionTypes} from './actions';
-import {CardDataModel, GameState, ClientInfo} from './common/dataModelDefinitions' 
+import {CardEntity, DeckEntity, GameState, ClientInfo} from './common/dataModelDefinitions' 
 import {MaybeNull} from './common/genericTypes'
 
 type InitialStateType = {
@@ -11,7 +11,8 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
     gameState: {
-        cards: new Array<CardDataModel>(),
+        cards: new Array<CardEntity>(),
+        decks: new Array<DeckEntity>(),
         clients: []
     },
     socket: null,
@@ -26,6 +27,7 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
         switch(action.type){
             case ActionTypeKeys.SYNC:
                 draft.cards = action.gameState.cards;
+                draft.decks = action.gameState.decks;
                 draft.clients = action.gameState.clients;
                 break;
         }

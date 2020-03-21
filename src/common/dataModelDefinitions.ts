@@ -1,6 +1,7 @@
 import {MaybeNull} from './genericTypes'
 
-export type CardDataModel = {
+export type CardEntity = {
+    face: string,
     entityId: string,
     entityType: EntityTypes.CARD
     positionX: number,
@@ -8,6 +9,17 @@ export type CardDataModel = {
     width: number,
     height: number
     scale: number
+}
+
+export type DeckEntity = {
+    entityId: string,
+    entityType: EntityTypes.DECK
+    positionX: number,
+    positionY: number,
+    width: number,
+    height: number
+    scale: number,
+    cards: CardEntity[]
 }
 
 export enum EntityTypes {
@@ -33,6 +45,7 @@ export type ClientInfo ={
 }
 
 export interface GameState {
-    cards: CardDataModel[],
+    cards: CardEntity[],
+    decks: DeckEntity[],
     clients: Client[]
 }
