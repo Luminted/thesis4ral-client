@@ -47,6 +47,8 @@ export function Deck({positionX, positionY, height, width, entityId, entityType,
             </div>
             {/* RESET BUTTON */}
             <button onMouseUp={ev => dispatch(emitDeckVerb(ev.clientX, ev.clientY, DeckVerbTypes.RESET, entityId))}>RESET</button>
+            {/* REMOVE BUTTON */}
+            <button onMouseUp={ev => dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.REMOVE, entityId, entityType))}>REMOVE</button>
         </div>
     )
 }
