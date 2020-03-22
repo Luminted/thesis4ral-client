@@ -73,7 +73,7 @@ export function emitSharedVerb(cursorX: number, cursorY: number, verbType: Share
     } 
 }
 
-export function emitCardVerb(cursorX: number, cursorY: number, verbType: CardVerbTypes | SharedVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
+export function emitCardVerb(cursorX: number, cursorY: number, verbType: CardVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
         const clientId = store.clientInfo?.clientId;
@@ -90,7 +90,7 @@ export function emitCardVerb(cursorX: number, cursorY: number, verbType: CardVer
     }
 }
 
-export function emitDeckVerb(cursorX: number, cursorY: number, verbType: DeckVerbTypes | SharedVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
+export function emitDeckVerb(cursorX: number, cursorY: number, verbType: DeckVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
         const clientId = store.clientInfo?.clientId;

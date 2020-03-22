@@ -17,6 +17,8 @@ export enum CardVerbTypes {
 export enum DeckVerbTypes {
     DRAW_FACE_UP = 'DRAW_FACE_UP',
     DRAW_FACE_DOWN = 'DRAW_FACE_DOWN',
+    RESET = 'RESET'
+
 }
 
 export type VerbTypes = SharedVerbTypes | CardVerbTypes | DeckVerbTypes;
@@ -31,18 +33,17 @@ interface VerbCommonalities {
 }
 
 export interface CardVerb extends VerbCommonalities {
-    type: CardVerbTypes | SharedVerbTypes,
+    type: CardVerbTypes,
     entityType: MaybeNull<EntityTypes.CARD>
 }
 
 export interface DeckVerb extends VerbCommonalities{
-    type: DeckVerbTypes | SharedVerbTypes,
+    type: DeckVerbTypes,
     entityType: MaybeNull<EntityTypes.DECK>,
 }
 
 export interface SharedVerb extends VerbCommonalities {
     type: SharedVerbTypes,
-    entityType: MaybeNull<EntityTypes.DECK | EntityTypes.CARD>
 }
 
 export type Verb = CardVerb | DeckVerb | SharedVerb;

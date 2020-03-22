@@ -1,17 +1,23 @@
 import {MaybeNull} from './genericTypes'
 
-export type CardEntity = {
-    face: string,
+export interface BaseCard {
     entityId: string,
-    entityType: EntityTypes.CARD
-    positionX: number,
-    positionY: number,
-    width: number,
-    height: number
-    scale: number
+    face: string,
+    entityType: EntityTypes.CARD;
+
 }
 
-export type DeckEntity = {
+export interface CardEntity extends BaseCard {
+    width: number,
+    height: number,
+    scale: number,
+    turnedUp: boolean,
+    positionX: number,
+    positionY: number,
+    ownerDeck: MaybeNull<string>
+}
+
+export interface DeckEntity {
     entityId: string,
     entityType: EntityTypes.DECK
     positionX: number,
@@ -19,7 +25,7 @@ export type DeckEntity = {
     width: number,
     height: number
     scale: number,
-    cards: CardEntity[]
+    cards: BaseCard[],
 }
 
 export enum EntityTypes {

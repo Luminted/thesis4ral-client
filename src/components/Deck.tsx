@@ -1,7 +1,7 @@
 import React from 'react';
 import {DeckEntity} from '../common/dataModelDefinitions'
-import { emitDerivedVerb, emitDeckVerb } from '../actions';
-import { SharedVerbTypes } from '../common/verbTypes';
+import { emitDerivedVerb, emitDeckVerb, emitSharedVerb } from '../actions';
+import { SharedVerbTypes, DeckVerbTypes } from '../common/verbTypes';
 import { useDispatch } from 'react-redux';
 
 type Props = DeckEntity;
@@ -17,6 +17,7 @@ export function Deck({positionX, positionY, height, width, entityId, entityType,
             left: positionX,
             top: positionY,
         }}>
+            {/* GRAPHIC */}
             <div style={{
                 backgroundColor: 'red',
                 height: height * scale,
@@ -29,6 +30,7 @@ export function Deck({positionX, positionY, height, width, entityId, entityType,
                 (ev) => dispatch(emitDerivedVerb(ev, entityId, entityType))
             }
             >Deck</div>
+            {/* HANDLE */}
             <div className='handle' 
                 style={{
                     border: '2px solid black',
@@ -39,10 +41,12 @@ export function Deck({positionX, positionY, height, width, entityId, entityType,
                     cursor: 'grab'
                 }}
                 onMouseDown={ev => {
-                    dispatch(emitDeckVerb(ev.clientX, ev.clientY, SharedVerbTypes.GRAB, entityId))}
+                    dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.GRAB, entityId, entityType))}
                 }
             >
             </div>
+            {/* RESET BUTTON */}
+            <button onMouseUp={ev => dispatch(emitDeckVerb(ev.clientX, ev.clientY, DeckVerbTypes.RESET, entityId))}>RESET</button>
         </div>
     )
 }
