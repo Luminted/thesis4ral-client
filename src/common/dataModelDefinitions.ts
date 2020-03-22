@@ -26,6 +26,7 @@ export interface DeckEntity {
     height: number
     scale: number,
     cards: BaseCard[],
+    drawIndex: number
 }
 
 export enum EntityTypes {
