@@ -1,25 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client';
+import {useDispatch} from 'react-redux'
 
-function App() {
+
+import {Table} from './components/Table';
+import { GameState, ClientInfo } from './common/dataModelDefinitions';
+import {SocketEventTypes} from './common/socketEventTypes';
+import {connectToSocket, sync, setClientInfo} from './actions'
+
+const PORT = '3001';
+const HOST = '172.17.0.3';
+
+const App = () => {
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        const socket = io(`${HOST}:${PORT}`);
+        dispatch(connectToSocket(socket));
+        socket.on('connection_accepted', function(clientInfo: ClientInfo){
+            console.log('connection accepted by the server');
+            dispatch(setClientInfo(clientInfo));
+        })
+        socket.on(SocketEventTypes.SYNC, (gameState: GameState) => {
+            dispatch(sync(gameState));
+        })
+
+        return () => {
+            socket.disconnect();
+        }
+    }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Table width={1000} height={1000}/>
   );
 }
 
