@@ -1,6 +1,6 @@
 import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions';
-import {verbFactory, mouseInputTypeFactory} from './controller'
-import { MouseEvent as SyntheticMouseEvent } from 'react';
+import {verbFactory, mouseInputTypeFactory} from './controller/controller'
+import { MouseEvent as SyntheticMouseEvent, DragEvent as SyntheticDragEvent } from 'react';
 import {MaybeNull} from './common/genericTypes'
 import { Verb, SharedVerbTypes, CardVerbTypes, DeckVerbTypes } from './common/verbTypes';
 import { ThunkAction } from 'redux-thunk';
@@ -107,7 +107,7 @@ export function emitDeckVerb(cursorX: number, cursorY: number, verbType: DeckVer
     }
 }
 
-export function emitDerivedVerb (event: SyntheticMouseEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void>{
+export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void>{
     return (dispatch, getStore) => {
         const store = getStore();
         const cursorX = event.clientX;

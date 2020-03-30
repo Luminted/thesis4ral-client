@@ -4,17 +4,17 @@ export interface BaseCard {
     entityId: string,
     face: string,
     entityType: EntityTypes.CARD;
-
 }
 
-export interface CardEntity extends BaseCard {
+export interface DisplayCardEntity extends BaseCard {
     width: number,
     height: number,
     scale: number,
-    turnedUp: boolean,
     positionX: number,
     positionY: number,
     ownerDeck: MaybeNull<string>
+    ownerHand: MaybeNull<string>,
+    faceUp: boolean
 }
 
 export interface DeckEntity {
@@ -46,13 +46,19 @@ export type Client = {
     grabbedEntitiy: GrabbedEntity
 }
 
+export type ClientHand = {
+    clientId: string,
+    cards: BaseCard[],
+}
+
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
 }
 
 export interface GameState {
-    cards: CardEntity[],
+    cards: DisplayCardEntity[],
     decks: DeckEntity[],
-    clients: Client[]
+    clients: Client[],
+    hands: ClientHand[]
 }

@@ -1,18 +1,21 @@
 import {
-    MouseInput,
     MouseInputTypes
-} from './common/mouseEventTypes'
+} from '../common/mouseEventTypes'
 import {
     EntityTypes
-} from './common/dataModelDefinitions';
+} from '../common/dataModelDefinitions';
 import { MouseEvent as SyntheticMouseEvent} from 'react';
-import { MaybeNull } from './common/genericTypes';
-import { CardVerbTypes, Verb, SharedVerbTypes, SharedVerb, VerbTypes, DeckVerbTypes } from './common/verbTypes';
+import { MaybeNull } from '../common/genericTypes';
+import { CardVerbTypes, Verb, SharedVerbTypes, DeckVerbTypes } from '../common/verbTypes';
 
 enum WhichButton {
     LEFT = 1,
     MIDDLE = 2,
     RIGHT = 3
+}
+
+enum DragEventTypes {
+    ON_DRAG_START = 'dragstart',
 }
 
 enum MouseEventTypes {

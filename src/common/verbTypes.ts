@@ -12,6 +12,7 @@ export enum SharedVerbTypes {
 export enum CardVerbTypes {
     FLIP = 'FLIP',
     PUT_IN_HAND = 'PUT_IN_HAND',
+    PUT_ON_TABLE = 'PUT_ON_TABLE'
 }
 
 export enum DeckVerbTypes {

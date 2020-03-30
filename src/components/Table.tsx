@@ -2,26 +2,30 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 
 import {useTypedSelector} from '../store';
-import {CardEntity, DeckEntity} from '../common/dataModelDefinitions'
+import {DisplayCardEntity, DeckEntity, ClientHand} from '../common/dataModelDefinitions'
 import {Card} from './Card';
 import {Deck} from './Deck'
-import {emitDerivedVerb, emitSharedVerb} from '../actions';
-import { selectGrabbedEntityByClientId } from '../selectors';
+import {emitSharedVerb} from '../actions';
+import { selectGrabbedEntityByClientId, selectHands } from '../selectors';
 import { SharedVerbTypes } from '../common/verbTypes';
+import {Hand} from './hand/Hand'
 
 type Props = {
     width: number,
     height: number,
+    positionX: number,
+    positionY: number
 }
 
 const tableElementId = 'TableElement'
 
-export function Table({width, height}: Props) {
+export function Table({width, height, positionX, positionY}: Props) {
 
     const dispatch = useDispatch();
 
-    const cards = useTypedSelector<CardEntity[]>((store) => store.gameState.cards);
+    const cards = useTypedSelector<DisplayCardEntity[]>((store) => store.gameState.cards);
     const decks = useTypedSelector<DeckEntity[]>((store) => store.gameState.decks);
+    const hands = useTypedSelector<ClientHand[]>(selectHands);
     const clientId = useTypedSelector(store => store.clientInfo.clientId);
     const grabbedEntity = useTypedSelector(selectGrabbedEntityByClientId(clientId));
 
@@ -35,21 +39,17 @@ export function Table({width, height}: Props) {
         return <Deck key={entityId} {...deck} />
     })
 
+    const renderedHands = hands.map(hand => {
+        const {clientId} = hand;
+        return <Hand key={clientId} positionX={150} positionY={500} height={250} width={200}/>
+    })
+
 
 
     // TODO: DESTRUCT EVENT LISTENERS
     
     return (
         <div id={tableElementId}
-        onMouseMove={
-            ev => {
-                ev.preventDefault();
-                if(grabbedEntity){
-                    const {entityId, entityType} = grabbedEntity;
-                    dispatch(emitDerivedVerb(ev, entityId, entityType));
-                }
-            }
-        }
         onMouseUp={
             ev => {
                 ev.preventDefault();
@@ -64,10 +64,14 @@ export function Table({width, height}: Props) {
             position: 'relative',
             width,
             height,
+            left: positionX,
+            top: positionY,
             backgroundColor: 'green'
         }}>
             {renderedCards}
             {renderedDecks}
+            {renderedHands}
+            
         </div>
     )
 }

@@ -1,3 +1,22 @@
+import {MaybeNull} from '../../common/genericTypes';
+
+export enum WhichButton {
+    LEFT = 1,
+    MIDDLE = 2,
+    RIGHT = 3
+}
+
+export enum ListenedDragEventTypes {
+    ON_DRAG_START = 'dragstart',
+}
+
+export enum ListenedMouseEventTypes {
+    MOUSE_DOWN = 'mousedown',
+    MOUSE_UP = 'mouseup',
+    MOUSE_MOVE = 'mousemove'
+}
+
+
 
 export enum MouseInputTypes {
     LEFT_BUTTON_DOWN= 'LEFT_BUTTON_DOWN',
