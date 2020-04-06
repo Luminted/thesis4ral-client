@@ -41,7 +41,7 @@ export function Deck({positionX, positionY, height, width, entityId, entityType,
                     cursor: 'grab'
                 }}
                 onMouseDown={ev => {
-                    dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.GRAB, entityId, entityType))}
+                    dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.GRAB_FROM_TABLE, entityId, entityType))}
                 }
             >
             </div>

@@ -26,10 +26,16 @@ export function Card({face, height = cardDim.y ,width = cardDim.x, scale = 1, po
     return (
         <div 
             onMouseDown={
-                (ev: MouseEvent) => {
-                    ev.stopPropagation();
+                (ev) => {
+                    ev.stopPropagation()
+                    console.log(ev)
+                    dispatch(emitDerivedVerb(ev, entityId, entityType));
+                }
+            }
+            onDragStart = {
+                ev => {
                     ev.preventDefault();
-                    console.log(ev.type)
+                    ev.stopPropagation();
                     dispatch(emitDerivedVerb(ev, entityId, entityType));
                 }
             }
@@ -42,7 +48,7 @@ export function Card({face, height = cardDim.y ,width = cardDim.x, scale = 1, po
                 width: width * scale,
                 height: height * scale,
                 zIndex: 2
-        }}>
+        }} draggable>
             {face}
         </div>
     )

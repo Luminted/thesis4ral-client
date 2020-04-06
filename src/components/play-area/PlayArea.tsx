@@ -1,21 +1,49 @@
 import React from 'react';
 
+import './style.css';
 import {Table} from '../Table'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGrabbrdEntityOfCurrentClient } from '../../selectors';
+import { selectGrabbrdEntityOfCurrentClient, selectHands, selectClients } from '../../selectors';
 import { emitDerivedVerb } from '../../actions';
+import { playAreaDimensions } from '../../config/visuals';
+import { Hand } from '../hand/Hand';
 
 export function PlayArea(){
 
     const dispatch = useDispatch();
     const grabbedEntity = useSelector(selectGrabbrdEntityOfCurrentClient);
+    const clients = useSelector(selectClients);
+    const clientHands = useSelector(selectHands);
+
+    const renderedHandsNorth: JSX.Element[] = [];
+    const renderedHandsSouth: JSX.Element[] = [];
+
+     clientHands.forEach(hand => {
+        const {clientId} = hand;
+        const currentClient = clients.find(c => c.clientInfo.clientId === clientId);
+        if(currentClient){
+            const {seatedAt} = currentClient.clientInfo;
+            if (seatedAt === null) return false;
+            if(seatedAt.includes('NORTH')){
+                renderedHandsNorth.push(<Hand belongsTo={hand.clientId}/>)
+                return;
+            }
+            if(seatedAt.includes('SOUTH')){
+                renderedHandsSouth.push(<Hand belongsTo={hand.clientId}/>)
+                return;
+            }
+        }
+        
+    })
 
     return (
-    <div style={{
-        position: 'relative',
-        width:'100%',
-        height: '100vh',
-        backgroundColor: 'silver'
+    <div className='play-area--root' style={{
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'silver',
+        width: playAreaDimensions.width,
+        height: '100%'
     }}
     onMouseMove={
         ev => {
@@ -25,8 +53,33 @@ export function PlayArea(){
                 dispatch(emitDerivedVerb(ev, entityId, entityType));
             }
         }
+    }
+    onMouseUp = {
+        ev => {
+            console.log('play area mouse up')
+            ev.preventDefault();
+            if(grabbedEntity){
+
+                const {entityId, entityType} = grabbedEntity;
+                dispatch(emitDerivedVerb(ev, entityId, entityType));
+            }
+        }
     }>
-        <Table height={540} width={910} positionX={150} positionY={100}/>
+        <div className='content'
+        style= {{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+        }}>
+            <div className='hand--container'>
+                {renderedHandsNorth}
+            </div>
+            <Table />
+            <div className='hand--container'>
+                {renderedHandsSouth}
+            </div>
+        </div>
     </div>
     )
 }

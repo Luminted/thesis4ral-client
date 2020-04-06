@@ -31,7 +31,9 @@ const App = () => {
     }, [dispatch])
 
   return (
-    <PlayArea></PlayArea>
+      <div className='app'>
+          <PlayArea></PlayArea>
+      </div>
   );
 }
 

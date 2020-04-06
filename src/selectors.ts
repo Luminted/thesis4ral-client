@@ -1,4 +1,4 @@
-import {GrabbedEntity, ClientHand} from './common/dataModelDefinitions';
+import {GrabbedEntity, ClientHand, Client, BaseCard} from './common/dataModelDefinitions';
 import {RootState} from './store'
 import { MaybeUndefined, MaybeNull } from './common/genericTypes';
 
@@ -23,4 +23,19 @@ export function selectHands(store: RootState): ClientHand[] {
 
 export function selectClientId(store: RootState): string {
     return store.clientInfo.clientId;
+}
+
+export function selectClients(store: RootState): Client[] {
+    return store.gameState.clients;
+}
+
+export function selectClientHandCardsById(clientId: string){
+    return function(store: RootState): BaseCard[] {
+        let hand = store.gameState.hands.find(hand => hand.clientId === clientId);
+        return hand ? hand.cards : [];
+    }
+}
+
+export function selectTablePosition(state: RootState){
+    return state.tablePosition;
 }

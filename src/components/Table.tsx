@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useDispatch} from 'react-redux';
 
 import {useTypedSelector} from '../store';
 import {DisplayCardEntity, DeckEntity, ClientHand} from '../common/dataModelDefinitions'
 import {Card} from './Card';
 import {Deck} from './Deck'
-import {emitSharedVerb} from '../actions';
+import {emitSharedVerb, setTablePosition} from '../actions';
 import { selectGrabbedEntityByClientId, selectHands } from '../selectors';
 import { SharedVerbTypes } from '../common/verbTypes';
-import {Hand} from './hand/Hand'
+import { tableDimensions, playAreaDimensions } from '../config/visuals';
 
 type Props = {
-    width: number,
-    height: number,
-    positionX: number,
-    positionY: number
 }
 
 const tableElementId = 'TableElement'
 
-export function Table({width, height, positionX, positionY}: Props) {
+export function Table({}: Props) {
 
     const dispatch = useDispatch();
+    
+    useEffect(() => {
+        const tableElement = document.getElementById(tableElementId);
+        if(tableElement){
+            const leftOffset = Math.round(playAreaDimensions.width / 2 - tableDimensions.width / 2);
+            const topOffset = Math.round(playAreaDimensions.height / 2 - tableDimensions.height / 2);
+            dispatch(setTablePosition(leftOffset, topOffset));
+        }
+
+    }, [])
+
 
     const cards = useTypedSelector<DisplayCardEntity[]>((store) => store.gameState.cards);
     const decks = useTypedSelector<DeckEntity[]>((store) => store.gameState.decks);
@@ -38,12 +45,6 @@ export function Table({width, height, positionX, positionY}: Props) {
         const {entityId} = deck;
         return <Deck key={entityId} {...deck} />
     })
-
-    const renderedHands = hands.map(hand => {
-        const {clientId} = hand;
-        return <Hand key={clientId} positionX={150} positionY={500} height={250} width={200}/>
-    })
-
 
 
     // TODO: DESTRUCT EVENT LISTENERS
@@ -62,15 +63,12 @@ export function Table({width, height, positionX, positionY}: Props) {
         onContextMenu={ev => ev.preventDefault()}
         style={{
             position: 'relative',
-            width,
-            height,
-            left: positionX,
-            top: positionY,
-            backgroundColor: 'green'
+            width: tableDimensions.width,
+            height: tableDimensions.height,
+            backgroundColor: 'green',
         }}>
             {renderedCards}
             {renderedDecks}
-            {renderedHands}
             
         </div>
     )

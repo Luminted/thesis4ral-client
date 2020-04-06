@@ -6,7 +6,11 @@ import {MaybeNull} from './common/genericTypes'
 type InitialStateType = {
     gameState: GameState,
     socket: MaybeNull<SocketIOClient.Socket>
-    clientInfo: ClientInfo
+    clientInfo: ClientInfo,
+    tablePosition: {
+        x: number,
+        y: number
+    }
 }
 
 const initialState: InitialStateType = {
@@ -14,13 +18,19 @@ const initialState: InitialStateType = {
         cards: new Array<DisplayCardEntity>(),
         decks: new Array<DeckEntity>(),
         clients: [],
-        hands: []
+        hands: [],
+        cardScale: 1
     },
     socket: null,
     clientInfo: {
         //TODO: THIS IS WAY NOT COOL
         clientId: 'undefined',
-        clientName: 'undefined'
+        clientName: 'undefined',
+        seatedAt: null
+    },
+    tablePosition: {
+        x: 0,
+        y: 0
     }
 }
 
@@ -54,4 +64,14 @@ export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) 
             return state;
     }
 }
+
+export const tablePosition = (state = initialState.tablePosition, action: ActionTypes) =>
+    produce(state, draft => {
+        switch(action.type) {
+            case ActionTypeKeys.SET_TABLE_POSITION:
+                draft.x = action.positionX;
+                draft.y = action.positionY;
+                break;
+        }
+    })
 

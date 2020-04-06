@@ -1,25 +1,42 @@
-import { WhichButton } from "./types";
+import { WhichButton, ListenedDragEventTypes } from "../types";
 import { SyntheticEvent, MouseEvent as SyntheticMouseEvent, DragEvent as SyntheticDragEvent} from 'react';
-import { MouseInputTypes, ListenedMouseEventTypes } from "./types";
+import { MouseInputTypes, ListenedMouseEventTypes } from "../types";
 
 
-export function mouseEventTranslator(event: SyntheticEvent): MouseInputTypes {
+export function mouseEventTranslator(event: SyntheticDragEvent | SyntheticMouseEvent): MouseInputTypes {
     if(isDragEvent(event)){
-
+        return dragTranslator(event);
     }else if(isMouseEvent(event)) {
-        return clickTranslator(event);
+        if(event.type === ListenedMouseEventTypes.MOUSE_MOVE){
+            return MouseInputTypes.MOUSE_MOVE;
+        }else {
+            return clickTranslator(event);
+        }
     }
 
     return MouseInputTypes.UNKNOWN_INPUT;
 }
 
-function dragTranslator( event: MouseEvent): MouseInputTypes {
+function dragTranslator( event: SyntheticDragEvent): MouseInputTypes {
+    const dragEventType = event.type;
+    if(dragEventType === ListenedDragEventTypes.ON_DRAG_START){
+        if(event.ctrlKey){
+            return MouseInputTypes.CTRL_DRAG_START;
+        }
+        else if(event.shiftKey) {
+            return MouseInputTypes.SHFT_DRAG_START;
+        }
+        else {
+            return MouseInputTypes.DRAG_START
+        }
+    }
+
     return MouseInputTypes.UNKNOWN_INPUT;
 }
 
 function clickTranslator (event: SyntheticMouseEvent): MouseInputTypes {
     const buttonPressed : WhichButton = event.nativeEvent.which;
-    const mouseEventType: ListenedMouseEventTypes = event.type as ListenedMouseEventTypes;
+    const mouseEventType = event.type;
     if(buttonPressed === WhichButton.LEFT){
         if(mouseEventType === ListenedMouseEventTypes.MOUSE_DOWN){
             if (event.ctrlKey) {
@@ -89,7 +106,7 @@ function isMouseEvent(event: SyntheticEvent): event is SyntheticMouseEvent {
     return type.includes('click') || type.includes('mouse');
 }
 
-function isDragEvent(event: SyntheticEvent) {
+function isDragEvent(event: SyntheticEvent): event is SyntheticDragEvent {
     const {type} = event;
     return type.includes('drag');
 }
