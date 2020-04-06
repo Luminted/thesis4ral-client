@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import {useDispatch} from 'react-redux'
 
 
-import {Table} from './components/Table';
+import {PlayArea} from './components/play-area/PlayArea';
 import { GameState, ClientInfo } from './common/dataModelDefinitions';
 import {SocketEventTypes} from './common/socketEventTypes';
 import {connectToSocket, sync, setClientInfo} from './actions'
@@ -28,10 +28,12 @@ const App = () => {
         return () => {
             socket.disconnect();
         }
-    }, [])
+    }, [dispatch])
 
   return (
-    <Table width={1000} height={1000}/>
+      <div className='app'>
+          <PlayArea></PlayArea>
+      </div>
   );
 }
 
