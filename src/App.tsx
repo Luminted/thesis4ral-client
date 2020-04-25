@@ -5,8 +5,8 @@ import {useDispatch} from 'react-redux'
 
 
 import {PlayArea} from './components/play-area/PlayArea';
-import { GameState, ClientInfo } from './common/dataModelDefinitions';
-import {SocketEventTypes} from './common/socketEventTypes';
+import { GameState, ClientInfo } from './types/dataModelDefinitions';
+import {SocketEventTypes} from './types/socketEventTypes';
 import {connectToSocket, sync, setClientInfo} from './actions'
 
 const serverURL = 'http://localhost:3001';
@@ -16,6 +16,9 @@ const App = () => {
 
     React.useEffect(() => {
         const socket = io(serverURL);
+        const socketNSP = io(serverURL + '/my-namespace');
+        socketNSP.emit('hello');
+        socketNSP.on('hello', () => console.log('connected to namespace'))
         dispatch(connectToSocket(socket));
         socket.on('connection_accepted', function(clientInfo: ClientInfo){
             console.log('connection accepted by the server');

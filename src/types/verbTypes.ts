@@ -21,7 +21,6 @@ export enum DeckVerbTypes {
     DRAW_FACE_UP = 'DRAW_FACE_UP',
     DRAW_FACE_DOWN = 'DRAW_FACE_DOWN',
     RESET = 'RESET'
-
 }
 
 export type VerbTypes = SharedVerbTypes | CardVerbTypes | DeckVerbTypes;

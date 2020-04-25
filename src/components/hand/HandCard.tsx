@@ -1,17 +1,10 @@
-import React from 'react';
-import { BaseCard } from '../../common/dataModelDefinitions';
-import { useDispatch } from 'react-redux';
-import { emitCardVerb, connectToSocket } from '../../actions';
-import { CardVerbTypes } from '../../common/verbTypes';
-import { useTypedSelector } from '../../store';
-import { selectTablePosition } from '../../selectors';
+import React, { CSSProperties } from 'react';
+import { EntityTypes, BaseEntity } from '../../types/dataModelDefinitions';
+import { EntityInterface } from '../entity-interface';
+import { VerbContextTypes } from '../../types/additionalTypes';
 
-type Props = {
-    positionX: number,
-    positionY: number
-    entityId: string,
-    face: string,
-    isFacingUp: boolean
+interface Props extends BaseEntity {
+    face: string
 }
 
 const cardDim = {
@@ -20,28 +13,27 @@ const cardDim = {
 }
 
 
-export function HandCard({entityId, face, isFacingUp, positionX, positionY}: Props) {
-    const dipatch = useDispatch();
+export function HandCard({entityId, face, positionX, positionY}: Props) {
+    const styles: {[key: string]: CSSProperties} = {
+        handCard:{
+            position: 'absolute',
+            left: positionX,
+            top: positionY,
+        },
+        handCardGraphics: {
+            height: cardDim.y,
+            width: cardDim.x,
+            background: 'blue',
+            border: '1px solid black'
+        }
+    }
 
-    const tablePosition = useTypedSelector<{x: number, y:number}>(selectTablePosition);
 
     return (
-        <div draggable
-        style={{
-            position: 'absolute',
-            top: positionY,
-            left: positionX,
-            width: cardDim.x,
-            height: cardDim.y,
-            backgroundColor: 'blue',
-            border: 'solid black 1px'
-        }}
-        onDragStart={ev => {
-            console.log(ev.clientX, ev.clientY)
-            console.log('normed values', )
-            ev.preventDefault();
-            ev.stopPropagation();
-            dipatch(emitCardVerb(ev.clientX - tablePosition.x, ev.clientY - tablePosition.y, CardVerbTypes.GRAB_FROM_HAND, entityId));
-        }}>{face}</div>
+            <EntityInterface entityId={entityId} entityType={EntityTypes.CARD} positionX={positionX} positionY={positionY} height={cardDim.y} width={cardDim.x} scale={1} verbContext={VerbContextTypes.HAND}>
+                <div className='hand-card-graphics' style={styles.handCardGraphics}>
+                    {face}
+                </div>
+            </EntityInterface>
     )
 }
