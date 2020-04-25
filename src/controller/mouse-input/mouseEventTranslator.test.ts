@@ -2,7 +2,7 @@ import * as assert from 'assert';
 
 import {mouseEventTranslator} from './mouseEventTranslator'
 import { ListenedMouseEventTypes, WhichButton, MouseInputTypes, ListenedDragEventTypes } from '../types';
-import { SyntheticEvent, MouseEvent, DragEvent } from 'react';
+import { MouseEvent, DragEvent } from 'react';
 
 type MockMouseEvent = {
     type: string,

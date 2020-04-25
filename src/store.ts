@@ -4,14 +4,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk'
 
 
-import {gameState, socket, clientInfo, tablePosition} from './reducers';
+import {gameState, socket, clientInfo, tablePosition, tableBoundaries, playareaBoundaries, grabbedEntityOriginalPosition} from './reducers';
 import {socketEmitterMiddleware, normalizeEmittedPositionToTable} from './middlewares';
 
 const rootReducer = combineReducers({
     gameState,
     socket,
     clientInfo,
-    tablePosition
+    tablePosition,
+    tableBoundaries,
+    playareaBoundaries,
+    grabbedEntityOriginalPosition
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

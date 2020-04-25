@@ -1,6 +1,6 @@
-import {GrabbedEntity, ClientHand, Client, BaseCard} from './common/dataModelDefinitions';
+import {GrabbedEntity, ClientHand, Client, BaseCard, DisplayCardEntity, DeckEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
-import { MaybeUndefined, MaybeNull } from './common/genericTypes';
+import { MaybeNull, MaybeUndefined } from './types/genericTypes';
 
 export function selectGrabbedEntityByClientId(clientId: string) {
     return function (store: RootState): MaybeNull<GrabbedEntity> {
@@ -29,7 +29,7 @@ export function selectClients(store: RootState): Client[] {
     return store.gameState.clients;
 }
 
-export function selectClientHandCardsById(clientId: string){
+export function selectClientHandCardsById(clientId: MaybeNull<string>){
     return function(store: RootState): BaseCard[] {
         let hand = store.gameState.hands.find(hand => hand.clientId === clientId);
         return hand ? hand.cards : [];
@@ -38,4 +38,24 @@ export function selectClientHandCardsById(clientId: string){
 
 export function selectTablePosition(state: RootState){
     return state.tablePosition;
+}
+
+export function selectCards(state: RootState): DisplayCardEntity[] {
+    return state.gameState.cards;
+}
+
+export function selectDecks(state: RootState): DeckEntity[] {
+    return state.gameState.decks;
+}
+
+export function selectTableBoundaries(state: RootState) {
+    return state.tableBoundaries;
+}
+
+export function selectPlayareaBoundaries(state: RootState) {
+    return state.playareaBoundaries;
+}
+
+export function selectGrabbedEntityOriginalPosition(state: RootState) {
+    return state.grabbedEntityOriginalPosition;
 }

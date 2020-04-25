@@ -1,7 +1,7 @@
 import { ThunkMiddleware } from "redux-thunk";
 import { RootState } from "./store";
 import { ActionTypes, ActionTypeKeys } from "./actions";
-import { SocketEventTypes } from "./common/socketEventTypes";
+import { SocketEventTypes } from "./types/socketEventTypes";
 
 export const socketEmitterMiddleware: ThunkMiddleware<RootState, ActionTypes, undefined> = (store) => {
     return next => (action: ActionTypes) => {

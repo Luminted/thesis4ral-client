@@ -1,10 +1,11 @@
-import {GameState, EntityTypes, ClientInfo} from './common/dataModelDefinitions';
+import {GameState, EntityTypes, ClientInfo} from './types/dataModelDefinitions';
 import { MouseEvent as SyntheticMouseEvent, DragEvent as SyntheticDragEvent } from 'react';
-import {MaybeNull} from './common/genericTypes'
-import { Verb, SharedVerbTypes, CardVerbTypes, DeckVerbTypes } from './common/verbTypes';
+import {MaybeNull} from './types/genericTypes'
+import { Verb, SharedVerbTypes, CardVerbTypes, DeckVerbTypes } from './types/verbTypes';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from './store';
 import { mouseEventTranslator, verbFactory } from './controller';
+import { VerbContextTypes } from './types/additionalTypes';
 
 
 export enum ActionTypeKeys {
@@ -14,7 +15,12 @@ export enum ActionTypeKeys {
 
     EMIT_VERB = 'emit/VERB',
 
-    SET_TABLE_POSITION = 'SET_TABLE_POSITION'
+    SET_TABLE_POSITION = 'SET_TABLE_POSITION',
+    SET_TABLE_BOUNDARIES = 'SET_TABLE_BOUNDARIES',
+    
+    SET_PLAYAREA_BOUNDARIES = 'SET_PLAYAREA_BOUNDARIES',
+
+    SET_GRABBED_ENTITY_ORIGINAL_POSITION = 'SET_GRABBED_ENTITY_ORIGINAL_POSITION'
 }
 
 export type ThunkResult<R> = ThunkAction<R, RootState, null, ActionTypes>
@@ -24,8 +30,18 @@ EmitVerb |
 SyncAction |
 ConnectToSocketAction |
 SetClientInfoAction |
-SetTablePositionAction;
+SetTablePositionAction |
+SetTableBoundaries | 
+SetPlayareaBoundaries |
+SetEntityOriginalPosition;
 
+interface SetEntityOriginalPosition {
+    type: ActionTypeKeys.SET_GRABBED_ENTITY_ORIGINAL_POSITION,
+    position: MaybeNull<{
+        x: number,
+        y: number
+    }>
+}
 interface EmitVerb {
     type: ActionTypeKeys.EMIT_VERB,
     verb: MaybeNull<Verb>
@@ -52,12 +68,56 @@ interface SetTablePositionAction {
     positionY: number
 }
 
+interface SetTableBoundaries {
+    type: ActionTypeKeys.SET_TABLE_BOUNDARIES,
+    top: number,
+    bottom: number,
+    left: number,
+    right: number
+}
+
+interface SetPlayareaBoundaries {
+    type: ActionTypeKeys.SET_PLAYAREA_BOUNDARIES,
+    top: number,
+    bottom: number,
+    left: number,
+    right: number
+}
+
 export function connectToSocket(socket: SocketIOClient.Socket){
     return {
         type: ActionTypeKeys.CONNECT_TO_SOCKET,
         socket
     }
 }
+
+export function setGrabbedEntityOriginalPosition(position: MaybeNull<{x: number, y: number}>): SetEntityOriginalPosition{
+    return {
+        type: ActionTypeKeys.SET_GRABBED_ENTITY_ORIGINAL_POSITION,
+        position
+    }
+}
+
+export function setTableBoundaries(top: number, bottom: number, left: number, right: number): SetTableBoundaries {
+    return {
+        type: ActionTypeKeys.SET_TABLE_BOUNDARIES,
+        top,
+        bottom,
+        left,
+        right
+    }
+}
+
+export function setPlayareaBoundaries(top: number, bottom: number, left: number, right: number): SetPlayareaBoundaries {
+    return {
+        type: ActionTypeKeys.SET_PLAYAREA_BOUNDARIES,
+        top,
+        bottom,
+        left,
+        right
+    }
+}
+
 
 function emitVerb(verb: MaybeNull<Verb>): EmitVerb{
     return {
@@ -94,7 +154,7 @@ export function emitCardVerb(positionX: number, positionY: number, verbType: Car
             positionY,
             entityId,
         }
-        console.log('Emitting verb: ', verb)
+        // console.log('Emitting verb: ', verb)
         dispatch(emitVerb(verb));
     }
 }
@@ -111,34 +171,32 @@ export function emitDeckVerb(positionX: number, positionY: number, verbType: Dec
             positionY,
             entityId,
         }
-        console.log('Emitting verb: ', verb)
+        // console.log('Emitting verb: ', verb)
         dispatch(emitVerb(verb));
     }
 }
 
-export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void>{
+export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>, verbContext: MaybeNull<VerbContextTypes> = null): ThunkResult<void>{
     return (dispatch, getStore) => {
         const store = getStore();
         const positionX = event.clientX;
         const positionY = event.clientY;
         const clientId = store.clientInfo?.clientId;
-    
         const mouseInputType = mouseEventTranslator(event);
-        console.log(mouseInputType)
         if(clientId){
-            const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY);
-            console.log('Emitting verb: ', verb)
+            const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY, verbContext);
+            console.log('Emitting verb: ', verb);
             dispatch(emitVerb(verb));
         }
     }
 }
 
-export function setClientInfo(clientInfo: ClientInfo) {
-    const action: SetClientInfoAction = {
+//TODO: give return types to all action
+export function setClientInfo(clientInfo: ClientInfo): SetClientInfoAction {
+    return {
         type: ActionTypeKeys.SET_CLIENT_INFO,
         clientInfo
     }
-    return action;
 }
 
 export function sync(gameState: GameState) {

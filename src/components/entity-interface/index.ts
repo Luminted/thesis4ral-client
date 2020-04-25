@@ -1,0 +1,1 @@
+export {EntityInterface} from './EntityInterface'

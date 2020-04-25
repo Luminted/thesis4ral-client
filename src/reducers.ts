@@ -1,36 +1,67 @@
 import {produce} from 'immer';
 import {ActionTypeKeys, ActionTypes} from './actions';
-import {DisplayCardEntity, DeckEntity, GameState, ClientInfo} from './common/dataModelDefinitions' 
-import {MaybeNull} from './common/genericTypes'
+import {DisplayCardEntity, DeckEntity, GameState, ClientInfo, Directions} from './types/dataModelDefinitions' 
+import {MaybeNull} from './types/genericTypes'
 
-type InitialStateType = {
+type State = {
     gameState: GameState,
     socket: MaybeNull<SocketIOClient.Socket>
     clientInfo: ClientInfo,
     tablePosition: {
         x: number,
         y: number
-    }
+    },
+    //TODO: swap in Boundary type
+    tableBoundaries: MaybeNull<{
+        top: number,
+        bottom: number,
+        left: number,
+        right: number
+    }>
+    playareaBoundaries: MaybeNull<{
+        top: number,
+        bottom: number,
+        left: number,
+        right: number
+    }>
+    grabbedEntityOriginalPosition: MaybeNull<{
+        x: number,
+        y: number
+    }>
 }
 
-const initialState: InitialStateType = {
+const initialState: State = {
     gameState: {
         cards: new Array<DisplayCardEntity>(),
         decks: new Array<DeckEntity>(),
         clients: [],
         hands: [],
-        cardScale: 1
+        cardScale: 1,
+        cardBoundary: null,
+        deckBoundary: null
     },
     socket: null,
     clientInfo: {
         //TODO: THIS IS WAY NOT COOL
         clientId: 'undefined',
         clientName: 'undefined',
-        seatedAt: null
+        seatedAt: Directions.SOUTH
     },
     tablePosition: {
         x: 0,
         y: 0
+    },
+    tableBoundaries: null,
+    playareaBoundaries: null,
+    grabbedEntityOriginalPosition: null
+}
+
+export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntityOriginalPosition, action: ActionTypes) => {
+    switch(action.type){
+        case ActionTypeKeys.SET_GRABBED_ENTITY_ORIGINAL_POSITION:
+            return action.position;
+        default:
+            return state;
     }
 }
 
@@ -75,3 +106,33 @@ export const tablePosition = (state = initialState.tablePosition, action: Action
         }
     })
 
+export const tableBoundaries = (state = initialState.tableBoundaries, action: ActionTypes) => {
+    switch(action.type) {
+        case ActionTypeKeys.SET_TABLE_BOUNDARIES:
+            const {top, bottom, left, right} = action;
+            return {
+                top,
+                bottom,
+                left,
+                right
+            }
+        default:
+            return state;
+        }
+}
+
+export const playareaBoundaries = (state = initialState.playareaBoundaries, action: ActionTypes) => {
+    switch(action.type) {
+        case ActionTypeKeys.SET_PLAYAREA_BOUNDARIES:
+            const {top, bottom, left, right} = action;
+            return {
+                top,
+                bottom,
+                left,
+                right
+            }
+
+        default:
+            return state;
+        }
+}
