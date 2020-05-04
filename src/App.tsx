@@ -4,34 +4,36 @@ import io from 'socket.io-client';
 import {useDispatch} from 'react-redux'
 
 
-import {PlayArea} from './components/play-area/PlayArea';
+import {PlayArea} from './components/play-table/play-area/PlayArea';
 import { GameState, ClientInfo } from './types/dataModelDefinitions';
-import {SocketEventTypes} from './types/socketEventTypes';
+import {TableSocketClientEvents, TableSocketServerEvents} from './types/socketEventTypes';
 import {connectToSocket, sync, setClientInfo} from './actions'
 
-const serverURL = 'http://localhost:3001';
+const serverURL = 'http://localhost:8000';
 
 const App = () => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        const socket = io(serverURL);
-        const socketNSP = io(serverURL + '/my-namespace');
-        socketNSP.emit('hello');
-        socketNSP.on('hello', () => console.log('connected to namespace'))
-        dispatch(connectToSocket(socket));
-        socket.on('connection_accepted', function(clientInfo: ClientInfo){
-            console.log('connection accepted by the server');
-            dispatch(setClientInfo(clientInfo));
+        const socket = io(serverURL + '/table', {
+            query: {
+                tableId: 'dev'
+            }
+        });
+        socket.on(TableSocketServerEvents.CONNECT, ()=>{
+            dispatch(connectToSocket(socket));
+            socket.emit(TableSocketClientEvents.JOIN_TABLE, (clientInfo: ClientInfo) => {
+                dispatch(setClientInfo(clientInfo));
+            })
         })
-        socket.on(SocketEventTypes.SYNC, (gameState: GameState) => {
+        socket.on(TableSocketServerEvents.SYNC, (gameState: GameState) => {
             dispatch(sync(gameState));
         })
 
         return () => {
             socket.disconnect();
         }
-    }, [dispatch])
+    }, [])
 
   return (
       <div className='app'>

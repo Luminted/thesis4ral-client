@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 import { EntityInterface } from '../entity-interface/';
-import { BaseEntity } from '../../types/dataModelDefinitions';
+import { BaseEntity } from '../../../types/dataModelDefinitions';
 
 interface Props extends BaseEntity {
 

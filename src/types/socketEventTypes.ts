@@ -1,4 +1,9 @@
-export enum SocketEventTypes {
+export enum TableSocketClientEvents {
     VERB = 'VERB',
-    SYNC = 'SYNC'
+    JOIN_TABLE = 'JOIN_TABLE'
+}
+
+export enum TableSocketServerEvents {
+    SYNC = 'SYNC',
+    CONNECT = 'connect'
 }

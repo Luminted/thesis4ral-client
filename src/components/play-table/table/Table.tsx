@@ -1,8 +1,8 @@
 import React, { CSSProperties, useEffect } from 'react';
-import { tableDimensions } from '../../config/visuals';
-import { useTypedSelector } from '../../store';
-import { DisplayCardEntity, DeckEntity } from '../../types/dataModelDefinitions';
-import { selectCards, selectDecks } from '../../selectors';
+import { tableDimensions } from '../../../config/visuals';
+import { useTypedSelector } from '../../../store';
+import { DisplayCardEntity, DeckEntity } from '../../../types/dataModelDefinitions';
+import { selectCards, selectDecks } from '../../../selectors';
 import { Deck } from './Deck';
 import { Card } from '../card';
 

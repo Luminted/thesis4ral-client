@@ -1,14 +1,14 @@
 import React, { ReactChild, CSSProperties, useEffect} from 'react';
-import { BaseEntity, GrabbedEntity } from '../../types/dataModelDefinitions';
+import { BaseEntity, GrabbedEntity } from '../../../types/dataModelDefinitions';
 import { useDispatch, useSelector } from 'react-redux';
-import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../actions';
-import { useTypedSelector } from '../../store';
-import { selectGrabbrdEntityOfCurrentClient, selectTablePosition, selectTableBoundaries, selectPlayareaBoundaries, selectGrabbedEntityOriginalPosition } from '../../selectors';
-import { VerbContextTypes } from '../../types/additionalTypes';
-import { MaybeNull } from '../../types/genericTypes';
-import globalConfig from '../../config/global';
-import { SharedVerbTypes } from '../../types/verbTypes';
-import { ListenedMouseEventTypes } from '../../controller/types';
+import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../../actions';
+import { useTypedSelector } from '../../../store';
+import { selectGrabbrdEntityOfCurrentClient, selectTablePosition, selectTableBoundaries, selectPlayareaBoundaries, selectGrabbedEntityOriginalPosition } from '../../../selectors';
+import { VerbContextTypes } from '../../../types/additionalTypes';
+import { MaybeNull } from '../../../types/genericTypes';
+import globalConfig from '../../../config/global';
+import { SharedVerbTypes } from '../../../types/verbTypes';
+import { ListenedMouseEventTypes } from '../../../controller/types';
 
 interface Props extends BaseEntity {
     children?: ReactChild,

@@ -104,3 +104,14 @@ export interface GameState {
     cardBoundary: MaybeNull<Boundary>,
     deckBoundary: MaybeNull<Boundary>
 }
+
+export type PlayRoom = {
+    roomId: string,
+    cards: DisplayCardEntity[],
+    decks: DeckEntity[],
+    clients: Client[],
+    hands: ClientHand[],
+    cardScale: number,
+    cardBoundary: MaybeNull<Boundary>,
+    deckBoundary: MaybeNull<Boundary>
+}

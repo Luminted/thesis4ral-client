@@ -1,7 +1,7 @@
 import { ThunkMiddleware } from "redux-thunk";
 import { RootState } from "./store";
 import { ActionTypes, ActionTypeKeys } from "./actions";
-import { SocketEventTypes } from "./types/socketEventTypes";
+import { TableSocketClientEvents } from "./types/socketEventTypes";
 
 export const socketEmitterMiddleware: ThunkMiddleware<RootState, ActionTypes, undefined> = (store) => {
     return next => (action: ActionTypes) => {
@@ -12,8 +12,8 @@ export const socketEmitterMiddleware: ThunkMiddleware<RootState, ActionTypes, un
                 //TODO: Don't send undefined verb
                 if(action.type === ActionTypeKeys.EMIT_VERB){
                     if(action.verb !== null){
-                        socket.emit(SocketEventTypes.VERB, action.verb);
-                        console.log(`socket event emitted: type=${SocketEventTypes.VERB}, verb type=${action.verb?.type}`  );
+                        socket.emit(TableSocketClientEvents.VERB, action.verb);
+                        console.log(`socket event emitted: type=${TableSocketClientEvents.VERB}, verb type=${action.verb?.type}`  );
                     }else{
                         console.log('Verb to be emitted is NULL. Aborting emit.')
                     }

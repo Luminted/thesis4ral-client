@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
-import { EntityTypes, BaseEntity } from '../../types/dataModelDefinitions';
+import { EntityTypes, BaseEntity } from '../../../types/dataModelDefinitions';
 import {EntityInterface} from '../entity-interface'
-import { VerbContextTypes } from '../../types/additionalTypes';
+import { VerbContextTypes } from '../../../types/additionalTypes';
 
 interface Props extends BaseEntity {
     face: string

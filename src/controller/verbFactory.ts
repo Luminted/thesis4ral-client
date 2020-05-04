@@ -22,7 +22,8 @@ export function verbFactory(mouseInputType: MouseInputTypes, entityType: MaybeNu
                 positionX,
                 positionY,
                 entityId,
-                entityType
+                entityType,
+                
             }
         }
     }

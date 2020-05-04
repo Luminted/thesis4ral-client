@@ -1,17 +1,17 @@
 import React, { CSSProperties, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { selectGrabbrdEntityOfCurrentClient, selectHands, selectClients } from '../../selectors';
-import { emitSharedVerb, setTablePosition, setTableBoundaries, setPlayareaBoundaries } from '../../actions';
-import { playAreaDimensions } from '../../config/visuals';
+import { selectGrabbrdEntityOfCurrentClient, selectHands, selectClients } from '../../../selectors';
+import { emitSharedVerb, setTablePosition, setTableBoundaries, setPlayareaBoundaries } from '../../../actions';
+import { playAreaDimensions } from '../../../config/visuals';
 import { Hand } from '../hand/Hand';
 import { Table } from '../table/Table';
-import { SharedVerbTypes } from '../../types/verbTypes';
-import { getElementAbsolutePosition } from '../../utils';
-import { Directions } from '../../types/dataModelDefinitions';
-import { useSetEntityBoundaries } from '../../effects';
-import config from '../../config/global'
-import { tableBoundaries } from '../../reducers';
+import { SharedVerbTypes } from '../../../types/verbTypes';
+import { getElementAbsolutePosition } from '../../../utils';
+import { Directions } from '../../../types/dataModelDefinitions';
+import { useSetEntityBoundaries } from '../../../effects';
+import config from '../../../config/global'
+import { tableBoundaries } from '../../../reducers';
 
 export function PlayArea(){
 

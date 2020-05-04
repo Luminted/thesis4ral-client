@@ -1,13 +1,13 @@
 import React, { CSSProperties } from 'react'
-import { useTypedSelector } from '../../store';
-import { BaseCard, GrabbedEntity, EntityTypes } from '../../types/dataModelDefinitions';
-import { selectClientHandCardsById, selectClientId, selectGrabbedEntityByClientId } from '../../selectors';
+import { useTypedSelector } from '../../../store';
+import { BaseCard, GrabbedEntity, EntityTypes } from '../../../types/dataModelDefinitions';
+import { selectClientHandCardsById, selectClientId, selectGrabbedEntityByClientId } from '../../../selectors';
 import { HandCard } from './HandCard';
 import { useDispatch } from 'react-redux';
-import { emitCardVerb } from '../../actions';
-import { CardVerbTypes } from '../../types/verbTypes';
-import { MaybeNull } from '../../types/genericTypes';
-import config from '../../config/global';
+import { emitCardVerb } from '../../../actions';
+import { CardVerbTypes } from '../../../types/verbTypes';
+import { MaybeNull } from '../../../types/genericTypes';
+import config from '../../../config/global';
 import chunk from 'lodash/chunk';
 import flatten from 'lodash/flatten';
 
