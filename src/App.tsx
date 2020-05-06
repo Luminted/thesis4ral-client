@@ -9,7 +9,7 @@ import { GameState, ClientInfo } from './types/dataModelDefinitions';
 import {TableSocketClientEvents, TableSocketServerEvents} from './types/socketEventTypes';
 import {connectToSocket, sync, setClientInfo} from './actions'
 
-const serverURL = 'http://localhost:8000';
+const serverURL = 'localhost:8080';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const App = () => {
     React.useEffect(() => {
         const socket = io(serverURL + '/table', {
             query: {
-                tableId: 'dev'
+                tableId: 'dev2'
             }
         });
         socket.on(TableSocketServerEvents.CONNECT, ()=>{
