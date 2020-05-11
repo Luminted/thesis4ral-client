@@ -1,17 +1,15 @@
 import React, { CSSProperties, useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { selectGrabbrdEntityOfCurrentClient, selectHands, selectClients } from '../../../selectors';
-import { emitSharedVerb, setTablePosition, setTableBoundaries, setPlayareaBoundaries } from '../../../actions';
-import { playAreaDimensions } from '../../../config/visuals';
+import { useDispatch } from 'react-redux';
+import { selectHands, selectClients } from '../../selectors';
+import { setTablePosition, setTableBoundaries, setPlayareaBoundaries } from '../../actions';
+import { playAreaDimensions } from '../../config/visuals';
 import { Hand } from '../hand/Hand';
 import { Table } from '../table/Table';
-import { SharedVerbTypes } from '../../../types/verbTypes';
-import { getElementAbsolutePosition } from '../../../utils';
-import { Directions } from '../../../types/dataModelDefinitions';
-import { useSetEntityBoundaries } from '../../../effects';
-import config from '../../../config/global'
-import { tableBoundaries } from '../../../reducers';
+import { getElementAbsolutePosition } from '../../utils';
+import { Directions } from '../../types/dataModelDefinitions';
+import config from '../../config/global'
+import { useTypedSelector } from '../../store';
 
 export function PlayArea(){
 
@@ -37,8 +35,8 @@ export function PlayArea(){
         }
     }, [])
 
-    const clients = useSelector(selectClients);
-    const clientHands = useSelector(selectHands);
+    const clients = useTypedSelector(selectClients);
+    const clientHands = useTypedSelector(selectHands);
 
     const renderedHandsNorth: JSX.Element[] = [];
     const renderedHandsSouth: JSX.Element[] = [];

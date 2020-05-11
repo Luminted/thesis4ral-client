@@ -16,17 +16,34 @@ export interface FrenchCardConfig extends CardTypeConfig {
 
 export type CardConfig = FrenchCardConfig;
 
-export interface BaseEntity {
+export interface EntitySyncObject {
+    entityId: string,
+    positionX: number,
+    positionY: number,
+    grabLocked: boolean
+}
+
+export interface CardEntitySyncObject extends EntitySyncObject {
+    faceUp: boolean
+}
+
+export interface DeckEntitySyncObject extends EntitySyncObject {
+    cards: CardRepresentation[]
+}
+
+export interface Entity {
     entityType: EntityTypes,
     entityId: string,
     height:number,
     width: number,
     scale: number,
     positionX: number,
-    positionY: number
+    positionY: number,
+    grabbedBy: MaybeNull<string>
+    zIndex: number
 }
 
-export interface BaseCard {
+export interface CardRepresentation {
     cardType: CardTypes,
     entityId: string,
     face: string,
@@ -35,19 +52,18 @@ export interface BaseCard {
     ownerDeck: MaybeNull<string>
 }
 
-export interface DisplayCardEntity extends BaseEntity {
+export interface CardEntity extends Entity {
     cardType: CardTypes,
     entityId: string,
     face: string,
     entityType: EntityTypes.CARD,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
-    
 }
 
-export interface DeckEntity extends BaseEntity {
+export interface DeckEntity extends Entity {
     entityType: EntityTypes.DECK
-    cards: BaseCard[],
+    cards: CardRepresentation[],
     drawIndex: number
 }
 
@@ -64,7 +80,6 @@ export type GrabbedEntity = MaybeNull<{
 }>
 
 export type Client = {
-    socketId: string,
     //TODO: flatten this out
     clientInfo: ClientInfo,
     grabbedEntitiy: GrabbedEntity
@@ -72,7 +87,7 @@ export type Client = {
 
 export type ClientHand = {
     clientId: string,
-    cards: BaseCard[],
+    cards: CardRepresentation[],
 }
 
 export type ClientInfo ={
@@ -88,30 +103,41 @@ export enum Directions {
     SOUTH_EAST = 'SOUTH_EAST',
     NORTH_WEST = 'NORTH_WEST',
     NORTH_EAST = 'NORTH_EAST'
-}
+} 
 
 export type Boundary = {
-    topLeft: number,
-    bottomRight: number
+    top: number,
+    left: number,
+    bottom: number,
+    right: number
 }
 
 export interface GameState {
-    cards: DisplayCardEntity[],
+    cards: CardEntity[],
     decks: DeckEntity[],
     clients: Client[],
     hands: ClientHand[],
     cardScale: number,
+    emptySeats: Directions[],
     cardBoundary: MaybeNull<Boundary>,
     deckBoundary: MaybeNull<Boundary>
+    topZIndex: number
 }
 
-export type PlayRoom = {
-    roomId: string,
-    cards: DisplayCardEntity[],
+export type PlayTable = {
+    tableId: string,
+    clientLimit: number
+    gameState: GameState,
+}
+
+export type SyncState = {
+    updatedCards: CardEntitySyncObject[];
+    newCards: CardEntity[];
+}
+
+export type SerializedGameState = {
+    cards: CardEntity[],
     decks: DeckEntity[],
     clients: Client[],
     hands: ClientHand[],
-    cardScale: number,
-    cardBoundary: MaybeNull<Boundary>,
-    deckBoundary: MaybeNull<Boundary>
 }

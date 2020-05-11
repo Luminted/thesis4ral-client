@@ -1,11 +1,12 @@
 import React, { CSSProperties } from 'react';
-import { EntityInterface } from '../entity-interface/';
-import { BaseEntity } from '../../../types/dataModelDefinitions';
+import { EntityInterface } from './EntityInterface';
+import { Entity } from '../../types/dataModelDefinitions';
 
-interface Props extends BaseEntity {
-
+interface Props extends Entity {
+    drawIndex: number,
+    size: number
 }
-export function Deck({entityId, height, width, scale, positionY, positionX, entityType}: Props){
+export function Deck({entityId, height, width, scale, positionY, positionX, entityType, drawIndex, grabbedBy, size, zIndex}: Props){
     const styles: {[key: string]: CSSProperties} = {
         deckGraphics: {
             height: height * scale,
@@ -16,8 +17,8 @@ export function Deck({entityId, height, width, scale, positionY, positionX, enti
 
     return (
         <div className='deck'>
-            <EntityInterface boundTo={'table'} entityId={entityId} entityType={entityType} positionX={positionX} positionY={positionY} height={height} width={width} scale={scale}>
-                <div className='deck-graphics' style={styles.deckGraphics}>
+            <EntityInterface grabbedBy={grabbedBy} entityId={entityId} entityType={entityType} positionX={positionX} positionY={positionY} zIndex={zIndex}>
+                <div className='deck-graphics' style={styles.deckGraphics} >
                     DECK
                 </div>
             </EntityInterface>

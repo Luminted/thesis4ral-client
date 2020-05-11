@@ -1,4 +1,4 @@
-import {GrabbedEntity, ClientHand, Client, BaseCard, DisplayCardEntity, DeckEntity} from './types/dataModelDefinitions';
+import {GrabbedEntity, ClientHand, Client, DeckEntity, CardRepresentation, CardEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
 import { MaybeNull, MaybeUndefined } from './types/genericTypes';
 
@@ -8,7 +8,7 @@ export function selectGrabbedEntityByClientId(clientId: string) {
     }
 }
 
-export function selectGrabbrdEntityOfCurrentClient(store: RootState): MaybeNull<GrabbedEntity>{ 
+export function selectGrabbedEntityOfCurrentClient(store: RootState): MaybeNull<GrabbedEntity>{ 
     const clientId = store.clientInfo.clientId;
     //TODO: THIS CHECK IS WAY NOT COOL
     if(clientId !== 'undefined') {
@@ -30,7 +30,7 @@ export function selectClients(store: RootState): Client[] {
 }
 
 export function selectClientHandCardsById(clientId: MaybeNull<string>){
-    return function(store: RootState): BaseCard[] {
+    return function(store: RootState): CardRepresentation[] {
         let hand = store.gameState.hands.find(hand => hand.clientId === clientId);
         return hand ? hand.cards : [];
     }
@@ -40,7 +40,7 @@ export function selectTablePosition(state: RootState){
     return state.tablePosition;
 }
 
-export function selectCards(state: RootState): DisplayCardEntity[] {
+export function selectCards(state: RootState): CardEntity[] {
     return state.gameState.cards;
 }
 

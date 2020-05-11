@@ -27,7 +27,7 @@ export type ThunkResult<R> = ThunkAction<R, RootState, null, ActionTypes>
 
 export type ActionTypes = 
 EmitVerb |
-SyncAction |
+SyncGameStateAction |
 ConnectToSocketAction |
 SetClientInfoAction |
 SetTablePositionAction |
@@ -47,7 +47,7 @@ interface EmitVerb {
     verb: MaybeNull<Verb>
 }
 
-interface SyncAction {
+interface SyncGameStateAction {
     type: ActionTypeKeys.SYNC,
     gameState: GameState
 }
@@ -199,8 +199,8 @@ export function setClientInfo(clientInfo: ClientInfo): SetClientInfoAction {
     }
 }
 
-export function sync(gameState: GameState) {
-    const action: SyncAction = {
+export function syncGameState(gameState: GameState) {
+    const action: SyncGameStateAction = {
         type: ActionTypeKeys.SYNC ,
         gameState
     }

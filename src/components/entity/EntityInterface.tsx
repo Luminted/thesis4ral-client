@@ -1,31 +1,30 @@
 import React, { ReactChild, CSSProperties, useEffect} from 'react';
-import { BaseEntity, GrabbedEntity } from '../../../types/dataModelDefinitions';
-import { useDispatch, useSelector } from 'react-redux';
-import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../../actions';
-import { useTypedSelector } from '../../../store';
-import { selectGrabbrdEntityOfCurrentClient, selectTablePosition, selectTableBoundaries, selectPlayareaBoundaries, selectGrabbedEntityOriginalPosition } from '../../../selectors';
-import { VerbContextTypes } from '../../../types/additionalTypes';
-import { MaybeNull } from '../../../types/genericTypes';
-import globalConfig from '../../../config/global';
-import { SharedVerbTypes } from '../../../types/verbTypes';
-import { ListenedMouseEventTypes } from '../../../controller/types';
+import { GrabbedEntity, EntityTypes } from '../../types/dataModelDefinitions';
+import { useDispatch } from 'react-redux';
+import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../actions';
+import { selectGrabbedEntityOfCurrentClient } from '../../selectors';
+import { VerbContextTypes } from '../../types/additionalTypes';
+import { MaybeNull } from '../../types/genericTypes';
+import { SharedVerbTypes } from '../../types/verbTypes';
+import { ListenedMouseEventTypes } from '../../controller/types';
+import { useTypedSelector } from '../../store';
 
-interface Props extends BaseEntity {
+type Props = {
     children?: ReactChild,
     verbContext?: MaybeNull<VerbContextTypes> 
-    boundTo?: 'table' | 'playarea'
-
+    positionX: number,
+    positionY: number,
+    entityType: EntityTypes,
+    entityId: string,
+    grabbedBy: MaybeNull<string>,
+    zIndex: number
 }
 
-export function EntityInterface({children, boundTo, entityId, entityType, height, positionX, positionY, scale, width, verbContext = null}: Props){
+export function EntityInterface({children, entityId, entityType, positionX, positionY, zIndex, verbContext = null}: Props){
 
     const dispatch = useDispatch();
-    const grabbedEntity = useTypedSelector<GrabbedEntity>(selectGrabbrdEntityOfCurrentClient);
-    const tablePosition = useSelector(selectTablePosition);
+    const grabbedEntity = useTypedSelector<MaybeNull<GrabbedEntity>>(selectGrabbedEntityOfCurrentClient);
     const eventPassthrough = grabbedEntity?.entityId === entityId;
-    const tableBoundaries = useSelector(selectTableBoundaries);
-    const playareaBoundaries = useSelector(selectPlayareaBoundaries);
-    const grabbedEntityOriginalPosition = useSelector(selectGrabbedEntityOriginalPosition);
 
     function documentOnMouseMoveHandler(ev: MouseEvent) {
         // console.log('mousemove')
@@ -58,9 +57,8 @@ export function EntityInterface({children, boundTo, entityId, entityType, height
             position: 'absolute',
             left: positionX,
             top: positionY,
-            height: height * scale,
-            width: width * scale,
-            pointerEvents: eventPassthrough ? 'none' : 'auto'
+            pointerEvents: eventPassthrough ? 'none' : 'auto',
+            zIndex: zIndex
         }
     }
 
