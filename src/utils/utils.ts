@@ -1,10 +1,10 @@
-export function transformPositionToOrientation(positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number]{
+export function mirrorOnTablePosition(positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number]{
     const transformedPositionX = -positionX + tableWidth;
     const transformedPositionY = -positionY + tableHeight;
     return [transformedPositionX, transformedPositionY];
 }
 
-export function inverseTransformPositionToOrientation(positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number]{
+export function inverseMirrorOnTablePosition(positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number]{
     const transformedPositionX = -(positionX - tableWidth);
     const transformedPositionY = -(positionY - tableHeight);
     return [transformedPositionX, transformedPositionY];
