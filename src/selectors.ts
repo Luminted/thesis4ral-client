@@ -56,6 +56,10 @@ export function selectPlayareaBoundaries(state: RootState) {
     return state.playareaBoundaries;
 }
 
-export function selectGrabbedEntityOriginalPosition(state: RootState) {
-    return state.grabbedEntityOriginalPosition;
+// export function selectGrabbedEntityOriginalPosition(state: RootState) {
+//     return state.grabbedEntityOriginalPosition;
+// }
+
+export function selectSeatedAt(state: RootState){
+    return state.clientInfo.seatedAt;
 }

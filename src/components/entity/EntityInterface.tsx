@@ -1,7 +1,7 @@
 import React, { ReactChild, CSSProperties, useEffect} from 'react';
 import { GrabbedEntity, EntityTypes } from '../../types/dataModelDefinitions';
 import { useDispatch } from 'react-redux';
-import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../actions';
+import { emitDerivedVerb, emitSharedVerb } from '../../actions';
 import { selectGrabbedEntityOfCurrentClient } from '../../selectors';
 import { VerbContextTypes } from '../../types/additionalTypes';
 import { MaybeNull } from '../../types/genericTypes';
@@ -82,11 +82,6 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
                 ev => {
                     ev.preventDefault();
                     ev.stopPropagation();
-
-                    dispatch(setGrabbedEntityOriginalPosition({
-                        x: positionX,
-                        y: positionY
-                    }))
                     dispatch(emitDerivedVerb(ev, entityId, entityType, verbContext));
                 }
             }
