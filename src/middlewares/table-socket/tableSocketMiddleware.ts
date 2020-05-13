@@ -1,13 +1,11 @@
-import SocketIOClient from 'socket.io-client';
-import { ThunkMiddleware } from "redux-thunk";
 import { RootState } from "../../store";
 import { ActionTypes, setGameState } from "../../actions";
 import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
 import { SocketActionTypeKeys } from '../../actions/socketActions';
-import { ConnectOpts } from './types';
 import { GameState } from '../../types/dataModelDefinitions';
+import { Middleware } from 'redux';
 
-export function createTableSocketMiddleware (socket: SocketIOClient.Socket): ThunkMiddleware<RootState, ActionTypes, undefined>{
+export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Middleware<{}, RootState>{
     return store => {
         const {dispatch} = store;
 

@@ -2,8 +2,9 @@ import { ThunkMiddleware } from "redux-thunk";
 import { RootState } from "../../store";
 import { ActionTypes} from "../../actions";
 import {SocketActionTypeKeys} from '../../actions'
+import { Middleware } from "redux";
 
-export const normalizeEmittedPositionMiddleware: ThunkMiddleware<RootState, ActionTypes, undefined> = (store) => {
+export const normalizeEmittedPositionMiddleware:  Middleware<{}, RootState> = (store) => {
     return next => (action: ActionTypes) => {
         if(action.type.startsWith('socket/')) {
             if(action.type === SocketActionTypeKeys.EMIT_VERB){
