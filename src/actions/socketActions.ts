@@ -14,7 +14,7 @@ export enum SocketActionTypeKeys {
 
 export type SocketEmitVerbAction = {
     type: SocketActionTypeKeys.EMIT_VERB,
-    verb: MaybeNull<Verb>,
+    verb: Verb,
     ackFunction?: Function
 }
 
@@ -33,7 +33,7 @@ export function socketConnect(): SocketConnectAction {
 }
 
 //should serve as interface  server API
-function socketEmitVerb(verb: MaybeNull<Verb>, ackFunction?: Function): SocketEmitVerbAction{
+function socketEmitVerb(verb: Verb, ackFunction?: Function): SocketEmitVerbAction{
     return {
         type: SocketActionTypeKeys.EMIT_VERB,
         verb,
@@ -43,6 +43,7 @@ function socketEmitVerb(verb: MaybeNull<Verb>, ackFunction?: Function): SocketEm
     }
 }
 
+//TODO: catch null verbs
 export function emitSharedVerb(positionX: number, positionY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
@@ -99,10 +100,12 @@ export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent
         const positionY = event.clientY;
         const clientId = store.clientInfo?.clientId;
         const mouseInputType = mouseEventTranslator(event);
-        if(clientId){
-            const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY, verbContext);
-            console.log('Emitting verb: ', verb);
+        const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY, verbContext);
+        console.log('Emitting verb: ', verb);
+        if(verb !== null){
             dispatch(socketEmitVerb(verb));
+        }else{
+            console.log('Derived Verb is null. Aborting dispatch.')
         }
     }
 }
