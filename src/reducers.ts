@@ -80,15 +80,6 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
         }
     })
 
-export const socket = (state = initialState.socket, action: ActionTypes) => {
-    switch(action.type){
-        case ActionTypeKeys.CONNECT_TO_SOCKET:
-            return action.socket;
-        default:
-            return state;
-    }
-}
-
 export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {
     switch(action.type){
         case SetActionTypeKeys.SET_CLIENT_INFO:
