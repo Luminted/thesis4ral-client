@@ -1,4 +1,5 @@
-import { ClientInfo, GameState } from "../types/dataModelDefinitions"
+import { ClientInfo, GameState, SerializedGameState } from "../types/dataModelDefinitions"
+import { SocketConnectionStatuses } from "../types/additionalTypes"
 
 export enum SetActionTypeKeys {
     SET_CLIENT_INFO = 'SET_CLIENT_INFO',
@@ -6,7 +7,13 @@ export enum SetActionTypeKeys {
     SET_TABLE_BOUNDARIES = 'SET_TABLE_BOUNDARIES',
     SET_PLAYAREA_BOUNDARIES = 'SET_PLAYAREA_BOUNDARIES',
     SET_GAME_STATE = 'SET_GAME_STATE',
-    SET_GRABBED_ENTITY_ORIGINAL_POSITION = 'SET_GRABBED_ENTITY_ORIGINAL_POSITION'
+    SET_TABLE_CONNECTION_STATUS = 'SET_TABLE_CONNECTION_STATUS'
+}
+
+export type SetTableConnectionStatusAction = {
+    type: SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
+    status: SocketConnectionStatuses
+
 }
 
 export type SetClientInfoAction = {

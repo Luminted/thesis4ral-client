@@ -2,6 +2,7 @@ import {produce} from 'immer';
 import {ActionTypes, SetActionTypeKeys} from './actions';
 import {CardEntity, DeckEntity, GameState, ClientInfo, Seats} from './types/dataModelDefinitions' 
 import {MaybeNull} from './types/genericTypes'
+import { SocketConnectionStatuses } from './types/additionalTypes';
 
 type State = {
     gameState: GameState,
@@ -27,7 +28,8 @@ type State = {
     grabbedEntityOriginalPosition: MaybeNull<{
         x: number,
         y: number
-    }>
+    }>,
+    tableConnectionStatus: SocketConnectionStatuses
 }
 
 const initialState: State = {
@@ -55,7 +57,8 @@ const initialState: State = {
     },
     tableBoundaries: null,
     playareaBoundaries: null,
-    grabbedEntityOriginalPosition: null
+    grabbedEntityOriginalPosition: null,
+    tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED
 }
 
 // export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntityOriginalPosition, action: ActionTypes) => {
@@ -67,6 +70,15 @@ const initialState: State = {
 //     }
 // }
 
+export const tableConnectionStatus = (state = initialState.tableConnectionStatus, action: ActionTypes) => {
+    switch(action.type){
+        case SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS:
+            return action.status;
+        default:
+            return state;
+    }
+}
+
 export const gameState = (state = initialState.gameState, action: ActionTypes) =>
     produce(state, draft => {
         switch(action.type){
@@ -77,7 +89,7 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
                 draft.clients = clients;
                 draft.hands = hands;
                 break;
-        }
+            }
     })
 
 export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {

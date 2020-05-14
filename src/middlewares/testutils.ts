@@ -6,8 +6,9 @@ export type MockMiddleware<A> = {
     getState: () => RootState
     dispatch: Function
   },
-  next: Function,
-  invoke: (action: A) => void
+  next: (action: A) => void,
+  invoke: (action: A) => void,
+  applyMiddleware: Function
 }
 
 export function createMockMiddleware<A> ( middleware: Middleware, state?: RootState): MockMiddleware<A> {
@@ -17,7 +18,15 @@ export function createMockMiddleware<A> ( middleware: Middleware, state?: RootSt
     }
     const next = jest.fn()
   
-    const invoke = (action: A) => middleware(store)(next)(action)
+    let invoke = (action: A) => middleware(store)(next)(action)
+
+    const applyMiddleware = () => {
+      const boundMiddleware = middleware(store);
+      invoke = (action: A) => {
+        console.log('applied invoke');
+        return boundMiddleware(next)(action);
+      }
+    }
   
-    return { store, next, invoke }
+    return { store, next, invoke, applyMiddleware }
   }

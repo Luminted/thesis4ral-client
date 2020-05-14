@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
     tablePosition,
     tableBoundaries,
     playareaBoundaries,
-    grabbedEntityOriginalPosition
+    tableConnectionStatus
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

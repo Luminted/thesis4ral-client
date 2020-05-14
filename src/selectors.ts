@@ -63,3 +63,7 @@ export function selectPlayareaBoundaries(state: RootState) {
 export function selectSeatedAt(state: RootState){
     return state.clientInfo.seatedAt;
 }
+
+export function selectTableConnectionStatus(state: RootState) {
+    return state.tableConnectionStatus;
+}

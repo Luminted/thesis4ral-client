@@ -4,18 +4,26 @@ import { ThunkResult } from "../actions";
 import { MouseEvent as SyntheticMouseEvent, DragEvent as SyntheticDragEvent } from 'react';
 import { mouseEventTranslator, verbFactory } from '../controller';
 import { VerbContextTypes } from '../types/additionalTypes';
-import { EntityTypes } from "../types/dataModelDefinitions";
+import { EntityTypes, ClientInfo, SerializedGameState } from "../types/dataModelDefinitions";
 
 export enum SocketActionTypeKeys {
     EMIT_VERB = 'socket/EMIT_VERB',
     CONNECT = 'socket/CONNECT',
     DISCONNECT = 'socket/DISCONNECT',
+    JOIN_TABLE = 'socket/JOIN_TABLE'
 }
 
 export type SocketEmitVerbAction = {
     type: SocketActionTypeKeys.EMIT_VERB,
     verb: Verb,
     ackFunction?: Function
+}
+
+type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => any
+
+export type SocketJoinTableAction = {
+    type: SocketActionTypeKeys.JOIN_TABLE
+    ackFunction?: SocketJoinTableAckFunction
 }
 
 export type SocketDisconnectAction = {
@@ -26,20 +34,24 @@ export type SocketConnectAction = {
     type: SocketActionTypeKeys.CONNECT
 }
 
+export function socketJoinTable(ackFunction?: SocketJoinTableAckFunction): SocketJoinTableAction{
+    return{
+        type: SocketActionTypeKeys.JOIN_TABLE,
+        ackFunction
+    }
+}
+
 export function socketConnect(): SocketConnectAction {
     return {
         type: SocketActionTypeKeys.CONNECT
     }
 }
 
-//should serve as interface  server API
 function socketEmitVerb(verb: Verb, ackFunction?: Function): SocketEmitVerbAction{
     return {
         type: SocketActionTypeKeys.EMIT_VERB,
         verb,
-        ackFunction: () => {
-            console.log('ACK')
-        }
+        ackFunction
     }
 }
 
