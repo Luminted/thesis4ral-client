@@ -59,7 +59,7 @@ function socketEmitVerb(verb: Verb, ackFunction?: Function): SocketEmitVerbActio
 export function emitSharedVerb(positionX: number, positionY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
-        const clientId = store.clientInfo?.clientId;
+        const clientId = store.clientInfo!.clientId;
         const verb: Verb = {
             type: verbType,
             entityType,
@@ -68,6 +68,7 @@ export function emitSharedVerb(positionX: number, positionY: number, verbType: S
             positionY,
             entityId,
         }
+        console.log('Emitting verb: ', verb);
         dispatch(socketEmitVerb(verb));
     } 
 }
@@ -75,7 +76,7 @@ export function emitSharedVerb(positionX: number, positionY: number, verbType: S
 export function emitCardVerb(positionX: number, positionY: number, verbType: CardVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
-        const clientId = store.clientInfo?.clientId;
+        const clientId = store.clientInfo!.clientId;
         const verb: Verb = {
             type: verbType,
             entityType: EntityTypes.CARD,
@@ -84,7 +85,7 @@ export function emitCardVerb(positionX: number, positionY: number, verbType: Car
             positionY,
             entityId,
         }
-        // console.log('Emitting verb: ', verb)
+        console.log('Emitting verb: ', verb)
         dispatch(socketEmitVerb(verb));
     }
 }
@@ -92,7 +93,7 @@ export function emitCardVerb(positionX: number, positionY: number, verbType: Car
 export function emitDeckVerb(positionX: number, positionY: number, verbType: DeckVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
     return (dispatch, getStore) => {
         const store = getStore();
-        const clientId = store.clientInfo?.clientId;
+        const clientId = store.clientInfo!.clientId;
         const verb: Verb = {
             type: verbType,
             entityType: EntityTypes.DECK,
@@ -101,6 +102,7 @@ export function emitDeckVerb(positionX: number, positionY: number, verbType: Dec
             positionY,
             entityId,
         }
+        console.log('Emitting verb: ', verb);
         dispatch(socketEmitVerb(verb));
     }
 }
@@ -110,7 +112,7 @@ export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent
         const store = getStore();
         const positionX = event.clientX;
         const positionY = event.clientY;
-        const clientId = store.clientInfo?.clientId;
+        const clientId = store.clientInfo!.clientId;
         const mouseInputType = mouseEventTranslator(event);
         const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY, verbContext);
         console.log('Emitting verb: ', verb);

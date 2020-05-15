@@ -7,7 +7,7 @@ import { SocketConnectionStatuses } from './types/additionalTypes';
 type State = {
     gameState: GameState,
     socket: MaybeNull<SocketIOClient.Socket>
-    clientInfo: ClientInfo,
+    clientInfo: MaybeNull<ClientInfo>,
     tablePosition: {
         x: number,
         y: number
@@ -45,12 +45,7 @@ const initialState: State = {
         topZIndex: 0
     },
     socket: null,
-    clientInfo: {
-        //TODO: THIS IS WAY NOT COOL
-        clientId: 'undefined',
-        clientName: 'undefined',
-        seatedAt: Seats.SOUTH
-    },
+    clientInfo: null,
     tablePosition: {
         x: 0,
         y: 0

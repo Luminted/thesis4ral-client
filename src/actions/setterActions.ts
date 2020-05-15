@@ -1,5 +1,5 @@
 import { ClientInfo, GameState, SerializedGameState } from "../types/dataModelDefinitions"
-import { SocketConnectionStatuses } from "../types/additionalTypes"
+import { SocketConnectionStatuses, Orientations } from "../types/additionalTypes"
 
 export enum SetActionTypeKeys {
     SET_CLIENT_INFO = 'SET_CLIENT_INFO',
@@ -7,13 +7,19 @@ export enum SetActionTypeKeys {
     SET_TABLE_BOUNDARIES = 'SET_TABLE_BOUNDARIES',
     SET_PLAYAREA_BOUNDARIES = 'SET_PLAYAREA_BOUNDARIES',
     SET_GAME_STATE = 'SET_GAME_STATE',
-    SET_TABLE_CONNECTION_STATUS = 'SET_TABLE_CONNECTION_STATUS'
+    SET_GRABBED_ENTITY_ORIGINAL_POSITION = 'SET_GRABBED_ENTITY_ORIGINAL_POSITION',
+    SET_TABLE_CONNECTION_STATUS = 'SET_TABLE_CONNECTION_STATUS',
+    SET_ORIENTATION = 'SET_ORIENTATION'
+}
+
+export type SetOrientationAction = {
+    type: SetActionTypeKeys.SET_ORIENTATION,
+    orientation: Orientations
 }
 
 export type SetTableConnectionStatusAction = {
     type: SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
     status: SocketConnectionStatuses
-
 }
 
 export type SetClientInfoAction = {
@@ -45,7 +51,21 @@ export type SetPlayareaBoundariesAction = {
 
 export type SetGameStateAction = {
     type: SetActionTypeKeys.SET_GAME_STATE
-    gameState: GameState
+    gameState: SerializedGameState
+}
+
+export function setOrientationAction(orientation: Orientations): SetOrientationAction {
+    return {
+        type: SetActionTypeKeys.SET_ORIENTATION,
+        orientation
+    }
+}
+
+export function setTableSocketStatus(status: SocketConnectionStatuses): SetTableConnectionStatusAction {
+    return {
+        type: SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
+        status
+    }
 }
 
 export function setTableBoundaries(top: number, bottom: number, left: number, right: number): SetTableBoundariesAction {
@@ -75,7 +95,7 @@ export function setClientInfo(clientInfo: ClientInfo): SetClientInfoAction {
     }
 }
 
-export function setGameState(gameState: GameState): SetGameStateAction {
+export function setGameState(gameState: SerializedGameState): SetGameStateAction {
    return {
         type: SetActionTypeKeys.SET_GAME_STATE ,
         gameState

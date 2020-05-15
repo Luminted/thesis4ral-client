@@ -4,10 +4,11 @@ import {EntityInterface} from './EntityInterface'
 import { VerbContextTypes } from '../../types/additionalTypes';
 
 interface Props extends Entity {
-    face: string
+    face: string,
+    upsideDown?: boolean
 };
 
-export function Card({entityId, height, width, scale, face, positionX, positionY, grabbedBy, zIndex}: Props) {
+export function Card({entityId, height, width, scale, face, positionX, positionY, grabbedBy, zIndex, upsideDown = false}: Props) {
     const styles: {[key: string]: CSSProperties} = {
         cardGraphics: {
             height: height * scale,
@@ -18,7 +19,7 @@ export function Card({entityId, height, width, scale, face, positionX, positionY
     }
 
     return (
-            <EntityInterface grabbedBy={grabbedBy} entityId={entityId} entityType={EntityTypes.CARD} positionX={positionX} positionY={positionY} verbContext={VerbContextTypes.TABLE} zIndex={zIndex}>
+            <EntityInterface upsideDown={upsideDown} grabbedBy={grabbedBy} entityId={entityId} entityType={EntityTypes.CARD} positionX={positionX} positionY={positionY} verbContext={VerbContextTypes.TABLE} zIndex={zIndex}>
                 <div className='card-graphics' style={styles.cardGraphics}>
                     {face}
                 </div>
