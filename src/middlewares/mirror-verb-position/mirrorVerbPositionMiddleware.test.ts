@@ -1,25 +1,21 @@
 import { createMockMiddleware } from "../testutils"
 import { ActionTypes, SocketActionTypes, SocketActionTypeKeys } from "../../actions"
-import { mirrorPositionMiddleware } from "./mirrorPositionMiddleware"
+import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
 import { Verb } from "../../types/verbTypes";
-import { mirrorOnTablePosition } from "../../utils";
+import { inverseMirrorOnTablePosition } from "../../utils";
 import { RootState } from "../../store";
 
 describe('Testing mirrorPositionMiddleware', function(){
+
+    const mockMiddleware = createMockMiddleware<ActionTypes>(mirrorVerbPositionMiddleware);
     
-    const store = {
-        tablePosition:{
-            x: 100,
-            y: 150
-        }
-    } as RootState
-    const mockMiddleware = createMockMiddleware<ActionTypes>(mirrorPositionMiddleware, store);
-    
-    it('should apply mirrorOnTablePosition on verb', function(){
+    it('should apply inverseMirrorOnTablePosition on verb', function(){
         const {invoke, next} = mockMiddleware;
         const positionX = 111;
         const positionY = 333;
-        const transformedPosition = mirrorOnTablePosition(positionX, positionY, store.tablePosition.x, store.tablePosition.y);
+        const tableWidth = 200;
+        const tableHeight = 150;
+        const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
         const action: SocketActionTypes = {
             type: SocketActionTypeKeys.EMIT_VERB,
             verb: {

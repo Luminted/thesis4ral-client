@@ -1,11 +1,11 @@
-import { normalizeEmittedPositionMiddleware } from "./normalizeEmittedPositionMiddleware"
+import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware"
 import { RootState } from "../../store"
 import { Verb } from "../../types/verbTypes"
 import { ActionTypes } from '../../actions'
 import { createMockMiddleware } from "../testutils"
 import { SocketActionTypeKeys } from "../../actions/socketActions"
 
-describe('Testing normalizeEmittedPositionMiddleware', function(){
+describe('Testing normalizeVerbPositionMiddleware', function(){
       it('should subtract tables position x and y from verbs position x and y', function(){
           const tablePosition ={
               x: 10,
@@ -23,7 +23,7 @@ describe('Testing normalizeEmittedPositionMiddleware', function(){
             type: SocketActionTypeKeys.EMIT_VERB,
             verb
         }
-        const {invoke, next} = createMockMiddleware<ActionTypes>( normalizeEmittedPositionMiddleware,{
+        const {invoke, next} = createMockMiddleware<ActionTypes>( normalizeVerbPositionMiddleware,{
             tablePosition
         } as RootState)
         
