@@ -5,8 +5,8 @@ export function mirrorOnTablePosition(positionX: number, positionY: number, tabl
 }
 
 export function inverseMirrorOnTablePosition(positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number]{
-    const transformedPositionX = -(positionX - tableWidth);
-    const transformedPositionY = -(positionY - tableHeight);
+    const transformedPositionX = -positionX + tableWidth;
+    const transformedPositionY = -positionY + tableHeight;
     return [transformedPositionX, transformedPositionY];
 }
 
