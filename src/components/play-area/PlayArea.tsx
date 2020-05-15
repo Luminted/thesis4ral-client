@@ -1,19 +1,27 @@
 import React, { CSSProperties, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { selectHands, selectClients } from '../../selectors';
+import { selectHands, selectClients, selectEmptySeats } from '../../selectors';
 import { setTablePosition, setTableBoundaries, setPlayareaBoundaries } from '../../actions';
 import { playAreaDimensions } from '../../config/visuals';
 import { Hand } from '../hand/Hand';
 import { Table } from '../table/Table';
-import { getElementAbsolutePosition } from '../../utils';
-import { Directions } from '../../types/dataModelDefinitions';
+import { getElementAbsolutePosition } from '../../utils/';
+import { Seats } from '../../types/dataModelDefinitions';
 import config from '../../config/global'
 import { useTypedSelector } from '../../store';
+import { Orientations } from '../../types/additionalTypes';
+import { Seat } from '../Seat';
 
-export function PlayArea(){
 
+type Props = {
+    orientation: Orientations
+}
 
+const NORTHERN_SEATS_IN_ORDER = [Seats.NORTH_WEST, Seats.NORTH, Seats.NORTH_EAST]
+const SOUTHERN_SEATS_IN_ORDER = [Seats.SOUTH_WEST, Seats.SOUTH, Seats.SOUTH_EAST]
+
+export function PlayArea ({orientation}: Props){
     const dispatch = useDispatch();
     useEffect(() => {
         const {tableHeight, tableWidth, playareaHorizontalBoundaryMargin} = config
@@ -36,40 +44,32 @@ export function PlayArea(){
     }, [])
 
     const clients = useTypedSelector(selectClients);
-    const clientHands = useTypedSelector(selectHands);
+    const freeSeats = useTypedSelector(selectEmptySeats);
 
     const renderedHandsNorth: JSX.Element[] = [];
     const renderedHandsSouth: JSX.Element[] = [];
 
     //TODO: name Directions to SeatDirections
-    const handDirections = new Set([Directions.NORTH, Directions.SOUTH, Directions.NORTH_EAST, Directions.SOUTH_EAST, Directions.NORTH_WEST, Directions.SOUTH_WEST]);
 
-    clientHands.forEach(hand => {
-        const {clientId} = hand;
-        const client = clients.find(c => c.clientInfo.clientId === clientId);
-        if(client){
-            const {seatedAt} = client.clientInfo;
-            handDirections.delete(seatedAt);
-            if (seatedAt === null) return false;
-            if(seatedAt.includes('NORTH')){
-                renderedHandsNorth.push(<Hand key={seatedAt} ownerId={hand.clientId}/>)
-                return;
+    NORTHERN_SEATS_IN_ORDER.forEach(seat => {
+        if(freeSeats.includes(seat)){
+            return;
+        }else{
+            const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            if(clientIdInSeat){
+                renderedHandsNorth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.RIGHT_SIDE_UP} />)
             }
-            if(seatedAt.includes('SOUTH')){
-                renderedHandsSouth.push(<Hand key={seatedAt} ownerId={hand.clientId}/>)
-                return;
-            }
-            debugger
         }
     })
-    handDirections.forEach(direction => {
-        if(direction.includes('NORTH')){
-            renderedHandsNorth.push(<Hand key ={direction}/>)
+
+    SOUTHERN_SEATS_IN_ORDER.forEach(seat => {
+        if(freeSeats.includes(seat)){
             return;
-        }
-        if(direction.includes('SOUTH')){
-            renderedHandsSouth.push(<Hand key ={direction}/>)
-            return;
+        }else{
+            const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            if(clientIdInSeat){
+                renderedHandsSouth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.UPSIDE_DOWN}/>)
+            }
         }
     })
 
@@ -95,9 +95,32 @@ export function PlayArea(){
     return (
         <div className='play-area' style={styles.playArea}>
             <div className='play-area-main' style={styles.playAreaMain}>
-        <div className='hands-container' style={styles.handsContainer}>{renderedHandsNorth}</div>
-                <Table/>
-        <div className='hands-container' style={styles.handsContainer}>{renderedHandsSouth}</div>
+                <div className='hands-container' style={styles.handsContainer}>
+                    {orientation === Orientations.RIGHT_SIDE_UP ? 
+                        (<>
+                            NORTH
+                        {renderedHandsNorth} 
+                        </>) :
+                        (
+                            <>
+                            SOUTH
+                            {renderedHandsSouth}
+                            </>
+                        )}
+                </div>
+                <Table upsideDown={orientation === Orientations.UPSIDE_DOWN}/>
+                <div className='hands-container' style={styles.handsContainer}>
+                    {orientation === Orientations.RIGHT_SIDE_UP ? 
+                        (<>
+                            SOUTH
+                            {renderedHandsSouth} 
+                        </>) :
+                        (<>
+                            NORTH
+                            {renderedHandsNorth}
+                        </>
+                        )}
+                </div>
             </div>
         </div>
     )

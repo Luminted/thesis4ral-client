@@ -1,7 +1,7 @@
 import React, { ReactChild, CSSProperties, useEffect} from 'react';
 import { GrabbedEntity, EntityTypes } from '../../types/dataModelDefinitions';
 import { useDispatch } from 'react-redux';
-import { emitDerivedVerb, emitSharedVerb, setGrabbedEntityOriginalPosition } from '../../actions';
+import { emitDerivedVerb, emitSharedVerb } from '../../actions';
 import { selectGrabbedEntityOfCurrentClient } from '../../selectors';
 import { VerbContextTypes } from '../../types/additionalTypes';
 import { MaybeNull } from '../../types/genericTypes';
@@ -17,17 +17,18 @@ type Props = {
     entityType: EntityTypes,
     entityId: string,
     grabbedBy: MaybeNull<string>,
-    zIndex: number
+    zIndex: number,
+    upsideDown: boolean
 }
 
-export function EntityInterface({children, entityId, entityType, positionX, positionY, zIndex, verbContext = null}: Props){
+export function EntityInterface({children, entityId, entityType, positionX, positionY, zIndex, verbContext = null, upsideDown}: Props){
 
     const dispatch = useDispatch();
     const grabbedEntity = useTypedSelector<MaybeNull<GrabbedEntity>>(selectGrabbedEntityOfCurrentClient);
     const eventPassthrough = grabbedEntity?.entityId === entityId;
 
     function documentOnMouseMoveHandler(ev: MouseEvent) {
-        // console.log('mousemove')
+        // console.log('move verb')
         if(grabbedEntity && grabbedEntity.entityId === entityId){
             dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.MOVE, entityId, entityType));
         }
@@ -58,6 +59,8 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
             left: positionX,
             top: positionY,
             pointerEvents: eventPassthrough ? 'none' : 'auto',
+            transform: upsideDown ? 'rotate(180deg)' : undefined,
+            transformOrigin: '0% 0%',
             zIndex: zIndex
         }
     }
@@ -82,11 +85,6 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
                 ev => {
                     ev.preventDefault();
                     ev.stopPropagation();
-
-                    dispatch(setGrabbedEntityOriginalPosition({
-                        x: positionX,
-                        y: positionY
-                    }))
                     dispatch(emitDerivedVerb(ev, entityId, entityType, verbContext));
                 }
             }

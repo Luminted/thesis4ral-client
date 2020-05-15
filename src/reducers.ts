@@ -1,12 +1,13 @@
 import {produce} from 'immer';
-import {ActionTypeKeys, ActionTypes} from './actions';
-import {CardEntity, DeckEntity, GameState, ClientInfo, Directions} from './types/dataModelDefinitions' 
+import {ActionTypes, SetActionTypeKeys} from './actions';
+import {CardEntity, DeckEntity, GameState, ClientInfo, Seats} from './types/dataModelDefinitions' 
 import {MaybeNull} from './types/genericTypes'
+import { SocketConnectionStatuses } from './types/additionalTypes';
 
 type State = {
     gameState: GameState,
     socket: MaybeNull<SocketIOClient.Socket>
-    clientInfo: ClientInfo,
+    clientInfo: MaybeNull<ClientInfo>,
     tablePosition: {
         x: number,
         y: number
@@ -27,7 +28,8 @@ type State = {
     grabbedEntityOriginalPosition: MaybeNull<{
         x: number,
         y: number
-    }>
+    }>,
+    tableConnectionStatus: SocketConnectionStatuses
 }
 
 const initialState: State = {
@@ -43,25 +45,30 @@ const initialState: State = {
         topZIndex: 0
     },
     socket: null,
-    clientInfo: {
-        //TODO: THIS IS WAY NOT COOL
-        clientId: 'undefined',
-        clientName: 'undefined',
-        seatedAt: Directions.SOUTH
-    },
+    clientInfo: null,
     tablePosition: {
         x: 0,
         y: 0
     },
     tableBoundaries: null,
     playareaBoundaries: null,
-    grabbedEntityOriginalPosition: null
+    grabbedEntityOriginalPosition: null,
+    tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED
 }
 
-export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntityOriginalPosition, action: ActionTypes) => {
+// export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntityOriginalPosition, action: ActionTypes) => {
+//     switch(action.type){
+//         case SetActionTypeKeys.SET_GRABBED_ENTITY_ORIGINAL_POSITION:
+//             return action.position;
+//         default:
+//             return state;
+//     }
+// }
+
+export const tableConnectionStatus = (state = initialState.tableConnectionStatus, action: ActionTypes) => {
     switch(action.type){
-        case ActionTypeKeys.SET_GRABBED_ENTITY_ORIGINAL_POSITION:
-            return action.position;
+        case SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS:
+            return action.status;
         default:
             return state;
     }
@@ -70,28 +77,19 @@ export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntity
 export const gameState = (state = initialState.gameState, action: ActionTypes) =>
     produce(state, draft => {
         switch(action.type){
-            case ActionTypeKeys.SYNC:
+            case SetActionTypeKeys.SET_GAME_STATE:
                 const {cards, decks, clients, hands} = action.gameState;
                 draft.cards = cards;
                 draft.decks = decks;
                 draft.clients = clients;
                 draft.hands = hands;
                 break;
-        }
+            }
     })
-
-export const socket = (state = initialState.socket, action: ActionTypes) => {
-    switch(action.type){
-        case ActionTypeKeys.CONNECT_TO_SOCKET:
-            return action.socket;
-        default:
-            return state;
-    }
-}
 
 export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {
     switch(action.type){
-        case ActionTypeKeys.SET_CLIENT_INFO:
+        case SetActionTypeKeys.SET_CLIENT_INFO:
             return action.clientInfo;
         default:
             return state;
@@ -101,7 +99,7 @@ export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) 
 export const tablePosition = (state = initialState.tablePosition, action: ActionTypes) =>
     produce(state, draft => {
         switch(action.type) {
-            case ActionTypeKeys.SET_TABLE_POSITION:
+            case SetActionTypeKeys.SET_TABLE_POSITION:
                 draft.x = action.positionX;
                 draft.y = action.positionY;
                 break;
@@ -110,7 +108,7 @@ export const tablePosition = (state = initialState.tablePosition, action: Action
 
 export const tableBoundaries = (state = initialState.tableBoundaries, action: ActionTypes) => {
     switch(action.type) {
-        case ActionTypeKeys.SET_TABLE_BOUNDARIES:
+        case SetActionTypeKeys.SET_TABLE_BOUNDARIES:
             const {top, bottom, left, right} = action;
             return {
                 top,
@@ -125,7 +123,7 @@ export const tableBoundaries = (state = initialState.tableBoundaries, action: Ac
 
 export const playareaBoundaries = (state = initialState.playareaBoundaries, action: ActionTypes) => {
     switch(action.type) {
-        case ActionTypeKeys.SET_PLAYAREA_BOUNDARIES:
+        case SetActionTypeKeys.SET_PLAYAREA_BOUNDARIES:
             const {top, bottom, left, right} = action;
             return {
                 top,

@@ -1,37 +1,45 @@
 import {GrabbedEntity, ClientHand, Client, DeckEntity, CardRepresentation, CardEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
-import { MaybeNull, MaybeUndefined } from './types/genericTypes';
+import { MaybeNull } from './types/genericTypes';
 
-export function selectGrabbedEntityByClientId(clientId: string) {
-    return function (store: RootState): MaybeNull<GrabbedEntity> {
-        return store.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntitiy || null;
+export function selectGrabbedEntityByClientId(clientId: MaybeNull<string>) {
+    return function (state: RootState): MaybeNull<GrabbedEntity> {
+        if(clientId){
+            return state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntitiy || null;
+        }
+        else{
+            return null;
+        }
     }
 }
 
-export function selectGrabbedEntityOfCurrentClient(store: RootState): MaybeNull<GrabbedEntity>{ 
-    const clientId = store.clientInfo.clientId;
+export function selectGrabbedEntityOfCurrentClient(state: RootState): MaybeNull<GrabbedEntity>{ 
+    const clientId = state.clientInfo?.clientId;
     //TODO: THIS CHECK IS WAY NOT COOL
     if(clientId !== 'undefined') {
-        return store.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntitiy || null;
+        return state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntitiy || null;
     }
     return null;
 }
 
-export function selectHands(store: RootState): ClientHand[] {
-    return store.gameState.hands;
+export function selectHands(state: RootState): ClientHand[] {
+    return state.gameState.hands;
 }
 
-export function selectClientId(store: RootState): string {
-    return store.clientInfo.clientId;
+export function selectClients(state: RootState): Client[] {
+    return state.gameState.clients;
 }
 
-export function selectClients(store: RootState): Client[] {
-    return store.gameState.clients;
+export function selectClientInfoById(clientId: string) {
+    return function(state: RootState){
+        const clientInfo = state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.clientInfo;
+        return clientInfo ? clientInfo : null;
+    }
 }
 
-export function selectClientHandCardsById(clientId: MaybeNull<string>){
-    return function(store: RootState): CardRepresentation[] {
-        let hand = store.gameState.hands.find(hand => hand.clientId === clientId);
+export function selectClientHandById(clientId: MaybeNull<string>){
+    return function(state: RootState): CardRepresentation[] {
+        let hand = state.gameState.hands.find(hand => hand.clientId === clientId);
         return hand ? hand.cards : [];
     }
 }
@@ -56,6 +64,22 @@ export function selectPlayareaBoundaries(state: RootState) {
     return state.playareaBoundaries;
 }
 
-export function selectGrabbedEntityOriginalPosition(state: RootState) {
-    return state.grabbedEntityOriginalPosition;
+// export function selectGrabbedEntityOriginalPosition(state: RootState) {
+//     return state.grabbedEntityOriginalPosition;
+// }
+
+export function selectTableConnectionStatus(state: RootState) {
+    return state.tableConnectionStatus;
+}
+
+export function selectOwnClientInfo(state: RootState) {
+    return state.clientInfo;
+}
+
+export function selectClientId(state: RootState){
+    return state.clientInfo ? state.clientInfo.clientId : null
+}
+
+export function selectEmptySeats(state: RootState){
+    return state.gameState.emptySeats;
 }

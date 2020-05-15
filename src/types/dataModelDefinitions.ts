@@ -93,10 +93,10 @@ export type ClientHand = {
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
-    seatedAt: Directions
+    seatedAt: Seats
 }
 
-export enum Directions {
+export enum Seats {
     SOUTH = 'SOUTH',
     NORTH = 'NORTH',
     SOUTH_WEST = 'SOUTH_WEST',
@@ -118,7 +118,7 @@ export interface GameState {
     clients: Client[],
     hands: ClientHand[],
     cardScale: number,
-    emptySeats: Directions[],
+    emptySeats: Seats[],
     cardBoundary: MaybeNull<Boundary>,
     deckBoundary: MaybeNull<Boundary>
     topZIndex: number

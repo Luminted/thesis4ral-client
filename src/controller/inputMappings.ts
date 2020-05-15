@@ -1,6 +1,7 @@
 import { SharedVerbTypes, CardVerbTypes, DeckVerbTypes } from "../types/verbTypes"
 import { MouseInputTypes } from "./types"
 
+//TODO: revise names
 export const tableCardInteractionMapping: {[key in MouseInputTypes]?: CardVerbTypes | SharedVerbTypes} = {
     DRAG_START: SharedVerbTypes.GRAB_FROM_TABLE,
     MOUSE_MOVE: SharedVerbTypes.MOVE,

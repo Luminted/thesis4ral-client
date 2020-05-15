@@ -1,21 +1,39 @@
-import React, { CSSProperties, useEffect } from 'react';
+import React, { CSSProperties } from 'react';
 import { tableDimensions } from '../../config/visuals';
 import { useTypedSelector } from '../../store';
-import { CardEntity, DeckEntity } from '../../types/dataModelDefinitions';
 import { selectCards, selectDecks } from '../../selectors';
 import { Deck } from '../entity'
 import { Card } from '../entity';
+import { mirrorOnTablePosition } from '../../utils/';
+import config from '../../config/global';
 
-export function Table(){
+type Props = {
+    upsideDown: boolean
+}
 
-    const cards = useTypedSelector<CardEntity[]>(selectCards);
-    const decks = useTypedSelector<DeckEntity[]>(selectDecks);
-    const cardComponents = cards.map(card => {
-        return <Card {...card} key={card.entityId} />
+export function Table({upsideDown}: Props){
+
+    const cards = useTypedSelector(selectCards);
+    const decks = useTypedSelector(selectDecks);
+    const cardEntities = cards.map(card => {
+        let {positionX, positionY} = card;
+        if(upsideDown){
+            const {tableHeight, tableWidth} = config;
+            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
+            console.log('card position', positionX, positionY)
+        }
+        return <Card {...card} positionX={positionX} positionY={positionY} key={card.entityId} upsideDown={upsideDown}/>
     })
-    const deckComponents = decks.map(deck => {
-        const {entityId, width, height, positionX, positionY, scale, entityType, grabbedBy, drawIndex, cards, zIndex} = deck;
-        return <Deck entityId={entityId} width={width} height={height} positionX={positionX} positionY={positionY} scale={scale} entityType={entityType} grabbedBy={grabbedBy} drawIndex={drawIndex} size={cards.length} zIndex={zIndex}/>
+    const deckEntities = decks.map(deck => {
+        const {entityId, width, height, scale, entityType, grabbedBy, drawIndex, cards, zIndex} = deck;
+        let {positionX, positionY} = deck;
+        if(upsideDown){
+            const {tableHeight, tableWidth} = config;
+            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
+            console.log('deck position', positionX, positionY)
+            
+        }
+        return <Deck key={entityId} entityId={entityId} width={width} height={height} positionX={positionX} positionY={positionY} scale={scale} entityType={entityType} grabbedBy={grabbedBy} drawIndex={drawIndex} size={cards.length} zIndex={zIndex} upsideDown={upsideDown} />
     })
 
 
@@ -30,8 +48,8 @@ export function Table(){
 
     return (
         <div className='table' style={styles.table}>
-            {cardComponents}
-            {deckComponents}
+            {cardEntities}
+            {deckEntities}
         </div>
     )
 }

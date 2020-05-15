@@ -4,9 +4,10 @@ import { Entity } from '../../types/dataModelDefinitions';
 
 interface Props extends Entity {
     drawIndex: number,
-    size: number
+    size: number,
+    upsideDown?: boolean
 }
-export function Deck({entityId, height, width, scale, positionY, positionX, entityType, drawIndex, grabbedBy, size, zIndex}: Props){
+export function Deck({entityId, height, width, scale, positionY, positionX, entityType, drawIndex, grabbedBy, size, zIndex, upsideDown = false}: Props){
     const styles: {[key: string]: CSSProperties} = {
         deckGraphics: {
             height: height * scale,
@@ -17,7 +18,7 @@ export function Deck({entityId, height, width, scale, positionY, positionX, enti
 
     return (
         <div className='deck'>
-            <EntityInterface grabbedBy={grabbedBy} entityId={entityId} entityType={entityType} positionX={positionX} positionY={positionY} zIndex={zIndex}>
+            <EntityInterface upsideDown={upsideDown} grabbedBy={grabbedBy} entityId={entityId} entityType={entityType} positionX={positionX} positionY={positionY} zIndex={zIndex}>
                 <div className='deck-graphics' style={styles.deckGraphics} >
                     DECK
                 </div>

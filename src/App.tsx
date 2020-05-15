@@ -1,52 +1,48 @@
 import React from 'react';
 import './App.css';
-import io from 'socket.io-client';
 import {useDispatch} from 'react-redux'
 
-
 import {PlayArea} from './components/play-area/PlayArea';
-import { GameState, ClientInfo } from './types/dataModelDefinitions';
-import {TableSocketClientEvents, TableSocketServerEvents} from './types/socketEventTypes';
-import {connectToSocket, syncGameState, setClientInfo} from './actions'
 import { useTypedSelector } from './store';
-import { selectCards } from './selectors';
+import { selectTableConnectionStatus, selectOwnClientInfo } from './selectors';
+import { socketConnect, socketJoinTable } from './actions/socketActions';
+import { SocketConnectionStatuses, Orientations } from './types/additionalTypes';
+import { setGameState, setClientInfo } from './actions';
+import {addMiddleware} from 'redux-dynamic-middlewares'
+import { mirrorVerbPositionMiddleware } from './middlewares/';
 
-const port = process.env.REACT_APP_SERVER_PORT;
-const host = process.env.REACT_APP_SERVER_HOST;
-const serverURL = `http://${host}:${port}`
+export function App() {
 
-const App = () => {
     const dispatch = useDispatch();
-
+    const connectionStatus = useTypedSelector(selectTableConnectionStatus);
+    const clientInfo = useTypedSelector(selectOwnClientInfo)
+    
     React.useEffect(() => {
-        console.log(`connecting to ${serverURL}`)
-        const socket = io(`${serverURL}/table`, {
-            query: {
-                tableId: process.env.NODE_ENV === 'development' ? 'dev' : 'dev'
-            }
-        });
-        socket.on(TableSocketServerEvents.CONNECT, ()=>{
-            dispatch(connectToSocket(socket));
-            socket.emit(TableSocketClientEvents.JOIN_TABLE, (clientInfo: ClientInfo, gameState: GameState) => {
-                dispatch(setClientInfo(clientInfo));
-                dispatch(syncGameState(gameState))
-            })
-        })
-        socket.on(TableSocketServerEvents.SYNC, (gameState: GameState) => {
-            dispatch(syncGameState(gameState));
-        })
-
-        return () => {
-            socket.disconnect();
+        if(connectionStatus !== SocketConnectionStatuses.CONNECTED){
+            dispatch(socketConnect());
         }
-    }, [])
+        if(connectionStatus === SocketConnectionStatuses.CONNECTED){
+            dispatch(socketJoinTable((clientInfo, gameState) => {
+                dispatch(setGameState(gameState));
+                dispatch(setClientInfo(clientInfo));
+            }));
+        }
+    }, [connectionStatus])
 
 
-  return (
-      <div className='app'>
-          <PlayArea></PlayArea>
-      </div>
-  );
+    if(clientInfo !== null && connectionStatus === SocketConnectionStatuses.CONNECTED){
+        const orientation = clientInfo.seatedAt.includes('SOUTH') ? Orientations.RIGHT_SIDE_UP : Orientations.UPSIDE_DOWN
+        if(orientation === Orientations.UPSIDE_DOWN){
+            addMiddleware(mirrorVerbPositionMiddleware)
+    }
+    return (
+        <div className='app'>
+            <PlayArea orientation={orientation}></PlayArea>
+        </div>)
+
+    }else {
+        return(
+            <div>LOADING</div>
+        )
+    }
 }
-
-export default App;
