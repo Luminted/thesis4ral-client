@@ -78,13 +78,10 @@ export function setTableBoundaries(top: number, bottom: number, left: number, ri
     }
 }
 
-export function setPlayareaBoundaries(top: number, bottom: number, left: number, right: number): SetPlayareaBoundariesAction {
+export function setTableSocketStatus(status: SocketConnectionStatuses): SetTableConnectionStatusAction {
     return {
-        type: SetActionTypeKeys.SET_PLAYAREA_BOUNDARIES,
-        top,
-        bottom,
-        left,
-        right
+        type: SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
+        status
     }
 }
 

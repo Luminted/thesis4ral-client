@@ -4,10 +4,18 @@ export enum TableSocketServerEvents {
 }
 
 export enum TableSocketClientEvents {
+        //built in events
+        CONNECT = 'connect',
+        DISCONNECT = 'disconnect',
+        RECONNECT = 'reconnect',
+        
+        
+        JOIN_TABLE = 'JOIN_TABLE',
+        REJOIN_TABLE = 'REJOIN_TABLE',
     VERB = 'VERB',
-    CONNECT = 'CONNECT',
-    DISCONNECT = 'DISCONNECT',
-    JOIN_TABLE = 'JOIN_TABLE'
+        LEAVE_TABLE = 'LEAVE_TABLE',
+        KICK_PLAYER = 'KICK_PLAYER',
+    
 }
 
 

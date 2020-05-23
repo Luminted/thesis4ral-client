@@ -10,7 +10,7 @@ export enum SocketActionTypeKeys {
     EMIT_VERB = 'socket/EMIT_VERB',
     CONNECT = 'socket/CONNECT',
     DISCONNECT = 'socket/DISCONNECT',
-    JOIN_TABLE = 'socket/JOIN_TABLE'
+    JOIN_TABLE = 'socket/JOIN_TABLE',
 }
 
 export type SocketEmitVerbAction = {
@@ -19,7 +19,7 @@ export type SocketEmitVerbAction = {
     ackFunction?: Function
 }
 
-type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => any
+type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => void
 
 export type SocketJoinTableAction = {
     type: SocketActionTypeKeys.JOIN_TABLE

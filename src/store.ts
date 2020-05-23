@@ -5,16 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import dynamicMiddlewares from 'redux-dynamic-middlewares'
 
-import {gameState, clientInfo, tablePosition, tableBoundaries, playareaBoundaries, tableConnectionStatus} from './reducers';
+     tableConnectionStatus,
 import {createTableSocketMiddleware, normalizeVerbPositionMiddleware} from './middlewares/';
 
 const rootReducer = combineReducers({
     gameState,
     clientInfo,
     tablePosition,
-    tableBoundaries,
-    playareaBoundaries,
-    tableConnectionStatus
+    tableConnectionStatus,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

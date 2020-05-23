@@ -20,6 +20,4 @@ export type SetterActionTypes =
     SetGameStateAction |
     SetClientInfoAction |
     SetTablePositionAction |
-    SetTableBoundariesAction | 
-    SetPlayareaBoundariesAction |
-    SetTableConnectionStatusAction;
+    SetTableConnectionStatusAction |

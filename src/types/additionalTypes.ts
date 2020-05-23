@@ -13,3 +13,8 @@ export enum Orientations {
     RIGHT_SIDE_UP = 'RIGHT_SIDE_UP',
     UPSIDE_DOWN = 'UPSIDE_DOWN'
 }
+
+export enum ClientConnectionStatuses {
+    CONNECTED = 'CONNECTED',
+    DISCONNECTED = 'DISCONNECTED',
+}

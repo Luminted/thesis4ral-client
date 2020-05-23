@@ -19,17 +19,8 @@ type State = {
         left: number,
         right: number
     }>
-    playareaBoundaries: MaybeNull<{
-        top: number,
-        bottom: number,
-        left: number,
-        right: number
-    }>
-    grabbedEntityOriginalPosition: MaybeNull<{
-        x: number,
-        y: number
-    }>,
-    tableConnectionStatus: SocketConnectionStatuses
+    tableConnectionStatus: SocketConnectionStatuses,
+    tableReady: boolean
 }
 
 const initialState: State = {
@@ -50,10 +41,7 @@ const initialState: State = {
         x: 0,
         y: 0
     },
-    tableBoundaries: null,
-    playareaBoundaries: null,
-    grabbedEntityOriginalPosition: null,
-    tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED
+    tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED,
 }
 
 // export const grabbedEntityOriginalPosition = (state = initialState.grabbedEntityOriginalPosition, action: ActionTypes) => {
