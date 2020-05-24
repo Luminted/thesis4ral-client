@@ -27,6 +27,20 @@ export function downscale(ratio: Ratio, value: number) {
     return Math.trunc(value * ratio.numerator / ratio.divisor);
 }
 
+export function calculateDiagonalLength(a: number, b: number){
+    return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
+}
+
+export function calculateHeightByDiagonalLength(diagonalLength: number, ratio: Ratio){
+    const {divisor, numerator} = ratio;
+    return (diagonalLength * divisor) / (Math.sqrt(Math.pow(numerator, 2) + Math.pow(divisor, 2)));
+}
+
+export function calculateWidthByDiagonalLength(diagonalLength: number, ratio: Ratio){
+    const {divisor, numerator} = ratio;
+    return (diagonalLength * numerator) / (Math.sqrt(Math.pow(numerator, 2) + Math.pow(divisor, 2)));
+}
+
 export function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }

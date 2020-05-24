@@ -6,6 +6,7 @@ import { Deck } from '../entity'
 import { Card } from '../entity';
 import { mirrorOnTablePosition } from '../../utils/';
 import config from '../../config/global';
+import { Ratio } from '../../types/additionalTypes';
 
 type Props = {
     width: number // pixel

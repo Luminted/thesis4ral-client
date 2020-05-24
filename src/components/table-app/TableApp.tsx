@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { selectClients, selectEmptySeats, selectTableConnectionStatus, selectOwnClientInfo, selectTableReady } from '../../selectors';
 import { setTablePosition, readyTable, setVerticalScalingRatio } from '../../actions';
 import { Table } from '../table/Table';
-import { getElementAbsolutePosition } from '../../utils';
+import { getElementAbsolutePosition, calculateDiagonalLength, calculateWidthByDiagonalLength, calculateHeightByDiagonalLength } from '../../utils';
 import { Seats } from '../../types/dataModelDefinitions';
 import { useTypedSelector } from '../../store';
 import { Orientations, SocketConnectionStatuses } from '../../types/additionalTypes';
@@ -21,8 +21,11 @@ type Props = {
 }
 
 const config = {
-    tableRenderWidth: 80,
-    tableRenderHeight: 80,
+    tableAspectRatio: {
+        divisor: 9,
+        numerator: 16
+    },
+    tableScale: 60
 }
 
 const NORTHERN_SEATS_IN_ORDER = [Seats.NORTH_WEST, Seats.NORTH, Seats.NORTH_EAST]
@@ -36,11 +39,14 @@ export function TableApp (){
     const freeSeats = useTypedSelector(selectEmptySeats);
     const connectionStatus = useTypedSelector(selectTableConnectionStatus);
     const clientInfo = useTypedSelector(selectOwnClientInfo);
-    const tableReadt = useTypedSelector(selectTableReady);
+    const tableReady = useTypedSelector(selectTableReady);
+ 
+    const {tableAspectRatio, tableScale} = config;
+    const {innerWidth, innerHeight} = window;
+    const [tableDiagonalLength, setTableDiagonalLength] = useState<number>(calculateDiagonalLength(innerWidth, innerHeight) * (tableScale / 100));
+    const tablePixelWidth = calculateWidthByDiagonalLength(tableDiagonalLength, tableAspectRatio);
+    const tablePixelHeight = calculateHeightByDiagonalLength(tableDiagonalLength, tableAspectRatio);
 
-    const [tablePixelWidth, setTablePixelWidth] = useState<number>(Math.round(window.innerWidth * (config.tableRenderWidth / 100)));
-    const [tablePixelHeight, setTablePixelHeight] = useState<number>(Math.round(window.innerHeight * (config.tableRenderHeight / 100)));
-    
     useEffect(() => {
         if(connectionStatus !== SocketConnectionStatuses.CONNECTED){
             dispatch(socketConnect());
@@ -59,16 +65,20 @@ export function TableApp (){
             const tablePosition = getElementAbsolutePosition(tableElement);
             dispatch(setTablePosition(tablePosition.x, tablePosition.y));
         }
-    }, [])    
+    }, [])
 
-    if(tableReadt){
+    useEffect(() => {
+        if(tableReady){
+            dispatch(setScalingRatios(tablePixelWidth, tablePixelHeight));
+        }
+    }, [tableDiagonalLength])
+
+    if(tableReady){
         //TODO: maybe this could be on higher level
         window.onresize = ev => {
-            const resizedTablePixelWidth = Math.round(window.innerWidth * (config.tableRenderWidth / 100));
-            const resizedTablePixelHeight = Math.round(window.innerHeight * (config.tableRenderHeight / 100));
-            setTablePixelWidth(resizedTablePixelWidth);
-            setTablePixelHeight(resizedTablePixelHeight);
-            dispatch(setScalingRatios(resizedTablePixelWidth, resizedTablePixelHeight));
+            const {innerWidth, innerHeight} = window;
+            const resizedDiagonalLength = calculateDiagonalLength(innerWidth, innerHeight) * (tableScale / 100);
+            setTableDiagonalLength(resizedDiagonalLength);
         }
 
         const orientation = clientInfo!.seatedAt.includes('SOUTH') ? Orientations.RIGHT_SIDE_UP : Orientations.UPSIDE_DOWN
