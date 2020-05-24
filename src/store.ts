@@ -5,14 +5,20 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import dynamicMiddlewares from 'redux-dynamic-middlewares'
 
-     tableConnectionStatus,
-import {createTableSocketMiddleware, normalizeVerbPositionMiddleware} from './middlewares/';
+import {gameState, clientInfo, tablePosition, tableConnectionStatus, tableReady, horizontalScalingRatio, verticalScalingRatio, tableVirtualDimensions} from './reducers';
+import {createTableSocketMiddleware, normalizeVerbPositionMiddleware, } from './middlewares/';
+import { upscale } from './utils';
+import { upscaleVerbPositionMiddleware } from './middlewares/upscale-verb-position/upscaleVerbPositionMiddleware';
 
 const rootReducer = combineReducers({
     gameState,
     clientInfo,
     tablePosition,
     tableConnectionStatus,
+    tableReady,
+    horizontalScalingRatio,
+    verticalScalingRatio,
+    tableVirtualDimensions
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -24,7 +30,6 @@ const host = process.env.REACT_APP_SERVER_HOST;
 const tableNamespace = '/table'
 const serverURL = `http://${host}:${port}${tableNamespace}`
 const socket = SocketIOClient(serverURL, {
-    autoConnect: true,
     query: {
         tableId: 'dev'
     }
@@ -32,10 +37,11 @@ const socket = SocketIOClient(serverURL, {
 const tableSocketMiddleware = createTableSocketMiddleware(socket);
 
 export const store = createStore(rootReducer, composeWithDevTools(
-    // Normalize before emitting!
+    // Order is important
     applyMiddleware(
         thunk,
         normalizeVerbPositionMiddleware,
         dynamicMiddlewares,
+        upscaleVerbPositionMiddleware,
         tableSocketMiddleware)
 ));

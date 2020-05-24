@@ -18,3 +18,8 @@ export enum ClientConnectionStatuses {
     CONNECTED = 'CONNECTED',
     DISCONNECTED = 'DISCONNECTED',
 }
+
+export type Ratio = {
+    numerator: number
+    divisor: number,
+}

@@ -18,6 +18,7 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
         })
 
         socket.on(TableSocketServerEvents.CONNECT, () => {
+            console.log('connected')
             dispatch(setTableSocketStatus(SocketConnectionStatuses.CONNECTED))
         })
 
@@ -32,6 +33,9 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
         (action: ActionTypes) => {
                 if(action.type.startsWith('socket/')){
                     switch(action.type){
+                        case SocketActionTypeKeys.GET_TABLE_DIMENSIONS:
+                            socket.emit(TableSocketClientEvents.GET_TABLE_DIMENSIONS, action.ackFunction);
+                            break;
                         case SocketActionTypeKeys.JOIN_TABLE:
                             if(!socket.connected){
                                 console.log('emitting join: not connected')

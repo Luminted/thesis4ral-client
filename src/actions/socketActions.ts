@@ -11,6 +11,7 @@ export enum SocketActionTypeKeys {
     CONNECT = 'socket/CONNECT',
     DISCONNECT = 'socket/DISCONNECT',
     JOIN_TABLE = 'socket/JOIN_TABLE',
+    GET_TABLE_DIMENSIONS = 'socket/GET_TABLE_DIMENSIONS'
 }
 
 export type SocketEmitVerbAction = {
@@ -20,6 +21,12 @@ export type SocketEmitVerbAction = {
 }
 
 type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => void
+type SocketGetTableDimensionsAckFunction = (tableWidth: number, tableHeight: number) => void
+
+export type SocketGetTableDimensionsAction = {
+    type: SocketActionTypeKeys.GET_TABLE_DIMENSIONS,
+    ackFunction?: SocketGetTableDimensionsAckFunction
+}
 
 export type SocketJoinTableAction = {
     type: SocketActionTypeKeys.JOIN_TABLE
@@ -32,6 +39,13 @@ export type SocketDisconnectAction = {
 
 export type SocketConnectAction = {
     type: SocketActionTypeKeys.CONNECT
+}
+
+export function socketGetTableDimensions(ackFunction?: SocketGetTableDimensionsAckFunction): SocketGetTableDimensionsAction{
+    return {
+        type: SocketActionTypeKeys.GET_TABLE_DIMENSIONS,
+        ackFunction
+    }
 }
 
 export function socketJoinTable(ackFunction?: SocketJoinTableAckFunction): SocketJoinTableAction{
@@ -47,79 +61,10 @@ export function socketConnect(): SocketConnectAction {
     }
 }
 
-function socketEmitVerb(verb: Verb, ackFunction?: Function): SocketEmitVerbAction{
+export function socketEmitVerb(verb: Verb, ackFunction?: Function): SocketEmitVerbAction{
     return {
         type: SocketActionTypeKeys.EMIT_VERB,
         verb,
         ackFunction
-    }
-}
-
-//TODO: catch null verbs
-export function emitSharedVerb(positionX: number, positionY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
-    return (dispatch, getStore) => {
-        const store = getStore();
-        const clientId = store.clientInfo!.clientId;
-        const verb: Verb = {
-            type: verbType,
-            entityType,
-            clientId,
-            positionX,
-            positionY,
-            entityId,
-        }
-        console.log('Emitting verb: ', verb);
-        dispatch(socketEmitVerb(verb));
-    } 
-}
-
-export function emitCardVerb(positionX: number, positionY: number, verbType: CardVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
-    return (dispatch, getStore) => {
-        const store = getStore();
-        const clientId = store.clientInfo!.clientId;
-        const verb: Verb = {
-            type: verbType,
-            entityType: EntityTypes.CARD,
-            clientId,
-            positionX,
-            positionY,
-            entityId,
-        }
-        console.log('Emitting verb: ', verb)
-        dispatch(socketEmitVerb(verb));
-    }
-}
-
-export function emitDeckVerb(positionX: number, positionY: number, verbType: DeckVerbTypes, entityId: MaybeNull<string>): ThunkResult<void> {
-    return (dispatch, getStore) => {
-        const store = getStore();
-        const clientId = store.clientInfo!.clientId;
-        const verb: Verb = {
-            type: verbType,
-            entityType: EntityTypes.DECK,
-            clientId,
-            positionX,
-            positionY,
-            entityId,
-        }
-        console.log('Emitting verb: ', verb);
-        dispatch(socketEmitVerb(verb));
-    }
-}
-
-export function emitDerivedVerb (event: SyntheticMouseEvent | SyntheticDragEvent, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>, verbContext: MaybeNull<VerbContextTypes> = null): ThunkResult<void>{
-    return (dispatch, getStore) => {
-        const store = getStore();
-        const positionX = event.clientX;
-        const positionY = event.clientY;
-        const clientId = store.clientInfo!.clientId;
-        const mouseInputType = mouseEventTranslator(event);
-        const verb = verbFactory(mouseInputType, entityType, entityId, clientId, positionX, positionY, verbContext);
-        console.log('Emitting verb: ', verb);
-        if(verb !== null){
-            dispatch(socketEmitVerb(verb));
-        }else{
-            console.log('Derived Verb is null. Aborting dispatch.')
-        }
     }
 }

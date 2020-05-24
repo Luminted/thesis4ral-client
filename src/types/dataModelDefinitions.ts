@@ -36,7 +36,6 @@ export interface Entity {
     entityId: string,
     height:number,
     width: number,
-    scale: number,
     positionX: number,
     positionY: number,
     grabbedBy: MaybeNull<string>
@@ -105,22 +104,13 @@ export enum Seats {
     NORTH_EAST = 'NORTH_EAST'
 } 
 
-export type Boundary = {
-    top: number,
-    left: number,
-    bottom: number,
-    right: number
-}
-
 export interface GameState {
     cards: CardEntity[],
     decks: DeckEntity[],
     clients: Client[],
     hands: ClientHand[],
-    cardScale: number,
+    entityScale: number,
     emptySeats: Seats[],
-    cardBoundary: MaybeNull<Boundary>,
-    deckBoundary: MaybeNull<Boundary>
     topZIndex: number
 }
 
@@ -140,4 +130,5 @@ export type SerializedGameState = {
     decks: DeckEntity[],
     clients: Client[],
     hands: ClientHand[],
+    entityScale: number
 }

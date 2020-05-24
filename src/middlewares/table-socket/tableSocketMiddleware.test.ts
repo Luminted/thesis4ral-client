@@ -1,7 +1,7 @@
 import SocketIO from 'socket.io';
 import SocketIOClient from 'socket.io-client';
 import { createTableSocketMiddleware } from './tableSocketMiddleware';
-import { createMockMiddleware, MockMiddleware } from '../testutils';
+import { createMockMiddleware } from '../testutils';
 import { SocketActionTypeKeys, ActionTypes, SetActionTypeKeys, setGameState } from '../../actions/';
 import { TableSocketClientEvents, TableSocketServerEvents } from './types';
 import { Verb } from '../../types/verbTypes';
@@ -62,8 +62,8 @@ describe('Testing tableModuleMiddleware', function(){
             })
         })
 
-        describe(`Action: ${SocketActionTypeKeys.JOIN_TABLE} with actions acknowledgement function`, function(){
-            it(`should emit ${TableSocketClientEvents.JOIN_TABLE}`, function(){
+        describe(`Action: ${SocketActionTypeKeys.JOIN_TABLE}`, function(){
+            it(`should emit ${TableSocketClientEvents.JOIN_TABLE} event with actions ackFunction`, function(){
                 const {invoke} = mockMiddleware;
                 const action: ActionTypes = {
                     type: SocketActionTypeKeys.JOIN_TABLE,
@@ -75,6 +75,20 @@ describe('Testing tableModuleMiddleware', function(){
                 expect(socketMock.emit).toHaveBeenCalledWith(TableSocketClientEvents.JOIN_TABLE, action.ackFunction);
             })
         })
+        describe(`Action: ${SocketActionTypeKeys.GET_TABLE_DIMENSIONS}`, function(){
+            it(`should emit ${TableSocketClientEvents.GET_TABLE_DIMENSIONS} with actions ackFunction`, function(){
+                const {invoke} = mockMiddleware;
+                const action: ActionTypes = {
+                    type: SocketActionTypeKeys.GET_TABLE_DIMENSIONS,
+                    ackFunction: jest.fn()
+                }
+
+                socketMock.connected = true;
+                invoke(action);
+                expect(socketMock.emit).toHaveBeenCalledWith(TableSocketClientEvents.GET_TABLE_DIMENSIONS, action.ackFunction);
+            })
+        })
+
     })
 
     describe('Incoming API', function(){
@@ -113,12 +127,13 @@ describe('Testing tableModuleMiddleware', function(){
                     cards: [],
                     clients: [],
                     decks: [],
-                    hands: []
+                    hands: [],
+                    entityScale: 1
                 } as SerializedGameState
                 socketServerNamespace.emit(TableSocketServerEvents.SYNC, gameState);
                 setTimeout(() => {
                     expect(store.dispatch).toHaveBeenCalledWith(setGameState(gameState));
-                    done()
+                    done();
                 }, 100)
             })
         })
@@ -130,7 +145,7 @@ describe('Testing tableModuleMiddleware', function(){
                 socket.connect();
                 setTimeout(() => {
                     expect(store.dispatch).toHaveBeenCalledWith(setTableSocketStatus(SocketConnectionStatuses.CONNECTED));
-                    done()
+                    done();
                 }, 100)
             })
         })

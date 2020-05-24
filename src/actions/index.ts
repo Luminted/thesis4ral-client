@@ -1,10 +1,11 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
-import { SocketEmitVerbAction, SocketConnectAction, SocketDisconnectAction, SocketJoinTableAction } from "./socketActions";
-import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableBoundariesAction, SetPlayareaBoundariesAction, SetTableConnectionStatusAction } from "./setterActions";
+import { SocketEmitVerbAction, SocketConnectAction, SocketDisconnectAction, SocketJoinTableAction, SocketGetTableDimensionsAction } from "./socketActions";
+import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTableReadyAction, SetTableVirtualDimensions, SetHorizontalScalingRation, SetVerticalScalingRation, SetOrientationAction } from "./setterActions";
 
-export {setClientInfo, setPlayareaBoundaries, setTableBoundaries, setGameState, setTablePosition, SetActionTypeKeys, } from './setterActions'
-export {emitCardVerb, emitDeckVerb, emitDerivedVerb, emitSharedVerb, SocketActionTypeKeys } from './socketActions'
+export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableVirtualDimensions, setTableReady, setOrientationAction, setTableSocketStatus, SetActionTypeKeys} from './setterActions'
+export { SocketActionTypeKeys } from './socketActions'
+export {emitCardVerb, emitDeckVerb, emitDerivedVerb, emitSharedVerb, readyTable} from './thunks'
 
 export type ThunkResult<R> = ThunkAction<R, RootState, null, ActionTypes>
 
@@ -14,10 +15,16 @@ export type SocketActionTypes =
     SocketEmitVerbAction |
     SocketConnectAction |
     SocketDisconnectAction |
-    SocketJoinTableAction;
+    SocketJoinTableAction |
+    SocketGetTableDimensionsAction;
 
 export type SetterActionTypes = 
     SetGameStateAction |
     SetClientInfoAction |
     SetTablePositionAction |
     SetTableConnectionStatusAction |
+    SetTableReadyAction |
+    SetVerticalScalingRation |
+    SetHorizontalScalingRation |
+    SetOrientationAction |
+    SetTableVirtualDimensions;

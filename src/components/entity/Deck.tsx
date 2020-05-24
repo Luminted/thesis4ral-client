@@ -1,17 +1,24 @@
 import React, { CSSProperties } from 'react';
 import { EntityInterface } from './EntityInterface';
 import { Entity } from '../../types/dataModelDefinitions';
+import {downscale} from '../../utils';
+import {useTypedSelector} from '../../store';
+import { selectHorizontalScalingRatio, selectVerticalScalingRatio } from '../../selectors';
 
 interface Props extends Entity {
     drawIndex: number,
     size: number,
     upsideDown?: boolean
+    scale: number
 }
 export function Deck({entityId, height, width, scale, positionY, positionX, entityType, drawIndex, grabbedBy, size, zIndex, upsideDown = false}: Props){
+    const horizontalScalingRatio = useTypedSelector(selectHorizontalScalingRatio);
+    const verticalScalingRatio = useTypedSelector(selectVerticalScalingRatio); 
+    
     const styles: {[key: string]: CSSProperties} = {
         deckGraphics: {
-            height: height * scale,
-            width: width * scale,
+            width: downscale(horizontalScalingRatio, width) * scale,
+            height: downscale(verticalScalingRatio, height) * scale,
             backgroundColor: 'red'
         }
     }

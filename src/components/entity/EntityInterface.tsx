@@ -2,12 +2,13 @@ import React, { ReactChild, CSSProperties, useEffect} from 'react';
 import { GrabbedEntity, EntityTypes } from '../../types/dataModelDefinitions';
 import { useDispatch } from 'react-redux';
 import { emitDerivedVerb, emitSharedVerb } from '../../actions';
-import { selectGrabbedEntityOfCurrentClient } from '../../selectors';
+import { selectGrabbedEntityOfCurrentClient, selectHorizontalScalingRatio, selectVerticalScalingRatio } from '../../selectors';
 import { VerbContextTypes } from '../../types/additionalTypes';
 import { MaybeNull } from '../../types/genericTypes';
 import { SharedVerbTypes } from '../../types/verbTypes';
 import { ListenedMouseEventTypes } from '../../controller/types';
 import { useTypedSelector } from '../../store';
+import { downscale } from '../../utils';
 
 type Props = {
     children?: ReactChild,
@@ -24,7 +25,9 @@ type Props = {
 export function EntityInterface({children, entityId, entityType, positionX, positionY, zIndex, verbContext = null, upsideDown}: Props){
 
     const dispatch = useDispatch();
-    const grabbedEntity = useTypedSelector<MaybeNull<GrabbedEntity>>(selectGrabbedEntityOfCurrentClient);
+    const grabbedEntity = useTypedSelector(selectGrabbedEntityOfCurrentClient);
+    const horizontalScalingRatio = useTypedSelector(selectHorizontalScalingRatio);
+    const verticalScalingRatio = useTypedSelector(selectVerticalScalingRatio);
     const eventPassthrough = grabbedEntity?.entityId === entityId;
 
     function documentOnMouseMoveHandler(ev: MouseEvent) {
@@ -53,11 +56,14 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
         }
     })
 
+    if(grabbedEntity?.entityId === entityId){
+        console.log('downscaled position', positionX, downscale(horizontalScalingRatio, positionX))
+    }
     const styles: {[key: string]: CSSProperties} = {
         entityInterface: {
             position: 'absolute',
-            left: positionX,
-            top: positionY,
+            left: downscale(horizontalScalingRatio, positionX),
+            top: downscale(verticalScalingRatio, positionY),
             pointerEvents: eventPassthrough ? 'none' : 'auto',
             transform: upsideDown ? 'rotate(180deg)' : undefined,
             transformOrigin: '0% 0%',

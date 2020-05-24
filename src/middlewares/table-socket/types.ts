@@ -12,10 +12,11 @@ export enum TableSocketClientEvents {
         
         JOIN_TABLE = 'JOIN_TABLE',
         REJOIN_TABLE = 'REJOIN_TABLE',
-    VERB = 'VERB',
+        VERB = 'VERB',
         LEAVE_TABLE = 'LEAVE_TABLE',
         KICK_PLAYER = 'KICK_PLAYER',
     
+        GET_TABLE_DIMENSIONS = 'GET_TABLE_DIMENSIONS'
 }
 
 

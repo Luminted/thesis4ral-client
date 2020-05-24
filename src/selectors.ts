@@ -56,14 +56,6 @@ export function selectDecks(state: RootState): DeckEntity[] {
     return state.gameState.decks;
 }
 
-export function selectTableBoundaries(state: RootState) {
-    return state.tableBoundaries;
-}
-
-export function selectPlayareaBoundaries(state: RootState) {
-    return state.playareaBoundaries;
-}
-
 // export function selectGrabbedEntityOriginalPosition(state: RootState) {
 //     return state.grabbedEntityOriginalPosition;
 // }
@@ -82,4 +74,20 @@ export function selectClientId(state: RootState){
 
 export function selectEmptySeats(state: RootState){
     return state.gameState.emptySeats;
+}
+
+export function selectTableReady(state: RootState){
+    return state.tableReady;
+}
+
+export function selectHorizontalScalingRatio(state: RootState){
+    return state.horizontalScalingRatio;
+}
+
+export function selectVerticalScalingRatio(state: RootState){
+    return state.verticalScalingRatio;
+}
+
+export function selectEntityScale(state: RootState) {
+    return state.gameState.entityScale;
 }

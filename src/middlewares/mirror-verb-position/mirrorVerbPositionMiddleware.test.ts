@@ -4,6 +4,7 @@ import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
 import { Verb } from "../../types/verbTypes";
 import { inverseMirrorOnTablePosition } from "../../utils";
 import { RootState } from "../../store";
+import global from "../../config/global";
 
 describe('Testing mirrorPositionMiddleware', function(){
 
@@ -13,8 +14,9 @@ describe('Testing mirrorPositionMiddleware', function(){
         const {invoke, next} = mockMiddleware;
         const positionX = 111;
         const positionY = 333;
-        const tableWidth = 200;
-        const tableHeight = 150;
+        const tableWidth = global.tableWidth;
+        const tableHeight = global.tableHeight;
+        debugger
         const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
         const action: SocketActionTypes = {
             type: SocketActionTypeKeys.EMIT_VERB,
