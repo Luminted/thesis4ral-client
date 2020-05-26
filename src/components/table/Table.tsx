@@ -1,10 +1,10 @@
 import React, { CSSProperties } from 'react';
 import { tableDimensions } from '../../config/visuals';
 import { useTypedSelector } from '../../store';
-import { selectCards, selectDecks, selectEntityScale } from '../../selectors';
+import { selectCards, selectDecks, selectEntityScale, selectHorizontalScalingRatio, selectVerticalScalingRatio } from '../../selectors';
 import { Deck } from '../entity'
 import { Card } from '../entity';
-import { mirrorOnTablePosition } from '../../utils/';
+import { mirrorOnTablePosition, downscale } from '../../utils/';
 import config from '../../config/global';
 import { Ratio } from '../../types/additionalTypes';
 
@@ -19,26 +19,34 @@ export function Table({upsideDown, width, height}: Props){
     const cards = useTypedSelector(selectCards);
     const decks = useTypedSelector(selectDecks);
     const entityScale = useTypedSelector(selectEntityScale);
+    const horizontalScalingRatio = useTypedSelector(selectHorizontalScalingRatio);
+    const verticalScalingRatio = useTypedSelector(selectVerticalScalingRatio);
 
     const cardEntities = cards.map(card => {
         let {positionX, positionY} = card;
+        // console.log('original pos ', positionX, positionY);
+        positionX = downscale(horizontalScalingRatio, positionX);
+        positionY = downscale(verticalScalingRatio, positionY);
+        // console.log('downscaled pos ', positionX, positionY);
+
         if(upsideDown){
-            const {tableHeight, tableWidth} = config;
-            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
-            console.log('card position', positionX, positionY)
+            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, width, height);
+            // console.log('mirrored position', positionX, positionY)
         }
-        return <Card {...card} positionX={positionX} positionY={positionY} scale={entityScale} key={card.entityId} upsideDown={upsideDown}/>
+        return <Card key={card.entityId} positionX={positionX} positionY={positionY} scale={entityScale} upsideDown={upsideDown} entityType={card.entityType} height={card.height} entityId={card.entityId} face={card.face} grabbedBy={card.grabbedBy} width={card.width} zIndex={card.zIndex}/>
     })
     const deckEntities = decks.map(deck => {
-        const {entityId, width, height, entityType, grabbedBy, drawIndex, cards, zIndex} = deck;
         let {positionX, positionY} = deck;
+        // console.log('original pos ', positionX, positionY);
+        positionX = downscale(horizontalScalingRatio, positionX);
+        positionY = downscale(verticalScalingRatio, positionY);
+        // console.log('downscaled pos ', positionX, positionY);
         if(upsideDown){
-            const {tableHeight, tableWidth} = config;
-            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
-            console.log('deck position', positionX, positionY)
+            [positionX, positionY] =  mirrorOnTablePosition(positionX, positionY, width, height);
+            // console.log('mirrored position', positionX, positionY)
             
         }
-        return <Deck key={entityId} entityId={entityId} width={width} height={height} positionX={positionX} positionY={positionY} scale={entityScale} entityType={entityType} grabbedBy={grabbedBy} drawIndex={drawIndex} size={cards.length} zIndex={zIndex} upsideDown={upsideDown} />
+        return <Deck key={deck.entityId} entityId={deck.entityId} width={deck.width} height={deck.height} positionX={positionX} positionY={positionY} scale={entityScale} entityType={deck.entityType} grabbedBy={deck.grabbedBy} drawIndex={deck.drawIndex} size={deck.cards.length} zIndex={deck.zIndex} upsideDown={upsideDown} />
     })
 
 

@@ -1,7 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 import { SocketEmitVerbAction, SocketConnectAction, SocketDisconnectAction, SocketJoinTableAction, SocketGetTableDimensionsAction } from "./socketActions";
-import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTableReadyAction, SetTableVirtualDimensions, SetHorizontalScalingRation, SetVerticalScalingRation, SetOrientationAction } from "./setterActions";
+import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTablePixelDimensions, SetTableReadyAction, SetTableVirtualDimensions, SetHorizontalScalingRation, SetVerticalScalingRation, SetOrientationAction } from "./setterActions";
 
 export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableVirtualDimensions, setTableReady, setOrientationAction, setTableSocketStatus, SetActionTypeKeys} from './setterActions'
 export { SocketActionTypeKeys } from './socketActions'
@@ -27,4 +27,5 @@ export type SetterActionTypes =
     SetVerticalScalingRation |
     SetHorizontalScalingRation |
     SetOrientationAction |
-    SetTableVirtualDimensions;
+    SetTableVirtualDimensions |
+    SetTablePixelDimensions;

@@ -11,7 +11,7 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store =>
                 const {verticalScalingRatio, horizontalScalingRatio} = store.getState();
                 action.verb.positionX = upscale(horizontalScalingRatio, positionX);
                 action.verb.positionY = upscale(verticalScalingRatio, positionY);
-                console.log('upscaling', positionX, positionY, action.verb.positionX, action.verb.positionY)
+                // console.log('upscaling', positionX, positionY, action.verb.positionX, action.verb.positionY)
             }
             next(action);
         }

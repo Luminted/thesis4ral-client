@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import dynamicMiddlewares from 'redux-dynamic-middlewares'
 
-import {gameState, clientInfo, tablePosition, tableConnectionStatus, tableReady, horizontalScalingRatio, verticalScalingRatio, tableVirtualDimensions} from './reducers';
+import {gameState, clientInfo, tablePosition, tableConnectionStatus, tableReady, horizontalScalingRatio, verticalScalingRatio, tablePixelDimensions, tableVirtualDimensions} from './reducers';
 import {createTableSocketMiddleware, normalizeVerbPositionMiddleware, } from './middlewares/';
 import { upscale } from './utils';
 import { upscaleVerbPositionMiddleware } from './middlewares/upscale-verb-position/upscaleVerbPositionMiddleware';
@@ -18,7 +18,8 @@ const rootReducer = combineReducers({
     tableReady,
     horizontalScalingRatio,
     verticalScalingRatio,
-    tableVirtualDimensions
+    tableVirtualDimensions,
+    tablePixelDimensions
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

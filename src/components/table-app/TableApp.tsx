@@ -1,8 +1,8 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
-import {addMiddleware} from 'redux-dynamic-middlewares'
+import React, { CSSProperties, useEffect, useState, useLayoutEffect } from 'react';
+import {addMiddleware, resetMiddlewares} from 'redux-dynamic-middlewares'
 import { useDispatch } from 'react-redux';
 
-import { selectClients, selectEmptySeats, selectTableConnectionStatus, selectOwnClientInfo, selectTableReady } from '../../selectors';
+import { selectClients, selectTableConnectionStatus, selectOwnClientInfo, selectTableReady } from '../../selectors';
 import { setTablePosition, readyTable, setVerticalScalingRatio } from '../../actions';
 import { Table } from '../table/Table';
 import { getElementAbsolutePosition, calculateDiagonalLength, calculateWidthByDiagonalLength, calculateHeightByDiagonalLength } from '../../utils';
@@ -10,10 +10,10 @@ import { Seats } from '../../types/dataModelDefinitions';
 import { useTypedSelector } from '../../store';
 import { Orientations, SocketConnectionStatuses } from '../../types/additionalTypes';
 import { Seat } from '../Seat';
-import { InteractionGutter } from './InteractionGutter';
 import { socketConnect } from '../../actions/socketActions';
 import { mirrorVerbPositionMiddleware } from '../../middlewares';
 import { setScalingRatios } from '../../actions/thunks';
+import { setTablePixelDimensions } from '../../actions/setterActions';
 
 
 type Props = {
@@ -21,9 +21,10 @@ type Props = {
 }
 
 const config = {
+    //TODO: calculate ratio instead of hardcoding it
     tableAspectRatio: {
-        divisor: 9,
-        numerator: 16
+        divisor: 2200,
+        numerator: 4100
     },
     tableScale: 60
 }
@@ -36,7 +37,6 @@ export function TableApp (){
     const dispatch = useDispatch();
 
     const clients = useTypedSelector(selectClients);
-    const freeSeats = useTypedSelector(selectEmptySeats);
     const connectionStatus = useTypedSelector(selectTableConnectionStatus);
     const clientInfo = useTypedSelector(selectOwnClientInfo);
     const tableReady = useTypedSelector(selectTableReady);
@@ -47,42 +47,48 @@ export function TableApp (){
     const tablePixelWidth = calculateWidthByDiagonalLength(tableDiagonalLength, tableAspectRatio);
     const tablePixelHeight = calculateHeightByDiagonalLength(tableDiagonalLength, tableAspectRatio);
 
+    console.log('calculated by diagonal', tablePixelWidth,
+        tablePixelHeight)
+
     useEffect(() => {
         if(connectionStatus !== SocketConnectionStatuses.CONNECTED){
             dispatch(socketConnect());
         }
-        if(connectionStatus === SocketConnectionStatuses.CONNECTED){
+        if(connectionStatus === SocketConnectionStatuses.CONNECTED && !tableReady){
             dispatch(readyTable(tablePixelWidth, tablePixelHeight));
-            //join table
-            // calculate scaling ratio
-            // ready table
         }
     }, [connectionStatus])
 
-    useEffect(() => {
-        const tableElement = document.querySelector('.table');
-        if(tableElement){
-            const tablePosition = getElementAbsolutePosition(tableElement);
-            dispatch(setTablePosition(tablePosition.x, tablePosition.y));
-        }
-    }, [])
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         if(tableReady){
+            const tableElement = document.querySelector('.table');
+            const tablePosition = getElementAbsolutePosition(tableElement);
+
+            dispatch(setTablePosition(tablePosition.x, tablePosition.y));
             dispatch(setScalingRatios(tablePixelWidth, tablePixelHeight));
+            dispatch(setTablePixelDimensions(tablePixelWidth, tablePixelHeight));
+
+            const recalculateDiagonalLength = () => {
+                const {innerWidth, innerHeight} = window;
+                const resizedDiagonalLength = calculateDiagonalLength(innerWidth, innerHeight) * (tableScale / 100);
+                
+                setTableDiagonalLength(resizedDiagonalLength);
+            }
+
+            window.addEventListener('resize', recalculateDiagonalLength);
+            return () => {
+                window.removeEventListener('resize', recalculateDiagonalLength)
+            }
         }
-    }, [tableDiagonalLength])
+    }, [tableDiagonalLength, tableReady])
 
     if(tableReady){
         //TODO: maybe this could be on higher level
-        window.onresize = ev => {
-            const {innerWidth, innerHeight} = window;
-            const resizedDiagonalLength = calculateDiagonalLength(innerWidth, innerHeight) * (tableScale / 100);
-            setTableDiagonalLength(resizedDiagonalLength);
-        }
+       
 
         const orientation = clientInfo!.seatedAt.includes('SOUTH') ? Orientations.RIGHT_SIDE_UP : Orientations.UPSIDE_DOWN
         if(orientation === Orientations.UPSIDE_DOWN){
+            resetMiddlewares();
             addMiddleware(mirrorVerbPositionMiddleware);
             NORTHERN_SEATS_IN_ORDER.reverse();
             SOUTHERN_SEATS_IN_ORDER.reverse();
@@ -94,24 +100,17 @@ export function TableApp (){
         //TODO: name Directions to SeatDirections
 
         NORTHERN_SEATS_IN_ORDER.forEach(seat => {
-            if(freeSeats.includes(seat)){
-                return;
-            }else{
-                const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
-                if(clientIdInSeat){
-                    renderedHandsNorth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.RIGHT_SIDE_UP} />)
-                }
+            const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            if(clientIdInSeat){
+                renderedHandsNorth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.RIGHT_SIDE_UP} />)
             }
+
         })
 
         SOUTHERN_SEATS_IN_ORDER.forEach(seat => {
-            if(freeSeats.includes(seat)){
-                return;
-            }else{
-                const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
-                if(clientIdInSeat){
-                    renderedHandsSouth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.UPSIDE_DOWN}/>)
-                }
+            const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            if(clientIdInSeat){
+                renderedHandsSouth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.UPSIDE_DOWN}/>)
             }
         })
 
@@ -139,7 +138,7 @@ export function TableApp (){
 
         return (
                 <div className='play-area' style={styles.playArea}>
-                    {/* <div className='play-area-main' style={styles.playAreaMain}> */}
+                    <div className='play-area-main' style={styles.playAreaMain}>
                         <div className='hands-container' style={styles.handsContainer}>
                             {orientation === Orientations.RIGHT_SIDE_UP ? 
                                 (<>
@@ -166,7 +165,7 @@ export function TableApp (){
                                 </>
                                 )}
                         </div>
-                    {/* </div> */}
+                    </div>
                 </div>
             )
         }

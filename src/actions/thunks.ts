@@ -6,7 +6,7 @@ import { MaybeNull } from "../types/genericTypes";
 import { ThunkResult } from ".";
 import { mouseEventTranslator, verbFactory } from "../controller";
 import { VerbContextTypes, Ratio } from '../types/additionalTypes';
-import { setClientInfo, setGameState, setVerticalScalingRatio, setHorizontalScalingRatio, setTableReady, setTableVirtualDimensions } from './setterActions';
+import { setClientInfo, setGameState, setVerticalScalingRatio, setHorizontalScalingRatio, setTableReady, setTableVirtualDimensions, setTablePixelDimensions } from './setterActions';
 
 //TODO: catch null verbs
 export function emitSharedVerb(positionX: number, positionY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
@@ -95,6 +95,7 @@ export function setScalingRatios(renderedTableWidth: number, renderedTableHeight
 
 export function readyTable(renderedTableWidth: number, renderedTableHeight: number): ThunkResult<void> {
     return (dispatch) => {
+        dispatch(setTableReady(false));
         const joinTablePromise = new Promise((resolve, reject) => {
             dispatch(socketJoinTable((clientInfo, gameState) => {
                 dispatch(setClientInfo(clientInfo));
@@ -114,6 +115,7 @@ export function readyTable(renderedTableWidth: number, renderedTableHeight: numb
                     divisor: tableHeight
                 }
                 dispatch(setTableVirtualDimensions(tableWidth, tableHeight));
+                dispatch(setTablePixelDimensions(renderedTableWidth, renderedTableHeight));
                 dispatch(setHorizontalScalingRatio(horizontalScalingRatio));
                 dispatch(setVerticalScalingRatio(verticalScalingRatio));
                 resolve();
@@ -121,6 +123,6 @@ export function readyTable(renderedTableWidth: number, renderedTableHeight: numb
         });
 
         Promise.all([joinTablePromise, scalingRatioPromise])
-        .then(() => dispatch(setTableReady(true))); 
+        .then(() => dispatch(setTableReady(true)));
     }
 }

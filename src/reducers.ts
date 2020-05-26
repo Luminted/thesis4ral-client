@@ -14,6 +14,10 @@ type State = {
     tableVirtualDimensions: MaybeNull<{
         width: number,
         height: number
+    }>,
+    tablePixelDimensions: MaybeNull<{
+        width: number,
+        height: number
     }>
     horizontalScalingRatio: Ratio,
     verticalScalingRatio: Ratio,
@@ -28,7 +32,6 @@ const initialState: State = {
         clients: [],
         hands: [],
         entityScale: 1,
-        emptySeats:[],
         topZIndex: 0
     },
     clientInfo: null,
@@ -37,6 +40,7 @@ const initialState: State = {
         y: 0
     },
     tableVirtualDimensions: null,
+    tablePixelDimensions: null,
     horizontalScalingRatio: {
         numerator: 1,
         divisor: 1
@@ -47,6 +51,15 @@ const initialState: State = {
     },
     tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED,
     tableReady: false
+}
+
+export const tablePixelDimensions = (state = initialState.tableVirtualDimensions, action: ActionTypes) => {
+    switch(action.type){
+        case SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
+            return action.dimensions;
+        default:
+            return state;
+    }
 }
 
 export const tableVirtualDimensions = (state = initialState.tableVirtualDimensions, action: ActionTypes) => {

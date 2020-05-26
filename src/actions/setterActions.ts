@@ -10,8 +10,17 @@ export enum SetActionTypeKeys {
     SET_ORIENTATION = 'SET_ORIENTATION',
     SET_TABLE_READY = 'SET_TABLE_READY',
     SET_HORIZONTAL_SCALING_RATIO = 'SET_HORIZONTAL_SCALING_RATIO',
-    SET_VERTICAL_SCALING_RATIO = 'SET_VERTICAL_SCALING',
-    SET_TABLE_VIRTUAL_DIMENSIONS = 'SET_TABLE_VIRTUAL_DIMENSIONS'
+    SET_VERTICAL_SCALING_RATIO = 'SET_VERTICAL_SCALING_RATIO',
+    SET_TABLE_VIRTUAL_DIMENSIONS = 'SET_TABLE_VIRTUAL_DIMENSIONS',
+    SET_TABLE_PIXEL_DIMENSIONS = 'SET_TABLE_PIXEL_DIMENSIONS'
+}
+
+export type SetTablePixelDimensions = {
+    type: SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
+    dimensions: {
+        width: number,
+        height: number
+    }
 }
 
 export type SetTableVirtualDimensions = {
@@ -61,6 +70,16 @@ export type SetTablePositionAction = {
 export type SetGameStateAction = {
     type: SetActionTypeKeys.SET_GAME_STATE
     gameState: SerializedGameState
+}
+
+export function setTablePixelDimensions(width: number, height: number): SetTablePixelDimensions{
+    return {
+        type: SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
+        dimensions: {
+            width,
+            height
+        }
+    }
 }
 
 export function setTableVirtualDimensions(width: number, height: number): SetTableVirtualDimensions {

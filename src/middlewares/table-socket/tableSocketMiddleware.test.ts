@@ -6,7 +6,6 @@ import { SocketActionTypeKeys, ActionTypes, SetActionTypeKeys, setGameState } fr
 import { TableSocketClientEvents, TableSocketServerEvents } from './types';
 import { Verb } from '../../types/verbTypes';
 import { SerializedGameState } from '../../types/dataModelDefinitions';
-import {} from 'redux-mock-store'
 import { SocketConnectionStatuses } from '../../types/additionalTypes';
 import { setTableSocketStatus } from '../../actions/setterActions';
 

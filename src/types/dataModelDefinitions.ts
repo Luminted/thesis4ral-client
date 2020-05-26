@@ -110,7 +110,6 @@ export interface GameState {
     clients: Client[],
     hands: ClientHand[],
     entityScale: number,
-    emptySeats: Seats[],
     topZIndex: number
 }
 

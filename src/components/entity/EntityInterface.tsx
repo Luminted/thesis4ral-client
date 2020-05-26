@@ -26,8 +26,6 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
 
     const dispatch = useDispatch();
     const grabbedEntity = useTypedSelector(selectGrabbedEntityOfCurrentClient);
-    const horizontalScalingRatio = useTypedSelector(selectHorizontalScalingRatio);
-    const verticalScalingRatio = useTypedSelector(selectVerticalScalingRatio);
     const eventPassthrough = grabbedEntity?.entityId === entityId;
 
     function documentOnMouseMoveHandler(ev: MouseEvent) {
@@ -47,6 +45,7 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
     }
 
     useEffect(() => {
+        //TODO: only one listener should be here
         document.addEventListener(ListenedMouseEventTypes.MOUSE_MOVE, documentOnMouseMoveHandler);
         document.addEventListener(ListenedMouseEventTypes.MOUSE_UP, documentOnMouseUpHandler);
 
@@ -56,14 +55,11 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
         }
     })
 
-    if(grabbedEntity?.entityId === entityId){
-        console.log('downscaled position', positionX, downscale(horizontalScalingRatio, positionX))
-    }
     const styles: {[key: string]: CSSProperties} = {
         entityInterface: {
             position: 'absolute',
-            left: downscale(horizontalScalingRatio, positionX),
-            top: downscale(verticalScalingRatio, positionY),
+            left: positionX,
+            top: positionY,
             pointerEvents: eventPassthrough ? 'none' : 'auto',
             transform: upsideDown ? 'rotate(180deg)' : undefined,
             transformOrigin: '0% 0%',
