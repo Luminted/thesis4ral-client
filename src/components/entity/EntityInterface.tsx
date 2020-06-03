@@ -8,7 +8,6 @@ import { MaybeNull } from '../../types/genericTypes';
 import { SharedVerbTypes } from '../../types/verbTypes';
 import { ListenedMouseEventTypes } from '../../controller/types';
 import { useTypedSelector } from '../../store';
-import { downscale } from '../../utils';
 
 type Props = {
     children?: ReactChild,
@@ -40,20 +39,21 @@ export function EntityInterface({children, entityId, entityType, positionX, posi
         // console.log('mouseup')
 
         if(grabbedEntity && grabbedEntity.entityId === entityId) {
+            console.log('global releasing')
             dispatch(emitSharedVerb(ev.clientX, ev.clientY, SharedVerbTypes.RELEASE, entityId, entityType));
         }
     }
 
-    useEffect(() => {
-        //TODO: only one listener should be here
-        document.addEventListener(ListenedMouseEventTypes.MOUSE_MOVE, documentOnMouseMoveHandler);
-        document.addEventListener(ListenedMouseEventTypes.MOUSE_UP, documentOnMouseUpHandler);
+    // useEffect(() => {
+    //     //TODO: only one listener should be here
+    //     document.addEventListener(ListenedMouseEventTypes.MOUSE_MOVE, documentOnMouseMoveHandler);
+    //     document.addEventListener(ListenedMouseEventTypes.MOUSE_UP, documentOnMouseUpHandler);
 
-        return () => {
-            document.removeEventListener(ListenedMouseEventTypes.MOUSE_MOVE, documentOnMouseMoveHandler);
-            document.removeEventListener(ListenedMouseEventTypes.MOUSE_UP, documentOnMouseUpHandler);
-        }
-    })
+    //     return () => {
+    //         document.removeEventListener(ListenedMouseEventTypes.MOUSE_MOVE, documentOnMouseMoveHandler);
+    //         document.removeEventListener(ListenedMouseEventTypes.MOUSE_UP, documentOnMouseUpHandler);
+    //     }
+    // })
 
     const styles: {[key: string]: CSSProperties} = {
         entityInterface: {

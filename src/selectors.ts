@@ -30,7 +30,7 @@ export function selectClients(state: RootState): Client[] {
     return state.gameState.clients;
 }
 
-export function selectClientInfoById(clientId: string) {
+export function selectClientInfoById(clientId: MaybeNull<string>) {
     return function(state: RootState){
         const clientInfo = state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.clientInfo;
         return clientInfo ? clientInfo : null;

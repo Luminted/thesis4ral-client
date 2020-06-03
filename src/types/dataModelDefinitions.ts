@@ -14,6 +14,22 @@ export interface FrenchCardConfig extends CardTypeConfig {
     suits: string[]
 }
 
+export enum FrenchCardFaces {
+    two = 'two',
+    three = 'three',
+    four = 'four',
+    five = 'five',
+    six = 'six',
+    seven = 'seven',
+    eight = 'eight',
+    nine = 'nine',
+    ten = 'ten',
+    jack = 'jack',
+    queen = 'queen',
+    king = 'king',
+    ace = 'ace',
+}
+
 export type CardConfig = FrenchCardConfig;
 
 export interface EntitySyncObject {
@@ -45,7 +61,7 @@ export interface Entity {
 export interface CardRepresentation {
     cardType: CardTypes,
     entityId: string,
-    face: string,
+    face: FrenchCardFaces,
     entityType: EntityTypes.CARD,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
@@ -54,7 +70,7 @@ export interface CardRepresentation {
 export interface CardEntity extends Entity {
     cardType: CardTypes,
     entityId: string,
-    face: string,
+    face: FrenchCardFaces,
     entityType: EntityTypes.CARD,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>

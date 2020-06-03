@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { EntityTypes, CardEntity, Entity } from '../../types/dataModelDefinitions';
+import { EntityTypes, CardEntity, Entity, FrenchCardFaces } from '../../types/dataModelDefinitions';
 import {EntityInterface} from './EntityInterface'
 import { VerbContextTypes } from '../../types/additionalTypes';
 import { useTypedSelector } from '../../store';
@@ -7,12 +7,13 @@ import { selectHorizontalScalingRatio, selectVerticalScalingRatio } from '../../
 import { downscale } from '../../utils';
 
 interface Props extends Entity {
-    face: string,
+    face: FrenchCardFaces,
+    scale: number,
     upsideDown?: boolean
-    scale: number
+    inHand?: boolean
 };
 
-export function Card({entityId, height, width, scale, face, positionX, positionY, grabbedBy, zIndex, upsideDown = false}: Props) {
+export function Card({entityId, height, width, scale, face, positionX, positionY, grabbedBy, zIndex, upsideDown = false, inHand = false}: Props) {
     const horizontalScalingRatio = useTypedSelector(selectHorizontalScalingRatio);
     const verticalScalingRatio = useTypedSelector(selectVerticalScalingRatio); 
     
@@ -26,7 +27,7 @@ export function Card({entityId, height, width, scale, face, positionX, positionY
     }
 
     return (
-            <EntityInterface upsideDown={upsideDown} grabbedBy={grabbedBy} entityId={entityId} entityType={EntityTypes.CARD} positionX={positionX} positionY={positionY} verbContext={VerbContextTypes.TABLE} zIndex={zIndex}>
+            <EntityInterface verbContext={inHand ? VerbContextTypes.HAND : VerbContextTypes.TABLE} upsideDown={upsideDown} grabbedBy={grabbedBy} entityId={entityId} entityType={EntityTypes.CARD} positionX={positionX} positionY={positionY} zIndex={zIndex}>
                 <div className='card-graphics' style={styles.cardGraphics}>
                     {face}
                 </div>

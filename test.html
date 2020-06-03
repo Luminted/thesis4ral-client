@@ -6,22 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div>
+        <div class='element-1'></div>
+        <div class='element-2'></div>
+    </div>
 </body>
-<script>
-    let events = 0;
-    setInterval(()=>{
-        console.log(events)
-        events = 0;
-    }, 1000)
-    var lastMove = 0;
-    document.addEventListener('mousemove', function() {
-    // do nothing if last move was less than 40 ms ago
-    if(Date.now() - lastMove > Math.round(1000 / 60)) {
-        // Do stuff
-        events++
-        lastMove = Date.now();
+<style>
+    .element-1 {
+        width: 100px;
+        height: 100px;
+        background-color: rebeccapurple;
     }
-});
-</script>
+    .element-2 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        transition-property: all;
+        transition-duration: 2s;
+    }
+</style>
 </html>

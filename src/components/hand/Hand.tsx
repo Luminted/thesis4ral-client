@@ -1,10 +1,9 @@
 import React, { CSSProperties } from 'react'
-import {selectGrabbedEntityByClientId, selectClientHandById, selectClientId } from '../../selectors';
+import {selectGrabbedEntityByClientId, selectClientHandById, selectClientId, selectEntityScale } from '../../selectors';
 import {Card} from '../entity'
 import { useDispatch } from 'react-redux';
 import { emitCardVerb } from '../../actions';
 import { CardVerbTypes } from '../../types/verbTypes';
-import config from '../../config/global';
 import chunk from 'lodash/chunk';
 import flatten from 'lodash/flatten';
 import { useTypedSelector } from '../../store';
@@ -12,6 +11,12 @@ import { useTypedSelector } from '../../store';
 type Props = {
     belongsTo: string,
     upsideDown: boolean
+}
+
+const config = {
+    maxHandSize: 25,
+    handRowSize: 25,
+    height: 70 //percentage
 }
 
 const horizontalOffset = 30;
@@ -23,11 +28,13 @@ export function Hand({belongsTo}: Props) {
     const cards = useTypedSelector(selectClientHandById(belongsTo));
     const currentClientId = useTypedSelector(selectClientId);
     const grabbedEntity = useTypedSelector(selectGrabbedEntityByClientId(currentClientId));
+    const entityScale = useTypedSelector(selectEntityScale);
+
     const renderedCards = flatten(
         chunk(cards, config.handRowSize)
         .map((row, rowIndex) => row.map((card, cardIndex) => {
                 const {entityId, entityType, face, ownerDeck} = card;
-                return <Card zIndex={cardIndex} grabbedBy={null} entityId={entityId} entityType={entityType} face={face} height={88} width={63} positionX={cardIndex * horizontalOffset + 10} positionY={rowIndex * verticalOffset + 30} scale={1} key={entityId}/>
+                return <Card key={entityId} inHand={true} zIndex={cardIndex} grabbedBy={null} entityId={entityId} entityType={entityType} face={face} height={88} width={63} positionX={cardIndex * horizontalOffset + 10} positionY={0} scale={entityScale}/>
             })
         )
     )
@@ -35,11 +42,9 @@ export function Hand({belongsTo}: Props) {
     const styles: {[key: string]: CSSProperties} = {
         hand: {
             position: 'relative',
-            width: 200,
-            height: 200,
-            marginBottom: 30,
-            background: 'purple',
-            zIndex: 0
+            width: '100%',
+            height: `${config.height}%`,
+            background: 'cyan',
         },
     }
 
@@ -49,8 +54,10 @@ export function Hand({belongsTo}: Props) {
             <div className='hand' style={styles.hand}
             onMouseUp={
                 ev => {
+                    console.log('hand')
+                    ev.bubbles = false
+                    ev.stopPropagation();
                     if(grabbedEntity && belongsTo === currentClientId && cards.length < config.maxHandSize){
-                        ev.stopPropagation();
                         dispatch(emitCardVerb(ev.clientX, ev.clientY, CardVerbTypes.PUT_IN_HAND, grabbedEntity.entityId))
                     }
                 }

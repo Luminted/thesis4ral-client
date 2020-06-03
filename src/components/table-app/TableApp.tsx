@@ -14,6 +14,7 @@ import { socketConnect } from '../../actions/socketActions';
 import { mirrorVerbPositionMiddleware } from '../../middlewares';
 import { setScalingRatios } from '../../actions/thunks';
 import { setTablePixelDimensions } from '../../actions/setterActions';
+import { InteractionGutter } from './InteractionGutter';
 
 
 type Props = {
@@ -46,9 +47,6 @@ export function TableApp (){
     const [tableDiagonalLength, setTableDiagonalLength] = useState<number>(calculateDiagonalLength(innerWidth, innerHeight) * (tableScale / 100));
     const tablePixelWidth = calculateWidthByDiagonalLength(tableDiagonalLength, tableAspectRatio);
     const tablePixelHeight = calculateHeightByDiagonalLength(tableDiagonalLength, tableAspectRatio);
-
-    console.log('calculated by diagonal', tablePixelWidth,
-        tablePixelHeight)
 
     useEffect(() => {
         if(connectionStatus !== SocketConnectionStatuses.CONNECTED){
@@ -101,17 +99,25 @@ export function TableApp (){
 
         NORTHERN_SEATS_IN_ORDER.forEach(seat => {
             const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            let isEmpty;
             if(clientIdInSeat){
-                renderedHandsNorth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.RIGHT_SIDE_UP} />)
+                isEmpty = false;
+            }else{
+                isEmpty = true;
             }
+            renderedHandsNorth.push(<Seat empty={isEmpty} belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.RIGHT_SIDE_UP} />)
 
         })
 
         SOUTHERN_SEATS_IN_ORDER.forEach(seat => {
             const clientIdInSeat = clients.find(client => client.clientInfo.seatedAt === seat)?.clientInfo.clientId;
+            let isEmpty;
             if(clientIdInSeat){
-                renderedHandsSouth.push(<Seat belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.UPSIDE_DOWN}/>)
+                isEmpty = false;
+            }else{
+                isEmpty = true;
             }
+            renderedHandsSouth.push(<Seat empty={isEmpty} belongsTo={clientIdInSeat} upsideDown={orientation === Orientations.UPSIDE_DOWN}/>)
         })
 
         const styles: {[key: string]: CSSProperties} = {
@@ -122,14 +128,18 @@ export function TableApp (){
                 position: 'relative'
             },
             playAreaMain:{
+                display: 'flex',
+                flexDirection: 'column',
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
                 transform: 'translate(-50%, -50%)',
+                height: '100%'
             },
             handsContainer: {
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                flexGrow: 1
             }
         }
 
@@ -137,17 +147,16 @@ export function TableApp (){
         //     console.log('table width', document.querySelector('.table')?.getBoundingClientRect());
 
         return (
+            <InteractionGutter>
                 <div className='play-area' style={styles.playArea}>
                     <div className='play-area-main' style={styles.playAreaMain}>
                         <div className='hands-container' style={styles.handsContainer}>
                             {orientation === Orientations.RIGHT_SIDE_UP ? 
                                 (<>
-                                    NORTH
                                 {renderedHandsNorth} 
                                 </>) :
                                 (
                                     <>
-                                    SOUTH
                                     {renderedHandsSouth}
                                     </>
                                 )}
@@ -156,17 +165,16 @@ export function TableApp (){
                         <div className='hands-container' style={styles.handsContainer}>
                             {orientation === Orientations.RIGHT_SIDE_UP ? 
                                 (<>
-                                    SOUTH
                                     {renderedHandsSouth} 
                                 </>) :
                                 (<>
-                                    NORTH
                                     {renderedHandsNorth}
                                 </>
                                 )}
                         </div>
                     </div>
                 </div>
+            </InteractionGutter>
             )
         }
         else{
