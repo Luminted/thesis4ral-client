@@ -74,20 +74,6 @@ describe('Testing tableModuleMiddleware', function(){
                 expect(socketMock.emit).toHaveBeenCalledWith(TableSocketClientEvents.JOIN_TABLE, action.ackFunction);
             })
         })
-        describe(`Action: ${SocketActionTypeKeys.GET_TABLE_DIMENSIONS}`, function(){
-            it(`should emit ${TableSocketClientEvents.GET_TABLE_DIMENSIONS} with actions ackFunction`, function(){
-                const {invoke} = mockMiddleware;
-                const action: ActionTypes = {
-                    type: SocketActionTypeKeys.GET_TABLE_DIMENSIONS,
-                    ackFunction: jest.fn()
-                }
-
-                socketMock.connected = true;
-                invoke(action);
-                expect(socketMock.emit).toHaveBeenCalledWith(TableSocketClientEvents.GET_TABLE_DIMENSIONS, action.ackFunction);
-            })
-        })
-
     })
 
     describe('Incoming API', function(){

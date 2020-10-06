@@ -15,8 +15,6 @@ export enum TableSocketClientEvents {
         VERB = 'VERB',
         LEAVE_TABLE = 'LEAVE_TABLE',
         KICK_PLAYER = 'KICK_PLAYER',
-    
-        GET_TABLE_DIMENSIONS = 'GET_TABLE_DIMENSIONS'
 }
 
 
