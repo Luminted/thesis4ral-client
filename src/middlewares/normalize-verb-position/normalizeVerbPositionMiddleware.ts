@@ -3,6 +3,10 @@ import { ActionTypes} from "../../actions";
 import {SocketActionTypeKeys} from '../../actions'
 import { Middleware } from "redux";
 
+/** 
+ * Normalizes coordinates so that tables top right corner is the origo
+ */ 
+
 export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store => 
     next => 
         (action: ActionTypes) => {
@@ -10,10 +14,9 @@ export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store
                 if(action.verb !== null){
                     const {tablePosition} = store.getState();
                     const {positionX, positionY} = action.verb;
-                    // console.log('+ normalizing position ', positionX, positionY)
+
                     action.verb.positionX = positionX - tablePosition.x;
                     action.verb.positionY = positionY - tablePosition.y;
-                    // console.log(action.verb.positionX, action.verb.positionY)
                 }
             }
             return next(action);

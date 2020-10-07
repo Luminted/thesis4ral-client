@@ -1,4 +1,4 @@
-import * as assert from 'assert';
+import assert from 'assert';
 
 import {mouseEventTranslator} from './mouseEventTranslator'
 import { ListenedMouseEventTypes, WhichButton, MouseInputTypes, ListenedDragEventTypes } from '../types';

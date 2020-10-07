@@ -1,5 +1,5 @@
 import {DragEvent as SyntheticDragEvent, MouseEvent as SyntheticMouseEvent} from 'react'
-import { socketEmitVerb, socketJoinTable, socketGetTableDimensions } from "./socketActions";
+import { socketEmitVerb, socketJoinTable } from "./socketActions";
 import { SharedVerbTypes, Verb, CardVerbTypes, DeckVerbTypes } from "../types/verbTypes";
 import { EntityTypes } from "../types/dataModelDefinitions";
 import { MaybeNull } from "../types/genericTypes";
@@ -91,38 +91,4 @@ export function setScalingRatios(renderedTableWidth: number, renderedTableHeight
         dispatch(setHorizontalScalingRatio(horizontalScalingRatio));
         dispatch(setVerticalScalingRatio(verticalScalingRatio));
    }
-}
-
-export function readyTable(renderedTableWidth: number, renderedTableHeight: number): ThunkResult<void> {
-    return (dispatch) => {
-        dispatch(setTableReady(false));
-        const joinTablePromise = new Promise((resolve, reject) => {
-            dispatch(socketJoinTable((clientInfo, gameState) => {
-                dispatch(setClientInfo(clientInfo));
-                dispatch(setGameState(gameState));
-                resolve();
-            }));
-        });
-
-        const scalingRatioPromise = new Promise((resolve, reject) => {
-            dispatch(socketGetTableDimensions((tableWidth, tableHeight) => {
-                const horizontalScalingRatio: Ratio = {
-                    numerator: renderedTableWidth,
-                    divisor: tableWidth
-                };
-                const verticalScalingRatio: Ratio = {
-                    numerator: renderedTableHeight,
-                    divisor: tableHeight
-                }
-                dispatch(setTableVirtualDimensions(tableWidth, tableHeight));
-                dispatch(setTablePixelDimensions(renderedTableWidth, renderedTableHeight));
-                dispatch(setHorizontalScalingRatio(horizontalScalingRatio));
-                dispatch(setVerticalScalingRatio(verticalScalingRatio));
-                resolve();
-            }));
-        });
-
-        Promise.all([joinTablePromise, scalingRatioPromise])
-        .then(() => dispatch(setTableReady(true)));
-    }
 }

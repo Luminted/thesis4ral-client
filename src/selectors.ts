@@ -13,7 +13,7 @@ export function selectGrabbedEntityByClientId(clientId: MaybeNull<string>) {
     }
 }
 
-export function selectGrabbedEntityOfCurrentClient(state: RootState): MaybeNull<GrabbedEntity>{ 
+export function selectGrabbedEntity(state: RootState): MaybeNull<GrabbedEntity>{ 
     const clientId = state.clientInfo?.clientId;
     //TODO: THIS CHECK IS WAY NOT COOL
     if(clientId !== 'undefined') {
