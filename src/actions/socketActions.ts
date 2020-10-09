@@ -15,8 +15,6 @@ export type SocketEmitVerbAction = {
 }
 
 type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => void
-type SocketGetTableDimensionsAckFunction = (tableWidth: number, tableHeight: number) => void
-
 
 export type SocketJoinTableAction = {
     type: SocketActionTypeKeys.JOIN_TABLE

@@ -1,12 +1,12 @@
 import {DragEvent as SyntheticDragEvent, MouseEvent as SyntheticMouseEvent} from 'react'
-import { socketEmitVerb, socketJoinTable } from "./socketActions";
+import { socketEmitVerb } from "./socketActions";
 import { SharedVerbTypes, Verb, CardVerbTypes, DeckVerbTypes } from "../types/verbTypes";
 import { EntityTypes } from "../types/dataModelDefinitions";
 import { MaybeNull } from "../types/genericTypes";
 import { ThunkResult } from ".";
 import { mouseEventTranslator, verbFactory } from "../controller";
 import { VerbContextTypes, Ratio } from '../types/additionalTypes';
-import { setClientInfo, setGameState, setVerticalScalingRatio, setHorizontalScalingRatio, setTableReady, setTableVirtualDimensions, setTablePixelDimensions } from './setterActions';
+import { setVerticalScalingRatio, setHorizontalScalingRatio } from './setterActions';
 
 //TODO: catch null verbs
 export function emitSharedVerb(positionX: number, positionY: number, verbType: SharedVerbTypes, entityId: MaybeNull<string>, entityType: MaybeNull<EntityTypes>): ThunkResult<void> {
