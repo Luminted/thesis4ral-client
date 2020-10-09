@@ -3,7 +3,7 @@ import { MouseInputTypes } from "./types"
 
 //TODO: revise names
 export const tableCardInteractionMapping: {[key in MouseInputTypes]?: CardVerbTypes | SharedVerbTypes} = {
-    DRAG_START: SharedVerbTypes.GRAB_FROM_TABLE,
+    DRAG_START: SharedVerbTypes.GRAB,
     MOUSE_MOVE: SharedVerbTypes.MOVE,
     LEFT_BUTTON_UP: SharedVerbTypes.RELEASE
 }
@@ -15,7 +15,7 @@ export const handCardInteractionMapping: {[key in MouseInputTypes]?: CardVerbTyp
 }
 
 export const deckInteractionMapping: {[key in MouseInputTypes]?: DeckVerbTypes | SharedVerbTypes} = {
-    DRAG_START: SharedVerbTypes.GRAB_FROM_TABLE,
+    DRAG_START: SharedVerbTypes.GRAB,
     LEFT_BUTTON_UP: DeckVerbTypes.DRAW_FACE_UP,
     MOUSE_MOVE: SharedVerbTypes.MOVE
 }

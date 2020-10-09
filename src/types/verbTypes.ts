@@ -2,7 +2,7 @@ import { EntityTypes } from "./dataModelDefinitions";
 import { MaybeNull } from "./genericTypes";
 
 export enum SharedVerbTypes {
-    GRAB_FROM_TABLE = 'GRAB_FROM_TABLE',
+    GRAB = 'GRAB',
     MOVE = 'MOVE',
     RELEASE = 'RELEASE',
     REMOVE = 'REMOVE',
