@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import {useDispatch} from 'react-redux'
+import {Switch, Route, BrowserRouter} from "react-router-dom"
 
 import {TableApp} from './components/table-app/TableApp';
 import { useTypedSelector } from './store';
@@ -13,7 +12,8 @@ import { readyTable } from './actions/thunks';
 export function App() {
     
     return (
-        <div className='app'>
-            <TableApp></TableApp>
-        </div>)
+        <BrowserRouter>
+            <Switch>
+            </Switch>
+        </BrowserRouter>)
 }
