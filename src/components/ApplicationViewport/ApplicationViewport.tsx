@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { selectGrabbedEntity } from "../../selectors";
-import { useTypedSelector } from "../../store";
 import {emitSharedVerb} from "../../actions/thunks";
 import { SharedVerbTypes } from "../../types/verbTypes";
 import "./style.css";
@@ -13,7 +12,7 @@ const listenerThrottleValue = 1000 / 60;
 export const ApplicationViewport = () => {
     const dispatch = useDispatch();
 
-    const grabbedEntity = useTypedSelector(selectGrabbedEntity);
+    const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 

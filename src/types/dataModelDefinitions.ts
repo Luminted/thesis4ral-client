@@ -10,7 +10,6 @@ export interface Entity {
 }
 
 export interface ICardEntity extends Entity {
-    entityId: string,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
 }

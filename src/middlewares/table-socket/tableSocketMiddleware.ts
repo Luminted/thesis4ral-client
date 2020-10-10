@@ -13,6 +13,7 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
 
         // Incoming API
         socket.on(TableSocketServerEvents.SYNC, (gameState: GameState) => {
+            console.log(gameState)
             dispatch(setGameState(gameState))
             
         })
@@ -32,6 +33,7 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
             // Outgoing API
             (action: ActionTypes) => {
                     if(action.type.startsWith('socket/')){
+                        //TODO: more if(!socket.connected) to top level
                         switch(action.type){
                             case SocketActionTypeKeys.JOIN_TABLE:
                                 if(!socket.connected){
