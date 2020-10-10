@@ -17,7 +17,7 @@ export const DeckEntity = ({entityId}: IProps) => {
     const {positionX, positionY, zIndex} = deckEntityDetails || {};
     const isGrabbed = grabbedEntity?.entityId === entityId;
 
-    const onMouseUp = (e: MouseEvent) => {
+    const onClick = (e: MouseEvent) => {
         if(grabbedEntity === null){
             const {clientX, clientY} = e;
             dispatch(emitDeckVerb(clientX, clientY, DeckVerbTypes.DRAW_FACE_UP, entityId));
@@ -39,7 +39,7 @@ export const DeckEntity = ({entityId}: IProps) => {
             zIndex
         }}
         onDragStart={onDragStart}
-        onMouseUp={onMouseUp}
+        onClick={onClick}
         >
             <div style={{
                 width: 65,
