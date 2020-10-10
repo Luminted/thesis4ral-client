@@ -1,3 +1,4 @@
+// TODO: Make selectors throw errors????
 import {GrabbedEntity, Client, ICardEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
 import { MaybeNull } from './types/genericTypes';
@@ -52,9 +53,7 @@ export function selectCards(state: RootState): ICardEntity[] {
     return state.gameState.cards;
 }
 
-// export function selectDecks(state: RootState): DeckEntity[] {
-//     return state.gameState.decks;
-// }
+export const selectDecks = (state: RootState) => state.gameState.decks;
 
 // export function selectGrabbedEntityOriginalPosition(state: RootState) {
 //     return state.grabbedEntityOriginalPosition;
@@ -90,3 +89,6 @@ export function selectEntityScale(state: RootState) {
 
 export const selectCardById = (entityId: string) =>
     (state: RootState) => state.gameState.cards.find(card => card.entityId === entityId);
+
+export const selectDeckById = (entityId: string) => 
+    (state: RootState) => state.gameState.decks.find(deck => deck.entityId === entityId);

@@ -1,0 +1,1 @@
+export {DeckEntity} from "./DeckEntity";

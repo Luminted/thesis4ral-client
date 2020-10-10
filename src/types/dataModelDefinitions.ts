@@ -11,10 +11,11 @@ export interface Entity {
 
 export interface ICardEntity extends Entity {
     entityId: string,
-    entityType: EntityTypes.CARD,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
 }
+
+export interface IDeckEntity extends Entity {}
 
 export enum EntityTypes {
     CARD = 'CARD',
@@ -51,7 +52,7 @@ export enum Seats {
 
 export interface GameState {
     cards: ICardEntity[],
-    decks: [],
+    decks: IDeckEntity[],
     clients: Client[],
     hands: [],
     entityScale: number,
@@ -66,7 +67,7 @@ export type PlayTable = {
 
 export type SerializedGameState = {
     cards: ICardEntity[],
-    decks: [],
+    decks: IDeckEntity[],
     clients: Client[],
     hands: [],
     entityScale: number
