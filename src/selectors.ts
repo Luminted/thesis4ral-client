@@ -1,4 +1,4 @@
-import {GrabbedEntity, ClientHand, Client, DeckEntity, CardRepresentation, CardEntity} from './types/dataModelDefinitions';
+import {GrabbedEntity, Client, ICardEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
 import { MaybeNull } from './types/genericTypes';
 
@@ -22,9 +22,9 @@ export function selectGrabbedEntity(state: RootState): MaybeNull<GrabbedEntity>{
     return null;
 }
 
-export function selectHands(state: RootState): ClientHand[] {
-    return state.gameState.hands;
-}
+// export function selectHands(state: RootState): ClientHand[] {
+//     return state.gameState.hands;
+// }
 
 export function selectClients(state: RootState): Client[] {
     return state.gameState.clients;
@@ -37,24 +37,24 @@ export function selectClientInfoById(clientId: string) {
     }
 }
 
-export function selectClientHandById(clientId: MaybeNull<string>){
-    return function(state: RootState): CardRepresentation[] {
-        let hand = state.gameState.hands.find(hand => hand.clientId === clientId);
-        return hand ? hand.cards : [];
-    }
-}
+// export function selectClientHandById(clientId: MaybeNull<string>){
+//     return function(state: RootState): CardRepresentation[] {
+//         let hand = state.gameState.hands.find(hand => hand.clientId === clientId);
+//         return hand ? hand.cards : [];
+//     }
+// }
 
 export function selectTablePosition(state: RootState){
     return state.tablePosition;
 }
 
-export function selectCards(state: RootState): CardEntity[] {
+export function selectCards(state: RootState): ICardEntity[] {
     return state.gameState.cards;
 }
 
-export function selectDecks(state: RootState): DeckEntity[] {
-    return state.gameState.decks;
-}
+// export function selectDecks(state: RootState): DeckEntity[] {
+//     return state.gameState.decks;
+// }
 
 // export function selectGrabbedEntityOriginalPosition(state: RootState) {
 //     return state.grabbedEntityOriginalPosition;
@@ -87,3 +87,6 @@ export function selectVerticalScalingRatio(state: RootState){
 export function selectEntityScale(state: RootState) {
     return state.gameState.entityScale;
 }
+
+export const selectCardById = (entityId: string) =>
+    (state: RootState) => state.gameState.cards.find(card => card.entityId === entityId);

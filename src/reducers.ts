@@ -1,6 +1,6 @@
 import {produce} from 'immer';
-import {ActionTypes, SocketActionTypeKeys, SetActionTypeKeys} from './actions';
-import {CardEntity, DeckEntity, GameState, ClientInfo} from './types/dataModelDefinitions' 
+import {ActionTypes, SetActionTypeKeys} from './actions';
+import {ICardEntity, GameState, ClientInfo} from './types/dataModelDefinitions' 
 import {MaybeNull} from './types/genericTypes'
 import { SocketConnectionStatuses, Ratio } from './types/additionalTypes';
 
@@ -27,8 +27,8 @@ type State = {
 
 const initialState: State = {
     gameState: {
-        cards: new Array<CardEntity>(),
-        decks: new Array<DeckEntity>(),
+        cards: new Array<ICardEntity>(),
+        decks: [],
         clients: [],
         hands: [],
         entityScale: 1,

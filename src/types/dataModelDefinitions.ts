@@ -1,69 +1,19 @@
 import {MaybeNull} from './genericTypes'
 
-export enum CardTypes {
-    FRENCH = 'FRENCH'
-}
-
-export interface CardTypeConfig {
-    baseHeight: number,
-    baseWidth: number,
-}
-
-export interface FrenchCardConfig extends CardTypeConfig {
-    cardRange: any[],
-    suits: string[]
-}
-
-export type CardConfig = FrenchCardConfig;
-
-export interface EntitySyncObject {
-    entityId: string,
-    positionX: number,
-    positionY: number,
-    grabLocked: boolean
-}
-
-export interface CardEntitySyncObject extends EntitySyncObject {
-    faceUp: boolean
-}
-
-export interface DeckEntitySyncObject extends EntitySyncObject {
-    cards: CardRepresentation[]
-}
-
 export interface Entity {
     entityType: EntityTypes,
     entityId: string,
-    height:number,
-    width: number,
     positionX: number,
     positionY: number,
     grabbedBy: MaybeNull<string>
     zIndex: number
 }
 
-export interface CardRepresentation {
-    cardType: CardTypes,
+export interface ICardEntity extends Entity {
     entityId: string,
-    face: string,
     entityType: EntityTypes.CARD,
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
-}
-
-export interface CardEntity extends Entity {
-    cardType: CardTypes,
-    entityId: string,
-    face: string,
-    entityType: EntityTypes.CARD,
-    faceUp: boolean,
-    ownerDeck: MaybeNull<string>
-}
-
-export interface DeckEntity extends Entity {
-    entityType: EntityTypes.DECK
-    cards: CardRepresentation[],
-    drawIndex: number
 }
 
 export enum EntityTypes {
@@ -84,11 +34,6 @@ export type Client = {
     grabbedEntitiy: GrabbedEntity
 }
 
-export type ClientHand = {
-    clientId: string,
-    cards: CardRepresentation[],
-}
-
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
@@ -105,10 +50,10 @@ export enum Seats {
 } 
 
 export interface GameState {
-    cards: CardEntity[],
-    decks: DeckEntity[],
+    cards: ICardEntity[],
+    decks: [],
     clients: Client[],
-    hands: ClientHand[],
+    hands: [],
     entityScale: number,
     topZIndex: number
 }
@@ -119,15 +64,10 @@ export type PlayTable = {
     gameState: GameState,
 }
 
-export type SyncState = {
-    updatedCards: CardEntitySyncObject[];
-    newCards: CardEntity[];
-}
-
 export type SerializedGameState = {
-    cards: CardEntity[],
-    decks: DeckEntity[],
+    cards: ICardEntity[],
+    decks: [],
     clients: Client[],
-    hands: ClientHand[],
+    hands: [],
     entityScale: number
 }

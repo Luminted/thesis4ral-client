@@ -21,7 +21,7 @@ export const ApplicationViewport = () => {
         if(grabbedEntity){
             dispatch(emitSharedVerb(
                 event.clientX,
-                event.clientX,
+                event.clientY,
                 SharedVerbTypes.MOVE,
                 grabbedEntity.entityId,
                 grabbedEntity.entityType));
@@ -30,7 +30,8 @@ export const ApplicationViewport = () => {
 
     const onMouseUp = useCallback(throttle((event: MouseEvent) => {
         if(grabbedEntity){
-            dispatch(emitSharedVerb(event.clientX,
+            dispatch(emitSharedVerb(
+                event.clientX,
                 event.clientY,
                 SharedVerbTypes.RELEASE,
                 grabbedEntity.entityId,
