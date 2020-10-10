@@ -1,11 +1,13 @@
-import React, { DragEvent } from "react";
+import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitSharedVerb } from "../../actions";
+import { emitCardVerb, emitSharedVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import { SharedVerbTypes } from "../../types/verbTypes";
+import { CardVerbTypes, SharedVerbTypes } from "../../types/verbTypes";
 import {Props, CardInteractionContext } from "./typings";
 import {style} from "./style";
 import { selectCardById, selectGrabbedEntity } from "../../selectors";
+import { emitRotateVerb } from "../../actions/thunks/emitRotateVerb";
+import {cardRotationStepDegree} from "../../config";
 
 export const CardEntity = ({entityId, context, scale = 1}: Props) => {
 
@@ -14,7 +16,6 @@ export const CardEntity = ({entityId, context, scale = 1}: Props) => {
     const cardEntityDetails = useSelector(selectCardById(entityId));
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
-    const {positionX, positionY, zIndex} = cardEntityDetails || {};
     const isGrabbed = grabbedEntity?.entityId === entityId;
 
     const onDragStartOnTable = (e: DragEvent) => {
@@ -24,21 +25,35 @@ export const CardEntity = ({entityId, context, scale = 1}: Props) => {
         dispatch(emitSharedVerb(clientX, clientY, SharedVerbTypes.GRAB, entityId, EntityTypes.CARD));
     }
 
+    const onRightClick = (e: MouseEvent) => {
+        e.preventDefault();
+        const {clientX, clientY} = e;
+        dispatch(emitRotateVerb(clientX, clientY, entityId, EntityTypes.CARD, cardRotationStepDegree))
+    }
+
+    const onClick = (e: MouseEvent) => {
+        const {clientX, clientY} = e;
+        dispatch(emitCardVerb(clientX, clientY, CardVerbTypes.FLIP, entityId))
+    }
+
     return (
         <>
-        <div draggable={true} className="card-entity" style={{
-            left: positionX,
-            top: positionY,
+        {cardEntityDetails && <div draggable={true} className="card-entity" style={{
+            left: cardEntityDetails.positionX,
+            top: cardEntityDetails.positionY,
             pointerEvents: isGrabbed ? "none" : "auto",
-            zIndex
+            rotate: `${cardEntityDetails.rotation % 360}deg`,
+            zIndex: cardEntityDetails.zIndex
         }}
-        onDragStart={context === CardInteractionContext.TABLE ? onDragStartOnTable : undefined}>
+        onDragStart={context === CardInteractionContext.TABLE ? onDragStartOnTable : undefined}
+        onClick={onClick}
+        onContextMenu={onRightClick}>
             <div style={{
                 width: 56,
                 height: 88,
-                background: "blue"
+                background: cardEntityDetails.faceUp ? "lightblue" : "blue"
             }}></div>
-        </div>
+        </div>}
             <style jsx={true}>{style}</style>
         </>
     )

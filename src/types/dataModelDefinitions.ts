@@ -1,20 +1,22 @@
 import {MaybeNull} from './genericTypes'
 
-export interface Entity {
+export interface IEntity {
     entityType: EntityTypes,
     entityId: string,
     positionX: number,
     positionY: number,
     grabbedBy: MaybeNull<string>
-    zIndex: number
+    zIndex: number,
+    rotation: number,
+
 }
 
-export interface ICardEntity extends Entity {
+export interface ICardEntity extends IEntity {
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
 }
 
-export interface IDeckEntity extends Entity {}
+export interface IDeckEntity extends IEntity {}
 
 export enum EntityTypes {
     CARD = 'CARD',
