@@ -1,48 +1,38 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { DragEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { emitSharedVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
 import { SharedVerbTypes } from "../../types/verbTypes";
-import {Props, CardContext } from "./typings";
+import {Props, CardInteractionContext } from "./typings";
 import {style} from "./style";
-import { useTypedSelector } from "../../store";
-import { selectCardById } from "../../selectors";
+import { selectCardById, selectGrabbedEntity } from "../../selectors";
 
 export const CardEntity = ({entityId, context, scale = 1}: Props) => {
 
     const dispatch = useDispatch();
 
-    const cardEntityRef = useRef<HTMLDivElement>(null);
-
-    const cardEntityDetails = useTypedSelector(selectCardById(entityId));
+    const cardEntityDetails = useSelector(selectCardById(entityId));
+    const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const {positionX, positionY, zIndex} = cardEntityDetails || {};
-    console.log('details', cardEntityDetails)
+    const isGrabbed = grabbedEntity?.entityId === entityId;
 
-    const onDragStart = useCallback((e: DragEvent) => {
+    const onDragStartOnTable = (e: DragEvent) => {
         e.preventDefault();
         const {clientX, clientY} = e;
         console.log('dragStarted')
         dispatch(emitSharedVerb(clientX, clientY, SharedVerbTypes.GRAB, entityId, EntityTypes.CARD));
-    }, [])
-
-    useEffect(() => {
-        const cardEntityElement = cardEntityRef.current;
-        if(cardEntityElement){
-            if(context = CardContext.TABLE){
-                cardEntityElement.addEventListener("dragstart", onDragStart);
-                return () => cardEntityElement.removeEventListener("dragstart", onDragStart);
-            }
-        }
-    }, [])
+    }
 
     return (
         <>
-        <div ref={cardEntityRef} draggable={true} className="card-entity" style={{
+        <div draggable={true} className="card-entity" style={{
             left: positionX,
             top: positionY,
+            pointerEvents: isGrabbed ? "none" : "auto",
             zIndex
-        }}>
+        }}
+        onDragStart={context === CardInteractionContext.TABLE ? onDragStartOnTable : undefined}>
             <div style={{
                 width: 56,
                 height: 88,

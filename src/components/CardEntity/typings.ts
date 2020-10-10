@@ -1,11 +1,11 @@
 export interface Props {
     entityId: string
-    context: CardContext
+    context: CardInteractionContext
     scale?: number,
     // children: React.Component
 }
 
-export enum CardContext {
+export enum CardInteractionContext {
     TABLE = "TABLE",
     HAND = "HAND"
 }
