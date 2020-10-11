@@ -5,9 +5,8 @@ import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTab
 
 export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableVirtualDimensions, setTableReady, setOrientationAction, setTableSocketStatus, SetActionTypeKeys} from './setterActions'
 export { SocketActionTypeKeys } from './socketActions'
-export {emitCardVerb, emitDeckVerb, emitDerivedVerb, emitSharedVerb} from './thunks'
 
-export type ThunkResult<R> = ThunkAction<R, RootState, null, ActionTypes>
+export type ThunkResult = ThunkAction<void, RootState, null, ActionTypes>
 
 export type ActionTypes = SocketActionTypes | SetterActionTypes;
 
@@ -28,3 +27,5 @@ export type SetterActionTypes =
     SetOrientationAction |
     SetTableVirtualDimensions |
     SetTablePixelDimensions;
+
+export * from "./thunks";

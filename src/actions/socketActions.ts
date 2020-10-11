@@ -1,4 +1,4 @@
-import { Verb } from "../types/verbTypes";
+import { Verb } from "../types/verb";
 import { ClientInfo, SerializedGameState } from "../types/dataModelDefinitions";
 
 export enum SocketActionTypeKeys {

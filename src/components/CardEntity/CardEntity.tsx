@@ -1,12 +1,12 @@
 import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitCardVerb, emitSharedVerb } from "../../actions";
+import { emitFlipVerb, emitGrabVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import { CardVerbTypes, SharedVerbTypes } from "../../types/verbTypes";
+import { CardVerbTypes, SharedVerbTypes } from "../../types/verb";
 import {Props, CardInteractionContext } from "./typings";
 import {style} from "./style";
 import { selectCardById, selectGrabbedEntity } from "../../selectors";
-import { emitRotateVerb } from "../../actions/thunks/emitRotateVerb";
+import { emitRotateVerb } from "../../actions/thunks/emitSharedVerb/emitRotateVerb";
 import {cardRotationStepDegree} from "../../config";
 
 export const CardEntity = ({entityId, context, scale = 1}: Props) => {
@@ -20,20 +20,17 @@ export const CardEntity = ({entityId, context, scale = 1}: Props) => {
 
     const onDragStartOnTable = (e: DragEvent) => {
         e.preventDefault();
-        const {clientX, clientY} = e;
         console.log('dragStarted')
-        dispatch(emitSharedVerb(clientX, clientY, SharedVerbTypes.GRAB, entityId, EntityTypes.CARD));
+        dispatch(emitGrabVerb(entityId, EntityTypes.CARD, e.clientX, e.clientY));
     }
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
-        const {clientX, clientY} = e;
-        dispatch(emitRotateVerb(clientX, clientY, entityId, EntityTypes.CARD, cardRotationStepDegree))
+        dispatch(emitRotateVerb(entityId, EntityTypes.CARD, cardRotationStepDegree));
     }
 
-    const onClick = (e: MouseEvent) => {
-        const {clientX, clientY} = e;
-        dispatch(emitCardVerb(clientX, clientY, CardVerbTypes.FLIP, entityId))
+    const onClick = () => {
+        dispatch(emitFlipVerb(entityId));
     }
 
     return (

@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { selectGrabbedEntity } from "../../selectors";
-import {emitSharedVerb} from "../../actions/thunks";
-import { SharedVerbTypes } from "../../types/verbTypes";
-import "./style.css";
+import {emitMoveVerb, emitReleaseVerb} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
+import "./style.css";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -16,25 +15,21 @@ export const ApplicationViewport = () => {
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 
-    const onMouseMove = useCallback(throttle((event: MouseEvent) => {
+    const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity){
-            dispatch(emitSharedVerb(
-                event.clientX,
-                event.clientY,
-                SharedVerbTypes.MOVE,
-                grabbedEntity.entityId,
-                grabbedEntity.entityType));
+            dispatch(emitMoveVerb(
+                e.clientX,
+                e.clientY
+                ));
         }
     }, listenerThrottleValue), [grabbedEntity]);
 
-    const onMouseUp = useCallback(throttle((event: MouseEvent) => {
+    const onMouseUp = useCallback(throttle(() => {
         if(grabbedEntity){
-            dispatch(emitSharedVerb(
-                event.clientX,
-                event.clientY,
-                SharedVerbTypes.RELEASE,
+            dispatch(emitReleaseVerb(
                 grabbedEntity.entityId,
-                grabbedEntity.entityType));
+                grabbedEntity.entityType
+            ));
         }
     }, listenerThrottleValue), [grabbedEntity]);
 

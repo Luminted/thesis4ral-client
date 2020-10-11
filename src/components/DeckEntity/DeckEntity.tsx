@@ -1,12 +1,12 @@
 import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitDeckVerb, emitSharedVerb } from "../../actions";
+import { emitDrawFaceUpVerb, emitGrabVerb } from "../../actions";
 import { selectDeckById, selectGrabbedEntity } from "../../selectors";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import { DeckVerbTypes, SharedVerbTypes } from "../../types/verbTypes";
+import { DeckVerbTypes, SharedVerbTypes } from "../../types/verb";
 import { style } from "./style";
 import { IProps } from "./interfaces";
-import { emitRotateVerb } from "../../actions/thunks/emitRotateVerb";
+import { emitRotateVerb } from "../../actions/thunks/emitSharedVerb/emitRotateVerb";
 import {deckRotationStepDegree} from "../../config";
 
 export const DeckEntity = ({entityId}: IProps) => {
@@ -18,23 +18,20 @@ export const DeckEntity = ({entityId}: IProps) => {
 
     const isGrabbed = grabbedEntity?.entityId === entityId;
 
-    const onClick = (e: MouseEvent) => {
+    const onClick = () => {
         if(grabbedEntity === null){
-            const {clientX, clientY, ctrlKey} = e;
-            dispatch(emitDeckVerb(clientX, clientY, DeckVerbTypes.DRAW_FACE_UP, entityId));
+            dispatch(emitDrawFaceUpVerb(entityId));
         }
     }
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
-        const {clientX, clientY} = e;
-        dispatch(emitRotateVerb(clientX, clientY, entityId, EntityTypes.DECK, deckRotationStepDegree));
+        dispatch(emitRotateVerb(entityId, EntityTypes.DECK, deckRotationStepDegree));
     }
 
     const onDragStart = (e: DragEvent) => {
         e.preventDefault();
-        const {clientX, clientY} = e;
-        dispatch(emitSharedVerb(clientX, clientY, SharedVerbTypes.GRAB, entityId, EntityTypes.DECK));
+        dispatch(emitGrabVerb(entityId, EntityTypes.DECK, e.clientX, e.clientY));
     }
 
     return (
