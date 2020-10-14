@@ -17,7 +17,7 @@ export const Hand = ({clientId}: IProps) => {
     const grabbedEntity = useSelector(selectGrabbedEntity);
     const ownClientId = useSelector(selectClientId);
 
-    const isOwnHand = useMemo(() => ownClientId === clientId, []);
+    const isOwnHand = useMemo(() => ownClientId === clientId, [ownClientId]);
 
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
@@ -36,7 +36,9 @@ export const Hand = ({clientId}: IProps) => {
         <CardEntity
         positionX={index * 40}
         positionY={0}
-         context={ECardInteractionContext.TABLE}
+         context={ECardInteractionContext.HAND}
+         inHandOf={handDetails.clientId}
+         key={card.entityId}
          {...card }/>), [handDetails?.cards])
 
     return ( 

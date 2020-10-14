@@ -1,16 +1,18 @@
-import React, { DragEvent, MouseEvent } from "react";
+import React, { DragEvent, MouseEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitFlipVerb, emitGrabVerb } from "../../actions";
+import { emitFlipVerb, emitGrabFromHand, emitGrabVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import {Props, ECardInteractionContext } from "./typings";
+import {IProps, ECardInteractionContext } from "./typings";
 import {style} from "./style";
-import { selectCardById, selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntity } from "../../selectors";
 import { emitRotateVerb } from "../../actions/thunks/emitSharedVerb/emitRotateVerb";
 import {cardRotationStepDegree} from "../../config";
 
-export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIndex, rotation = 0 }: Props) => {
+export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIndex, inHandOf, rotation = 0 }: IProps) => {
 
     const dispatch = useDispatch();
+
+    const cardRef = useRef<HTMLDivElement>(null);
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
@@ -18,8 +20,18 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIn
 
     const onDragStartOnTable = (e: DragEvent) => {
         e.preventDefault();
-        console.log('dragStarted')
         dispatch(emitGrabVerb(entityId, EntityTypes.CARD, e.clientX, e.clientY));
+    }
+
+    const onDragStartInHand = (e: DragEvent) => {
+        e.preventDefault();
+        const cardElement = cardRef.current;
+        if(cardElement && inHandOf){
+            const {left, top} = cardElement.getBoundingClientRect();
+            const {clientX, clientY} = e;
+
+            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, left, top ))
+        }
     }
 
     const onRightClick = (e: MouseEvent) => {
@@ -33,14 +45,14 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIn
 
     return (
         <>
-        <div draggable={true} className="card-entity" style={{
+        <div draggable={true} ref={cardRef} className="card-entity" style={{
             left: positionX,
             top: positionY,
             pointerEvents: isGrabbed ? "none" : "auto",
             rotate: `${rotation}deg`,
             zIndex: zIndex || "auto"
         }}
-        onDragStart={context === ECardInteractionContext.TABLE ? onDragStartOnTable : undefined}
+        onDragStart={context === ECardInteractionContext.TABLE ? onDragStartOnTable : onDragStartInHand}
         onClick={onClick}
         onContextMenu={onRightClick}>
             <div style={{

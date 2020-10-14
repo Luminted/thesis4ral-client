@@ -1,6 +1,6 @@
-import { IEntityMetadata } from "../../types/dataModelDefinitions";
+import { IEntityMetadata } from "../../types/dataModelDefinitions"
 
-export interface Props {
+export interface IProps {
     entityId: string
     positionX: number
     positionY: number
@@ -9,6 +9,7 @@ export interface Props {
     metadata: IEntityMetadata
     rotation?: number
     zIndex?: number
+    inHandOf?: string
 }
 export enum ECardInteractionContext {
     TABLE = "TABLE",
