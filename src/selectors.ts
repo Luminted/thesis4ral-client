@@ -1,7 +1,7 @@
 // TODO: Make selectors throw errors????
-import {GrabbedEntity, Client, ICardEntity} from './types/dataModelDefinitions';
+import {GrabbedEntity, Client, ICardEntity, IClientHand} from './types/dataModelDefinitions';
 import {RootState} from './store'
-import { MaybeNull } from './types/genericTypes';
+import { MaybeNull } from './types/genericTypes';   
 
 export function selectGrabbedEntityByClientId(clientId: MaybeNull<string>) {
     return function (state: RootState): MaybeNull<GrabbedEntity> {
@@ -23,9 +23,7 @@ export function selectGrabbedEntity(state: RootState): MaybeNull<GrabbedEntity>{
     return null;
 }
 
-// export function selectHands(state: RootState): ClientHand[] {
-//     return state.gameState.hands;
-// }
+export const selectHands = (state: RootState) => state.gameState.hands;
 
 export function selectClients(state: RootState): Client[] {
     return state.gameState.clients;
@@ -38,12 +36,8 @@ export function selectClientInfoById(clientId: string) {
     }
 }
 
-// export function selectClientHandById(clientId: MaybeNull<string>){
-//     return function(state: RootState): CardRepresentation[] {
-//         let hand = state.gameState.hands.find(hand => hand.clientId === clientId);
-//         return hand ? hand.cards : [];
-//     }
-// }
+export const selectClientHandById = (clientId: MaybeNull<string>) =>
+    (state: RootState) => state.gameState.hands.find(hand => hand.clientId === clientId);
 
 export function selectTablePosition(state: RootState){
     return state.tablePosition;

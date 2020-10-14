@@ -8,15 +8,34 @@ export interface IEntity {
     grabbedBy: MaybeNull<string>
     zIndex: number,
     rotation: number,
-
+    metadata?: IEntityMetadata
 }
 
 export interface ICardEntity extends IEntity {
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
+    metadata: IEntityMetadata
 }
 
-export interface IDeckEntity extends IEntity {}
+export interface IDeckEntity extends IEntity {
+    metadata: IEntityMetadata
+}
+
+export interface IEntityMetadata {
+    entityId: string
+    configId: string
+}
+
+export interface IDeckCard extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {}
+
+export interface IHandCard extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {
+    ownerDeck: string,
+}
+
+export interface IClientHand {
+    clientId: string
+    cards: IHandCard[]
+}
 
 export enum EntityTypes {
     CARD = 'CARD',
@@ -39,10 +58,10 @@ export type Client = {
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
-    seatedAt: Seats
+    seatedAt: ESeatOrientation
 }
 
-export enum Seats {
+export enum ESeatOrientation {
     SOUTH = 'SOUTH',
     NORTH = 'NORTH',
     SOUTH_WEST = 'SOUTH_WEST',
@@ -55,7 +74,7 @@ export interface GameState {
     cards: ICardEntity[],
     decks: IDeckEntity[],
     clients: Client[],
-    hands: [],
+    hands: IClientHand[],
     entityScale: number,
     topZIndex: number
 }
@@ -70,6 +89,6 @@ export type SerializedGameState = {
     cards: ICardEntity[],
     decks: IDeckEntity[],
     clients: Client[],
-    hands: [],
+    hands: IClientHand[],
     entityScale: number
 }

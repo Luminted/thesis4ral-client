@@ -1,0 +1,13 @@
+.hand {
+    position: relative;
+    width: 25%;
+    height: 70%;
+}
+
+.hand--own-hand{
+    background: cyan;
+}
+
+.hand--parner-hand{
+    background: purple;
+}

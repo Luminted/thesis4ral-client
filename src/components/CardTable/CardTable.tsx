@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import { selectCards, selectDecks } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
-import {CardInteractionContext} from "../CardEntity/typings";
+import {ECardInteractionContext} from "../CardEntity/typings";
 import { DeckEntity } from "../DeckEntity";
 
 export const CardTable = () => {
@@ -13,9 +13,9 @@ export const CardTable = () => {
 
     const renderedCards = useMemo(() => cards.map(card => 
         <CardEntity 
-            context={CardInteractionContext.TABLE}
-            entityId={card.entityId}
+            context={ECardInteractionContext.TABLE}
             key={card.entityId}
+            {...card}
              />), [cards]);
 
     const renderedDecks = useMemo(() => decks.map(deck =>

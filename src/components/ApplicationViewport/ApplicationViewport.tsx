@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
-import { selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntity, selectOwnClientInfo } from "../../selectors";
 import {emitMoveVerb, emitReleaseVerb} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
 import "./style.css";
+import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -12,6 +13,7 @@ export const ApplicationViewport = () => {
     const dispatch = useDispatch();
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
+    const clientInfo = useSelector(selectOwnClientInfo);
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 
@@ -44,8 +46,15 @@ export const ApplicationViewport = () => {
     }, [onMouseUp]);
 
     return (
-        <div ref={applicationViewportRef} className="application-viewport">
-            <CardTable/>
-        </div>
+        <>
+        {clientInfo && <div ref={applicationViewportRef} className="application-viewport">
+            <div className="application-viewport__center">
+                    <SeatsContainer orientation={"NORTH"} />
+                    <CardTable/>
+                    <SeatsContainer orientation={"SOUTH"} />
+            </div>
+        </div>}
+        {!clientInfo && "LOADING"}
+        </>
     )
 }
