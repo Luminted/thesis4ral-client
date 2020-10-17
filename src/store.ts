@@ -42,7 +42,7 @@ export const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(
         thunk,
         normalizeVerbPositionMiddleware,
-        dynamicMiddlewares,
-        upscaleVerbPositionMiddleware,
+        // dynamicMiddlewares,
+        // upscaleVerbPositionMiddleware,
         tableSocketMiddleware)
 ));
