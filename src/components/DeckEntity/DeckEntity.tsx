@@ -1,9 +1,8 @@
 import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitDrawFaceUpVerb, emitGrabVerb } from "../../actions";
-import { selectDeckById, selectGrabbedEntity } from "../../selectors";
+import { emitDrawFaceUpVerb, emitGrabVerb, emitResetVerb, emitShuffleVerb } from "../../actions";
+import { selectDeckById, selectGrabbedEntity, selectTablePosition } from "../../selectors";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import { DeckVerbTypes, SharedVerbTypes } from "../../types/verb";
 import { style } from "./style";
 import { IProps } from "./interfaces";
 import { emitRotateVerb } from "../../actions/thunks/emitSharedVerb/emitRotateVerb";
@@ -34,24 +33,41 @@ export const DeckEntity = ({entityId}: IProps) => {
         dispatch(emitGrabVerb(entityId, EntityTypes.DECK, e.clientX, e.clientY));
     }
 
+    const onShuffle = () => dispatch(emitShuffleVerb(entityId));
+
+    const onReset =() => dispatch(emitResetVerb(entityId));
+
     return (
         <>
-        {deckEntityDetails && <div draggable={true} className="deck-entity" style={{
+        {deckEntityDetails && 
+        <div className="deck-entity" style={{
             left: deckEntityDetails.positionX,
             top: deckEntityDetails.positionY,
-            pointerEvents: isGrabbed ? "none" : "auto",
-            rotate: `${deckEntityDetails.rotation % 360}deg`,
+            rotate: `${deckEntityDetails.rotation}deg`,
             zIndex: deckEntityDetails.zIndex
-        }}
-        onDragStart={onDragStart}
-        onClick={onClick}
-        onContextMenu={onRightClick}
-        >
+        }}>
+            <div className="deck-entity__interface">
+                <div className="deck-entity__interface__button">
+                    <button onClick={onShuffle}>Shuffle</button>
+                </div>
+                <div className="deck-entity__interface__button">
+                    <button onClick={onReset}>Reset</button>
+                </div>
+            </div>
+        
+            <div draggable={true} style={{
+                pointerEvents: isGrabbed ? "none" : "auto",
+            }}
+            onDragStart={onDragStart}
+            onClick={onClick}
+            onContextMenu={onRightClick}
+            >
             <div style={{
                 width: 65,
                 height: 88,
                 background: "red"
             }}></div>
+            </div>
         </div>}
         <style jsx={true}>{style}</style>
         </>
