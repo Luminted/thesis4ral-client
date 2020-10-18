@@ -45,14 +45,13 @@ export const Entity = ({
     return (
         <div className="entity" style={{
             zIndex: zIndex || "auto",
+            pointerEvents: clickPassThrough ? "none" : "auto",
             ...cssPositionAndRotation
         }}>
             {menuContent && <div className="entity-menu">{menuContent}</div>}
             <div 
             draggable={true}
-            style={{
-                pointerEvents: clickPassThrough ? "none" : "auto",
-            }}
+
             onDragStart={onDragStart}
             onContextMenu={onRightClick}
             {...eventHandlers}>
