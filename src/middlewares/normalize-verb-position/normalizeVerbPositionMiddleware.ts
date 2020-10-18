@@ -12,18 +12,20 @@ export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store
     next => 
         (action: ActionTypes) => {
             if(action.type === SocketActionTypeKeys.EMIT_VERB){
-                // GRAB_FROM_HAND has another set of position that needs to be normalized 
-                const {tablePosition} = store.getState();
-                if(action.verb.type === CardVerbTypes.GRAB_FROM_HAND){
-                    const {grabbedAtX, grabbedAtY} = action.verb;
-                    action.verb.grabbedAtX = grabbedAtX - tablePosition.x;
-                    action.verb.grabbedAtY = grabbedAtY - tablePosition.y;
-                }
+                
                 if(isVerbTypeWithPosition(action.verb)){
                     const {positionX, positionY} = action.verb;
+                    const {tablePosition} = store.getState();
 
                     action.verb.positionX = positionX - tablePosition.x;
                     action.verb.positionY = positionY - tablePosition.y;
+
+                    // GRAB_FROM_HAND has another set of position that needs to be normalized 
+                    if(action.verb.type === CardVerbTypes.GRAB_FROM_HAND){
+                        const {grabbedAtX, grabbedAtY} = action.verb;
+                        action.verb.grabbedAtX = grabbedAtX - tablePosition.x;
+                        action.verb.grabbedAtY = grabbedAtY - tablePosition.y;
+                    }
 
                 }
             }
