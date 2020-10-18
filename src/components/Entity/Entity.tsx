@@ -1,15 +1,21 @@
 import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb } from "../../actions";
 import { IProps } from "./typings";
 import "./style.css";
+import { Ratio } from "../../types/additionalTypes";
+import { selectTablePixelDimensions } from "../../selectors";
+import { tableVirtualHeight, tableVirtualWidth } from "../../config";
+import { downscale } from "../../utils";
 
 
 export const Entity = ({
     entityId,
     entityType, 
     positionX, 
-    positionY, 
+    positionY,
+    width,
+    height,
     rotation, 
     zIndex, 
     clickPassThrough, 
@@ -22,6 +28,8 @@ export const Entity = ({
 
     const dispatch = useDispatch();
 
+    const tablePixelDimensions = useSelector(selectTablePixelDimensions);
+
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(emitRotateVerb(entityId,entityType, rotationStep));
@@ -32,15 +40,39 @@ export const Entity = ({
         dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
     }
 
-    const cssPositionAndRotation: CSSProperties = isMirrored ? {
-        right: positionX,
-        bottom: positionY,
-        rotate: `${180 + rotation}deg`
-    }: {
-        left: positionX,
-        top: positionY,
-        rotate: `${rotation}deg`
-    }
+    const cssPositionAndRotation: CSSProperties = useMemo(() => {
+        if(tablePixelDimensions){
+            const horizontalScalingRatio: Ratio = {
+                numerator: tablePixelDimensions.width,
+                divisor: tableVirtualWidth
+            }
+            const verticalScalingRatio: Ratio = {
+                numerator: tablePixelDimensions.height,
+                divisor: tableVirtualHeight
+            }
+            const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
+            const downscaledPositionY = downscale(verticalScalingRatio, positionY);
+            const downscaledWidth = downscale(horizontalScalingRatio, width);
+            const downscaledHeight = downscale(horizontalScalingRatio, height);
+
+            return isMirrored ? {
+                right: downscaledPositionX,
+                bottom: downscaledPositionY,
+                width: downscaledWidth,
+                height: downscaledHeight,
+                rotate: `${180 + rotation}deg`
+            }: {
+                left: downscaledPositionX,
+                top: downscaledPositionY,
+                width: downscaledWidth,
+                height: downscaledHeight,
+                rotate: `${rotation}deg`
+            }
+        }
+
+        return {}
+    }, [positionX, positionY, rotation, tablePixelDimensions, isMirrored]) 
+    
 
     return (
         <div className="entity" style={{
@@ -48,8 +80,9 @@ export const Entity = ({
             pointerEvents: clickPassThrough ? "none" : "auto",
             ...cssPositionAndRotation
         }}>
-            {menuContent && <div className="entity-menu">{menuContent}</div>}
-            <div 
+            {menuContent && <div className="entity__menu">{menuContent}</div>}
+            <div
+            className="entity__graphic"
             draggable={true}
 
             onDragStart={onDragStart}

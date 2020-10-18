@@ -43,6 +43,8 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, isM
             entityType={EntityTypes.CARD}
             positionX={positionX}
             positionY={positionY}
+            width={560}
+            height={880}
             rotation={rotation}
             zIndex={zIndex}
             rotationStep={cardRotationStepDegree}
@@ -51,8 +53,8 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, isM
 
             graphicalContent={
                 <div ref={cardRef} style={{
-                    width: 56,
-                    height: 88,
+                    width: "100%",
+                    height: "100%",
                     background: faceUp ? "lightblue" : "blue"
                 }}></div>
             }

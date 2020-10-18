@@ -34,6 +34,8 @@ console.log(deckEntityDetails?.positionX, deckEntityDetails?.positionY, "~~~~~~~
             clickPassThrough={isGrabbed} 
             positionX={deckEntityDetails.positionX}
             positionY={deckEntityDetails.positionY}
+            width={560}
+            height={880}
             zIndex={deckEntityDetails.zIndex}
             rotation={deckEntityDetails.rotation}
             rotationStep={deckRotationStepDegree}
@@ -44,8 +46,8 @@ console.log(deckEntityDetails?.positionX, deckEntityDetails?.positionY, "~~~~~~~
             }}
 
             graphicalContent={<div style={{
-                width: 65,
-                height: 88,
+                width: "100%",
+                height: "100%",
                 background: "red"
             }}></div>}
             menuContent={

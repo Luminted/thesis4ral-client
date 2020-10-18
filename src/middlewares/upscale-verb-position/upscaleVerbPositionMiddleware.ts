@@ -1,8 +1,9 @@
 import { Middleware } from "redux";
 import { RootState } from "../../store";
 import { ActionTypes, SocketActionTypeKeys } from "../../actions";
-import { upscale } from "../../utils";
-import { CardVerbTypes, DeckVerbTypes, SharedVerbTypes } from "../../types/verb";
+import { isVerbTypeWithPosition, upscale } from "../../utils";
+import {tableVirtualHeight, tableVirtualWidth} from "../../config";
+import { Ratio } from "../../types/additionalTypes";
 
 export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store => 
     next =>
@@ -11,16 +12,20 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store =>
 
                 // these verbs have position fileds
                 // only way to force TS to narrow types os to check one by one
-                if(action.verb.type === SharedVerbTypes.MOVE || 
-                    action.verb.type === SharedVerbTypes.GRAB ||
-                    action.verb.type === SharedVerbTypes.MOVE_TO ||
-                    action.verb.type === CardVerbTypes.ADD_CARD ||
-                    action.verb.type === CardVerbTypes.GRAB_FROM_HAND ||
-                    action.verb.type === CardVerbTypes.PUT_ON_TABLE ||
-                    action.verb.type === DeckVerbTypes.ADD_DECK
-                    ){
+                if(isVerbTypeWithPosition(action.verb)){
                         const {positionX, positionY} = action.verb;
-                        const {verticalScalingRatio, horizontalScalingRatio} = store.getState();
+                        const {tablePixelDimensions} = store.getState();
+                        const horizontalScalingRatio: Ratio = {
+                            // TODO: handle null better
+                            numerator: tablePixelDimensions!.width,
+                            divisor: tableVirtualWidth
+                        }
+                        const verticalScalingRatio: Ratio = {
+                            numerator: tablePixelDimensions!.height,
+                            divisor: tableVirtualHeight
+                        }
+
+
                         action.verb.positionX = upscale(horizontalScalingRatio, positionX);
                         action.verb.positionY = upscale(verticalScalingRatio, positionY);
                         // console.log('upscaling', positionX, positionY, action.verb.positionX, action.verb.positionY)

@@ -6,6 +6,8 @@ export interface IProps {
     entityType: EntityTypes
     positionX: number
     positionY: number
+    width: number,
+    height: number,
     rotation: number
     rotationStep: number
     clickPassThrough: boolean
