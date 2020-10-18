@@ -6,8 +6,10 @@ import {style} from "./style";
 import {ECardInteractionContext} from "../CardEntity/typings";
 import { DeckEntity } from "../DeckEntity";
 import { setTablePosition } from "../../actions";
+import { IProps } from "./typings";
+import { setTablePixelDimensions } from "../../actions/setterActions";
 
-export const CardTable = () => {
+export const CardTable = ({isMirrored}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -17,14 +19,16 @@ export const CardTable = () => {
     const decks = useSelector(selectDecks);
 
     const renderedCards = useMemo(() => cards.map(card => 
-        <CardEntity 
+        <CardEntity
+            isMirrored={isMirrored}
             context={ECardInteractionContext.TABLE}
             key={card.entityId}
             {...card}
              />), [cards]);
 
     const renderedDecks = useMemo(() => decks.map(deck =>
-        <DeckEntity 
+        <DeckEntity
+            isMirrored={isMirrored}
             entityId={deck.entityId}
             key={deck.entityId}/>
         ), [decks]);
@@ -32,8 +36,9 @@ export const CardTable = () => {
     useLayoutEffect(() => {
         const tableElement = tableRef.current;
         if(tableElement){
-            const {top, left} = tableElement.getBoundingClientRect();
+            const {top, left, width, height} = tableElement.getBoundingClientRect();
             dispatch(setTablePosition(left, top));
+            dispatch(setTablePixelDimensions(width, height));
         }
     }, [])
 

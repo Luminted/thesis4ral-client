@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
+import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
 import { selectGrabbedEntity, selectOwnClientInfo } from "../../selectors";
 import {emitMoveVerb, emitReleaseVerb} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
-import "./style.css";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
+import { mirrorVerbPositionMiddleware } from "../../middlewares";
+import "./style.css";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -16,6 +18,8 @@ export const ApplicationViewport = () => {
     const clientInfo = useSelector(selectOwnClientInfo);
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
+
+    const isMirrored = useMemo(() => clientInfo?.seatedAt.includes("NORTH") || false, [clientInfo]);
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity){
@@ -35,6 +39,14 @@ export const ApplicationViewport = () => {
         }
     }, listenerThrottleValue), [grabbedEntity]);
 
+    // mirror table if client is sitting on the northern side
+    useLayoutEffect(() => {
+        if(isMirrored){
+            addMiddleware(mirrorVerbPositionMiddleware);
+        }
+        return () => removeMiddleware(mirrorVerbPositionMiddleware);
+    }, [isMirrored])
+
     useEffect(() => {
         applicationViewportRef.current?.addEventListener("mousemove", onMouseMove);
         return () => applicationViewportRef.current?.removeEventListener("mousemove", onMouseMove);
@@ -49,9 +61,9 @@ export const ApplicationViewport = () => {
         <>
         {clientInfo && <div ref={applicationViewportRef} className="application-viewport">
             <div className="application-viewport__center">
-                    <SeatsContainer orientation={"NORTH"} />
-                    <CardTable/>
-                    <SeatsContainer orientation={"SOUTH"} />
+                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "SOUTH" : "NORTH"} />
+                <CardTable isMirrored={isMirrored}/>
+                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "NORTH" : "SOUTH"} />
             </div>
         </div>}
         {!clientInfo && "LOADING"}

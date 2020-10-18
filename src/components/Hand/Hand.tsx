@@ -7,7 +7,7 @@ import "./style.css";
 import { CardEntity } from "../CardEntity";
 import { ECardInteractionContext } from "../CardEntity/typings";
 
-export const Hand = ({clientId}: IProps) => {
+export const Hand = ({clientId, isMirrored}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -34,6 +34,7 @@ export const Hand = ({clientId}: IProps) => {
 
     const renderedCards = useMemo(() => handDetails?.cards.map( (card, index) => 
         <CardEntity
+        isMirrored={isMirrored}
         positionX={index * 40}
         positionY={0}
          context={ECardInteractionContext.HAND}
