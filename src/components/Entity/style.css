@@ -1,0 +1,8 @@
+.entity-menu{
+    position: absolute;
+    transform: translate(-100%);
+}
+
+.entity{
+    position: absolute;
+}
