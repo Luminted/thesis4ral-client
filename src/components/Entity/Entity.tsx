@@ -1,4 +1,4 @@
-import React, { DragEvent, MouseEvent } from "react";
+import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { emitGrabVerb, emitRotateVerb } from "../../actions";
 import { IProps } from "./typings";
@@ -14,6 +14,7 @@ export const Entity = ({
     zIndex, 
     clickPassThrough, 
     rotationStep, 
+    isMirrored,
     graphicalContent, 
     menuContent,
     eventHandlers
@@ -31,20 +32,32 @@ export const Entity = ({
         dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
     }
 
-    return (
-        <div draggable={true} className="entity" style={{
-            left: positionX,
-            top: positionY,
-            pointerEvents: clickPassThrough ? "none" : "auto",
-            rotate: `${rotation}deg`,
-            zIndex: zIndex || "auto"
-        }}
-        onDragStart={onDragStart}
-        onContextMenu={onRightClick}
+    const cssPositionAndRotation: CSSProperties = isMirrored ? {
+        right: positionX,
+        bottom: positionY,
+        rotate: `${180 + rotation}deg`
+    }: {
+        left: positionX,
+        top: positionY,
+        rotate: `${rotation}deg`
+    }
 
-        {...eventHandlers}>
+    return (
+        <div className="entity" style={{
+            zIndex: zIndex || "auto",
+            ...cssPositionAndRotation
+        }}>
             {menuContent && <div className="entity-menu">{menuContent}</div>}
-            <div>{graphicalContent}</div>
+            <div 
+            draggable={true}
+            style={{
+                pointerEvents: clickPassThrough ? "none" : "auto",
+            }}
+            onDragStart={onDragStart}
+            onContextMenu={onRightClick}
+            {...eventHandlers}>
+                {graphicalContent}
+            </div>
         </div>
     )
 }

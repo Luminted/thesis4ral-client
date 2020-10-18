@@ -7,7 +7,7 @@ import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
 
-export const DeckEntity = ({entityId}: IProps) => {
+export const DeckEntity = ({entityId, isMirrored}: IProps) => {
     
     const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export const DeckEntity = ({entityId}: IProps) => {
     const onShuffle = () => dispatch(emitShuffleVerb(entityId));
 
     const onReset =() => dispatch(emitResetVerb(entityId));
-
+console.log(deckEntityDetails?.positionX, deckEntityDetails?.positionY, "~~~~~~~~~~")
     return (
         <>
        {deckEntityDetails && <Entity 
@@ -37,6 +37,7 @@ export const DeckEntity = ({entityId}: IProps) => {
             zIndex={deckEntityDetails.zIndex}
             rotation={deckEntityDetails.rotation}
             rotationStep={deckRotationStepDegree}
+            isMirrored={isMirrored}
 
             eventHandlers={{
                 onClick
@@ -49,10 +50,10 @@ export const DeckEntity = ({entityId}: IProps) => {
             }}></div>}
             menuContent={
                 <>
-                    <div className="deck-entity__interface__button">
+                <div>
                     <button onClick={onShuffle}>Shuffle</button>
                 </div>
-                <div className="deck-entity__interface__button">
+                <div>
                     <button onClick={onReset}>Reset</button>
                 </div>
                 </>}

@@ -7,6 +7,7 @@ export interface IProps {
     faceUp: boolean
     context: ECardInteractionContext
     metadata: IEntityMetadata
+    isMirrored: boolean
     rotation?: number
     zIndex?: number
     inHandOf?: string

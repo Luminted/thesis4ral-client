@@ -7,7 +7,7 @@ import { selectGrabbedEntity } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
 
-export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIndex, inHandOf, rotation = 0 }: IProps) => {
+export const CardEntity = ({entityId, context, positionX, positionY, faceUp, isMirrored, zIndex, inHandOf, rotation = 0 }: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -47,6 +47,8 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIn
             zIndex={zIndex}
             rotationStep={cardRotationStepDegree}
             clickPassThrough={isGrabbed}
+            isMirrored={isMirrored}
+
             graphicalContent={
                 <div style={{
                     width: 56,
@@ -54,6 +56,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, zIn
                     background: faceUp ? "lightblue" : "blue"
                 }}></div>
             }
+
             eventHandlers={{
                 onClick,
                 onDragStart: context === ECardInteractionContext.TABLE ? onDragStartOnTable : onDragStartInHand
