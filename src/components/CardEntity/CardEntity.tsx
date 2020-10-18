@@ -26,10 +26,10 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, isM
         e.preventDefault();
         const cardElement = cardRef.current;
         if(cardElement && inHandOf){
-            const {left, top} = cardElement.getBoundingClientRect();
+            const {left, top, right, bottom} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
 
-            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, left, top ))
+            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right : left, isMirrored ? bottom : top ))
         }
     }
 
@@ -50,7 +50,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, isM
             isMirrored={isMirrored}
 
             graphicalContent={
-                <div style={{
+                <div ref={cardRef} style={{
                     width: 56,
                     height: 88,
                     background: faceUp ? "lightblue" : "blue"
