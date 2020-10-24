@@ -1,5 +1,5 @@
 import { Middleware } from "redux";
-import { CardVerbTypes } from "../../types/verb"
+import { CardVerbTypes, DeckVerbTypes } from "../../types/verb"
 import { RootState } from "../../store";
 import { ActionTypes} from "../../actions";
 import {SocketActionTypeKeys} from '../../actions'
@@ -12,6 +12,11 @@ export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store
     next => 
         (action: ActionTypes) => {
             if(action.type === SocketActionTypeKeys.EMIT_VERB){
+
+                // abort transformation for certain types
+                if(action.verb.type === DeckVerbTypes.ADD_DECK){
+                    return next(action);
+                }
                 
                 if(isVerbTypeWithPosition(action.verb)){
                     const {positionX, positionY} = action.verb;
