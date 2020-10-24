@@ -6,6 +6,7 @@ import { Ratio } from "../../types/additionalTypes";
 import { selectTablePixelDimensions } from "../../selectors";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { downscale } from "../../utils";
+import { SVGLoader } from "../SVGLoader";
 import "./style.css";
 
 
@@ -13,7 +14,7 @@ export const Entity = ({
     entityId,
     entityType, 
     positionX, 
-    positionY, 
+    positionY,
     width,
     height,
     rotation, 
@@ -60,14 +61,14 @@ export const Entity = ({
                 bottom: downscaledPositionY,
                 width: downscaledWidth,
                 height: downscaledHeight,
-        rotate: `${180 + rotation}deg`
-    }: {
+                rotate: `${180 + rotation}deg`
+            }: {
                 left: downscaledPositionX,
                 top: downscaledPositionY,
                 width: downscaledWidth,
                 height: downscaledHeight,
-        rotate: `${rotation}deg`
-    }
+                rotate: `${rotation}deg`
+            }
         }
 
         return {}
@@ -81,14 +82,14 @@ export const Entity = ({
             ...computedCSS
         }}>
             {menuContent && <div className="entity__menu">{menuContent}</div>}
-            <div 
+            <div
             className="entity__graphic"
             draggable={true}
 
             onDragStart={onDragStart}
             onContextMenu={onRightClick}
             {...eventHandlers}>
-                {graphicalContent}
+                <SVGLoader endpoint={svgEndpoint} />
             </div>
         </div>
     )

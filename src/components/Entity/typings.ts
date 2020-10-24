@@ -11,8 +11,8 @@ export interface IProps {
     rotation: number
     rotationStep: number
     clickPassThrough: boolean
-    graphicalContent: ReactNode
     isMirrored: boolean
+    svgEndpoint: string
     zIndex?: number
     menuContent?: ReactNode
     eventHandlers?: {[key in string]: Function}

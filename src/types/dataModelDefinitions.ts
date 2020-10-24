@@ -22,8 +22,8 @@ export interface IDeckEntity extends IEntity {
 }
 
 export interface IEntityMetadata {
-    entityId: string
-    configId: string
+    name: string
+    type: string
 }
 
 export interface IDeckCard extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {}

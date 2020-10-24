@@ -39,16 +39,11 @@ export const DeckEntity = ({entityId, isMirrored}: IProps) => {
             rotation={deckEntityDetails.rotation}
             rotationStep={deckRotationStepDegree}
             isMirrored={isMirrored}
+            svgEndpoint={`${deckEntityDetails.metadata.type}/cardbacks/${deckEntityDetails.metadata.name}`}
 
             eventHandlers={{
                 onClick
             }}
-
-            graphicalContent={<div style={{
-                width: 65,
-                height: 88,
-                background: "red"
-            }}></div>}
             menuContent={
                 <>
                 <div>
