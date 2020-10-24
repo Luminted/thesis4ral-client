@@ -7,5 +7,5 @@ export const tableAspectRatio: Ratio = {
 
 export const tableHeightPercentage = 65;
 
-export const virtualTableWidth = 10000;
-export const virtualTableHeight = 10000;
+export const tableVirtualWidth = 10000;
+export const tableVirtualHeight = 10000;

@@ -25,7 +25,6 @@ export const DeckEntity = ({entityId, isMirrored}: IProps) => {
     const onShuffle = () => dispatch(emitShuffleVerb(entityId));
 
     const onReset =() => dispatch(emitResetVerb(entityId));
-console.log(deckEntityDetails?.positionX, deckEntityDetails?.positionY, "~~~~~~~~~~")
     return (
         <>
        {deckEntityDetails && <Entity 
@@ -34,6 +33,8 @@ console.log(deckEntityDetails?.positionX, deckEntityDetails?.positionY, "~~~~~~~
             clickPassThrough={isGrabbed} 
             positionX={deckEntityDetails.positionX}
             positionY={deckEntityDetails.positionY}
+            width={560}
+            height={880}
             zIndex={deckEntityDetails.zIndex}
             rotation={deckEntityDetails.rotation}
             rotationStep={deckRotationStepDegree}

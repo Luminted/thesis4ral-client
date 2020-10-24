@@ -33,6 +33,15 @@ export const CardTable = ({isMirrored}: IProps) => {
             key={deck.entityId}/>
         ), [decks]);
 
+    const onWindowResize = useCallback(() => {
+        const tableElement = tableRef.current;
+        if(tableElement){
+            const {top, left, width, height} = tableElement.getBoundingClientRect();
+            dispatch(setTablePosition(left, top));
+            dispatch(setTablePixelDimensions(width, height));
+        }
+    }, [tableRef])
+
     useLayoutEffect(() => {
         const tableElement = tableRef.current;
         if(tableElement){
@@ -40,6 +49,11 @@ export const CardTable = ({isMirrored}: IProps) => {
             dispatch(setTablePosition(left, top));
             dispatch(setTablePixelDimensions(width, height));
         }
+    }, [])
+
+    useEffect(() => {
+        window.addEventListener("resize", onWindowResize);
+        return () => window.removeEventListener("resize", onWindowResize);
     }, [])
 
     return (
