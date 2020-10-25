@@ -8,6 +8,7 @@ import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 import { mirrorVerbPositionMiddleware } from "../../middlewares";
 import "./style.css";
+import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -36,6 +37,7 @@ export const ApplicationViewport = () => {
                 grabbedEntity.entityId,
                 grabbedEntity.entityType
             ));
+            dispatch(setGrabbedEntityInfo(null))
         }
     }, listenerThrottleValue), [grabbedEntity]);
 

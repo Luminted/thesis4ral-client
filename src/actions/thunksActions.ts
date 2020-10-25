@@ -1,6 +1,6 @@
 import { ThunkResult } from ".";
 import { Ratio } from '../types/additionalTypes';
-import { setVerticalScalingRatio, setHorizontalScalingRatio } from './setterActions';
+import { setVerticalScalingRatio, setHorizontalScalingRatio } from './setterActions/setterActions';
 
 export function setScalingRatios(renderedTableWidth: number, renderedTableHeight: number): ThunkResult {
    return (dispatch, getStore) => {

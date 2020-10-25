@@ -7,7 +7,7 @@ import {ECardInteractionContext} from "../CardEntity/typings";
 import { DeckEntity } from "../DeckEntity";
 import { setTablePosition } from "../../actions";
 import { IProps } from "./typings";
-import { setTablePixelDimensions } from "../../actions/setterActions";
+import { setTablePixelDimensions } from "../../actions/setterActions/setterActions";
 
 export const CardTable = ({isMirrored}: IProps) => {
 

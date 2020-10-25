@@ -7,6 +7,7 @@ import { selectTablePixelDimensions } from "../../selectors";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { downscale } from "../../utils";
 import { SVGLoader } from "../SVGLoader";
+import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
 import { Ratio } from "../../types/additionalTypes";
 import { selectTablePixelDimensions } from "../../selectors";

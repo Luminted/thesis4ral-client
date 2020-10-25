@@ -1,9 +1,10 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 import { SocketEmitVerbAction, SocketConnectAction, SocketDisconnectAction, SocketJoinTableAction } from "./socketActions";
-import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTablePixelDimensions, SetTableReadyAction, SetTableVirtualDimensions, SetHorizontalScalingRation, SetVerticalScalingRation, SetOrientationAction } from "./setterActions";
+import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTablePixelDimensions, SetTableReadyAction, SetTableVirtualDimensions, SetHorizontalScalingRation, SetVerticalScalingRation, SetOrientationAction } from "./setterActions/setterActions";
+import { SetGrabbedEntityInfo } from "./setterActions/setGrabbedEntityInfo/typing";
 
-export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableVirtualDimensions, setTableReady, setOrientationAction, setTableSocketStatus, SetActionTypeKeys} from './setterActions'
+export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableVirtualDimensions, setTableReady, setOrientationAction, setTableSocketStatus} from './setterActions/setterActions'
 export { SocketActionTypeKeys } from './socketActions'
 
 export type ThunkResult = ThunkAction<void, RootState, null, ActionTypes>
@@ -26,6 +27,7 @@ export type SetterActionTypes =
     SetHorizontalScalingRation |
     SetOrientationAction |
     SetTableVirtualDimensions |
-    SetTablePixelDimensions;
+    SetTablePixelDimensions |
+    SetGrabbedEntityInfo;
 
 export * from "./thunks";

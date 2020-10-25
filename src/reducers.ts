@@ -1,8 +1,9 @@
 import {produce} from 'immer';
-import {ActionTypes, SetActionTypeKeys} from './actions';
-import {ICardEntity, GameState, ClientInfo} from './types/dataModelDefinitions' 
+import {ActionTypes} from './actions/';
+import { GameState, ClientInfo} from './types/dataModelDefinitions' 
 import {MaybeNull} from './types/genericTypes'
 import { SocketConnectionStatuses, Ratio } from './types/additionalTypes';
+import { SetActionTypeKeys } from './actions/setterActions/actionTypes';
 
 type State = {
     gameState: GameState,
