@@ -4,7 +4,10 @@ import { SetActionTypeKeys } from "../actionTypes";
 export type TGrabbedEntityInfo = MaybeNull<{
     width: number,
     height: number,
-    restricted: boolean
+    relativeGrabbedAtX: number,
+    relativeGrabbedAtY: number,
+    restricted: boolean,
+
 }>
 
 export type SetGrabbedEntityInfo = {

@@ -4,6 +4,7 @@ import { GameState, ClientInfo} from './types/dataModelDefinitions'
 import {MaybeNull} from './types/genericTypes'
 import { SocketConnectionStatuses, Ratio } from './types/additionalTypes';
 import { SetActionTypeKeys } from './actions/setterActions/actionTypes';
+import { TGrabbedEntityInfo } from './actions/setterActions/setGrabbedEntityInfo';
 
 type State = {
     gameState: GameState,
@@ -23,12 +24,13 @@ type State = {
     horizontalScalingRatio: Ratio,
     verticalScalingRatio: Ratio,
     tableConnectionStatus: SocketConnectionStatuses,
-    tableReady: boolean
+    tableReady: boolean,
+    grabbedEntityInfo: MaybeNull<TGrabbedEntityInfo>
 }
 
 const initialState: State = {
     gameState: {
-        cards: new Array<ICardEntity>(),
+        cards: [],
         decks: [],
         clients: [],
         hands: [],
@@ -51,7 +53,8 @@ const initialState: State = {
         divisor: 1
     },
     tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED,
-    tableReady: false
+    tableReady: false,
+    grabbedEntityInfo: null
 }
 
 export const tablePixelDimensions = (state = initialState.tableVirtualDimensions, action: ActionTypes) => {
@@ -142,4 +145,13 @@ export const tablePosition = (state = initialState.tablePosition, action: Action
                 break;
         }
     })
+
+export const grabbedEntityInfo = (state = initialState.grabbedEntityInfo, action: ActionTypes) => {
+    switch(action.type){
+        case SetActionTypeKeys.SET_GRABBED_ENTITY_INFO:  
+            return action.grabbedEntityInfo
+        default:
+            return state;
+    }
+}
 

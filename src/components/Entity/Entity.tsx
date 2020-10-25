@@ -1,4 +1,4 @@
-import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
+import React, { CSSProperties, DragEvent, MouseEvent, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb } from "../../actions";
 import { IProps } from "./typings";
@@ -9,11 +9,6 @@ import { downscale } from "../../utils";
 import { SVGLoader } from "../SVGLoader";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
-import { Ratio } from "../../types/additionalTypes";
-import { selectTablePixelDimensions } from "../../selectors";
-import { tableVirtualHeight, tableVirtualWidth } from "../../config";
-import { downscale } from "../../utils";
-
 
 export const Entity = ({
     entityId,
@@ -23,7 +18,7 @@ export const Entity = ({
     width,
     height,
     rotation, 
-    zIndex, 
+    zIndex,
     clickPassThrough, 
     rotationStep, 
     isMirrored,
@@ -36,6 +31,41 @@ export const Entity = ({
 
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
+    const customOnDragHandler = eventHandlers?.onDragStart;
+    delete eventHandlers?.onDragStart;
+
+    const horizontalScalingRatio: Ratio = useMemo(() => ({
+            numerator: tablePixelDimensions?.width || 0,
+            divisor: tableVirtualWidth
+    }), [tablePixelDimensions])
+
+    const verticalScalingRatio: Ratio = useMemo(() => ({
+            numerator: tablePixelDimensions?.height || 0,
+            divisor: tableVirtualHeight
+
+    }), [tablePixelDimensions])
+
+    const downscaledWidth = useMemo(() => downscale(horizontalScalingRatio, width), [horizontalScalingRatio]);
+    const downscaledHeight = useMemo(() =>downscale(horizontalScalingRatio, height), [verticalScalingRatio]);
+    const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
+    const downscaledPositionY = downscale(verticalScalingRatio, positionY);
+
+    const computedCSS: CSSProperties = useMemo(() => {
+        return isMirrored ? {
+            right: downscaledPositionX,
+            bottom: downscaledPositionY,
+            width: downscaledWidth,
+            height: downscaledHeight,
+            rotate: `${180 + rotation}deg`
+        }: {
+            left: downscaledPositionX,
+            top: downscaledPositionY,
+            width: downscaledWidth,
+            height: downscaledHeight,
+            rotate: `${rotation}deg`
+        }
+    }, [positionX, positionY, rotation, downscaledWidth, downscaledHeight, horizontalScalingRatio, verticalScalingRatio, downscaledPositionX, downscaledPositionY]) 
+
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
         dispatch(emitRotateVerb(entityId,entityType, rotationStep));
@@ -43,41 +73,26 @@ export const Entity = ({
 
     const onDragStart = (e: DragEvent) => {
         e.preventDefault();
-        dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
-    }
-
-    const computedCSS: CSSProperties = useMemo(() => {
-        if(tablePixelDimensions){
-            const horizontalScalingRatio: Ratio = {
-                numerator: tablePixelDimensions.width,
-                divisor: tableVirtualWidth
-            }
-            const verticalScalingRatio: Ratio = {
-                numerator: tablePixelDimensions.height,
-                divisor: tableVirtualHeight
-            }
-            const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
-            const downscaledPositionY = downscale(verticalScalingRatio, positionY);
-            const downscaledWidth = downscale(horizontalScalingRatio, width);
-            const downscaledHeight = downscale(horizontalScalingRatio, height);
-
-            return isMirrored ? {
-                right: downscaledPositionX,
-                bottom: downscaledPositionY,
-                width: downscaledWidth,
-                height: downscaledHeight,
-                rotate: `${180 + rotation}deg`
-            }: {
-                left: downscaledPositionX,
-                top: downscaledPositionY,
-                width: downscaledWidth,
-                height: downscaledHeight,
-                rotate: `${rotation}deg`
-            }
+        if(customOnDragHandler){
+            customOnDragHandler(e);
+        }
+        else{
+            dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
         }
 
-        return {}
-    }, [positionX, positionY, rotation, tablePixelDimensions, isMirrored]) 
+        const {clientX, clientY} = e;
+        const {top, left, width: targetWidth, height: targetHeight} = e.currentTarget.getBoundingClientRect();
+        const relativeMouseX = clientX - left;
+        const relativeMouseY = clientY - top;
+
+        dispatch(setGrabbedEntityInfo({
+            height: targetHeight,
+            width: targetWidth,
+            relativeGrabbedAtX: relativeMouseX,
+            relativeGrabbedAtY: relativeMouseY,
+            restricted:true
+        }));
+    }
     
 
     return (

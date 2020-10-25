@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
-import { selectGrabbedEntity, selectOwnClientInfo } from "../../selectors";
+import { selectGrabbedEntity, selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
 import {emitMoveVerb, emitReleaseVerb} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 import { mirrorVerbPositionMiddleware } from "../../middlewares";
+import { clamp } from "../../utils";
 import "./style.css";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 
@@ -17,17 +18,33 @@ export const ApplicationViewport = () => {
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
     const clientInfo = useSelector(selectOwnClientInfo);
+    const tablePosition = useSelector(selectTablePosition);
+    const tablePixelDimensions = useSelector(selectTablePixelDimensions);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 
     const isMirrored = useMemo(() => clientInfo?.seatedAt.includes("NORTH") || false, [clientInfo]);
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
-        if(grabbedEntity){
-            dispatch(emitMoveVerb(
-                e.clientX,
-                e.clientY
+        if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
+            if(grabbedEntityInfo.restricted){
+                const entityLeftEdgeOffset = grabbedEntityInfo.relativeGrabbedAtX;
+                const entityRightEdgeOffset = grabbedEntityInfo.width - grabbedEntityInfo.relativeGrabbedAtX;
+                const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
+                const entityBottomEdgeOffset = grabbedEntityInfo.height - grabbedEntityInfo.relativeGrabbedAtY;
+                dispatch(emitMoveVerb(
+                    clamp(e.clientX, tablePosition.x + entityLeftEdgeOffset, tablePosition.x + tablePixelDimensions.width - entityRightEdgeOffset),
+                    clamp(e.clientY, tablePosition.y + entityTopEdgeOffset, tablePosition.y + tablePixelDimensions.height - entityBottomEdgeOffset)
+                ))
+            }
+            else{
+                dispatch(emitMoveVerb(
+                    e.clientX,
+                    e.clientY
                 ));
+
+            }
         }
     }, listenerThrottleValue), [grabbedEntity]);
 
@@ -37,7 +54,7 @@ export const ApplicationViewport = () => {
                 grabbedEntity.entityId,
                 grabbedEntity.entityType
             ));
-            dispatch(setGrabbedEntityInfo(null))
+            dispatch(setGrabbedEntityInfo(null));
         }
     }, listenerThrottleValue), [grabbedEntity]);
 

@@ -1,13 +1,11 @@
 import SocketIOClient from 'socket.io-client';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import dynamicMiddlewares from 'redux-dynamic-middlewares'
 
-import {gameState, clientInfo, tablePosition, tableConnectionStatus, tableReady, horizontalScalingRatio, verticalScalingRatio, tablePixelDimensions, tableVirtualDimensions} from './reducers';
+import {gameState, clientInfo, tablePosition, tableConnectionStatus, tableReady, horizontalScalingRatio, verticalScalingRatio, tablePixelDimensions, tableVirtualDimensions, grabbedEntityInfo} from './reducers';
 import {createTableSocketMiddleware, normalizeVerbPositionMiddleware, } from './middlewares/';
-import { upscale } from './utils';
 import { upscaleVerbPositionMiddleware } from './middlewares/upscale-verb-position/upscaleVerbPositionMiddleware';
 
 const rootReducer = combineReducers({
@@ -19,7 +17,8 @@ const rootReducer = combineReducers({
     horizontalScalingRatio,
     verticalScalingRatio,
     tableVirtualDimensions,
-    tablePixelDimensions
+    tablePixelDimensions,
+    grabbedEntityInfo
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

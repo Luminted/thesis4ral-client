@@ -88,3 +88,5 @@ export const selectDeckById = (entityId: string) =>
     (state: RootState) => state.gameState.decks.find(deck => deck.entityId === entityId);
 
 export const selectTablePixelDimensions = (state: RootState) => state.tablePixelDimensions;
+
+export const selectGrabbedEntityInfo = (state: RootState) => state.grabbedEntityInfo;
