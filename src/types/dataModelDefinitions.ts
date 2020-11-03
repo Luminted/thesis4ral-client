@@ -58,17 +58,8 @@ export type Client = {
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
-    seatedAt: ESeatOrientation
+    seatId: number
 }
-
-export enum ESeatOrientation {
-    SOUTH = 'SOUTH',
-    NORTH = 'NORTH',
-    SOUTH_WEST = 'SOUTH_WEST',
-    SOUTH_EAST = 'SOUTH_EAST',
-    NORTH_WEST = 'NORTH_WEST',
-    NORTH_EAST = 'NORTH_EAST'
-} 
 
 export interface GameState {
     cards: ICardEntity[],

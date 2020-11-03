@@ -8,8 +8,9 @@ import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 import { mirrorVerbPositionMiddleware } from "../../middlewares";
 import { clamp } from "../../utils";
-import "./style.css";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
+import { seatIdMapping } from "../../config";
+import "./style.css";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -24,7 +25,14 @@ export const ApplicationViewport = () => {
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 
-    const isMirrored = useMemo(() => clientInfo?.seatedAt.includes("NORTH") || false, [clientInfo]);
+    const isMirrored = useMemo(() => {
+        if(clientInfo){
+            return seatIdMapping[clientInfo.seatId].includes("NORTH")
+        }
+        else{
+            return false;
+        }
+    }, [clientInfo]);
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
@@ -78,14 +86,13 @@ export const ApplicationViewport = () => {
 
     return (
         <>
-        {clientInfo && <div ref={applicationViewportRef} className="application-viewport">
+        <div ref={applicationViewportRef} className="application-viewport">
             <div className="application-viewport__center">
                 <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "SOUTH" : "NORTH"} />
                 <CardTable isMirrored={isMirrored}/>
                 <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "NORTH" : "SOUTH"} />
             </div>
-        </div>}
-        {!clientInfo && "LOADING"}
+        </div>
         </>
     )
 }

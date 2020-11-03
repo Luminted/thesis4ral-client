@@ -4,7 +4,7 @@ import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
 import { SocketActionTypeKeys } from '../../actions/socketActions';
 import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
-import { setTableSocketStatus } from "../../actions/setterActions";
+import { setTableSocketStatus } from "../../actions/setterActions/setterActions";
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
 
 export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Middleware<{}, RootState>{
@@ -13,7 +13,6 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
 
         // Incoming API
         socket.on(TableSocketServerEvents.SYNC, (gameState: GameState) => {
-            console.log(gameState)
             dispatch(setGameState(gameState))
             
         })
@@ -48,10 +47,9 @@ export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Mi
                                     return next(action);
                                 }
                                 if(action.verb !== null){
-                                    console.log('- verb x y',action.verb.positionX, action.verb.positionY)
                                     socket.emit(TableSocketClientEvents.VERB, action.verb, action.ackFunction);
 
-                                    // console.log(`Middleware: socket event emitted: type=${TableSocketClientEvents.VERB}, verb type=${action.verb.type} position=${action.verb.positionX} ${action.verb.positionY}`  );
+                                    console.log(`Middleware: socket event emitted: type=${TableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
                                 }else{
                                     console.log('Middleware: Verb to be emitted is NULL. Aborting emit.');
                                     return next(action);

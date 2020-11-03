@@ -7,7 +7,7 @@ import { TableSocketClientEvents, TableSocketServerEvents } from './types';
 import { Verb } from '../../types/verbTypes';
 import { SerializedGameState } from '../../types/dataModelDefinitions';
 import { SocketConnectionStatuses } from '../../types/additionalTypes';
-import { setTableSocketStatus } from '../../actions/setterActions';
+import { setTableSocketStatus } from '../../actions/setterActions/setterActions';
 
 describe('Testing tableModuleMiddleware', function(){
     
