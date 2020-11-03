@@ -5,7 +5,7 @@ import { Hand } from "../Hand";
 import {IProps} from "./typings";
 import {style} from "./style";
 
-export const SeatsContainer = ({orientation}: IProps) => {
+export const SeatsContainer = ({orientation, isMirrored}: IProps) => {
     const clients = useSelector(selectClients);
 
     const clientsOnThisSide = useMemo( () => clients.filter(client => client.clientInfo.seatedAt.includes(orientation)), [clients]);
@@ -13,7 +13,7 @@ export const SeatsContainer = ({orientation}: IProps) => {
     return (
         <>
             <div className="seats-container">
-                {clientsOnThisSide.map(client => <Hand clientId={client.clientInfo.clientId} key={client.clientInfo.clientId} />)}
+                {clientsOnThisSide.map(client => <Hand isMirrored={isMirrored} clientId={client.clientInfo.clientId} key={client.clientInfo.clientId} />)}
             </div>
             <style jsx={true}>{style}</style>
         </>
