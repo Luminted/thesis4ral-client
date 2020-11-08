@@ -7,4 +7,9 @@ export const style = css`
         background-color: green;
         height: ${tableHeightPercentage}vh;
         width: ${tableHeightPercentage * (tableAspectRatio.numerator / tableAspectRatio.divisor)}vh;
+    }
+    .card-table__drawer{
+        position: absolute;
+        transform: translate(-100%);
+        height: 100%;
     }`

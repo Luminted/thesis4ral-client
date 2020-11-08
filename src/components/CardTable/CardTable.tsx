@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { selectCards, selectDecks } from "../../selectors";
 import { CardEntity } from "../CardEntity";
@@ -8,6 +8,7 @@ import { DeckEntity } from "../DeckEntity";
 import { setTablePosition } from "../../actions";
 import { IProps } from "./typings";
 import { setTablePixelDimensions } from "../../actions/setterActions/setterActions";
+import { EntityDrawer } from "../EntityDrawer";
 
 export const CardTable = ({isMirrored}: IProps) => {
 
@@ -24,14 +25,14 @@ export const CardTable = ({isMirrored}: IProps) => {
             context={ECardInteractionContext.TABLE}
             key={card.entityId}
             {...card}
-             />), [cards]);
+             />), [cards, isMirrored]);
 
     const renderedDecks = useMemo(() => decks.map(deck =>
         <DeckEntity
             isMirrored={isMirrored}
             entityId={deck.entityId}
             key={deck.entityId}/>
-        ), [decks]);
+        ), [decks, isMirrored]);
 
     const onWindowResize = useCallback(() => {
         const tableElement = tableRef.current;
@@ -59,6 +60,9 @@ export const CardTable = ({isMirrored}: IProps) => {
     return (
         <>
         <div ref={tableRef} className="card-table">
+            <div className="card-table__drawer">
+                <EntityDrawer />
+            </div>
             {renderedCards}
             {renderedDecks}
         </div>
