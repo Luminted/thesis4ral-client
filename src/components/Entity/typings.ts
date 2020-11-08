@@ -13,6 +13,7 @@ export interface IProps {
     clickPassThrough: boolean
     isMirrored: boolean
     svgEndpoint: string
+    boundToTable: boolean
     zIndex?: number
     menuContent?: ReactNode
     eventHandlers?: {[key in string]: Function}

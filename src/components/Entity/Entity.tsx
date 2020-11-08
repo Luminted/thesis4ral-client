@@ -23,6 +23,7 @@ export const Entity = ({
     rotationStep, 
     isMirrored,
     svgEndpoint,
+    boundToTable,
     menuContent,
     eventHandlers
     }: IProps) => {
@@ -90,7 +91,7 @@ export const Entity = ({
             width: targetWidth,
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
-            restricted:true
+            restricted: boundToTable
         }));
     }
     
