@@ -1,0 +1,1 @@
+export { default as french52Sorted } from "./french52Sorted";
