@@ -2,19 +2,24 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { selectClients } from "../../selectors";
 import {seatIdMapping} from "../../config";
-import { Hand } from "../Hand";
 import {IProps} from "./typings";
 import {style} from "./style";
+import { Seat } from "../Seat";
 
 export const SeatsContainer = ({orientation, isMirrored}: IProps) => {
     const clients = useSelector(selectClients);
 
-    const clientsOnThisSide = useMemo( () => clients.filter(client => seatIdMapping[client.clientInfo.seatId].includes(orientation)), [clients]);
+    const seatsOnThisSide = useMemo(() => seatIdMapping.filter(seat => seat.includes(orientation)), [orientation]);
 
     return (
         <>
+            <div style={{position: "absolute"}}>{orientation}</div>
             <div className="seats-container">
-                {clientsOnThisSide.map(client => <Hand isMirrored={isMirrored} clientId={client.clientInfo.clientId} key={client.clientInfo.clientId} />)}
+                {seatsOnThisSide.map(seat => {
+                    const seatId = seatIdMapping.indexOf(seat) + 1;
+                    const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
+                        return <Seat isMirrored={isMirrored} clientId={clientInfo?.clientId} key={seatId} />
+                } )}
             </div>
             <style jsx={true}>{style}</style>
         </>
