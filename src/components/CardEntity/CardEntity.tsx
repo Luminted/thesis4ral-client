@@ -50,6 +50,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
             rotationStep={cardRotationStepDegree}
             clickPassThrough={isGrabbed}
             isMirrored={isMirrored}
+            boundToTable={false}
             svgEndpoint={`${metadata.type}/${metadata.name}`}
 
             ref={entityRef}
