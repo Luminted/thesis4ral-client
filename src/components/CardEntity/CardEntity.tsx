@@ -11,7 +11,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
 
     const dispatch = useDispatch();
 
-    const cardRef = useRef<HTMLDivElement>(null);
+    const entityRef = useRef<HTMLDivElement>(null);
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
@@ -24,7 +24,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
 
     const onDragStartInHand = (e: DragEvent) => {
         e.preventDefault();
-        const cardElement = cardRef.current;
+        const cardElement = entityRef.current;
         if(cardElement && inHandOf){
             const {left, top, right, bottom} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
@@ -51,6 +51,8 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
             clickPassThrough={isGrabbed}
             isMirrored={isMirrored}
             svgEndpoint={`${metadata.type}/${metadata.name}`}
+
+            ref={entityRef}
 
             eventHandlers={{
                 onClick,
