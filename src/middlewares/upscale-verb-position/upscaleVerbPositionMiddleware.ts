@@ -4,7 +4,7 @@ import { ActionTypes, SocketActionTypeKeys } from "../../actions";
 import { isVerbTypeWithPosition, upscale } from "../../utils";
 import {tableVirtualHeight, tableVirtualWidth} from "../../config";
 import { Ratio } from "../../types/additionalTypes";
-import { DeckVerbTypes } from "../../types/verb";
+import { CardVerbTypes, DeckVerbTypes } from "../../types/verb";
 
 export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store => 
     next =>
@@ -35,6 +35,13 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store =>
 
                         action.verb.positionX = upscale(horizontalScalingRatio, positionX);
                         action.verb.positionY = upscale(verticalScalingRatio, positionY);
+
+                        // GRAB_FROM_HAND has a set of extra positions to be upscaled
+                        if(action.verb.type === CardVerbTypes.GRAB_FROM_HAND){
+                            const {grabbedAtX, grabbedAtY} = action.verb
+                            action.verb.grabbedAtX = upscale(horizontalScalingRatio, grabbedAtX);
+                            action.verb.grabbedAtY = upscale(verticalScalingRatio, grabbedAtY);
+                        }
                         // console.log('upscaling', positionX, positionY, action.verb.positionX, action.verb.positionY)
                     }
             }
