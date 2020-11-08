@@ -10,7 +10,7 @@ import { SVGLoader } from "../SVGLoader";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
 
-export const Entity = ({
+export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
     entityType, 
     positionX, 
@@ -26,7 +26,7 @@ export const Entity = ({
     boundToTable,
     menuContent,
     eventHandlers
-    }: IProps) => {
+    }, ref) => {
 
     const dispatch = useDispatch();
 
@@ -97,7 +97,7 @@ export const Entity = ({
     
 
     return (
-        <div className="entity" style={{
+        <div ref={ref} className="entity" style={{
             zIndex: zIndex || "auto",
             pointerEvents: clickPassThrough ? "none" : "auto",
             ...computedCSS
@@ -114,4 +114,4 @@ export const Entity = ({
             </div>
         </div>
     )
-}
+})
