@@ -65,10 +65,6 @@ export function selectClientId(state: RootState){
     return state.clientInfo ? state.clientInfo.clientId : null
 }
 
-export function selectTableReady(state: RootState){
-    return state.tableReady;
-}
-
 export function selectHorizontalScalingRatio(state: RootState){
     return state.horizontalScalingRatio;
 }

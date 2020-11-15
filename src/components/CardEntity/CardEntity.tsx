@@ -1,13 +1,13 @@
 import React, { DragEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitFlipVerb, emitGrabFromHand, emitGrabVerb } from "../../actions";
+import { emitFlipVerb, emitGrabVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
-import {IProps, ECardInteractionContext } from "./typings";
+import {IProps } from "./typings";
 import { selectGrabbedEntity } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
 
-export const CardEntity = ({entityId, context, positionX, positionY, faceUp, metadata, isMirrored, zIndex, inHandOf, rotation = 0 }: IProps) => {
+export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, isMirrored, zIndex, rotation = 0 }: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -16,22 +16,6 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const isGrabbed = grabbedEntity?.entityId === entityId;
-
-    const onDragStartOnTable = (e: DragEvent) => {
-        e.preventDefault();
-        dispatch(emitGrabVerb(entityId, EntityTypes.CARD, e.clientX, e.clientY));
-    }
-
-    const onDragStartInHand = (e: DragEvent) => {
-        e.preventDefault();
-        const cardElement = entityRef.current;
-        if(cardElement && inHandOf){
-            const {left, top, right, bottom} = cardElement.getBoundingClientRect();
-            const {clientX, clientY} = e;
-
-            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right : left, isMirrored ? bottom : top ))
-        }
-    }
 
     const onClick = () => {
         dispatch(emitFlipVerb(entityId));
@@ -43,6 +27,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
             entityType={EntityTypes.CARD}
             positionX={positionX}
             positionY={positionY}
+            // TODO: make this configurable
             width={560}
             height={880}
             rotation={rotation}
@@ -56,8 +41,7 @@ export const CardEntity = ({entityId, context, positionX, positionY, faceUp, met
             ref={entityRef}
 
             eventHandlers={{
-                onClick,
-                onDragStart: context === ECardInteractionContext.TABLE ? onDragStartOnTable : onDragStartInHand
+                onClick
             }}
         />
     )

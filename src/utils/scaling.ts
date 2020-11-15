@@ -6,6 +6,5 @@ export function upscale(ratio: Ratio, value: number){
 }
 
 export function downscale(ratio: Ratio, value: number) {
-    console.log(value, "virtual value")
     return Math.trunc(value * ratio.numerator / ratio.divisor);
 }

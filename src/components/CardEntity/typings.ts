@@ -5,14 +5,8 @@ export interface IProps {
     positionX: number
     positionY: number
     faceUp: boolean
-    context: ECardInteractionContext
     metadata: IEntityMetadata
     isMirrored: boolean
-    rotation?: number
-    zIndex?: number
-    inHandOf?: string
-}
-export enum ECardInteractionContext {
-    TABLE = "TABLE",
-    HAND = "HAND"
+    rotation: number
+    zIndex: number
 }

@@ -9,14 +9,17 @@ import { Seat } from "../Seat";
 export const SeatsContainer = ({orientation, isMirrored}: IProps) => {
     const clients = useSelector(selectClients);
 
-    const seatsOnThisSide = useMemo(() => seatIdMapping.filter(seat => seat.includes(orientation)), [orientation]);
+    const orientationsSeatIds = Object.keys(seatIdMapping).filter(id => {
+        if(seatIdMapping[id]){
+           return seatIdMapping[id].includes(orientation);
+        }
+    });
 
     return (
         <>
             <div style={{position: "absolute"}}>{orientation}</div>
             <div className="seats-container">
-                {seatsOnThisSide.map(seat => {
-                    const seatId = seatIdMapping.indexOf(seat) + 1;
+                {orientationsSeatIds.map( seatId => {
                     const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
                         return <Seat isMirrored={isMirrored} clientId={clientInfo?.clientId} key={seatId} />
                 } )}

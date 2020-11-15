@@ -33,6 +33,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
     const customOnDragHandler = eventHandlers?.onDragStart;
+    //TODO: what?
     delete eventHandlers?.onDragStart;
 
     const horizontalScalingRatio: Ratio = useMemo(() => ({
@@ -52,20 +53,21 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
 
     const computedCSS: CSSProperties = useMemo(() => {
-        return isMirrored ? {
-            right: downscaledPositionX,
-            bottom: downscaledPositionY,
+        return {
             width: downscaledWidth,
             height: downscaledHeight,
-            rotate: `${180 + rotation}deg`
-        }: {
-            left: downscaledPositionX,
-            top: downscaledPositionY,
-            width: downscaledWidth,
-            height: downscaledHeight,
-            rotate: `${rotation}deg`
+            rotate: `${180 + rotation}deg`,
+            ...isMirrored ? 
+            {
+                right: downscaledPositionX,
+                bottom: downscaledPositionY,
+            } :
+            {
+                left: downscaledPositionX,
+                top: downscaledPositionY,
+            }
         }
-    }, [positionX, positionY, rotation, downscaledWidth, downscaledHeight, horizontalScalingRatio, verticalScalingRatio, downscaledPositionX, downscaledPositionY]) 
+    }, [ rotation, downscaledWidth, downscaledHeight, downscaledPositionX, downscaledPositionY]) 
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();

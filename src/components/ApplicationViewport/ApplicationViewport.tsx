@@ -27,7 +27,7 @@ export const ApplicationViewport = () => {
 
     const isMirrored = useMemo(() => {
         if(clientInfo){
-            return seatIdMapping[clientInfo.seatId].includes("NORTH")
+            return seatIdMapping[clientInfo.seatId].includes("NORTH");
         }
         else{
             return false;

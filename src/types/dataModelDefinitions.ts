@@ -58,7 +58,7 @@ export type Client = {
 export type ClientInfo ={
     clientId: string,
     clientName?: string,
-    seatId: number
+    seatId: string
 }
 
 export interface GameState {

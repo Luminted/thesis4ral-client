@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import { selectCards, selectDecks } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
-import {ECardInteractionContext} from "../CardEntity/typings";
 import { DeckEntity } from "../DeckEntity";
 import { setTablePosition } from "../../actions";
 import { IProps } from "./typings";
-import { setTablePixelDimensions } from "../../actions/setterActions/setterActions";
+import { setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio } from "../../actions/setterActions/setterActions";
 import { EntityDrawer } from "../EntityDrawer";
+import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 
 export const CardTable = ({isMirrored}: IProps) => {
 
@@ -22,39 +22,41 @@ export const CardTable = ({isMirrored}: IProps) => {
     const renderedCards = useMemo(() => cards.map(card => 
         <CardEntity
             isMirrored={isMirrored}
-            context={ECardInteractionContext.TABLE}
             key={card.entityId}
             {...card}
-             />), [cards, isMirrored]);
+             />), [cards]);
 
     const renderedDecks = useMemo(() => decks.map(deck =>
         <DeckEntity
             isMirrored={isMirrored}
             entityId={deck.entityId}
             key={deck.entityId}/>
-        ), [decks, isMirrored]);
+        ), [decks]);
 
-    const onWindowResize = useCallback(() => {
+    const storeTableDOMInfo = useCallback(() => {
         const tableElement = tableRef.current;
         if(tableElement){
             const {top, left, width, height} = tableElement.getBoundingClientRect();
             dispatch(setTablePosition(left, top));
             dispatch(setTablePixelDimensions(width, height));
+            dispatch(setVerticalScalingRatio({
+                numerator: height,
+                divisor: tableVirtualHeight
+            }));
+            dispatch(setHorizontalScalingRatio({
+                numerator: width,
+                divisor: tableVirtualWidth
+            }))
         }
     }, [tableRef])
 
     useLayoutEffect(() => {
-        const tableElement = tableRef.current;
-        if(tableElement){
-            const {top, left, width, height} = tableElement.getBoundingClientRect();
-            dispatch(setTablePosition(left, top));
-            dispatch(setTablePixelDimensions(width, height));
-        }
-    }, [])
+        storeTableDOMInfo();
+    }, [storeTableDOMInfo]);
 
     useEffect(() => {
-        window.addEventListener("resize", onWindowResize);
-        return () => window.removeEventListener("resize", onWindowResize);
+        window.addEventListener("resize", storeTableDOMInfo);
+        return () => window.removeEventListener("resize", storeTableDOMInfo);
     }, [])
 
     return (

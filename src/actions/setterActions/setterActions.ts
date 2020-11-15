@@ -10,14 +10,6 @@ export type SetTablePixelDimensions = {
     }
 }
 
-export type SetTableVirtualDimensions = {
-    type: SetActionTypeKeys.SET_TABLE_VIRTUAL_DIMENSIONS,
-    dimensions: {
-        width: number,
-        height: number
-    }
-}
-
 export type SetHorizontalScalingRation = {
     type: SetActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO,
     ratio: Ratio
@@ -63,16 +55,6 @@ export function setTablePixelDimensions(width: number, height: number): SetTable
     return {
         type: SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
         dimensions: {
-            width,
-            height
-        }
-    }
-}
-
-export function setTableVirtualDimensions(width: number, height: number): SetTableVirtualDimensions {
-    return {
-        type: SetActionTypeKeys.SET_TABLE_VIRTUAL_DIMENSIONS,
-        dimensions:{
             width,
             height
         }

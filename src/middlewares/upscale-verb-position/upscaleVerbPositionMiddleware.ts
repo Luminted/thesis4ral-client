@@ -21,16 +21,7 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store =>
                 // only way to force TS to narrow types os to check one by one
                 if(isVerbTypeWithPosition(action.verb)){
                         const {positionX, positionY} = action.verb;
-                        const {tablePixelDimensions} = store.getState();
-                        const horizontalScalingRatio: Ratio = {
-                            // TODO: handle null better
-                            numerator: tablePixelDimensions!.width,
-                            divisor: tableVirtualWidth
-                        }
-                        const verticalScalingRatio: Ratio = {
-                            numerator: tablePixelDimensions!.height,
-                            divisor: tableVirtualHeight
-                        }
+                        const {horizontalScalingRatio, verticalScalingRatio} = store.getState();
 
 
                         action.verb.positionX = upscale(horizontalScalingRatio, positionX);

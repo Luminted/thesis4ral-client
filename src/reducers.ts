@@ -13,10 +13,6 @@ type State = {
         x: number,
         y: number
     },
-    tableVirtualDimensions: MaybeNull<{
-        width: number,
-        height: number
-    }>,
     tablePixelDimensions: MaybeNull<{
         width: number,
         height: number
@@ -24,7 +20,6 @@ type State = {
     horizontalScalingRatio: Ratio,
     verticalScalingRatio: Ratio,
     tableConnectionStatus: SocketConnectionStatuses,
-    tableReady: boolean,
     grabbedEntityInfo: MaybeNull<TGrabbedEntityInfo>
 }
 
@@ -42,7 +37,6 @@ const initialState: State = {
         x: 0,
         y: 0
     },
-    tableVirtualDimensions: null,
     tablePixelDimensions: null,
     horizontalScalingRatio: {
         numerator: 1,
@@ -53,11 +47,10 @@ const initialState: State = {
         divisor: 1
     },
     tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED,
-    tableReady: false,
     grabbedEntityInfo: null
 }
 
-export const tablePixelDimensions = (state = initialState.tableVirtualDimensions, action: ActionTypes) => {
+export const tablePixelDimensions = (state = initialState.tablePixelDimensions, action: ActionTypes) => {
     switch(action.type){
         case SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
             return action.dimensions;
@@ -65,26 +58,6 @@ export const tablePixelDimensions = (state = initialState.tableVirtualDimensions
             return state;
     }
 }
-
-export const tableVirtualDimensions = (state = initialState.tableVirtualDimensions, action: ActionTypes) => {
-    switch(action.type){
-        case SetActionTypeKeys.SET_TABLE_VIRTUAL_DIMENSIONS:
-            return action.dimensions;
-        default:
-            return state;
-    }
-}
-
-export const tableReady = (state = initialState.tableReady, action: ActionTypes) => 
-    produce(state, draft => {
-        switch(action.type){
-            case SetActionTypeKeys.SET_TABLE_READY:
-                return action.ready;
-            default:
-                return state;
-        }
-    })
-
 
 export const horizontalScalingRatio = (state = initialState.horizontalScalingRatio, action: ActionTypes) => {
     switch(action.type){
