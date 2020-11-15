@@ -1,1 +1,0 @@
-export const handCardScale = 0.8;

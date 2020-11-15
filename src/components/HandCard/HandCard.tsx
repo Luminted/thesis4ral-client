@@ -1,15 +1,18 @@
 import React, { CSSProperties, useRef, DragEvent, useState, useEffect, useMemo, Ref } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames";
 import { emitGrabFromHand } from "../../actions";
 import { SVGLoader } from "../SVGLoader";
 import { IProps } from "./typings";
-import "./style.css";
+import {style} from "./style";
 import { downscale } from "../../utils";
-import { selectHorizontalScalingRatio, selectVerticalScalingRatio } from "../../selectors";
+import { selectHorizontalScalingRatio, selectOwnClientInfo, selectVerticalScalingRatio } from "../../selectors";
 import { MaybeNull } from "../../types/genericTypes";
 
 export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, isMirrored, isRevealed, metadata}: IProps) => {
     const dispatch = useDispatch();
+
+    const clientInfo = useSelector(selectOwnClientInfo);
 
     const [cardElement, setCardElement] = useState<MaybeNull<HTMLDivElement>>(null);
 
@@ -40,8 +43,9 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, is
     const svgUrl = `${metadata.type}/${metadata.name}`;
 
     return (
+        <>
         <div
-            className="hand-card"
+            className={cn("hand-card", {"hand-card--own": clientInfo?.clientId === inHandOf})}
             style={calculatedCSS}
 
             ref={setCardElement}
@@ -49,5 +53,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, is
             onDragStart={onDragStartInHand}>
             <SVGLoader endpoint={svgUrl} />
         </div>
+        <style jsx={true}>{style}</style>
+        </>
     )
 }
