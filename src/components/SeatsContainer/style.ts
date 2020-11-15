@@ -3,6 +3,8 @@ import {tableHeightPercentage} from "../../config"
 
 export const style = css`
     .seats-container {
+        position: relative;
+        z-index: 1;
         display: flex;
         justify-content: space-between;
         width: 85%;

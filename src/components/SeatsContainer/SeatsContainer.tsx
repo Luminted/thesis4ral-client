@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectClients } from "../../selectors";
 import {seatIdMapping} from "../../config";
@@ -21,7 +21,7 @@ export const SeatsContainer = ({orientation, isMirrored}: IProps) => {
             <div className="seats-container">
                 {orientationsSeatIds.map( seatId => {
                     const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
-                        return <Seat isMirrored={isMirrored} clientId={clientInfo?.clientId} key={seatId} />
+                        return <Seat isMirrored={isMirrored} orientation={orientation} clientId={clientInfo?.clientId} key={seatId} />
                 } )}
             </div>
             <style jsx={true}>{style}</style>

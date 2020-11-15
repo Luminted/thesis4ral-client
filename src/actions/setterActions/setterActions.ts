@@ -1,5 +1,5 @@
 import { ClientInfo, SerializedGameState } from "../../types/dataModelDefinitions"
-import { SocketConnectionStatuses, Orientations, Ratio } from "../../types/additionalTypes"
+import { SocketConnectionStatuses, Ratio } from "../../types/additionalTypes"
 import { SetActionTypeKeys } from "./actionTypes";
 
 export type SetTablePixelDimensions = {
@@ -23,11 +23,6 @@ export type SetVerticalScalingRation = {
 export type SetTableReadyAction = {
     type: SetActionTypeKeys.SET_TABLE_READY,
     ready: boolean
-}
-
-export type SetOrientationAction = {
-    type: SetActionTypeKeys.SET_ORIENTATION,
-    orientation: Orientations
 }
 
 export type SetTableConnectionStatusAction = {
@@ -79,13 +74,6 @@ export function setTableReady(ready: boolean): SetTableReadyAction{
     return {
         type: SetActionTypeKeys.SET_TABLE_READY,
         ready
-    }
-}
-
-export function setOrientationAction(orientation: Orientations): SetOrientationAction {
-    return {
-        type: SetActionTypeKeys.SET_ORIENTATION,
-        orientation
     }
 }
 

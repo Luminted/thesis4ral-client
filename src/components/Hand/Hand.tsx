@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useMemo, useRef } from "react";
+import React, {CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
+import cn from "classnames";
 import { emitPutInHandVerb } from "../../actions";
 import { selectClientHandById, selectClientId, selectGrabbedEntity } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import "./style.css";
 import { HandCard } from "../HandCard";
-import { IClientHand } from "../../types/dataModelDefinitions";
+import { EOrientation } from "../../types/additionalTypes";
 
 //TODO: move to config
 const cardTiltFactor = 1;
@@ -22,7 +23,7 @@ const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [
     return pivotPointX >= cardX ? -tiltAngle : tiltAngle;
 }
 
-export const Hand = ({clientId, isMirrored}: IProps) => {
+export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -74,7 +75,7 @@ export const Hand = ({clientId, isMirrored}: IProps) => {
             const {height, width} = handElement.getBoundingClientRect();
             handCurveFunctionRef.current = interpolatingPolynomial([[0, height], [width / 2, height / 2], [width, height]]);
         }
-    }, [handRef])
+    }, [handRef]);
 
     // Event listener has to be applied natively to stop bubbling to ApplicationViewports mouseup listener
     useEffect(() => {
@@ -89,9 +90,11 @@ export const Hand = ({clientId, isMirrored}: IProps) => {
         return () => window.removeEventListener("resize", calculateHandCurve);
     }, [calculateHandCurve]);
 
+    const isHandMirrored = isMirrored && orientation === EOrientation.SOUTH || !isMirrored && orientation === EOrientation.NORTH;
+
     return ( 
         <>
-        { <div ref={handRef} className={`hand ${isOwnHand ? "hand--own-hand" : "hand--parner-hand"}`}>
+        { <div ref={handRef} className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
         {renderedCards}
         </div>}
         </>

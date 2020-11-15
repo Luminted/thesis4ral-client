@@ -11,6 +11,7 @@ import { clamp } from "../../utils";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import { seatIdMapping } from "../../config";
 import "./style.css";
+import { EOrientation } from "../../types/additionalTypes";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -88,9 +89,9 @@ export const ApplicationViewport = () => {
         <>
         <div ref={applicationViewportRef} className="application-viewport">
             <div className="application-viewport__center">
-                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "SOUTH" : "NORTH"} />
+                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
                 <CardTable isMirrored={isMirrored}/>
-                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? "NORTH" : "SOUTH"} />
+                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.NORTH : EOrientation.SOUTH} />
             </div>
         </div>
         </>

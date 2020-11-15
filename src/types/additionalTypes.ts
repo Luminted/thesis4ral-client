@@ -9,11 +9,6 @@ export enum SocketConnectionStatuses {
     CONNECTING = 'CONNECTING',
 }
 
-export enum Orientations {
-    RIGHT_SIDE_UP = 'RIGHT_SIDE_UP',
-    UPSIDE_DOWN = 'UPSIDE_DOWN'
-}
-
 export enum ClientConnectionStatuses {
     CONNECTED = 'CONNECTED',
     DISCONNECTED = 'DISCONNECTED',
@@ -22,4 +17,9 @@ export enum ClientConnectionStatuses {
 export type Ratio = {
     numerator: number
     divisor: number,
+}
+
+export enum EOrientation {
+    SOUTH = "SOUTH",
+    NORTH = "NORTH"
 }

@@ -1,4 +1,6 @@
+import { EOrientation } from "../../types/additionalTypes";
+
 export interface IProps {
-    orientation: "SOUTH" | "NORTH"
+    orientation: EOrientation
     isMirrored: boolean
 }
