@@ -7,6 +7,7 @@ import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import "./style.css";
 import { HandCard } from "../HandCard";
+import { IClientHand } from "../../types/dataModelDefinitions";
 
 //TODO: move to config
 const cardTiltFactor = 1;
@@ -42,13 +43,14 @@ export const Hand = ({clientId, isMirrored}: IProps) => {
                 const positionX = step * (index + 1);
                 const positionY = handCurveFunctionRef.current!(positionX);
                 const tiltAngle = getCardTiltAngle(width, height, [positionX, positionY], cardTiltFactor);
-                console.log(positionX, positionY, tiltAngle)
+
                return <HandCard
                 entityId={card.entityId}
                 positionX={positionX}
                 positionY={positionY}
                 rotation={tiltAngle}
                 inHandOf={handDetails.clientId}
+                isMirrored={isMirrored}
                 isRevealed={true}
                 metadata={card.metadata}
                 key={card.entityId}/>
@@ -57,7 +59,7 @@ export const Hand = ({clientId, isMirrored}: IProps) => {
         else{
             return [];
         }
-    }, [handDetails?.cards ,handRef, handCurveFunctionRef]);
+    }, [handDetails?.cards ,handRef, handCurveFunctionRef.current]);
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
@@ -83,6 +85,7 @@ export const Hand = ({clientId, isMirrored}: IProps) => {
     useEffect(() => {
         calculateHandCurve();
         window.addEventListener("resize", calculateHandCurve);
+        console.log("hand resize")
         return () => window.removeEventListener("resize", calculateHandCurve);
     }, [calculateHandCurve]);
 

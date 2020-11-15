@@ -7,5 +7,6 @@ export interface IProps {
     rotation: number
     inHandOf: string
     isRevealed: boolean
+    isMirrored: boolean
     metadata: IEntityMetadata
 }

@@ -8,7 +8,7 @@ import { downscale } from "../../utils";
 import { selectHorizontalScalingRatio, selectVerticalScalingRatio } from "../../selectors";
 import { MaybeNull } from "../../types/genericTypes";
 
-export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, isRevealed, metadata}: IProps) => {
+export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, isMirrored, isRevealed, metadata}: IProps) => {
     const dispatch = useDispatch();
 
     const [cardElement, setCardElement] = useState<MaybeNull<HTMLDivElement>>(null);
@@ -19,9 +19,9 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, is
     const onDragStartInHand = (e: DragEvent) => {
         e.preventDefault();
         if(cardElement){
-            const {left, top} = cardElement.getBoundingClientRect();
+            const {left, right, top, bottom} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
-            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, left, top ))
+            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top));
         }
     }
 
