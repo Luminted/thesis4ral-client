@@ -1,4 +1,4 @@
-import React, {CSSProperties, useCallback, useEffect, useMemo, useRef } from "react";
+import React, {useCallback, useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
@@ -52,7 +52,8 @@ export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
                 rotation={tiltAngle}
                 inHandOf={handDetails.clientId}
                 isMirrored={isMirrored}
-                isRevealed={true}
+                isRevealed={false}
+                faceUp={isOwnHand}
                 metadata={card.metadata}
                 key={card.entityId}/>
             })
@@ -64,7 +65,7 @@ export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
-            dispatch(emitPutInHandVerb(grabbedEntity.entityId));
+            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true));
             e.stopPropagation();
         }
     }, [grabbedEntity, isOwnHand]);
@@ -90,11 +91,12 @@ export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
         return () => window.removeEventListener("resize", calculateHandCurve);
     }, [calculateHandCurve]);
 
-    const isHandMirrored = isMirrored && orientation === EOrientation.SOUTH || !isMirrored && orientation === EOrientation.NORTH;
+    const isHandMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
 
     return ( 
         <>
-        { <div ref={handRef} className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
+        { <div ref={handRef}
+         className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
         {renderedCards}
         </div>}
         </>

@@ -14,7 +14,7 @@ export interface IEntity {
 export interface ICardEntity extends IEntity {
     faceUp: boolean,
     ownerDeck: MaybeNull<string>
-    metadata: IEntityMetadata
+    metadata: ICardEntityMetadata
 }
 
 export interface IDeckEntity extends IEntity {
@@ -26,10 +26,15 @@ export interface IEntityMetadata {
     type: string
 }
 
-export interface IDeckCard extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {}
+export interface ICardEntityMetadata extends IEntityMetadata {
+    back: string
+}
 
-export interface IHandCard extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {
+export interface IAbstractCardEntity extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {}
+
+export interface IHandCard extends IAbstractCardEntity {
     ownerDeck: string,
+    revealed: boolean
 }
 
 export interface IClientHand {

@@ -21,6 +21,8 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, is
         dispatch(emitFlipVerb(entityId));
     }
 
+    const displayedSVG = faceUp ? `${metadata.type}/${metadata.name}` : `${metadata.type}/${metadata.back}`
+
     return (
         <Entity 
             entityId={entityId}
@@ -36,7 +38,7 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, is
             clickPassThrough={isGrabbed}
             isMirrored={isMirrored}
             boundToTable={false}
-            svgEndpoint={`${metadata.type}/${metadata.name}`}
+            svgEndpoint={displayedSVG}
 
             ref={entityRef}
 

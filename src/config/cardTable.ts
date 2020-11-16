@@ -18,3 +18,12 @@ export const seatIdMapping = {
     5: 'SOUTH',
     6: 'SOUTH_EAST'
 }
+
+export const seatColors = { 
+    1: "red",
+    2: "blue",
+    3: "yellow",
+    4: "green",
+    5: "purple",
+    6: "orange"
+};

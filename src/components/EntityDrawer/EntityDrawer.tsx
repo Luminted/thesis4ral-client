@@ -9,7 +9,10 @@ export const EntityDrawer = () => {
 
     return <div className="entity-drawer">
         <button onClick={
-            () => dispatch(emitAddDeckVerb(french52Sorted, {
+            () => dispatch(emitAddDeckVerb(french52Sorted.map(card => ({
+                ...card,
+                back: "rcb"
+            })), {
                 name: "rcb",
                 type: "french"
             }, 0, 0, 0))

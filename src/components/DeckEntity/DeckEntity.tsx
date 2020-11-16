@@ -40,7 +40,7 @@ export const DeckEntity = ({entityId, isMirrored}: IProps) => {
             rotationStep={deckRotationStepDegree}
             boundToTable={true}
             isMirrored={isMirrored}
-            svgEndpoint={`${deckEntityDetails.metadata.type}/cardbacks/${deckEntityDetails.metadata.name}`}
+            svgEndpoint={`${deckEntityDetails.metadata.type}/${deckEntityDetails.metadata.name}`}
 
             eventHandlers={{
                 onClick

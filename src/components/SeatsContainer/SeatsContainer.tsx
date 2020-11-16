@@ -21,7 +21,7 @@ export const SeatsContainer = ({orientation, isMirrored}: IProps) => {
             <div className="seats-container">
                 {orientationsSeatIds.map( seatId => {
                     const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
-                        return <Seat isMirrored={isMirrored} orientation={orientation} clientId={clientInfo?.clientId} key={seatId} />
+                        return <Seat seatId={seatId} isMirrored={isMirrored} orientation={orientation} clientId={clientInfo?.clientId} key={seatId} />
                 } )}
             </div>
             <style jsx={true}>{style}</style>

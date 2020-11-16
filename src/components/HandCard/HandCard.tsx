@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, DragEvent, useState, useEffect, useMemo, Ref } from "react";
+import React, { CSSProperties, DragEvent, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { emitGrabFromHand } from "../../actions";
@@ -9,7 +9,7 @@ import { downscale } from "../../utils";
 import { selectHorizontalScalingRatio, selectOwnClientInfo, selectVerticalScalingRatio } from "../../selectors";
 import { MaybeNull } from "../../types/genericTypes";
 
-export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, isMirrored, isRevealed, metadata}: IProps) => {
+export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rotation, isMirrored, isRevealed, metadata}: IProps) => {
     const dispatch = useDispatch();
 
     const clientInfo = useSelector(selectOwnClientInfo);
@@ -24,7 +24,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, is
         if(cardElement){
             const {left, right, top, bottom} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
-            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top));
+            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
         }
     }
 
@@ -40,7 +40,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, rotation, is
         height: downscaledHeight,
     }
 
-    const svgUrl = `${metadata.type}/${metadata.name}`;
+    const svgUrl =  faceUp ? `${metadata.type}/${metadata.name}` : `${metadata.type}/${metadata.back}`;
 
     return (
         <>
