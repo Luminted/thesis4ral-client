@@ -8,6 +8,7 @@ import {style} from "./style";
 import { downscale } from "../../utils";
 import { selectHorizontalScalingRatio, selectOwnClientInfo, selectVerticalScalingRatio } from "../../selectors";
 import { MaybeNull } from "../../types/genericTypes";
+import { setGrabbedEntityInfo } from "../../actions/setterActions";
 
 export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rotation, isMirrored, isRevealed, metadata}: IProps) => {
     const dispatch = useDispatch();
@@ -22,9 +23,19 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rota
     const onDragStartInHand = (e: DragEvent) => {
         e.preventDefault();
         if(cardElement){
-            const {left, right, top, bottom} = cardElement.getBoundingClientRect();
+            const {left, right, top, bottom, width, height} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
+            const relativeMouseX = clientX - left;
+            const relativeMouseY = clientY - top;
+            
             dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
+            dispatch(setGrabbedEntityInfo({
+                height,
+                width,
+                relativeGrabbedAtX: relativeMouseX,
+                relativeGrabbedAtY: relativeMouseY,
+                restricted: false
+            }));
         }
     }
 

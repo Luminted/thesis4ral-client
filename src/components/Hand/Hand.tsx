@@ -9,6 +9,7 @@ import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import "./style.css";
 import { HandCard } from "../HandCard";
 import { EOrientation } from "../../types/additionalTypes";
+import { setGrabbedEntityInfo } from "../../actions/setterActions";
 
 //TODO: move to config
 const cardTiltFactor = 1;
@@ -65,8 +66,9 @@ export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
-            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true));
             e.stopPropagation();
+            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true));
+            dispatch(setGrabbedEntityInfo(null));
         }
     }, [grabbedEntity, isOwnHand]);
 
