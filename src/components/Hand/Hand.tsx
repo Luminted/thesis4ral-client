@@ -1,15 +1,17 @@
-import React, {useCallback, useEffect, useMemo, useRef } from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
-import { emitPutInHandVerb } from "../../actions";
-import { selectClientHandById, selectClientId, selectGrabbedEntity } from "../../selectors";
+import { emitPutInHandVerb, emitReorderHandVerb } from "../../actions";
+import { selectClientId, selectGrabbedEntity } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import "./style.css";
 import { HandCard } from "../HandCard";
 import { EOrientation } from "../../types/additionalTypes";
 import { setGrabbedEntityInfo } from "../../actions/setterActions";
+import { EntityTypes } from "../../types/dataModelDefinitions";
+import { MaybeNull } from "../../types/genericTypes";
 
 //TODO: move to config
 const cardTiltFactor = 1;
@@ -17,58 +19,97 @@ const cardTiltFactor = 1;
 const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [number, number], tiltFactor: number) => {
     const [cardX, cardY] = cardPosition;
     const pivotPointX = handWidth / 2;
-    const pivotPointY = -cardTiltFactor * handHeight;
+    const pivotPointY = -tiltFactor * handHeight;
     const adjacentSideLength = calculateDistance([pivotPointX, pivotPointY], [pivotPointX, cardY]);
     const hypotenuseLength = calculateDistance([pivotPointX, pivotPointY], [cardX, cardY]);
     const tiltAngle = calculateAdjacentAngle(adjacentSideLength, hypotenuseLength);
     return pivotPointX >= cardX ? -tiltAngle : tiltAngle;
 }
 
-export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
+export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
 
     const dispatch = useDispatch();
 
     const handRef = useRef<HTMLDivElement>(null);
     const handCurveFunctionRef = useRef<(y: number) => number>();
 
-    const handDetails = useSelector(selectClientHandById(clientId));
+    const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<MaybeNull<number>>(null);
+
     const grabbedEntity = useSelector(selectGrabbedEntity);
     const ownClientId = useSelector(selectClientId);
 
+    const {cards, ordering, clientId} = handDetails;
+
+    const getOnMouseEnterHandCard = orderOfCard => () => {
+        if(grabbedEntity && grabbedEntity.entityType === EntityTypes.CARD){
+            setOrderOfCardBeingHoveredWithGrabbedOne(orderOfCard);
+        }
+    }
+
+    const onMouseLeaveHandCard = () => {
+        if(grabbedEntity && grabbedEntity.entityType === EntityTypes.CARD){
+            setOrderOfCardBeingHoveredWithGrabbedOne(null);
+        }
+    }
+
     const isOwnHand = useMemo(() => ownClientId === clientId, [ownClientId]);
     const renderedCards = useMemo(() => {
-        if(handDetails && handRef.current && handCurveFunctionRef.current){
+        if(handRef.current && handCurveFunctionRef.current){
             const {width, height} = handRef.current!.getBoundingClientRect();
-            const step = width / (handDetails.cards.length + 1);
+            const step = width / (cards.length + 1);
 
-            return handDetails.cards.map( (card, index) => {
-                const positionX = step * (index + 1);
+            return cards.map( (card, index) => {
+                const order = ordering[index];
+                const positionXFactor = orderOfCardBeingHoveredWithGrabbedOne !== null && orderOfCardBeingHoveredWithGrabbedOne < order ? order + 1.2 : order + 1;
+                const positionX = step * positionXFactor;
+                const {entityId, metadata} = card;
                 const positionY = handCurveFunctionRef.current!(positionX);
                 const tiltAngle = getCardTiltAngle(width, height, [positionX, positionY], cardTiltFactor);
 
                return <HandCard
-                entityId={card.entityId}
+                entityId={entityId}
                 positionX={positionX}
                 positionY={positionY}
+                zIndex={order}
                 rotation={tiltAngle}
-                inHandOf={handDetails.clientId}
+                inHandOf={clientId}
                 isMirrored={isMirrored}
                 isRevealed={false}
                 faceUp={isOwnHand}
-                metadata={card.metadata}
-                key={card.entityId}/>
+                metadata={metadata}
+                hoverFeedback={!(!!grabbedEntity)}
+
+                key={entityId}
+                
+                onMouseEnter={getOnMouseEnterHandCard(order)}
+                onMouseLeave={onMouseLeaveHandCard}/>
             })
         }
         else{
             return [];
         }
-    }, [handDetails?.cards ,handRef, handCurveFunctionRef.current]);
+    }, [cards ,handRef, handCurveFunctionRef.current]);
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
             e.stopPropagation();
-            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true));
+            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true,
+                nextGameState => {
+                const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
+                if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
+                    const {ordering} = nextHand;
+                    const newOrdering = [...ordering
+                        .slice(0, ordering.length - 1)
+                        .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
+                        , orderOfCardBeingHoveredWithGrabbedOne + 1];
+                        console.log(newOrdering);
+                    
+                    dispatch(emitReorderHandVerb(newOrdering));
+                }
+            }
+            ));
             dispatch(setGrabbedEntityInfo(null));
+            setOrderOfCardBeingHoveredWithGrabbedOne(null);
         }
     }, [grabbedEntity, isOwnHand]);
 
@@ -89,7 +130,6 @@ export const Hand = ({clientId, isMirrored, orientation}: IProps) => {
     useEffect(() => {
         calculateHandCurve();
         window.addEventListener("resize", calculateHandCurve);
-        console.log("hand resize")
         return () => window.removeEventListener("resize", calculateHandCurve);
     }, [calculateHandCurve]);
 

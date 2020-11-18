@@ -40,6 +40,7 @@ export interface IHandCard extends IAbstractCardEntity {
 export interface IClientHand {
     clientId: string
     cards: IHandCard[]
+    ordering: number[]
 }
 
 export enum EntityTypes {

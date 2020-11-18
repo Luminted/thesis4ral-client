@@ -1,7 +1,8 @@
 import { EOrientation } from "../../types/additionalTypes";
+import { IClientHand } from "../../types/dataModelDefinitions";
 
 export interface IProps {
-    clientId: string
+    handDetails: IClientHand
     isMirrored: boolean
     orientation: EOrientation
 }

@@ -1,7 +1,9 @@
+import { EntityTypes } from "../../../types/dataModelDefinitions";
 import { MaybeNull } from "../../../types/genericTypes";
 import { SetActionTypeKeys } from "../actionTypes";
 
 export type TGrabbedEntityInfo = MaybeNull<{
+    entityType: EntityTypes
     width: number,
     height: number,
     relativeGrabbedAtX: number,

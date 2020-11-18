@@ -5,7 +5,7 @@ export const style = css`
         position: absolute
     }
 
-    .hand-card--own:hover {
-        z-index: 2;
+    .hand-card.hand-card--feedback:hover {
+        z-index: 99 !important;
     }
 `

@@ -89,6 +89,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         const relativeMouseY = clientY - top;
 
         dispatch(setGrabbedEntityInfo({
+            entityType,
             height: targetHeight,
             width: targetWidth,
             relativeGrabbedAtX: relativeMouseX,

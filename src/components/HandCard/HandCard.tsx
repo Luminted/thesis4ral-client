@@ -6,14 +6,13 @@ import { SVGLoader } from "../SVGLoader";
 import { IProps } from "./typings";
 import {style} from "./style";
 import { downscale } from "../../utils";
-import { selectHorizontalScalingRatio, selectOwnClientInfo, selectVerticalScalingRatio } from "../../selectors";
+import { selectHorizontalScalingRatio, selectVerticalScalingRatio } from "../../selectors";
 import { MaybeNull } from "../../types/genericTypes";
 import { setGrabbedEntityInfo } from "../../actions/setterActions";
+import { EntityTypes } from "../../types/dataModelDefinitions";
 
-export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rotation, isMirrored, isRevealed, metadata}: IProps) => {
+export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, faceUp, rotation, isMirrored, isRevealed, metadata, onMouseEnter, onMouseLeave, hoverFeedback}: IProps) => {
     const dispatch = useDispatch();
-
-    const clientInfo = useSelector(selectOwnClientInfo);
 
     const [cardElement, setCardElement] = useState<MaybeNull<HTMLDivElement>>(null);
 
@@ -30,6 +29,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rota
             
             dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
             dispatch(setGrabbedEntityInfo({
+                entityType: EntityTypes.CARD,
                 height,
                 width,
                 relativeGrabbedAtX: relativeMouseX,
@@ -49,6 +49,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rota
         rotate: `${rotation}deg`,
         width: downscaledWidth,
         height: downscaledHeight,
+        zIndex
     }
 
     const svgUrl =  faceUp ? `${metadata.type}/${metadata.name}` : `${metadata.type}/${metadata.back}`;
@@ -56,12 +57,14 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, faceUp, rota
     return (
         <>
         <div
-            className={cn("hand-card", {"hand-card--own": clientInfo?.clientId === inHandOf})}
+            className={cn("hand-card", {"hand-card--feedback": hoverFeedback})}
             style={calculatedCSS}
 
             ref={setCardElement}
 
-            onDragStart={onDragStartInHand}>
+            onDragStart={onDragStartInHand}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
             <SVGLoader endpoint={svgUrl} />
         </div>
         <style jsx={true}>{style}</style>
