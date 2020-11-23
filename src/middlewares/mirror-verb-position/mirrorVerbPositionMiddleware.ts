@@ -7,11 +7,6 @@ import { CardVerbTypes, DeckVerbTypes } from "../../types/verb";
 export const mirrorVerbPositionMiddleware: Middleware<{}, RootState> = store => next => (action: ActionTypes) => {
     if(action.type === SocketActionTypeKeys.EMIT_VERB){
 
-        // abort for certain types
-        if(action.verb.type === DeckVerbTypes.ADD_DECK){
-            return next(action);
-        }
-
         if(isVerbTypeWithPosition(action.verb)){
             const {positionX, positionY} = action.verb;
             const {tablePixelDimensions} = store.getState();

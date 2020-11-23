@@ -32,10 +32,6 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
 
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
-    const customOnDragHandler = eventHandlers?.onDragStart;
-    //TODO: what?
-    delete eventHandlers?.onDragStart;
-
     const horizontalScalingRatio: Ratio = useMemo(() => ({
             numerator: tablePixelDimensions?.width || 0,
             divisor: tableVirtualWidth
@@ -72,18 +68,13 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
 
     const onDragStart = (e: DragEvent) => {
         e.preventDefault();
-        if(customOnDragHandler){
-            customOnDragHandler(e);
-        }
-        else{
-            dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
-        }
-
+        
         const {clientX, clientY} = e;
         const {top, left, width: targetWidth, height: targetHeight} = e.currentTarget.getBoundingClientRect();
         const relativeMouseX = clientX - left;
         const relativeMouseY = clientY - top;
-
+        
+        dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
         dispatch(setGrabbedEntityInfo({
             entityType,
             height: targetHeight,
@@ -104,7 +95,8 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             {menuContent && <div className="entity__menu">{menuContent}</div>}
             <EntityCore width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
                 onDragStart,
-                onContextMenu: onRightClick
+                onContextMenu: onRightClick,
+                ...eventHandlers
             }} />
         </div>
     )

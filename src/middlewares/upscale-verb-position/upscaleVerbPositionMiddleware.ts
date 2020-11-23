@@ -11,14 +11,8 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store =>
         (action: ActionTypes) => {
             
             if(action.type === SocketActionTypeKeys.EMIT_VERB) {
-
-                // abort transformation for certain verbs
-                if(action.verb.type === DeckVerbTypes.ADD_DECK){
-                    return next(action);
-                }
-
                 // these verbs have position fileds
-                // only way to force TS to narrow types os to check one by one
+                console.log(action.verb)
                 if(isVerbTypeWithPosition(action.verb)){
                         const {positionX, positionY} = action.verb;
                         const {horizontalScalingRatio, verticalScalingRatio} = store.getState();

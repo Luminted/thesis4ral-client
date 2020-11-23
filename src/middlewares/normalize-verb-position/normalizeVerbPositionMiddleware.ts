@@ -11,13 +11,7 @@ import { isVerbTypeWithPosition } from "../../utils";
 export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store => 
     next => 
         (action: ActionTypes) => {
-            if(action.type === SocketActionTypeKeys.EMIT_VERB){
-
-                // abort transformation for certain types
-                if(action.verb.type === DeckVerbTypes.ADD_DECK){
-                    return next(action);
-                }
-                
+            if(action.type === SocketActionTypeKeys.EMIT_VERB){                
                 if(isVerbTypeWithPosition(action.verb)){
                     const {positionX, positionY} = action.verb;
                     const {tablePosition} = store.getState();
