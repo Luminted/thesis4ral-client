@@ -19,15 +19,16 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
     const horizontalScalingRatio = useSelector(selectHorizontalScalingRatio);
     const verticalScalingRatio = useSelector(selectVerticalScalingRatio);
 
-    const onDragStartInHand = (e: DragEvent) => {
+    const onDragStart = (e: DragEvent) => {
         e.preventDefault();
         if(cardElement){
+            // TODO: use target instead of ref
             const {left, right, top, bottom, width, height} = cardElement.getBoundingClientRect();
             const {clientX, clientY} = e;
             const relativeMouseX = clientX - left;
             const relativeMouseY = clientY - top;
             
-            dispatch(emitGrabFromHand(entityId,clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
+            dispatch(emitGrabFromHand(entityId, clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
             dispatch(setGrabbedEntityInfo({
                 entityType: EntityTypes.CARD,
                 height,
@@ -62,7 +63,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
 
             ref={setCardElement}
 
-            onDragStart={onDragStartInHand}
+            onDragStart={onDragStart}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}>
             <SVGLoader endpoint={svgUrl} />

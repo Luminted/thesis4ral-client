@@ -5,7 +5,8 @@ export const tableAspectRatio: Ratio = {
     divisor: 3
 }
 
-export const tableHeightPercentage = 65;
+export const tableHeightPercentage = 55;
+export const drawerHandleWidth = 10;
 
 export const tableVirtualWidth = 10000;
 export const tableVirtualHeight = 10000;

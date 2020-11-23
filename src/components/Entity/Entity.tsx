@@ -6,20 +6,20 @@ import { Ratio } from "../../types/additionalTypes";
 import { selectTablePixelDimensions } from "../../selectors";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { downscale } from "../../utils";
-import { SVGLoader } from "../SVGLoader";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
+import { EntityCore } from "../EntityCore";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
-    entityType, 
+    entityType,
     positionX, 
     positionY,
     width,
     height,
     rotation, 
     zIndex,
-    clickPassThrough, 
+    clickPassThrough,
     rotationStep, 
     isMirrored,
     svgEndpoint,
@@ -47,16 +47,12 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
 
     }), [tablePixelDimensions])
 
-    const downscaledWidth = useMemo(() => downscale(horizontalScalingRatio, width), [horizontalScalingRatio]);
-    const downscaledHeight = useMemo(() =>downscale(horizontalScalingRatio, height), [verticalScalingRatio]);
     const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
 
     const computedCSS: CSSProperties = useMemo(() => {
         return {
-            width: downscaledWidth,
-            height: downscaledHeight,
-            rotate: `${180 + rotation}deg`,
+            rotate: `${isMirrored ? 180 + rotation : rotation}deg`,
             ...isMirrored ? 
             {
                 right: downscaledPositionX,
@@ -67,7 +63,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
                 top: downscaledPositionY,
             }
         }
-    }, [ rotation, downscaledWidth, downscaledHeight, downscaledPositionX, downscaledPositionY]) 
+    }, [ rotation, downscaledPositionX, downscaledPositionY]) 
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
@@ -106,15 +102,10 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             ...computedCSS
         }}>
             {menuContent && <div className="entity__menu">{menuContent}</div>}
-            <div
-            className="entity__graphic"
-            draggable={true}
-
-            onDragStart={onDragStart}
-            onContextMenu={onRightClick}
-            {...eventHandlers}>
-                <SVGLoader endpoint={svgEndpoint} />
-            </div>
+            <EntityCore width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
+                onDragStart,
+                onContextMenu: onRightClick
+            }} />
         </div>
     )
 })

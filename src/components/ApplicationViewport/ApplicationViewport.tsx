@@ -12,6 +12,7 @@ import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import { seatIdMapping } from "../../config";
 import "./style.css";
 import { EOrientation } from "../../types/additionalTypes";
+import { EntityTypes } from "../../types/dataModelDefinitions";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -37,7 +38,7 @@ export const ApplicationViewport = () => {
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
-            if(grabbedEntityInfo.restricted){
+            if(grabbedEntityInfo.entityType === EntityTypes.DECK){
                 const entityLeftEdgeOffset = grabbedEntityInfo.relativeGrabbedAtX;
                 const entityRightEdgeOffset = grabbedEntityInfo.width - grabbedEntityInfo.relativeGrabbedAtX;
                 const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
@@ -57,7 +58,7 @@ export const ApplicationViewport = () => {
         }
     }, listenerThrottleValue), [grabbedEntity]);
 
-    const onMouseUp = useCallback(throttle(() => {
+    const onMouseUp = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity){
             dispatch(emitReleaseVerb(
                 grabbedEntity.entityId,
