@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
 import { selectGrabbedEntity, selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
-import {emitMoveVerb, emitReleaseVerb} from "../../actions";
+import {emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 import { mirrorVerbPositionMiddleware } from "../../middlewares";
 import { clamp } from "../../utils";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
-import { seatIdMapping } from "../../config";
+import { seatIdMapping, trayWidthPercentage } from "../../config";
 import "./style.css";
 import { EOrientation } from "../../types/additionalTypes";
 import { EntityTypes } from "../../types/dataModelDefinitions";
@@ -38,14 +38,19 @@ export const ApplicationViewport = () => {
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
-            if(grabbedEntityInfo.entityType === EntityTypes.DECK){
+            if(grabbedEntity.entityType === EntityTypes.DECK){
                 const entityLeftEdgeOffset = grabbedEntityInfo.relativeGrabbedAtX;
                 const entityRightEdgeOffset = grabbedEntityInfo.width - grabbedEntityInfo.relativeGrabbedAtX;
                 const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
                 const entityBottomEdgeOffset = grabbedEntityInfo.height - grabbedEntityInfo.relativeGrabbedAtY;
+                const tableTrayWidth = tablePixelDimensions.width * (trayWidthPercentage / 100);
+                const leftClampBorder = tablePosition.x + entityLeftEdgeOffset - tableTrayWidth;
+                const rightClampBorder = tablePosition.x + tablePixelDimensions.width - entityRightEdgeOffset;
+                const topClampBorder = tablePosition.y + entityTopEdgeOffset;
+                const bottomClampBorder = tablePosition.y + tablePixelDimensions.height - entityBottomEdgeOffset;
                 dispatch(emitMoveVerb(
-                    clamp(e.clientX, tablePosition.x + entityLeftEdgeOffset, tablePosition.x + tablePixelDimensions.width - entityRightEdgeOffset),
-                    clamp(e.clientY, tablePosition.y + entityTopEdgeOffset, tablePosition.y + tablePixelDimensions.height - entityBottomEdgeOffset)
+                    clamp(e.clientX, leftClampBorder, rightClampBorder),
+                    clamp(e.clientY, topClampBorder, bottomClampBorder)
                 ))
             }
             else{
@@ -59,11 +64,28 @@ export const ApplicationViewport = () => {
     }, listenerThrottleValue), [grabbedEntity]);
 
     const onMouseUp = useCallback(throttle((e: MouseEvent) => {
-        if(grabbedEntity){
-            dispatch(emitReleaseVerb(
-                grabbedEntity.entityId,
-                grabbedEntity.entityType
-            ));
+        if(grabbedEntity && grabbedEntityInfo){
+            const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
+            const {entityId, entityType} = grabbedEntity;
+
+            if(grabbedFromHand){
+                dispatch(emitPutInHandVerb(entityId, true, true));
+            }
+            else if(originalPositionX && originalPositionY && entityType === EntityTypes.CARD){
+                dispatch(emitMoveToVerb(entityId, entityType, originalPositionX, originalPositionY));
+                dispatch(emitReleaseVerb(
+                    grabbedEntity.entityId,
+                    grabbedEntity.entityType
+                ));
+            }
+            else{
+                dispatch(emitReleaseVerb(
+                    grabbedEntity.entityId,
+                    grabbedEntity.entityType
+                ));
+            }
+
+            
             dispatch(setGrabbedEntityInfo(null));
         }
     }, listenerThrottleValue), [grabbedEntity]);

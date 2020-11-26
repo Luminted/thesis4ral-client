@@ -81,7 +81,9 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             width: targetWidth,
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
-            restricted: boundToTable
+            restricted: boundToTable,
+            originalPositionX: left,
+            originalPositionY: top
         }));
     }
     

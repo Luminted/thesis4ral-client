@@ -1,5 +1,5 @@
 import css from "styled-jsx/css";
-import {tableHeightPercentage, tableAspectRatio, drawerHandleWidth} from "../../config"
+import {tableHeightPercentage, tableAspectRatio, trayWidthPercentage} from "../../config"
 
 const tableWidth = tableHeightPercentage * (tableAspectRatio.numerator / tableAspectRatio.divisor);
 
@@ -18,10 +18,6 @@ export const style = css`
     .card-table__drawer{
         position: absolute;
         height: 100%;
-        width: ${tableWidth * 0.15}vh;
-        translate: -${drawerHandleWidth}%;
-        transition: all 0.2s;
-    }
-    .card-table__drawer--open{
+        width: ${trayWidthPercentage}%;
         translate: -100%;
     }`

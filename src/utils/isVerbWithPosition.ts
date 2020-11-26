@@ -6,8 +6,4 @@ export const isVerbTypeWithPosition = (verb: Verb): verb is IGrabVerb |
     IAddCardVerb |
     IGrabFromHandVerb |
     IPutOnTable |
-    IAddDeckVerb => {
-
-        console.log("positionX" in verb, "positionY" in verb)
-        return "positionX" in verb && "positionY" in verb;
-    } 
+    IAddDeckVerb => "positionX" in verb && "positionY" in verb; 

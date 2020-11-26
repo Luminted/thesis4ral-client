@@ -92,24 +92,28 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
-            e.stopPropagation();
-            dispatch(emitPutInHandVerb(grabbedEntity.entityId, false, true,
-                nextGameState => {
-                const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
-                if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
-                    const {ordering} = nextHand;
-                    const newOrdering = [...ordering
-                        .slice(0, ordering.length - 1)
-                        .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
-                        , orderOfCardBeingHoveredWithGrabbedOne + 1];
-                        console.log(newOrdering);
-                    
-                    dispatch(emitReorderHandVerb(newOrdering));
+            const {entityId, entityType} = grabbedEntity;
+            
+            if(entityType === EntityTypes.CARD){
+                e.stopPropagation();
+                dispatch(emitPutInHandVerb(entityId, false, true,
+                    nextGameState => {
+                    const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
+                    if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
+                        const {ordering} = nextHand;
+                        const newOrdering = [...ordering
+                            .slice(0, ordering.length - 1)
+                            .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
+                            , orderOfCardBeingHoveredWithGrabbedOne + 1];
+                            console.log(newOrdering);
+                        
+                        dispatch(emitReorderHandVerb(newOrdering));
+                    }
                 }
+                ));
+                dispatch(setGrabbedEntityInfo(null));
+                setOrderOfCardBeingHoveredWithGrabbedOne(null);
             }
-            ));
-            dispatch(setGrabbedEntityInfo(null));
-            setOrderOfCardBeingHoveredWithGrabbedOne(null);
         }
     }, [grabbedEntity, isOwnHand]);
 

@@ -22,12 +22,13 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
         
         dispatch(emitGrabFromHand(entityId, clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
         dispatch(setGrabbedEntityInfo({
-            entityType: EntityTypes.CARD,
             height,
             width,
+            entityType: EntityTypes.CARD,
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
-            restricted: false
+            restricted: false,
+            grabbedFromHand: inHandOf
         }));
     }
 

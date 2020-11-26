@@ -1,4 +1,5 @@
-import {Ratio} from "../types/additionalTypes"
+import {Ratio} from "../types/additionalTypes";
+import { french52SortedBlue, french52SortedRed } from "../entities";
 
 export const tableAspectRatio: Ratio = {
     numerator: 7,
@@ -6,7 +7,7 @@ export const tableAspectRatio: Ratio = {
 }
 
 export const tableHeightPercentage = 55;
-export const drawerHandleWidth = 10;
+export const trayWidthPercentage = 15;
 
 export const tableVirtualWidth = 10000;
 export const tableVirtualHeight = 10000;
@@ -28,3 +29,5 @@ export const seatColors = {
     5: "purple",
     6: "orange"
 };
+
+export const trayDecks = [french52SortedRed, french52SortedBlue];
