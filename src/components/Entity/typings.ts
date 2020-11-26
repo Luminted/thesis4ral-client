@@ -11,7 +11,6 @@ export interface IProps {
     rotation: number
     rotationStep: number
     clickPassThrough: boolean
-    isMirrored: boolean
     svgEndpoint: string
     boundToTable: boolean
     zIndex?: number

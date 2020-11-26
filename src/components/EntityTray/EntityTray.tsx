@@ -9,8 +9,9 @@ import {trayDecks} from "../../config";
 import { IEntityMetadata, SerializedGameState } from "../../types/dataModelDefinitions";
 import { setGrabbedEntityInfo } from "../../actions/setterActions";
 import "./style.css";
+import { IProps } from "./typings";
 
-export const EntityDrawer = () => {
+export const EntityTray = ({isMirrored}: IProps) => {
     const dispatch = useDispatch();
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
@@ -54,7 +55,7 @@ export const EntityDrawer = () => {
             }
         }
 
-        dispatch(emitAddDeckVerb(cardsMetadata, metadata, left, top, 0, ackFunction));
+        dispatch(emitAddDeckVerb(cardsMetadata, metadata, (isMirrored ? right : left), (isMirrored ? bottom : top), 0, ackFunction));
     }
 
     const renderedDecks = trayDecks.map(({cardBack, type}, index) => {

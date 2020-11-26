@@ -1,13 +1,13 @@
-import React, { DragEvent, useRef } from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitFlipVerb, emitGrabVerb } from "../../actions";
+import { emitFlipVerb } from "../../actions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
 import {IProps } from "./typings";
 import { selectGrabbedEntity } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
 
-export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, isMirrored, zIndex, rotation = 0 }: IProps) => {
+export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zIndex, rotation = 0 }: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -36,7 +36,6 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, is
             zIndex={zIndex}
             rotationStep={cardRotationStepDegree}
             clickPassThrough={isGrabbed}
-            isMirrored={isMirrored}
             boundToTable={false}
             svgEndpoint={displayedSVG}
 

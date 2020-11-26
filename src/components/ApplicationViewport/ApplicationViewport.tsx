@@ -44,8 +44,8 @@ export const ApplicationViewport = () => {
                 const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
                 const entityBottomEdgeOffset = grabbedEntityInfo.height - grabbedEntityInfo.relativeGrabbedAtY;
                 const tableTrayWidth = tablePixelDimensions.width * (trayWidthPercentage / 100);
-                const leftClampBorder = tablePosition.x + entityLeftEdgeOffset - tableTrayWidth;
-                const rightClampBorder = tablePosition.x + tablePixelDimensions.width - entityRightEdgeOffset;
+                const leftClampBorder = tablePosition.x + entityLeftEdgeOffset - (isMirrored ? 0 : tableTrayWidth);
+                const rightClampBorder = tablePosition.x + tablePixelDimensions.width - entityRightEdgeOffset + (isMirrored ? tableTrayWidth : 0);
                 const topClampBorder = tablePosition.y + entityTopEdgeOffset;
                 const bottomClampBorder = tablePosition.y + tablePixelDimensions.height - entityBottomEdgeOffset;
                 dispatch(emitMoveVerb(

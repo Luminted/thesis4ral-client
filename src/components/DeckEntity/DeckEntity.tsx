@@ -7,7 +7,7 @@ import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
 
-export const DeckEntity = ({entityId, isMirrored}: IProps) => {
+export const DeckEntity = ({entityId}: IProps) => {
     
     const dispatch = useDispatch();
 
@@ -39,7 +39,6 @@ export const DeckEntity = ({entityId, isMirrored}: IProps) => {
             rotation={deckEntityDetails.rotation}
             rotationStep={deckRotationStepDegree}
             boundToTable={true}
-            isMirrored={isMirrored}
             svgEndpoint={`${deckEntityDetails.metadata.type}/${deckEntityDetails.metadata.name}`}
 
             eventHandlers={{

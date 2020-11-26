@@ -6,7 +6,6 @@ export interface IProps {
     positionY: number
     faceUp: boolean
     metadata: ICardEntityMetadata
-    isMirrored: boolean
     rotation: number
     zIndex: number
 }

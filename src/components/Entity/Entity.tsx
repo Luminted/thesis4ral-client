@@ -1,4 +1,4 @@
-import React, { CSSProperties, DragEvent, MouseEvent, useMemo, useRef } from "react";
+import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb } from "../../actions";
 import { IProps } from "./typings";
@@ -21,7 +21,6 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     zIndex,
     clickPassThrough,
     rotationStep, 
-    isMirrored,
     svgEndpoint,
     boundToTable,
     menuContent,
@@ -48,16 +47,9 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
 
     const computedCSS: CSSProperties = useMemo(() => {
         return {
-            rotate: `${isMirrored ? 180 + rotation : rotation}deg`,
-            ...isMirrored ? 
-            {
-                right: downscaledPositionX,
-                bottom: downscaledPositionY,
-            } :
-            {
-                left: downscaledPositionX,
-                top: downscaledPositionY,
-            }
+            rotate: `${rotation}deg`,
+            left: downscaledPositionX,
+            top: downscaledPositionY,
         }
     }, [ rotation, downscaledPositionX, downscaledPositionY]) 
 

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
+import cn from "classnames";
 import { selectCards, selectDecks, selectGrabbedEntity } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
@@ -7,7 +8,7 @@ import { DeckEntity } from "../DeckEntity";
 import { emitReleaseVerb, setTablePosition } from "../../actions";
 import { IProps } from "./typings";
 import { setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio } from "../../actions/setterActions/setterActions";
-import { EntityDrawer } from "../EntityDrawer";
+import { EntityTray } from "../EntityTray";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { setGrabbedEntityInfo } from "../../actions/setterActions";
 
@@ -34,14 +35,12 @@ export const CardTable = ({isMirrored}: IProps) => {
 
     const renderedCards = useMemo(() => cards.map(card => 
         <CardEntity
-            isMirrored={isMirrored}
             key={card.entityId}
             {...card}
              />), [cards]);
 
     const renderedDecks = useMemo(() => decks.map(deck =>
         <DeckEntity
-            isMirrored={isMirrored}
             entityId={deck.entityId}
             key={deck.entityId}/>
         ), [decks]);
@@ -80,9 +79,9 @@ export const CardTable = ({isMirrored}: IProps) => {
 
     return (
         <>
-        <div className="card-table">
+        <div className={cn("card-table", {"card-table--mirrored": isMirrored})}>
             <div className="card-table__drawer">
-                <EntityDrawer />
+                <EntityTray isMirrored={isMirrored} />
             </div>
             <div ref={tableRef} className="card-table__table"> 
                 {renderedCards}
