@@ -9,7 +9,6 @@ export interface IProps {
     faceUp: boolean
     inHandOf: string
     metadata: ICardEntityMetadata
-    isRevealed: boolean
     isMirrored: boolean
     hoverFeedback: boolean
 

@@ -74,7 +74,6 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
                 rotation={tiltAngle}
                 inHandOf={clientId}
                 isMirrored={isMirrored}
-                isRevealed={false}
                 faceUp={isOwnHand}
                 metadata={metadata}
                 hoverFeedback={!(!!grabbedEntity)}
@@ -96,7 +95,8 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
             
             if(entityType === EntityTypes.CARD){
                 e.stopPropagation();
-                dispatch(emitPutInHandVerb(entityId, false, true,
+                dispatch(emitPutInHandVerb(entityId, false,
+                    // TODO: move this to separate variable
                     nextGameState => {
                     const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
                     if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
@@ -105,7 +105,6 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
                             .slice(0, ordering.length - 1)
                             .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
                             , orderOfCardBeingHoveredWithGrabbedOne + 1];
-                            console.log(newOrdering);
                         
                         dispatch(emitReorderHandVerb(newOrdering));
                     }

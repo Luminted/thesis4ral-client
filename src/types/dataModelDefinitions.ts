@@ -30,12 +30,9 @@ export interface ICardEntityMetadata extends IEntityMetadata {
     back: string
 }
 
-export interface IAbstractCardEntity extends Pick<ICardEntity, "entityId" | "faceUp" | "metadata"> {}
+export interface IHandCard extends Pick<ICardEntity, "entityId" | "metadata" | "ownerDeck" | "faceUp"> {}
 
-export interface IHandCard extends IAbstractCardEntity {
-    ownerDeck: string,
-    revealed: boolean
-}
+export interface IDeckCard extends Pick<ICardEntity, "entityId" | "metadata"> {}
 
 export interface IClientHand {
     clientId: string
@@ -58,7 +55,7 @@ export type GrabbedEntity = MaybeNull<{
 export type Client = {
     //TODO: flatten this out
     clientInfo: ClientInfo,
-    grabbedEntitiy: GrabbedEntity
+    grabbedEntity: GrabbedEntity
 }
 
 export type ClientInfo ={
