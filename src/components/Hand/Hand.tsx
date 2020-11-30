@@ -10,11 +10,9 @@ import "./style.css";
 import { HandCard } from "../HandCard";
 import { EOrientation } from "../../types/additionalTypes";
 import { setGrabbedEntityInfo } from "../../actions/setterActions";
-import { EntityTypes } from "../../types/dataModelDefinitions";
+import { EntityTypes, SerializedGameState } from "../../types/dataModelDefinitions";
 import { MaybeNull } from "../../types/genericTypes";
-
-//TODO: move to config
-const cardTiltFactor = 1;
+import { cardTiltFactor } from "../../config";
 
 const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [number, number], tiltFactor: number) => {
     const [cardX, cardY] = cardPosition;
@@ -88,6 +86,19 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
             return [];
         }
     }, [cards ,handRef, handCurveFunctionRef.current]);
+
+    const chainDispatchReorderVerb = (nextGameState: SerializedGameState) => {
+        const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
+        if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
+            const {ordering} = nextHand;
+            const newOrdering = [...ordering
+                .slice(0, ordering.length - 1)
+                .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
+                , orderOfCardBeingHoveredWithGrabbedOne + 1];
+            
+            dispatch(emitReorderHandVerb(newOrdering));
+        }
+    }
     
     const onMouseUp = (e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
@@ -95,21 +106,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
             
             if(entityType === EntityTypes.CARD){
                 e.stopPropagation();
-                dispatch(emitPutInHandVerb(entityId, false,
-                    // TODO: move this to separate variable
-                    nextGameState => {
-                    const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
-                    if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
-                        const {ordering} = nextHand;
-                        const newOrdering = [...ordering
-                            .slice(0, ordering.length - 1)
-                            .map(order => order > orderOfCardBeingHoveredWithGrabbedOne ? order + 1 : order)
-                            , orderOfCardBeingHoveredWithGrabbedOne + 1];
-                        
-                        dispatch(emitReorderHandVerb(newOrdering));
-                    }
-                }
-                ));
+                dispatch(emitPutInHandVerb(entityId, false, chainDispatchReorderVerb));
                 dispatch(setGrabbedEntityInfo(null));
                 setOrderOfCardBeingHoveredWithGrabbedOne(null);
             }

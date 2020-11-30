@@ -6,6 +6,8 @@ export const tableAspectRatio: Ratio = {
     divisor: 3
 }
 
+export const cardTiltFactor = 1;
+
 export const tableHeightPercentage = 55;
 export const trayWidthPercentage = 15;
 

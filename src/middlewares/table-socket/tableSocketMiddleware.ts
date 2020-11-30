@@ -7,12 +7,11 @@ import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
 import { setTableSocketStatus } from "../../actions/setterActions/setterActions";
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
+import { tableSocketHost, tableSocketPort, tableSocketNamespace } from '../../config/';
 
 export function createTableSocketMiddleware ():  Middleware<{}, RootState>{
-    const port = process.env.REACT_APP_SERVER_PORT;
-    const host = process.env.REACT_APP_SERVER_HOST;
-    const tableNamespace = '/table'
-    const serverURL = `http://${host}:${port}${tableNamespace}`
+    
+    const serverURL = `http://${tableSocketHost}:${tableSocketPort}/${tableSocketNamespace}`
     console.log(`connecting to ${serverURL}`);
     const socket = SocketIOClient(serverURL);
 
@@ -31,7 +30,6 @@ export function createTableSocketMiddleware ():  Middleware<{}, RootState>{
         })
 
         socket.on('disconnect', () => {
-            //TODO: test this
             dispatch(setTableSocketStatus(SocketConnectionStatuses.DISCONNECTED));
         })
 

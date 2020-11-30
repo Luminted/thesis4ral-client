@@ -53,7 +53,6 @@ export type GrabbedEntity = MaybeNull<{
 }>
 
 export type Client = {
-    //TODO: flatten this out
     clientInfo: ClientInfo,
     grabbedEntity: GrabbedEntity
 }

@@ -1,5 +1,6 @@
 import { ICardEntityMetadata, IEntityMetadata } from "../../types/dataModelDefinitions";
-export const frenchCardConfig = {
+import { ICardConfig } from "../../types/entityTypings";
+export const frenchCardConfig: ICardConfig = {
     width: 560,
     height: 880
 }

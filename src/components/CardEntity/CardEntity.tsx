@@ -6,6 +6,7 @@ import {IProps } from "./typings";
 import { selectGrabbedEntity } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
+import { getCardDimensions } from "../../utils";
 
 export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zIndex, rotation = 0 }: IProps) => {
 
@@ -16,6 +17,8 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const isGrabbed = grabbedEntity?.entityId === entityId;
+
+    const {width, height} = getCardDimensions(metadata.type);
 
     const onClick = () => {
         dispatch(emitFlipVerb(entityId));
@@ -29,9 +32,8 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
             entityType={EntityTypes.CARD}
             positionX={positionX}
             positionY={positionY}
-            // TODO: make this configurable
-            width={560}
-            height={880}
+            width={width}
+            height={height}
             rotation={rotation}
             zIndex={zIndex}
             rotationStep={cardRotationStepDegree}

@@ -1,1 +1,0 @@
-export {SVGLoader} from "./SVGLoader";
