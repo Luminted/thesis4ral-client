@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { MouseEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
 import { selectCards, selectDecks, selectGrabbedEntity } from "../../selectors";
@@ -22,7 +22,7 @@ export const CardTable = ({isMirrored}: IProps) => {
     const decks = useSelector(selectDecks);
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
-    const onMouseUp = useCallback((e: MouseEvent) => {
+    const onMouseUp = (e: MouseEvent) => {
         e.stopPropagation();
 
         if(grabbedEntity){
@@ -31,7 +31,7 @@ export const CardTable = ({isMirrored}: IProps) => {
             dispatch(emitReleaseVerb(entityId, entityType));
             dispatch(setGrabbedEntityInfo(null));
         }
-    }, [grabbedEntity]);
+    }
 
     const renderedCards = useMemo(() => cards.map(card => 
         <CardEntity
@@ -62,12 +62,6 @@ export const CardTable = ({isMirrored}: IProps) => {
         }
     }, [tableRef]);
 
-    useEffect(() => {
-        const tableElement = tableRef.current;
-        tableElement?.addEventListener("mouseup", onMouseUp);
-        return () => tableElement?.removeEventListener("mouseup", onMouseUp);
-    }, [tableRef, onMouseUp])
-
     useLayoutEffect(() => {
         storeTableDOMInfo();
     }, [storeTableDOMInfo]);
@@ -83,7 +77,7 @@ export const CardTable = ({isMirrored}: IProps) => {
             <div className="card-table__drawer">
                 <EntityTray isMirrored={isMirrored} />
             </div>
-            <div ref={tableRef} className="card-table__table"> 
+            <div ref={tableRef} className="card-table__table" onMouseUp={onMouseUp}> 
                 {renderedCards}
                 {renderedDecks}
             </div>

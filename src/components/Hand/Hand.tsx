@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
@@ -89,7 +89,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         }
     }, [cards ,handRef, handCurveFunctionRef.current]);
     
-    const onMouseUp = useCallback((e: MouseEvent) => {
+    const onMouseUp = (e: MouseEvent) => {
         if(grabbedEntity && isOwnHand){
             const {entityId, entityType} = grabbedEntity;
             
@@ -114,7 +114,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
                 setOrderOfCardBeingHoveredWithGrabbedOne(null);
             }
         }
-    }, [grabbedEntity, isOwnHand]);
+    };
 
     const calculateHandCurve = useCallback(() => {
         const handElement = handRef.current;
@@ -123,12 +123,6 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
             handCurveFunctionRef.current = interpolatingPolynomial([[0, height], [width / 2, height / 2], [width, height]]);
         }
     }, [handRef]);
-
-    // Event listener has to be applied natively to stop bubbling to ApplicationViewports mouseup listener
-    useEffect(() => {
-        handRef.current?.addEventListener('mouseup', onMouseUp);
-        return () => handRef.current?.removeEventListener('mouseup', onMouseUp);
-    }, [onMouseUp]);
 
     useEffect(() => {
         calculateHandCurve();
@@ -140,7 +134,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
 
     return ( 
         <>
-        { <div ref={handRef}
+        { <div ref={handRef} onMouseUp={onMouseUp}
          className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
         {renderedCards}
         </div>}

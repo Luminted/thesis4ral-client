@@ -1,4 +1,4 @@
-import React, { DragEvent } from "react";
+import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitAddDeckVerb, emitGrabVerb, emitRemoveVerb } from "../../actions";
 import { frenchCardConfig, getDeckCardsMetadata} from "../../entities";
@@ -16,8 +16,10 @@ export const EntityTray = ({isMirrored}: IProps) => {
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
-    const removeEntity = () => {
+    const removeEntity = (e: MouseEvent) => {
         if(grabbedEntity){
+            e.stopPropagation();
+            
             const {entityType, entityId} = grabbedEntity;
             dispatch(emitRemoveVerb(entityId, entityType));
         }

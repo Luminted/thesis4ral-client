@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { MouseEvent as ReactMouseEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
@@ -63,13 +63,13 @@ export const ApplicationViewport = () => {
         }
     }, listenerThrottleValue), [grabbedEntity]);
 
-    const onMouseUp = useCallback(throttle((e: MouseEvent) => {
+    const onMouseUp = useCallback(throttle((e: ReactMouseEvent) => {
         if(grabbedEntity && grabbedEntityInfo){
             const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
             const {entityId, entityType} = grabbedEntity;
 
             if(grabbedFromHand){
-                dispatch(emitPutInHandVerb(entityId, true, true));
+                dispatch(emitPutInHandVerb(entityId, true));
             }
             else if(originalPositionX && originalPositionY && entityType === EntityTypes.CARD){
                 dispatch(emitMoveToVerb(entityId, entityType, originalPositionX, originalPositionY));
@@ -98,19 +98,15 @@ export const ApplicationViewport = () => {
         return () => removeMiddleware(mirrorVerbPositionMiddleware);
     }, [isMirrored])
 
+    // Reacts event pooling makes this event choppy
     useEffect(() => {
         applicationViewportRef.current?.addEventListener("mousemove", onMouseMove);
         return () => applicationViewportRef.current?.removeEventListener("mousemove", onMouseMove);
     }, [onMouseMove]);
-
-    useEffect(() => {
-        applicationViewportRef.current?.addEventListener("mouseup", onMouseUp);
-        return () => applicationViewportRef.current?.removeEventListener("mouseup", onMouseUp);
-    }, [onMouseUp]);
-
+    
     return (
         <>
-        <div ref={applicationViewportRef} className="application-viewport">
+        <div ref={applicationViewportRef} onMouseUp={onMouseUp} className="application-viewport">
             <div className="application-viewport__center">
                 <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
                 <CardTable isMirrored={isMirrored}/>
