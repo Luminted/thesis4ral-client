@@ -1,3 +1,4 @@
+import SocketIOClient from 'socket.io-client';
 import { RootState } from "../../store";
 import { ActionTypes, setGameState } from "../../actions";
 import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
@@ -7,7 +8,14 @@ import { Middleware } from 'redux';
 import { setTableSocketStatus } from "../../actions/setterActions/setterActions";
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
 
-export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Middleware<{}, RootState>{
+export function createTableSocketMiddleware ():  Middleware<{}, RootState>{
+    const port = process.env.REACT_APP_SERVER_PORT;
+    const host = process.env.REACT_APP_SERVER_HOST;
+    const tableNamespace = '/table'
+    const serverURL = `http://${host}:${port}${tableNamespace}`
+    console.log(`connecting to ${serverURL}`);
+    const socket = SocketIOClient(serverURL);
+
     return store => {
         const {dispatch} = store;
 
