@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClientInfo, SerializedGameState} from "../../types/dataModelDefinitions"
+import { ClientInfo, SerializedGameState, SocketConnectionStatuses} from "../../typings";
 import { ApplicationViewport } from "../../components/ApplicationViewport/ApplicationViewport";
 import { setClientInfo, setGameState, socketJoinTable } from "../../actions";
 import { selectTableConnectionStatus } from "../../selectors";
-import { SocketConnectionStatuses } from "../../types/additionalTypes";
 
 export const TableApp = () => {
 

@@ -1,4 +1,4 @@
-import { ClientInfo } from "../../types/dataModelDefinitions"
+import { ClientInfo } from "../../typings"
 import { SetterActionTypeKeys } from "../actionTypeKeys"
 
 export type SetClientInfoAction = {

@@ -1,6 +1,5 @@
 import { ThunkResult } from "..";
-import { IEntityMetadata, ICardEntityMetadata } from "../../../types/dataModelDefinitions";
-import { DeckVerbTypes, IAddDeckVerb } from "../../../types/verb";
+import { IEntityMetadata, ICardEntityMetadata, DeckVerbTypes, IAddDeckVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 import { SocketVerbAckFunction } from "../../socketEmitVerb";
 

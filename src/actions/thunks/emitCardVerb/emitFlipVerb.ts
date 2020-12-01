@@ -1,5 +1,5 @@
 import { ThunkResult } from "../../"
-import { CardVerbTypes, IFlipVerb } from "../../../types/verb"
+import { CardVerbTypes, IFlipVerb } from "../../../typings"
 import { socketEmitVerb } from "../../"
 
 export const emitFlipVerb = (entityId: string): ThunkResult => 

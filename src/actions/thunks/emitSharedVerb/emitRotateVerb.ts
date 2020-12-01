@@ -1,6 +1,5 @@
 import { ThunkResult } from "../.."
-import { EntityTypes } from "../../../types/dataModelDefinitions"
-import { IRotateVerb, SharedVerbTypes } from "../../../types/verb"
+import { IRotateVerb, SharedVerbTypes, EntityTypes } from "../../../typings"
 import { socketEmitVerb } from "../../";
 
 export const emitRotateVerb = (entityId: string, entityType: EntityTypes, angle: number): ThunkResult => 

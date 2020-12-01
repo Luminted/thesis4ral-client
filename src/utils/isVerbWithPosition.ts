@@ -1,4 +1,4 @@
-import { IAddCardVerb, IAddDeckVerb, IGrabFromHandVerb, IGrabVerb, IMoveToVerb, IMoveVerb, IPutOnTable, Verb } from "../types/verb"
+import { IAddCardVerb, IAddDeckVerb, IGrabFromHandVerb, IGrabVerb, IMoveToVerb, IMoveVerb, IPutOnTable, Verb } from "../typings"
 
 export const isVerbTypeWithPosition = (verb: Verb): verb is IGrabVerb |
     IMoveToVerb |

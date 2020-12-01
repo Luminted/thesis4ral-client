@@ -1,5 +1,5 @@
 import { Middleware } from "redux";
-import { CardVerbTypes } from "../../types/verb"
+import { CardVerbTypes } from "../../typings"
 import { RootState } from "../../store";
 import { ActionTypes, SocketActionTypeKeys} from "../../actions";
 import { isVerbTypeWithPosition } from "../../utils";

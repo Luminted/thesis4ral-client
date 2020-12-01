@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { seatColors } from "../config";
 import { selectClientSeatId } from "../selectors"
-import { MaybeNull } from "../types/genericTypes";
+import { MaybeNull } from "../typings";
 
 export const useGetEntityHighlightColor = (clientId: MaybeNull<string>) => {
     const seatId = useSelector(selectClientSeatId(clientId));

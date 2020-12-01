@@ -1,4 +1,4 @@
-import { SerializedGameState } from "../../types/dataModelDefinitions"
+import { SerializedGameState } from "../../typings"
 import { SetterActionTypeKeys } from "../actionTypeKeys"
 
 export type SetGameStateAction = {

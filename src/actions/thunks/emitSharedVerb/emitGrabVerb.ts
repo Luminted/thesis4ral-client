@@ -1,6 +1,5 @@
 import { ThunkResult } from "..";
-import { EntityTypes } from "../../../types/dataModelDefinitions";
-import { IGrabVerb, SharedVerbTypes } from "../../../types/verb";
+import { IGrabVerb, SharedVerbTypes, EntityTypes } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
 export const emitGrabVerb = (entityId: string, entityType: EntityTypes, positionX: number, positionY: number): ThunkResult => 

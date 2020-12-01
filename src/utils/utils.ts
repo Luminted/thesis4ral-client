@@ -1,4 +1,4 @@
-import { Ratio } from "../types/additionalTypes";
+import { Ratio } from "../typings";
 
 export const mirrorOnTablePosition = (positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number] => {
     const transformedPositionX = -positionX + tableWidth;

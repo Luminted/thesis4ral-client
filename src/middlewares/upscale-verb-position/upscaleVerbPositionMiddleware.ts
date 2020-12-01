@@ -2,9 +2,7 @@ import { Middleware } from "redux";
 import { RootState } from "../../store";
 import { ActionTypes, SocketActionTypeKeys } from "../../actions";
 import { isVerbTypeWithPosition, upscale } from "../../utils";
-import {tableVirtualHeight, tableVirtualWidth} from "../../config";
-import { Ratio } from "../../types/additionalTypes";
-import { CardVerbTypes, DeckVerbTypes } from "../../types/verb";
+import { CardVerbTypes, DeckVerbTypes, Ratio } from "../../typings";
 
 export const upscaleVerbPositionMiddleware: Middleware<{}, RootState> = store => 
     next =>

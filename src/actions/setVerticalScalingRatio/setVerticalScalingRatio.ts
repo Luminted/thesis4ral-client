@@ -1,4 +1,4 @@
-import { Ratio } from "../../types/additionalTypes"
+import { Ratio } from "../../typings"
 import { SetterActionTypeKeys } from "../actionTypeKeys"
 
 export type SetVerticalScalingRationAction = {

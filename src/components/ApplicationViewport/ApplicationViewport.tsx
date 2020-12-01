@@ -10,8 +10,7 @@ import { mirrorVerbPositionMiddleware } from "../../middlewares";
 import { clamp } from "../../utils";
 import { seatIdMapping, trayWidthPercentage } from "../../config";
 import "./style.css";
-import { EOrientation } from "../../types/additionalTypes";
-import { EntityTypes } from "../../types/dataModelDefinitions";
+import { EntityTypes, EOrientation } from "../../typings";
 
 const listenerThrottleValue = 1000 / 60;
 

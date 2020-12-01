@@ -1,5 +1,5 @@
 import { ThunkResult } from "..";
-import { CardVerbTypes, IReorderHandVerb } from "../../../types/verb";
+import { CardVerbTypes, IReorderHandVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
 export const emitReorderHandVerb = (order: number[]): ThunkResult => 

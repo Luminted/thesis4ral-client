@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 import { useSelector } from "react-redux";
 import { tableVirtualWidth } from "../../config";
 import { selectTablePixelDimensions } from "../../selectors";
-import { Ratio } from "../../types/additionalTypes";
+import { Ratio } from "../../typings";
 import { downscale } from "../../utils";
 import { IProps } from "./typings";
 

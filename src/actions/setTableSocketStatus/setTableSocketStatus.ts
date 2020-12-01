@@ -1,4 +1,4 @@
-import { SocketConnectionStatuses } from "../../types/additionalTypes"
+import { SocketConnectionStatuses } from "../../typings"
 import { SetterActionTypeKeys } from "../actionTypeKeys"
 
 export type SetTableConnectionStatusAction = {

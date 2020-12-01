@@ -1,4 +1,4 @@
-import { Ratio } from "../types/additionalTypes";
+import { Ratio } from "../typings";
 
 // numerator is assumed to be the actual table size and the divisor to be the virtual size
 

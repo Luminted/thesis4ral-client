@@ -1,4 +1,4 @@
-import {MaybeNull} from './genericTypes'
+import {MaybeNull} from './utilityTypings'
 
 export interface IEntity {
     entityType: EntityTypes,
@@ -70,12 +70,6 @@ export interface GameState {
     hands: IClientHand[],
     entityScale: number,
     topZIndex: number
-}
-
-export type PlayTable = {
-    tableId: string,
-    clientLimit: number
-    gameState: GameState,
 }
 
 export type SerializedGameState = {

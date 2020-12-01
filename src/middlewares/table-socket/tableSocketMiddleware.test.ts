@@ -4,9 +4,7 @@ import { createTableSocketMiddleware } from './tableSocketMiddleware';
 import { createMockMiddleware } from '../testutils';
 import { SocketActionTypeKeys, ActionTypes, SetterActionTypeKeys, setGameState, setTableSocketStatus } from '../../actions/';
 import { TableSocketClientEvents, TableSocketServerEvents } from './types';
-import { Verb } from '../../types/verb';
-import { SerializedGameState } from '../../types/dataModelDefinitions';
-import { SocketConnectionStatuses } from '../../types/additionalTypes';
+import { SerializedGameState, SocketConnectionStatuses, Verb} from '../../typings';
 
 describe('Testing tableModuleMiddleware', () => {
     

@@ -1,3 +1,3 @@
-import { ICardEntity } from "../../types/dataModelDefinitions"
+import { ICardEntity } from "../../typings"
 
 export interface IProps extends Omit<ICardEntity, "entityType"> {}

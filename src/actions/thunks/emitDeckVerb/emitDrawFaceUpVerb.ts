@@ -1,5 +1,5 @@
 import { ThunkResult } from "..";
-import { DeckVerbTypes, IDrawFaceUpVerb } from "../../../types/verb";
+import { DeckVerbTypes, IDrawFaceUpVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
 export const emitDrawFaceUpVerb = (entityId: string): ThunkResult => 

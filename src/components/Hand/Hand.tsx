@@ -7,9 +7,7 @@ import { selectClientId, selectGrabbedEntity } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
-import { EOrientation } from "../../types/additionalTypes";
-import { EntityTypes, SerializedGameState } from "../../types/dataModelDefinitions";
-import { MaybeNull } from "../../types/genericTypes";
+import { EntityTypes, SerializedGameState, EOrientation, MaybeNull } from "../../typings";
 import { cardTiltFactor } from "../../config";
 import "./style.css";
 

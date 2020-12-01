@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitDrawFaceUpVerb, emitResetVerb, emitShuffleVerb } from "../../actions";
 import { selectGrabbedEntity } from "../../selectors";
-import { EntityTypes } from "../../types/dataModelDefinitions";
+import { EntityTypes } from "../../typings";
 import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";

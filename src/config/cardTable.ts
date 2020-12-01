@@ -1,4 +1,4 @@
-import {Ratio} from "../types/additionalTypes";
+import {Ratio} from "../typings";
 import { french52SortedBlue, french52SortedRed } from "../entities";
 
 export const tableAspectRatio: Ratio = {

@@ -1,4 +1,4 @@
-import { ICardEntityMetadata } from "../../types/dataModelDefinitions";
+import { ICardEntityMetadata } from "../../typings";
 
 export interface IProps {
     entityId: string

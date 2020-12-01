@@ -1,5 +1,4 @@
-import { EntityTypes } from "../../types/dataModelDefinitions";
-import { MaybeNull } from "../../types/genericTypes";
+import { EntityTypes, MaybeNull } from "../../typings";
 import { SetterActionTypeKeys } from "../actionTypeKeys";
 
 //TODO: move this to datamodeldefinitions eqv

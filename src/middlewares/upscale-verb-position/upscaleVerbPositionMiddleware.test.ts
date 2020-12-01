@@ -1,5 +1,4 @@
-import { Verb, SharedVerbTypes } from '../../types/verb';
-import { Ratio } from '../../types/additionalTypes';
+import { Verb, SharedVerbTypes, Ratio } from '../../typings';
 import {upscale} from '../../utils';
 import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
 import {createMockMiddleware} from '../testutils';

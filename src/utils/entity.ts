@@ -1,5 +1,5 @@
 import { frenchCardConfig } from "../entities";
-import {ECardTypes} from "../types/entityTypings";
+import {ECardTypes} from "../typings";
 
 export const getCardDimensions = (type: string) => {
     switch(type){

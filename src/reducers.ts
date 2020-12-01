@@ -1,8 +1,6 @@
 import {produce} from 'immer';
 import {ActionTypes, SetterActionTypeKeys} from './actions/';
-import { GameState, ClientInfo} from './types/dataModelDefinitions' 
-import {MaybeNull} from './types/genericTypes'
-import { SocketConnectionStatuses, Ratio } from './types/additionalTypes';
+import { GameState, ClientInfo, MaybeNull, SocketConnectionStatuses, Ratio} from './typings' 
 import { TGrabbedEntityInfo } from './actions/setGrabbedEntityInfo';
 
 type State = {

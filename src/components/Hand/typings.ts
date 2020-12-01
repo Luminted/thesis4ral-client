@@ -1,5 +1,4 @@
-import { EOrientation } from "../../types/additionalTypes";
-import { IClientHand } from "../../types/dataModelDefinitions";
+import { IClientHand, EOrientation } from "../../typings";
 
 export interface IProps {
     handDetails: IClientHand

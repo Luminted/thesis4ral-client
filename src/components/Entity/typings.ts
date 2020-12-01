@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IEntity } from "../../types/dataModelDefinitions";
+import { IEntity } from "../../typings";
 
 export interface IProps extends IEntity {
     width: number

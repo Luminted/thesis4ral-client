@@ -2,11 +2,10 @@ import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitAddDeckVerb, emitGrabVerb, emitRemoveVerb, setGrabbedEntityInfo } from "../../actions";
 import { frenchCardConfig, getDeckCardsMetadata} from "../../entities";
-import {ECardTypes} from "../../types/entityTypings";
 import { selectGrabbedEntity } from "../../selectors";
 import { EntityCore } from "../EntityCore";
 import {trayDecks} from "../../config";
-import { IEntityMetadata, SerializedGameState } from "../../types/dataModelDefinitions";
+import { IEntityMetadata, SerializedGameState, ECardTypes } from "../../typings";
 import { IProps } from "./typings";
 import "./style.css";
 

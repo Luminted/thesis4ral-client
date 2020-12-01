@@ -1,5 +1,5 @@
 import {RootState} from './store'
-import { MaybeNull } from './types/genericTypes';   
+import { MaybeNull } from './typings';   
 
 export const selectGrabbedEntity = (state: RootState) =>{ 
     const clientId = state.clientInfo?.clientId;

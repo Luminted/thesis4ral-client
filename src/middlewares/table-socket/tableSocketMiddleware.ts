@@ -1,9 +1,8 @@
 import { RootState } from "../../store";
 import { ActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
 import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
-import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
-import { SocketConnectionStatuses } from "../../types/additionalTypes";
+import { SocketConnectionStatuses, GameState } from "../../typings";
 
 export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, RootState> => {
     return store => {

@@ -2,7 +2,7 @@ import { ActionTypes, SocketActionTypeKeys } from "../../actions";
 import {Middleware} from 'redux'
 import { RootState } from "../../store";
 import { mirrorOnTablePosition, isVerbTypeWithPosition } from "../../utils";
-import { CardVerbTypes, DeckVerbTypes } from "../../types/verb";
+import { CardVerbTypes } from "../../typings";
 
 export const mirrorVerbPositionMiddleware: Middleware<{}, RootState> = store => next => (action: ActionTypes) => {
     if(action.type === SocketActionTypeKeys.EMIT_VERB){

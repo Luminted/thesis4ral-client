@@ -1,7 +1,7 @@
 import { createMockMiddleware } from "../testutils"
 import { ActionTypes, SocketActionTypes, SocketActionTypeKeys } from "../../actions"
 import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
-import { Verb } from "../../types/verb";
+import { Verb } from "../../typings";
 import { inverseMirrorOnTablePosition } from "../../utils";
 
 describe('Testing mirrorPositionMiddleware', () => {

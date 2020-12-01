@@ -1,5 +1,5 @@
 import { ThunkResult } from "..";
-import { CardVerbTypes, IPutInHandVerb } from "../../../types/verb";
+import { CardVerbTypes, IPutInHandVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 import { SocketVerbAckFunction } from "../../socketEmitVerb";
 

@@ -1,6 +1,6 @@
 import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware"
 import { RootState } from "../../store"
-import { Verb } from "../../types/verb"
+import { Verb } from "../../typings"
 import { ActionTypes, SocketActionTypeKeys } from '../../actions'
 import { createMockMiddleware } from "../testutils"
 

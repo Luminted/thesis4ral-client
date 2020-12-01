@@ -1,5 +1,5 @@
 import { ThunkResult } from "../.."
-import { IMoveVerb, SharedVerbTypes } from "../../../types/verb"
+import { IMoveVerb, SharedVerbTypes } from "../../../typings"
 import { socketEmitVerb } from "../../"
 
 export const emitMoveVerb = (positionX: number, positionY: number):ThunkResult => 

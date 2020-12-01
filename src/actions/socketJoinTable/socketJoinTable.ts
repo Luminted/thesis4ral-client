@@ -1,4 +1,4 @@
-import { ClientInfo, SerializedGameState } from "../../types/dataModelDefinitions"
+import { ClientInfo, SerializedGameState } from "../../typings"
 import { SocketActionTypeKeys } from "../actionTypeKeys"
 
 type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => void

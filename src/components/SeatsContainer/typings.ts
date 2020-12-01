@@ -1,4 +1,4 @@
-import { EOrientation } from "../../types/additionalTypes";
+import { EOrientation } from "../../typings";
 
 export interface IProps {
     orientation: EOrientation

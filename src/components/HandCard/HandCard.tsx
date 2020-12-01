@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import cn from "classnames";
 import { emitGrabFromHand, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import { EntityTypes } from "../../types/dataModelDefinitions";
+import { EntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
 import {getCardDimensions} from "../../utils";
 import "./style.css";

@@ -1,5 +1,4 @@
-import { SerializedGameState } from "../../types/dataModelDefinitions";
-import { Verb } from "../../types/verb";
+import { SerializedGameState, Verb } from "../../typings";
 import { SocketActionTypeKeys } from "../actionTypeKeys";
 
 export type SocketEmitVerbAction = {

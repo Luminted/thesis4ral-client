@@ -11,7 +11,7 @@ export type MockMiddleware<A> = {
   applyMiddleware: Function
 }
 
-export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<RootState>): MockMiddleware<A> {
+export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<RootState>): MockMiddleware<A> => {
     const store = {
       getState: jest.fn(() => ({...state})),
       dispatch: jest.fn()
