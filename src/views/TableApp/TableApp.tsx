@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ClientInfo, SerializedGameState} from "../../types/dataModelDefinitions"
-import { socketJoinTable } from "../../actions/socketActions";
 import { ApplicationViewport } from "../../components/ApplicationViewport/ApplicationViewport";
-import { setClientInfo, setGameState } from "../../actions";
+import { setClientInfo, setGameState, socketJoinTable } from "../../actions";
 import { selectTableConnectionStatus } from "../../selectors";
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
 

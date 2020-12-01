@@ -2,17 +2,16 @@ import React, {MouseEvent, useCallback, useEffect, useMemo, useRef, useState } f
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
-import { emitPutInHandVerb, emitReorderHandVerb } from "../../actions";
+import { emitPutInHandVerb, emitReorderHandVerb, setGrabbedEntityInfo } from "../../actions";
 import { selectClientId, selectGrabbedEntity } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
-import "./style.css";
 import { HandCard } from "../HandCard";
 import { EOrientation } from "../../types/additionalTypes";
-import { setGrabbedEntityInfo } from "../../actions/setterActions";
 import { EntityTypes, SerializedGameState } from "../../types/dataModelDefinitions";
 import { MaybeNull } from "../../types/genericTypes";
 import { cardTiltFactor } from "../../config";
+import "./style.css";
 
 const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [number, number], tiltFactor: number) => {
     const [cardX, cardY] = cardPosition;

@@ -1,12 +1,11 @@
 import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { emitGrabVerb, emitRotateVerb } from "../../actions";
+import { emitGrabVerb, emitRotateVerb, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
 import { Ratio } from "../../types/additionalTypes";
 import { selectTablePixelDimensions } from "../../selectors";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { downscale } from "../../utils";
-import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks/useGetEntityHighlightColor";

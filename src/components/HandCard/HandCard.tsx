@@ -1,13 +1,12 @@
 import React, { CSSProperties, DragEvent } from "react";
 import { useDispatch } from "react-redux";
 import cn from "classnames";
-import { emitGrabFromHand } from "../../actions";
+import { emitGrabFromHand, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import "./style.css";
-import { setGrabbedEntityInfo } from "../../actions/setterActions";
 import { EntityTypes } from "../../types/dataModelDefinitions";
 import { EntityCore } from "../EntityCore";
 import {getCardDimensions} from "../../utils";
+import "./style.css";
 
 export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, faceUp, rotation, isMirrored, metadata, onMouseEnter, onMouseLeave, hoverFeedback}: IProps) => {
     const dispatch = useDispatch();

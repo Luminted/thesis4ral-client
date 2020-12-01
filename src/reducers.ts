@@ -1,10 +1,9 @@
 import {produce} from 'immer';
-import {ActionTypes} from './actions/';
+import {ActionTypes, SetterActionTypeKeys} from './actions/';
 import { GameState, ClientInfo} from './types/dataModelDefinitions' 
 import {MaybeNull} from './types/genericTypes'
 import { SocketConnectionStatuses, Ratio } from './types/additionalTypes';
-import { SetActionTypeKeys } from './actions/setterActions/actionTypes';
-import { TGrabbedEntityInfo } from './actions/setterActions/setGrabbedEntityInfo';
+import { TGrabbedEntityInfo } from './actions/setGrabbedEntityInfo';
 
 type State = {
     gameState: GameState,
@@ -52,7 +51,7 @@ const initialState: State = {
 
 export const tablePixelDimensions = (state = initialState.tablePixelDimensions, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
+        case SetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
             return action.dimensions;
         default:
             return state;
@@ -61,7 +60,7 @@ export const tablePixelDimensions = (state = initialState.tablePixelDimensions, 
 
 export const horizontalScalingRatio = (state = initialState.horizontalScalingRatio, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO:
+        case SetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO:
             return action.ratio;
         default:
             return state;
@@ -70,7 +69,7 @@ export const horizontalScalingRatio = (state = initialState.horizontalScalingRat
 
 export const verticalScalingRatio = (state = initialState.verticalScalingRatio, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_VERTICAL_SCALING_RATIO:
+        case SetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO:
             return action.ratio;
         default:
             return state;
@@ -79,7 +78,7 @@ export const verticalScalingRatio = (state = initialState.verticalScalingRatio, 
 
 export const tableConnectionStatus = (state = initialState.tableConnectionStatus, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS:
+        case SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS:
             return action.status;
         default:
             return state;
@@ -89,7 +88,7 @@ export const tableConnectionStatus = (state = initialState.tableConnectionStatus
 export const gameState = (state = initialState.gameState, action: ActionTypes) =>
     produce(state, draft => {
         switch(action.type){
-            case SetActionTypeKeys.SET_GAME_STATE:
+            case SetterActionTypeKeys.SET_GAME_STATE:
                 const {cards, decks, clients, hands, entityScale} = action.gameState;
                 draft.cards = cards;
                 draft.decks = decks;
@@ -102,7 +101,7 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
 
 export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_CLIENT_INFO:
+        case SetterActionTypeKeys.SET_CLIENT_INFO:
             return action.clientInfo;
         default:
             return state;
@@ -112,7 +111,7 @@ export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) 
 export const tablePosition = (state = initialState.tablePosition, action: ActionTypes) =>
     produce(state, draft => {
         switch(action.type) {
-            case SetActionTypeKeys.SET_TABLE_POSITION:
+            case SetterActionTypeKeys.SET_TABLE_POSITION:
                 draft.x = action.positionX;
                 draft.y = action.positionY;
                 break;
@@ -121,7 +120,7 @@ export const tablePosition = (state = initialState.tablePosition, action: Action
 
 export const grabbedEntityInfo = (state = initialState.grabbedEntityInfo, action: ActionTypes) => {
     switch(action.type){
-        case SetActionTypeKeys.SET_GRABBED_ENTITY_INFO:  
+        case SetterActionTypeKeys.SET_GRABBED_ENTITY_INFO:  
             return action.grabbedEntityInfo
         default:
             return state;

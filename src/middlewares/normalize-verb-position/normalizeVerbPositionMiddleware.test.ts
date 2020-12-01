@@ -1,23 +1,24 @@
 import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware"
 import { RootState } from "../../store"
-import { Verb } from "../../types/verbTypes"
-import { ActionTypes } from '../../actions'
+import { Verb } from "../../types/verb"
+import { ActionTypes, SocketActionTypeKeys } from '../../actions'
 import { createMockMiddleware } from "../testutils"
-import { SocketActionTypeKeys } from "../../actions/socketActions"
 
-describe('Testing normalizeVerbPositionMiddleware', function(){
-      it('should subtract tables position x and y from verbs position x and y', function(){
+describe('Testing normalizeVerbPositionMiddleware', () => {
+      it('should subtract tables position x and y from verbs position x and y', () => {
           const tablePosition ={
               x: 10,
               y: 20
           }
+        const positionX = 20;
+        const positionY = 100;
         const verb: Verb = {
-            positionX: 20,
-            positionY: 100
+            positionX,
+            positionY,
         } as Verb;
         const expectedVerb: Verb = {
-            positionX: verb.positionX - tablePosition.x,
-            positionY: verb.positionY - tablePosition.y
+            positionX: positionX - tablePosition.x,
+            positionY: positionY - tablePosition.y
         } as Verb;
         const action: ActionTypes ={
             type: SocketActionTypeKeys.EMIT_VERB,

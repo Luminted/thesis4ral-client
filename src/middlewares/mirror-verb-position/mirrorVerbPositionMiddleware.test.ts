@@ -1,10 +1,10 @@
 import { createMockMiddleware } from "../testutils"
 import { ActionTypes, SocketActionTypes, SocketActionTypeKeys } from "../../actions"
 import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
-import { Verb } from "../../types/verbTypes";
+import { Verb } from "../../types/verb";
 import { inverseMirrorOnTablePosition } from "../../utils";
 
-describe('Testing mirrorPositionMiddleware', function(){
+describe('Testing mirrorPositionMiddleware', () => {
 
     const tableWidth = 1200;
     const tableHeight = 1000;
@@ -16,7 +16,7 @@ describe('Testing mirrorPositionMiddleware', function(){
         }
     });
     
-    it('should apply inverseMirrorOnTablePosition on verb', function(){
+    it('should apply inverseMirrorOnTablePosition on verb', () => {
         const {invoke, next} = mockMiddleware;
         const positionX = 111;
         const positionY = 333;

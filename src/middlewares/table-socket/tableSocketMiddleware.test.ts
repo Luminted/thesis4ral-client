@@ -2,12 +2,11 @@ import SocketIO from 'socket.io';
 import SocketIOClient from 'socket.io-client';
 import { createTableSocketMiddleware } from './tableSocketMiddleware';
 import { createMockMiddleware } from '../testutils';
-import { SocketActionTypeKeys, ActionTypes, SetActionTypeKeys, setGameState } from '../../actions/';
+import { SocketActionTypeKeys, ActionTypes, SetterActionTypeKeys, setGameState, setTableSocketStatus } from '../../actions/';
 import { TableSocketClientEvents, TableSocketServerEvents } from './types';
-import { Verb } from '../../types/verbTypes';
+import { Verb } from '../../types/verb';
 import { SerializedGameState } from '../../types/dataModelDefinitions';
 import { SocketConnectionStatuses } from '../../types/additionalTypes';
-import { setTableSocketStatus } from '../../actions/setterActions/setterActions';
 
 describe('Testing tableModuleMiddleware', function(){
     
@@ -34,16 +33,6 @@ describe('Testing tableModuleMiddleware', function(){
                 socketMock.connected = false;
                 invoke(action);
                 expect(socketMock.connect).toHaveBeenCalled();
-            })
-        })
-        describe(`Action: ${SocketActionTypeKeys.DISCONNECT}`, function(){
-            it(`should call sockets disconnect`, function(){
-                const {invoke} = mockMiddleware;
-                const action: ActionTypes ={
-                    type: SocketActionTypeKeys.DISCONNECT
-                }
-                invoke(action);
-                expect(socketMock.disconnect).toHaveBeenCalled();
             })
         })
         describe(`Action: ${SocketActionTypeKeys.EMIT_VERB}`, function(){
@@ -87,7 +76,7 @@ describe('Testing tableModuleMiddleware', function(){
             autoConnect: false,
             forceNew: true,
         });
-        const tableSocketMiddleware = createTableSocketMiddleware(socket);
+        const tableSocketMiddleware = createTableSocketMiddleware();
         let mockMiddleware;
         
         beforeEach(done => {
@@ -106,7 +95,7 @@ describe('Testing tableModuleMiddleware', function(){
         })
 
         describe(`Event: ${TableSocketServerEvents.SYNC}`, function(){
-            it(`should dispatch ${SetActionTypeKeys.SET_GAME_STATE} with received gameState on ${TableSocketServerEvents.SYNC} event`, function(done){
+            it(`should dispatch ${SetterActionTypeKeys.SET_GAME_STATE} with received gameState on ${TableSocketServerEvents.SYNC} event`, function(done){
                 const {store} = mockMiddleware;
                 const gameState = {
                     cards: [],
@@ -124,7 +113,7 @@ describe('Testing tableModuleMiddleware', function(){
         })
 
         describe(`Event: ${TableSocketServerEvents.CONNECT}`, function(){
-            it(`should dispatch ${SetActionTypeKeys.SET_TABLE_CONNECTION_STATUS} action with status ${SocketConnectionStatuses.CONNECTED}`, function(done){
+            it(`should dispatch ${SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS} action with status ${SocketConnectionStatuses.CONNECTED}`, function(done){
                 const {store} = mockMiddleware;
                 socket.disconnect();
                 socket.connect();

@@ -1,11 +1,9 @@
 import SocketIOClient from 'socket.io-client';
 import { RootState } from "../../store";
-import { ActionTypes, setGameState } from "../../actions";
+import { ActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
 import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
-import { SocketActionTypeKeys } from '../../actions/socketActions';
 import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
-import { setTableSocketStatus } from "../../actions/setterActions/setterActions";
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
 import { tableSocketHost, tableSocketPort, tableSocketNamespace } from '../../config/';
 
@@ -66,13 +64,6 @@ export function createTableSocketMiddleware ():  Middleware<{}, RootState>{
                                     socket.connect();
                                 }else{
                                     console.log('Middleware: Socket already connected');
-                                }
-                                break;
-                            case SocketActionTypeKeys.DISCONNECT:
-                                if(!socket.disconnected){
-                                    socket.disconnect();
-                                }else{
-                                    console.log('Middleware: Socket already disconnected');
                                 }
                                 break;
                         }

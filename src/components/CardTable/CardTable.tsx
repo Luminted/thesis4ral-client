@@ -5,12 +5,10 @@ import { selectCards, selectDecks, selectGrabbedEntity } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
 import { DeckEntity } from "../DeckEntity";
-import { emitReleaseVerb, setTablePosition } from "../../actions";
 import { IProps } from "./typings";
-import { setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio } from "../../actions/setterActions/setterActions";
+import { setGrabbedEntityInfo, setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio, emitReleaseVerb, setTablePosition } from "../../actions";
 import { EntityTray } from "../EntityTray";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
-import { setGrabbedEntityInfo } from "../../actions/setterActions";
 
 export const CardTable = ({isMirrored}: IProps) => {
 

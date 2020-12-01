@@ -1,5 +1,5 @@
 import { RootState } from "../store"
-import { Middleware, Action } from "redux"
+import { Middleware } from "redux"
 
 export type MockMiddleware<A> = {
   store: {

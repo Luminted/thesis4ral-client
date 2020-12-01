@@ -1,11 +1,10 @@
-import { Verb, SharedVerbTypes } from '../../types/verbTypes';
-import { EntityTypes } from '../../types/dataModelDefinitions';
+import { Verb, SharedVerbTypes } from '../../types/verb';
 import { Ratio } from '../../types/additionalTypes';
 import {upscale} from '../../utils';
 import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
-import { ActionTypes } from '../../actions';
 import {createMockMiddleware} from '../testutils';
-import { socketEmitVerb, SocketEmitVerbAction, SocketActionTypeKeys } from '../../actions/socketActions';
+import { SocketActionTypeKeys, ActionTypes } from '../../actions';
+import { SocketEmitVerbAction } from '../../actions/socketEmitVerb';
 import { RootState } from '../../store';
 
 describe('Testing upscaleVerbPositionMiddleware', function(){
@@ -27,8 +26,6 @@ describe('Testing upscaleVerbPositionMiddleware', function(){
         const positionY = 2;
         const verb: Verb = {
             clientId: 'c-1',
-            entityId: 'e-1',
-            entityType: EntityTypes.CARD,
             positionX,
             positionY,
             type: SharedVerbTypes.MOVE
