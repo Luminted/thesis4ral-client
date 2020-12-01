@@ -1,15 +1,15 @@
-import { ThunkResult } from "..";
-import { IMoveToVerb, SharedVerbTypes, EntityTypes } from "../../../typings";
+import { TThunkResult } from "..";
+import { IMoveToVerb, ESharedVerbTypes, EEntityTypes } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitMoveToVerb = (entityId: string, entityType: EntityTypes, positionX, positionY): ThunkResult => 
+export const emitMoveToVerb = (entityId: string, entityType: EEntityTypes, positionX, positionY): TThunkResult => 
     dispatch => {
         const verb: IMoveToVerb = {
             entityId,
             entityType,
             positionX,
             positionY,
-            type: SharedVerbTypes.MOVE_TO
+            type: ESharedVerbTypes.MOVE_TO
         }
         dispatch(socketEmitVerb(verb));
     }

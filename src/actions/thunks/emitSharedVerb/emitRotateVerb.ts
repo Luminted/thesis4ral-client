@@ -1,14 +1,14 @@
-import { ThunkResult } from "../.."
-import { IRotateVerb, SharedVerbTypes, EntityTypes } from "../../../typings"
+import { TThunkResult } from "../.."
+import { IRotateVerb, ESharedVerbTypes, EEntityTypes } from "../../../typings"
 import { socketEmitVerb } from "../../";
 
-export const emitRotateVerb = (entityId: string, entityType: EntityTypes, angle: number): ThunkResult => 
+export const emitRotateVerb = (entityId: string, entityType: EEntityTypes, angle: number): TThunkResult => 
     dispatch => {
         const verb: IRotateVerb = {
             entityId,
             entityType,
             angle,
-            type: SharedVerbTypes.ROTATE
+            type: ESharedVerbTypes.ROTATE
         }
         dispatch(socketEmitVerb(verb));
     }

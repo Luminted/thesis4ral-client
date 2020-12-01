@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitDrawFaceUpVerb, emitResetVerb, emitShuffleVerb } from "../../actions";
 import { selectGrabbedEntity } from "../../selectors";
-import { EntityTypes } from "../../typings";
+import { EEntityTypes } from "../../typings";
 import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
@@ -31,7 +31,7 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
         <>
        <Entity 
             entityId={entityId} 
-            entityType={EntityTypes.DECK} 
+            entityType={EEntityTypes.DECK} 
             clickPassThrough={isGrabbed} 
             positionX={positionX}
             positionY={positionY}

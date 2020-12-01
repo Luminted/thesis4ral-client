@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     grabbedEntityInfo
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type TRootState = ReturnType<typeof rootReducer>;
 
 const tableSocketMiddleware = createTableSocketMiddleware(tableSocket);
 

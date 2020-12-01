@@ -1,14 +1,14 @@
-import { SocketConnectionStatuses } from "../../typings"
-import { SetterActionTypeKeys } from "../actionTypeKeys"
+import { ESocketConnectionStatuses } from "../../typings"
+import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
-export type SetTableConnectionStatusAction = {
-    type: SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
-    status: SocketConnectionStatuses
+export type TSetTableConnectionStatusAction = {
+    type: ESetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
+    status: ESocketConnectionStatuses
 }
 
-export const setTableSocketStatus = (status: SocketConnectionStatuses): SetTableConnectionStatusAction => {
+export const setTableSocketStatus = (status: ESocketConnectionStatuses): TSetTableConnectionStatusAction => {
     return {
-        type: SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
+        type: ESetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS,
         status
     }
 }

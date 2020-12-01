@@ -1,23 +1,23 @@
 import {produce} from 'immer';
-import {ActionTypes, SetterActionTypeKeys} from './actions/';
-import { GameState, ClientInfo, MaybeNull, SocketConnectionStatuses, Ratio} from './typings' 
+import {TActionTypes, SetterActionTypeKeys} from './actions/';
+import { TGameState, TClientInfo, TMaybeNull, ESocketConnectionStatuses, TRatio} from './typings' 
 import { TGrabbedEntityInfo } from './actions/setGrabbedEntityInfo';
 
 type State = {
-    gameState: GameState,
-    clientInfo: MaybeNull<ClientInfo>,
+    gameState: TGameState,
+    clientInfo: TMaybeNull<TClientInfo>,
     tablePosition: {
         x: number,
         y: number
     },
-    tablePixelDimensions: MaybeNull<{
+    tablePixelDimensions: TMaybeNull<{
         width: number,
         height: number
     }>
-    horizontalScalingRatio: Ratio,
-    verticalScalingRatio: Ratio,
-    tableConnectionStatus: SocketConnectionStatuses,
-    grabbedEntityInfo: MaybeNull<TGrabbedEntityInfo>
+    horizontalScalingRatio: TRatio,
+    verticalScalingRatio: TRatio,
+    tableConnectionStatus: ESocketConnectionStatuses,
+    grabbedEntityInfo: TMaybeNull<TGrabbedEntityInfo>
 }
 
 const initialState: State = {
@@ -43,11 +43,11 @@ const initialState: State = {
         numerator: 1,
         divisor: 1
     },
-    tableConnectionStatus: SocketConnectionStatuses.DISCONNECTED,
+    tableConnectionStatus: ESocketConnectionStatuses.DISCONNECTED,
     grabbedEntityInfo: null
 }
 
-export const tablePixelDimensions = (state = initialState.tablePixelDimensions, action: ActionTypes) => {
+export const tablePixelDimensions = (state = initialState.tablePixelDimensions, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
             return action.dimensions;
@@ -56,7 +56,7 @@ export const tablePixelDimensions = (state = initialState.tablePixelDimensions, 
     }
 }
 
-export const horizontalScalingRatio = (state = initialState.horizontalScalingRatio, action: ActionTypes) => {
+export const horizontalScalingRatio = (state = initialState.horizontalScalingRatio, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO:
             return action.ratio;
@@ -65,7 +65,7 @@ export const horizontalScalingRatio = (state = initialState.horizontalScalingRat
     }
 }
 
-export const verticalScalingRatio = (state = initialState.verticalScalingRatio, action: ActionTypes) => {
+export const verticalScalingRatio = (state = initialState.verticalScalingRatio, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO:
             return action.ratio;
@@ -74,7 +74,7 @@ export const verticalScalingRatio = (state = initialState.verticalScalingRatio, 
     }
 }
 
-export const tableConnectionStatus = (state = initialState.tableConnectionStatus, action: ActionTypes) => {
+export const tableConnectionStatus = (state = initialState.tableConnectionStatus, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS:
             return action.status;
@@ -83,7 +83,7 @@ export const tableConnectionStatus = (state = initialState.tableConnectionStatus
     }
 }
 
-export const gameState = (state = initialState.gameState, action: ActionTypes) =>
+export const gameState = (state = initialState.gameState, action: TActionTypes) =>
     produce(state, draft => {
         switch(action.type){
             case SetterActionTypeKeys.SET_GAME_STATE:
@@ -97,7 +97,7 @@ export const gameState = (state = initialState.gameState, action: ActionTypes) =
             }
     })
 
-export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) => {
+export const clientInfo = (state =initialState.clientInfo, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_CLIENT_INFO:
             return action.clientInfo;
@@ -106,7 +106,7 @@ export const clientInfo = (state =initialState.clientInfo, action: ActionTypes) 
     }
 }
 
-export const tablePosition = (state = initialState.tablePosition, action: ActionTypes) =>
+export const tablePosition = (state = initialState.tablePosition, action: TActionTypes) =>
     produce(state, draft => {
         switch(action.type) {
             case SetterActionTypeKeys.SET_TABLE_POSITION:
@@ -116,7 +116,7 @@ export const tablePosition = (state = initialState.tablePosition, action: Action
         }
     })
 
-export const grabbedEntityInfo = (state = initialState.grabbedEntityInfo, action: ActionTypes) => {
+export const grabbedEntityInfo = (state = initialState.grabbedEntityInfo, action: TActionTypes) => {
     switch(action.type){
         case SetterActionTypeKeys.SET_GRABBED_ENTITY_INFO:  
             return action.grabbedEntityInfo

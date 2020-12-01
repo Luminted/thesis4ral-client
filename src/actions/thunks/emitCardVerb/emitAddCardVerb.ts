@@ -1,8 +1,8 @@
-import { ThunkResult } from "..";
-import { CardVerbTypes, IAddCardVerb, ICardEntityMetadata } from "../../../typings";
+import { TThunkResult } from "..";
+import { ECardVerbTypes, IAddCardVerb, ICardEntityMetadata } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitAddCardVerb = (faceUp: boolean, metadata: ICardEntityMetadata, positionX: number, positionY: number, rotation: number): ThunkResult =>
+export const emitAddCardVerb = (faceUp: boolean, metadata: ICardEntityMetadata, positionX: number, positionY: number, rotation: number): TThunkResult =>
     dispatch => {
         const verb: IAddCardVerb = {
             faceUp,
@@ -10,7 +10,7 @@ export const emitAddCardVerb = (faceUp: boolean, metadata: ICardEntityMetadata, 
             positionX,
             positionY,
             rotation,
-            type: CardVerbTypes.ADD_CARD
+            type: ECardVerbTypes.ADD_CARD
         }
         dispatch(socketEmitVerb(verb));
     }

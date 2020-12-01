@@ -1,8 +1,8 @@
-import { ThunkResult } from "..";
-import { CardVerbTypes, IPutOnTable } from "../../../typings";
+import { TThunkResult } from "..";
+import { ECardVerbTypes, IPutOnTable } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitPutOnTableVerb = (entityId: string, positionX: number, positionY: number, faceUp: boolean): ThunkResult => 
+export const emitPutOnTableVerb = (entityId: string, positionX: number, positionY: number, faceUp: boolean): TThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IPutOnTable = {
@@ -11,7 +11,7 @@ export const emitPutOnTableVerb = (entityId: string, positionX: number, position
             positionY,
             faceUp,
             clientId: clientInfo!.clientId,
-            type: CardVerbTypes.PUT_ON_TABLE
+            type: ECardVerbTypes.PUT_ON_TABLE
         }
         dispatch(socketEmitVerb(verb));
     }

@@ -1,16 +1,16 @@
-import { ThunkResult } from "..";
-import { CardVerbTypes, IPutInHandVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { ECardVerbTypes, IPutInHandVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
-import { SocketVerbAckFunction } from "../../socketEmitVerb";
+import { TSocketVerbAckFunction } from "../../socketEmitVerb";
 
-export const emitPutInHandVerb = (entityId: string, faceUp: boolean, ackFunction?: SocketVerbAckFunction): ThunkResult => 
+export const emitPutInHandVerb = (entityId: string, faceUp: boolean, ackFunction?: TSocketVerbAckFunction): TThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IPutInHandVerb = {
             entityId,
             faceUp,
             clientId: clientInfo!.clientId,
-            type: CardVerbTypes.PUT_IN_HAND
+            type: ECardVerbTypes.PUT_IN_HAND
         }
         dispatch(socketEmitVerb(verb, ackFunction));
     }

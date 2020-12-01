@@ -1,14 +1,14 @@
-import { SetClientInfoAction } from "./setClientInfo";
-import { SetGameStateAction } from "./setGameState";
-import { SetGrabbedEntityInfoAction } from "./setGrabbedEntityInfo";
-import { SetHorizontalScalingRationAction } from "./setHorizontalScalingRatio";
-import { SetTablePixelDimensionsAction } from "./setTablePixelDimensions";
-import { SetTablePositionAction } from "./setTablePosition";
-import { SetTableConnectionStatusAction } from "./setTableSocketStatus";
-import { SetVerticalScalingRationAction } from "./setVerticalScalingRatio";
-import { SocketConnectAction } from "./socketConnect";
-import { SocketEmitVerbAction } from "./socketEmitVerb";
-import { SocketJoinTableAction } from "./socketJoinTable";
+import { TSetClientInfoAction } from "./setClientInfo";
+import { TSetGameStateAction } from "./setGameState";
+import { TSetGrabbedEntityInfoAction } from "./setGrabbedEntityInfo";
+import { TSetHorizontalScalingRationAction } from "./setHorizontalScalingRatio";
+import { TSetTablePixelDimensionsAction } from "./setTablePixelDimensions";
+import { TSetTablePositionAction } from "./setTablePosition";
+import { TSetTableConnectionStatusAction } from "./setTableSocketStatus";
+import { TSetVerticalScalingRationAction } from "./setVerticalScalingRatio";
+import { TSocketConnectAction } from "./socketConnect";
+import { TSocketEmitVerbAction } from "./socketEmitVerb";
+import { TSocketJoinTableAction } from "./socketJoinTable";
 
 export {setClientInfo} from "./setClientInfo"
 export {setGameState} from "./setGameState"
@@ -22,23 +22,23 @@ export {socketEmitVerb} from "./socketEmitVerb";
 export {socketConnect} from "./socketConnect";
 export {socketJoinTable} from "./socketJoinTable"
 
-export { SocketActionTypeKeys, SetterActionTypeKeys } from './actionTypeKeys'
+export { ESocketActionTypeKeys as SocketActionTypeKeys, ESetterActionTypeKeys as SetterActionTypeKeys } from './actionTypeKeys'
 
-export type ActionTypes = SocketActionTypes | SetterActionTypes;
+export type TActionTypes = TSocketActionTypes | TSetterActionTypes;
 
-export type SocketActionTypes = 
-    SocketEmitVerbAction |
-    SocketConnectAction |
-    SocketJoinTableAction;
+export type TSocketActionTypes = 
+    TSocketEmitVerbAction |
+    TSocketConnectAction |
+    TSocketJoinTableAction;
 
-export type SetterActionTypes = 
-    SetGameStateAction |
-    SetClientInfoAction |
-    SetTablePositionAction |
-    SetTableConnectionStatusAction |
-    SetVerticalScalingRationAction |
-    SetHorizontalScalingRationAction |
-    SetTablePixelDimensionsAction |
-    SetGrabbedEntityInfoAction;
+export type TSetterActionTypes = 
+    TSetGameStateAction |
+    TSetClientInfoAction |
+    TSetTablePositionAction |
+    TSetTableConnectionStatusAction |
+    TSetVerticalScalingRationAction |
+    TSetHorizontalScalingRationAction |
+    TSetTablePixelDimensionsAction |
+    TSetGrabbedEntityInfoAction;
 
 export * from "./thunks";

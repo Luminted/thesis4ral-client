@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import cn from "classnames";
 import { emitGrabFromHand, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import { EntityTypes } from "../../typings";
+import { EEntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
 import {getCardDimensions} from "../../utils";
 import "./style.css";
@@ -23,7 +23,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
         dispatch(setGrabbedEntityInfo({
             height,
             width,
-            entityType: EntityTypes.CARD,
+            entityType: EEntityTypes.CARD,
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
             restricted: false,

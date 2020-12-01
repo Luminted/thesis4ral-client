@@ -1,16 +1,16 @@
-import { SetterActionTypeKeys } from "../actionTypeKeys"
+import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
-export type SetTablePixelDimensionsAction = {
-    type: SetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
+export type TSetTablePixelDimensionsAction = {
+    type: ESetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
     dimensions: {
         width: number,
         height: number
     }
 }
 
-export const setTablePixelDimensions = (width: number, height: number): SetTablePixelDimensionsAction => {
+export const setTablePixelDimensions = (width: number, height: number): TSetTablePixelDimensionsAction => {
     return {
-        type: SetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
+        type: ESetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS,
         dimensions: {
             width,
             height

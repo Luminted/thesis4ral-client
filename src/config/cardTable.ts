@@ -1,7 +1,7 @@
-import {Ratio} from "../typings";
+import {TRatio} from "../typings";
 import { french52SortedBlue, french52SortedRed } from "../entities";
 
-export const tableAspectRatio: Ratio = {
+export const tableAspectRatio: TRatio = {
     numerator: 7,
     divisor: 3
 }

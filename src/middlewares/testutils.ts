@@ -1,9 +1,9 @@
-import { RootState } from "../store"
+import { TRootState } from "../store"
 import { Middleware } from "redux"
 
-export type MockMiddleware<A> = {
+export type TMockMiddleware<A> = {
   store: {
-    getState: () => Partial<RootState>
+    getState: () => Partial<TRootState>
     dispatch: Function
   },
   next: (action: A) => void,
@@ -11,7 +11,7 @@ export type MockMiddleware<A> = {
   applyMiddleware: Function
 }
 
-export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<RootState>): MockMiddleware<A> => {
+export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<TRootState>): TMockMiddleware<A> => {
     const store = {
       getState: jest.fn(() => ({...state})),
       dispatch: jest.fn()

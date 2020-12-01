@@ -1,9 +1,9 @@
-import { EntityTypes, MaybeNull } from "../../typings";
-import { SetterActionTypeKeys } from "../actionTypeKeys";
+import { EEntityTypes, TMaybeNull } from "../../typings";
+import { ESetterActionTypeKeys } from "../actionTypeKeys";
 
 //TODO: move this to datamodeldefinitions eqv
 export type TGrabbedEntityInfo = {
-    entityType: EntityTypes
+    entityType: EEntityTypes
     width: number,
     height: number,
     relativeGrabbedAtX: number,
@@ -14,12 +14,12 @@ export type TGrabbedEntityInfo = {
     grabbedFromHand?: string,
 }
 
-export type SetGrabbedEntityInfoAction = {
-    type: SetterActionTypeKeys.SET_GRABBED_ENTITY_INFO,
-    grabbedEntityInfo: MaybeNull<TGrabbedEntityInfo>
+export type TSetGrabbedEntityInfoAction = {
+    type: ESetterActionTypeKeys.SET_GRABBED_ENTITY_INFO,
+    grabbedEntityInfo: TMaybeNull<TGrabbedEntityInfo>
 }
 
-export const setGrabbedEntityInfo = (grabbedEntityInfo: MaybeNull<TGrabbedEntityInfo>): SetGrabbedEntityInfoAction => ({
-    type: SetterActionTypeKeys.SET_GRABBED_ENTITY_INFO,
+export const setGrabbedEntityInfo = (grabbedEntityInfo: TMaybeNull<TGrabbedEntityInfo>): TSetGrabbedEntityInfoAction => ({
+    type: ESetterActionTypeKeys.SET_GRABBED_ENTITY_INFO,
     grabbedEntityInfo
 })

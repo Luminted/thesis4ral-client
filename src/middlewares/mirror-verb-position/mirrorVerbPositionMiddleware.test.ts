@@ -1,7 +1,7 @@
 import { createMockMiddleware } from "../testutils"
-import { ActionTypes, SocketActionTypes, SocketActionTypeKeys } from "../../actions"
+import { TActionTypes, TSocketActionTypes, SocketActionTypeKeys } from "../../actions"
 import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
-import { Verb } from "../../typings";
+import { TVerb } from "../../typings";
 import { inverseMirrorOnTablePosition } from "../../utils";
 
 describe('Testing mirrorPositionMiddleware', () => {
@@ -9,7 +9,7 @@ describe('Testing mirrorPositionMiddleware', () => {
     const tableWidth = 1200;
     const tableHeight = 1000;
 
-    const mockMiddleware = createMockMiddleware<ActionTypes>(mirrorVerbPositionMiddleware, {
+    const mockMiddleware = createMockMiddleware<TActionTypes>(mirrorVerbPositionMiddleware, {
         tablePixelDimensions: {
             width: tableWidth,
             height: tableHeight
@@ -22,19 +22,19 @@ describe('Testing mirrorPositionMiddleware', () => {
         const positionY = 333;
 
         const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
-        const action: SocketActionTypes = {
+        const action: TSocketActionTypes = {
             type: SocketActionTypeKeys.EMIT_VERB,
             verb: {
                 positionX,
                 positionY
-            } as Verb,
+            } as TVerb,
         }
         const expectedTransformedAction = {
             ...action,
             verb: {
                 positionX: transformedPosition[0],
                 positionY: transformedPosition[1]
-            } as Verb
+            } as TVerb
         }
 
         // jest.spyOn(mockMiddleware, 'next')

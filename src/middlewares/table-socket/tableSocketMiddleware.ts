@@ -1,32 +1,32 @@
-import { RootState } from "../../store";
-import { ActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
-import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
+import { TRootState } from "../../store";
+import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
+import { ETableSocketClientEvents, ETableSocketServerEvents } from "./types";
 import { Middleware } from 'redux';
-import { SocketConnectionStatuses, GameState } from "../../typings";
+import { ESocketConnectionStatuses, TGameState } from "../../typings";
 
-export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, RootState> => {
+export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, TRootState> => {
     return store => {
         const {dispatch} = store;
 
         // Incoming API
-        socket.on(TableSocketServerEvents.SYNC, (gameState: GameState) => {
+        socket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
             dispatch(setGameState(gameState))
             
         })
 
-        socket.on(TableSocketServerEvents.CONNECT, () => {
+        socket.on(ETableSocketServerEvents.CONNECT, () => {
             console.log('connected')
-            dispatch(setTableSocketStatus(SocketConnectionStatuses.CONNECTED))
+            dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTED))
         })
 
         socket.on('disconnect', () => {
-            dispatch(setTableSocketStatus(SocketConnectionStatuses.DISCONNECTED));
+            dispatch(setTableSocketStatus(ESocketConnectionStatuses.DISCONNECTED));
         })
 
 
         return next => 
             // Outgoing API
-            (action: ActionTypes) => {
+            (action: TActionTypes) => {
                     if(action.type.startsWith('socket/')){
                         //TODO: more if(!socket.connected) to top level
                         switch(action.type){
@@ -34,7 +34,7 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
                                 if(!socket.connected){
                                     console.log('emitting join: not connected')
                                 }else{
-                                    socket.emit(TableSocketClientEvents.JOIN_TABLE, action.ackFunction);
+                                    socket.emit(ETableSocketClientEvents.JOIN_TABLE, action.ackFunction);
                                 }
                                 break;
                             case SocketActionTypeKeys.EMIT_VERB:
@@ -43,9 +43,9 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
                                     return next(action);
                                 }
                                 if(action.verb !== null){
-                                    socket.emit(TableSocketClientEvents.VERB, action.verb, action.ackFunction);
+                                    socket.emit(ETableSocketClientEvents.VERB, action.verb, action.ackFunction);
 
-                                    console.log(`Middleware: socket event emitted: type=${TableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
+                                    console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
                                 }else{
                                     console.log('Middleware: Verb to be emitted is NULL. Aborting emit.');
                                     return next(action);

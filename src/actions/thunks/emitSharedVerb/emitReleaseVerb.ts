@@ -1,15 +1,15 @@
-import { ThunkResult } from "..";
-import { IReleaseVerb, SharedVerbTypes, EntityTypes } from "../../../typings";
+import { TThunkResult } from "..";
+import { IReleaseVerb, ESharedVerbTypes, EEntityTypes } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitReleaseVerb = (entityId: string, entityType: EntityTypes): ThunkResult =>
+export const emitReleaseVerb = (entityId: string, entityType: EEntityTypes): TThunkResult =>
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IReleaseVerb = {
             entityId,
             entityType,
             clientId: clientInfo!.clientId,
-            type: SharedVerbTypes.RELEASE
+            type: ESharedVerbTypes.RELEASE
         }
         dispatch(socketEmitVerb(verb));
     }

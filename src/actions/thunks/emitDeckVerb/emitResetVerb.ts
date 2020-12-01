@@ -1,12 +1,12 @@
-import { ThunkResult } from "..";
-import { DeckVerbTypes, IResetVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { EDeckVerbTypes, IResetVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitResetVerb = (entityId: string): ThunkResult => 
+export const emitResetVerb = (entityId: string): TThunkResult => 
     dispatch => {
         const verb: IResetVerb = {
             entityId,
-            type: DeckVerbTypes.RESET
+            type: EDeckVerbTypes.RESET
         }
         dispatch(socketEmitVerb(verb));
     }

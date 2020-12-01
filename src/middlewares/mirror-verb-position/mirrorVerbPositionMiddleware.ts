@@ -1,10 +1,10 @@
-import { ActionTypes, SocketActionTypeKeys } from "../../actions";
+import { TActionTypes, SocketActionTypeKeys } from "../../actions";
 import {Middleware} from 'redux'
-import { RootState } from "../../store";
+import { TRootState } from "../../store";
 import { mirrorOnTablePosition, isVerbTypeWithPosition } from "../../utils";
-import { CardVerbTypes } from "../../typings";
+import { ECardVerbTypes } from "../../typings";
 
-export const mirrorVerbPositionMiddleware: Middleware<{}, RootState> = store => next => (action: ActionTypes) => {
+export const mirrorVerbPositionMiddleware: Middleware<{}, TRootState> = store => next => (action: TActionTypes) => {
     if(action.type === SocketActionTypeKeys.EMIT_VERB){
 
         if(isVerbTypeWithPosition(action.verb)){
@@ -18,7 +18,7 @@ export const mirrorVerbPositionMiddleware: Middleware<{}, RootState> = store => 
             action.verb.positionY);
 
             // GrabbedAt position needs to be mirrored too
-            if(action.verb.type === CardVerbTypes.GRAB_FROM_HAND){
+            if(action.verb.type === ECardVerbTypes.GRAB_FROM_HAND){
                 const {grabbedAtX, grabbedAtY} = action.verb;
                 const transformedGrabbedAtPosition = mirrorOnTablePosition(grabbedAtX, grabbedAtY, tablePixelDimensions!.width, tablePixelDimensions!.height)
                 

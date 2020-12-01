@@ -1,16 +1,16 @@
-import { ClientInfo, SerializedGameState } from "../../typings"
-import { SocketActionTypeKeys } from "../actionTypeKeys"
+import { TClientInfo, TSerializedGameState } from "../../typings"
+import { ESocketActionTypeKeys } from "../actionTypeKeys"
 
-type SocketJoinTableAckFunction = (clientInfo: ClientInfo, gameState: SerializedGameState) => void
+type SocketJoinTableAckFunction = (clientInfo: TClientInfo, gameState: TSerializedGameState) => void
 
-export type SocketJoinTableAction = {
-    type: SocketActionTypeKeys.JOIN_TABLE
+export type TSocketJoinTableAction = {
+    type: ESocketActionTypeKeys.JOIN_TABLE
     ackFunction?: SocketJoinTableAckFunction
 }
 
-export const socketJoinTable = (ackFunction?: SocketJoinTableAckFunction): SocketJoinTableAction => {
+export const socketJoinTable = (ackFunction?: SocketJoinTableAckFunction): TSocketJoinTableAction => {
     return {
-        type: SocketActionTypeKeys.JOIN_TABLE,
+        type: ESocketActionTypeKeys.JOIN_TABLE,
         ackFunction
     }
 }

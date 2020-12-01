@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClientInfo, SerializedGameState, SocketConnectionStatuses} from "../../typings";
+import { TClientInfo, TSerializedGameState, ESocketConnectionStatuses} from "../../typings";
 import { ApplicationViewport } from "../../components/ApplicationViewport/ApplicationViewport";
 import { setClientInfo, setGameState, socketJoinTable } from "../../actions";
 import { selectTableConnectionStatus } from "../../selectors";
@@ -12,8 +12,8 @@ export const TableApp = () => {
     const connectionStatus = useSelector(selectTableConnectionStatus);
 
     useEffect(() => {
-        if(connectionStatus === SocketConnectionStatuses.CONNECTED)
-        dispatch(socketJoinTable((clientInfo: ClientInfo, serializedGameState: SerializedGameState) => {
+        if(connectionStatus === ESocketConnectionStatuses.CONNECTED)
+        dispatch(socketJoinTable((clientInfo: TClientInfo, serializedGameState: TSerializedGameState) => {
             dispatch(setGameState(serializedGameState));
             dispatch(setClientInfo(clientInfo));
         }));
@@ -21,8 +21,8 @@ export const TableApp = () => {
 
     return (
         <>
-            {connectionStatus === SocketConnectionStatuses.CONNECTING && "CONNECTING"}
-            {connectionStatus === SocketConnectionStatuses.DISCONNECTED && "DISCONNECTED"}
-            {connectionStatus === SocketConnectionStatuses.CONNECTED && <ApplicationViewport />}
+            {connectionStatus === ESocketConnectionStatuses.CONNECTING && "CONNECTING"}
+            {connectionStatus === ESocketConnectionStatuses.DISCONNECTED && "DISCONNECTED"}
+            {connectionStatus === ESocketConnectionStatuses.CONNECTED && <ApplicationViewport />}
         </>)
 } 

@@ -1,8 +1,8 @@
-import { ThunkResult } from "..";
-import { IGrabVerb, SharedVerbTypes, EntityTypes } from "../../../typings";
+import { TThunkResult } from "..";
+import { IGrabVerb, ESharedVerbTypes, EEntityTypes } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitGrabVerb = (entityId: string, entityType: EntityTypes, positionX: number, positionY: number): ThunkResult => 
+export const emitGrabVerb = (entityId: string, entityType: EEntityTypes, positionX: number, positionY: number): TThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IGrabVerb = {
@@ -11,7 +11,7 @@ export const emitGrabVerb = (entityId: string, entityType: EntityTypes, position
             positionX,
             positionY,
             clientId: clientInfo!.clientId,
-            type: SharedVerbTypes.GRAB
+            type: ESharedVerbTypes.GRAB
         }
         dispatch(socketEmitVerb(verb));
     }

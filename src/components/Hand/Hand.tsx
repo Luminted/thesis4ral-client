@@ -7,7 +7,7 @@ import { selectClientId, selectGrabbedEntity } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
-import { EntityTypes, SerializedGameState, EOrientation, MaybeNull } from "../../typings";
+import { EEntityTypes, TSerializedGameState, EOrientation, TMaybeNull } from "../../typings";
 import { cardTiltFactor } from "../../config";
 import "./style.css";
 
@@ -28,7 +28,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
     const handRef = useRef<HTMLDivElement>(null);
     const handCurveFunctionRef = useRef<(y: number) => number>();
 
-    const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<MaybeNull<number>>(null);
+    const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<TMaybeNull<number>>(null);
 
     const grabbedEntity = useSelector(selectGrabbedEntity);
     const ownClientId = useSelector(selectClientId);
@@ -36,13 +36,13 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
     const {cards, ordering, clientId} = handDetails;
 
     const getOnMouseEnterHandCard = orderOfCard => () => {
-        if(grabbedEntity && grabbedEntity.entityType === EntityTypes.CARD){
+        if(grabbedEntity && grabbedEntity.entityType === EEntityTypes.CARD){
             setOrderOfCardBeingHoveredWithGrabbedOne(orderOfCard);
         }
     }
 
     const onMouseLeaveHandCard = () => {
-        if(grabbedEntity && grabbedEntity.entityType === EntityTypes.CARD){
+        if(grabbedEntity && grabbedEntity.entityType === EEntityTypes.CARD){
             setOrderOfCardBeingHoveredWithGrabbedOne(null);
         }
     }
@@ -84,7 +84,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         }
     }, [cards ,handRef, handCurveFunctionRef.current]);
 
-    const chainDispatchReorderVerb = (nextGameState: SerializedGameState) => {
+    const chainDispatchReorderVerb = (nextGameState: TSerializedGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
         if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
             const {ordering} = nextHand;
@@ -101,7 +101,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         if(grabbedEntity && isOwnHand){
             const {entityId, entityType} = grabbedEntity;
             
-            if(entityType === EntityTypes.CARD){
+            if(entityType === EEntityTypes.CARD){
                 e.stopPropagation();
                 dispatch(emitPutInHandVerb(entityId, false, chainDispatchReorderVerb));
                 dispatch(setGrabbedEntityInfo(null));

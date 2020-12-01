@@ -10,7 +10,7 @@ import { mirrorVerbPositionMiddleware } from "../../middlewares";
 import { clamp } from "../../utils";
 import { seatIdMapping, trayWidthPercentage } from "../../config";
 import "./style.css";
-import { EntityTypes, EOrientation } from "../../typings";
+import { EEntityTypes, EOrientation } from "../../typings";
 
 const listenerThrottleValue = 1000 / 60;
 
@@ -36,7 +36,7 @@ export const ApplicationViewport = () => {
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
-            if(grabbedEntity.entityType === EntityTypes.DECK){
+            if(grabbedEntity.entityType === EEntityTypes.DECK){
                 const entityLeftEdgeOffset = grabbedEntityInfo.relativeGrabbedAtX;
                 const entityRightEdgeOffset = grabbedEntityInfo.width - grabbedEntityInfo.relativeGrabbedAtX;
                 const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
@@ -69,7 +69,7 @@ export const ApplicationViewport = () => {
             if(grabbedFromHand){
                 dispatch(emitPutInHandVerb(entityId, true));
             }
-            else if(originalPositionX && originalPositionY && entityType === EntityTypes.CARD){
+            else if(originalPositionX && originalPositionY && entityType === EEntityTypes.CARD){
                 dispatch(emitMoveToVerb(entityId, entityType, originalPositionX, originalPositionY));
                 dispatch(emitReleaseVerb(
                     grabbedEntity.entityId,

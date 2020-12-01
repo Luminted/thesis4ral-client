@@ -1,15 +1,15 @@
 import { Middleware } from "redux";
-import { CardVerbTypes } from "../../typings"
-import { RootState } from "../../store";
-import { ActionTypes, SocketActionTypeKeys} from "../../actions";
+import { ECardVerbTypes } from "../../typings"
+import { TRootState } from "../../store";
+import { TActionTypes, SocketActionTypeKeys} from "../../actions";
 import { isVerbTypeWithPosition } from "../../utils";
 
 /** 
  * Normalizes coordinates so that tables top right corner is the origo
  */ 
-export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store => 
+export const normalizeVerbPositionMiddleware:  Middleware<{}, TRootState> = store => 
     next => 
-        (action: ActionTypes) => {
+        (action: TActionTypes) => {
             if(action.type === SocketActionTypeKeys.EMIT_VERB){                
                 if(isVerbTypeWithPosition(action.verb)){
                     const {positionX, positionY} = action.verb;
@@ -19,7 +19,7 @@ export const normalizeVerbPositionMiddleware:  Middleware<{}, RootState> = store
                     action.verb.positionY = positionY - tablePosition.y;
 
                     // GRAB_FROM_HAND has another set of position that needs to be normalized 
-                    if(action.verb.type === CardVerbTypes.GRAB_FROM_HAND){
+                    if(action.verb.type === ECardVerbTypes.GRAB_FROM_HAND){
                         const {grabbedAtX, grabbedAtY} = action.verb;
                         action.verb.grabbedAtX = grabbedAtX - tablePosition.x;
                         action.verb.grabbedAtY = grabbedAtY - tablePosition.y;

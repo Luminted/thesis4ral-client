@@ -1,14 +1,14 @@
-import { Ratio } from "../../typings"
-import { SetterActionTypeKeys } from "../actionTypeKeys"
+import { TRatio } from "../../typings"
+import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
-export type SetVerticalScalingRationAction = {
-    type: SetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO,
-    ratio: Ratio
+export type TSetVerticalScalingRationAction = {
+    type: ESetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO,
+    ratio: TRatio
 }
 
-export const setVerticalScalingRatio = (ratio: Ratio): SetVerticalScalingRationAction => {
+export const setVerticalScalingRatio = (ratio: TRatio): TSetVerticalScalingRationAction => {
     return {
-        type: SetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO,
+        type: ESetterActionTypeKeys.SET_VERTICAL_SCALING_RATIO,
         ratio
     }
 }

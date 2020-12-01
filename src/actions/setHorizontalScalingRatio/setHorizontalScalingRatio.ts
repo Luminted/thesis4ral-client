@@ -1,15 +1,15 @@
-import { Ratio } from "../../typings"
-import { SetterActionTypeKeys } from "../actionTypeKeys"
+import { TRatio } from "../../typings"
+import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
-export type SetHorizontalScalingRationAction = {
-    type: SetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO,
-    ratio: Ratio
+export type TSetHorizontalScalingRationAction = {
+    type: ESetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO,
+    ratio: TRatio
 }
 
 
-export const setHorizontalScalingRatio = (ratio: Ratio): SetHorizontalScalingRationAction => {
+export const setHorizontalScalingRatio = (ratio: TRatio): TSetHorizontalScalingRationAction => {
     return {
-        type: SetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO,
+        type: ESetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO,
         ratio
     }
 }

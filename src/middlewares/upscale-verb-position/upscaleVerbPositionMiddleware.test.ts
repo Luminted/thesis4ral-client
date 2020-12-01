@@ -1,39 +1,39 @@
-import { Verb, SharedVerbTypes, Ratio } from '../../typings';
+import { TVerb, ESharedVerbTypes, TRatio } from '../../typings';
 import {upscale} from '../../utils';
 import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
 import {createMockMiddleware} from '../testutils';
-import { SocketActionTypeKeys, ActionTypes } from '../../actions';
-import { SocketEmitVerbAction } from '../../actions/socketEmitVerb';
-import { RootState } from '../../store';
+import { SocketActionTypeKeys, TActionTypes } from '../../actions';
+import { TSocketEmitVerbAction } from '../../actions/socketEmitVerb';
+import { TRootState } from '../../store';
 
 describe('Testing upscaleVerbPositionMiddleware', ()=> {
-    const horizontalScalingRatio: Ratio = {
+    const horizontalScalingRatio: TRatio = {
         numerator: 4,
         divisor: 12
     }
-    const verticalScalingRatio: Ratio = {
+    const verticalScalingRatio: TRatio = {
         numerator: 3,
         divisor: 9
     }
-    const mockMiddleware = createMockMiddleware<ActionTypes>(upscaleVerbPositionMiddleware, {
+    const mockMiddleware = createMockMiddleware<TActionTypes>(upscaleVerbPositionMiddleware, {
         horizontalScalingRatio,
         verticalScalingRatio
-    } as RootState);
+    } as TRootState);
 
     it('should apply upscalePosition to verbs X and Y position', ()=> {
         const positionX = 1;
         const positionY = 2;
-        const verb: Verb = {
+        const verb: TVerb = {
             clientId: 'c-1',
             positionX,
             positionY,
-            type: SharedVerbTypes.MOVE
+            type: ESharedVerbTypes.MOVE
         }
-        const action: SocketEmitVerbAction = {
+        const action: TSocketEmitVerbAction = {
             type: SocketActionTypeKeys.EMIT_VERB,
             verb
         }
-        const expectedAction: SocketEmitVerbAction = {
+        const expectedAction: TSocketEmitVerbAction = {
             ...action,
             verb: {
                 ...verb,

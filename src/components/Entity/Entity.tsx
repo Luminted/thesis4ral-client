@@ -2,7 +2,7 @@ import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import { Ratio } from "../../typings";
+import { TRatio } from "../../typings";
 import { selectTablePixelDimensions } from "../../selectors";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 import { downscale } from "../../utils";
@@ -34,12 +34,12 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
     // TODO: code dupplication
-    const horizontalScalingRatio: Ratio = useMemo(() => ({
+    const horizontalScalingRatio: TRatio = useMemo(() => ({
             numerator: tablePixelDimensions?.width || 0,
             divisor: tableVirtualWidth
     }), [tablePixelDimensions])
 
-    const verticalScalingRatio: Ratio = useMemo(() => ({
+    const verticalScalingRatio: TRatio = useMemo(() => ({
             numerator: tablePixelDimensions?.height || 0,
             divisor: tableVirtualHeight
 

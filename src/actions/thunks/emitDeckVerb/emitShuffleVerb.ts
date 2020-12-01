@@ -1,12 +1,12 @@
-import { ThunkResult } from "..";
-import { DeckVerbTypes, IShuffleVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { EDeckVerbTypes, IShuffleVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitShuffleVerb = (entityId: string): ThunkResult =>
+export const emitShuffleVerb = (entityId: string): TThunkResult =>
     dispatch => {
         const verb: IShuffleVerb = {
             entityId,
-            type: DeckVerbTypes.SHUFFLE
+            type: EDeckVerbTypes.SHUFFLE
         }
         dispatch(socketEmitVerb(verb));
     }

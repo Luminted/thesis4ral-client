@@ -1,6 +1,6 @@
-import { IAddCardVerb, IAddDeckVerb, IGrabFromHandVerb, IGrabVerb, IMoveToVerb, IMoveVerb, IPutOnTable, Verb } from "../typings"
+import { IAddCardVerb, IAddDeckVerb, IGrabFromHandVerb, IGrabVerb, IMoveToVerb, IMoveVerb, IPutOnTable, TVerb } from "../typings"
 
-export const isVerbTypeWithPosition = (verb: Verb): verb is IGrabVerb |
+export const isVerbTypeWithPosition = (verb: TVerb): verb is IGrabVerb |
     IMoveToVerb |
     IMoveVerb |
     IAddCardVerb |

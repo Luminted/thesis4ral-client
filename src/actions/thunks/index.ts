@@ -1,9 +1,9 @@
 import { ThunkAction } from "redux-thunk";
-import { ActionTypes } from "..";
-import { RootState } from "../../store";
+import { TActionTypes } from "..";
+import { TRootState } from "../../store";
 
 export * from "./emitSharedVerb"
 export * from "./emitDeckVerb"
 export * from "./emitCardVerb"
 
-export type ThunkResult = ThunkAction<void, RootState, null, ActionTypes>
+export type TThunkResult = ThunkAction<void, TRootState, null, TActionTypes>

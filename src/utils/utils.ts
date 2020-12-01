@@ -1,4 +1,4 @@
-import { Ratio } from "../typings";
+import { TRatio } from "../typings";
 
 export const mirrorOnTablePosition = (positionX: number, positionY: number, tableWidth: number, tableHeight: number): [number, number] => {
     const transformedPositionX = -positionX + tableWidth;
@@ -23,12 +23,12 @@ export const calculateDiagonalLength = (a: number, b: number) => {
     return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
 }
 
-export const calculateHeightByDiagonalLength = (diagonalLength: number, ratio: Ratio) => {
+export const calculateHeightByDiagonalLength = (diagonalLength: number, ratio: TRatio) => {
     const {divisor, numerator} = ratio;
     return (diagonalLength * divisor) / (Math.sqrt(Math.pow(numerator, 2) + Math.pow(divisor, 2)));
 }
 
-export const calculateWidthByDiagonalLength = (diagonalLength: number, ratio: Ratio) => {
+export const calculateWidthByDiagonalLength = (diagonalLength: number, ratio: TRatio) => {
     const {divisor, numerator} = ratio;
     return (diagonalLength * numerator) / (Math.sqrt(Math.pow(numerator, 2) + Math.pow(divisor, 2)));
 }

@@ -1,8 +1,8 @@
 import { Middleware } from "redux";
-import { ActionTypes, SocketActionTypeKeys } from "../../actions";
-import { RootState } from "../../store";
+import { TActionTypes, SocketActionTypeKeys } from "../../actions";
+import { TRootState } from "../../store";
 
-export const joinedTableValidator: Middleware<{}, RootState> = store => next => (action: ActionTypes) => {
+export const joinedTableValidator: Middleware<{}, TRootState> = store => next => (action: TActionTypes) => {
     if(action.type === SocketActionTypeKeys.EMIT_VERB){
         if(store.getState().clientInfo){
             return next(action);

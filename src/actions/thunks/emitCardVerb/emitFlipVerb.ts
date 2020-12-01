@@ -1,12 +1,12 @@
-import { ThunkResult } from "../../"
-import { CardVerbTypes, IFlipVerb } from "../../../typings"
+import { TThunkResult } from "../../"
+import { ECardVerbTypes, IFlipVerb } from "../../../typings"
 import { socketEmitVerb } from "../../"
 
-export const emitFlipVerb = (entityId: string): ThunkResult => 
+export const emitFlipVerb = (entityId: string): TThunkResult => 
     dispatch => {
         const verb: IFlipVerb = {
             entityId,
-            type: CardVerbTypes.FLIP
+            type: ECardVerbTypes.FLIP
         }
         dispatch(socketEmitVerb(verb));
     }

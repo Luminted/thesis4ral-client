@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitFlipVerb } from "../../actions";
-import { EntityTypes } from "../../typings";
+import { EEntityTypes } from "../../typings";
 import {IProps } from "./typings";
 import { selectGrabbedEntity } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
@@ -29,7 +29,7 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
     return (
         <Entity 
             entityId={entityId}
-            entityType={EntityTypes.CARD}
+            entityType={EEntityTypes.CARD}
             positionX={positionX}
             positionY={positionY}
             width={width}

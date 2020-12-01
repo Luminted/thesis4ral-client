@@ -1,8 +1,8 @@
-import { ThunkResult } from "..";
-import { CardVerbTypes, IGrabFromHandVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { ECardVerbTypes, IGrabFromHandVerb } from "../../../typings";
 import {socketEmitVerb} from "../../"
 
-export const emitGrabFromHand = (entityId: string, grabbedAtX: number, grabbedAtY: number, grabbedFrom: string, positionX: number, positionY: number, faceUp: boolean): ThunkResult =>
+export const emitGrabFromHand = (entityId: string, grabbedAtX: number, grabbedAtY: number, grabbedFrom: string, positionX: number, positionY: number, faceUp: boolean): TThunkResult =>
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IGrabFromHandVerb = {
@@ -14,7 +14,7 @@ export const emitGrabFromHand = (entityId: string, grabbedAtX: number, grabbedAt
             positionY,
             faceUp,
             clientId: clientInfo!.clientId,
-            type: CardVerbTypes.GRAB_FROM_HAND
+            type: ECardVerbTypes.GRAB_FROM_HAND
         }
         dispatch(socketEmitVerb(verb));
     }

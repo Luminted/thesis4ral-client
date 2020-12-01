@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 import { useSelector } from "react-redux";
 import { tableVirtualWidth } from "../../config";
 import { selectTablePixelDimensions } from "../../selectors";
-import { Ratio } from "../../typings";
+import { TRatio } from "../../typings";
 import { downscale } from "../../utils";
 import { IProps } from "./typings";
 
@@ -10,7 +10,7 @@ export const DimensionsScaler = ({width, height, children}: IProps) => {
 
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
-    const horizontalScalingRatio: Ratio = {
+    const horizontalScalingRatio: TRatio = {
         numerator: tablePixelDimensions?.width || 0,
         divisor: tableVirtualWidth
     }

@@ -1,9 +1,9 @@
-import { ThunkResult } from "..";
-import { IEntityMetadata, ICardEntityMetadata, DeckVerbTypes, IAddDeckVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { IEntityMetadata, ICardEntityMetadata, EDeckVerbTypes, IAddDeckVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
-import { SocketVerbAckFunction } from "../../socketEmitVerb";
+import { TSocketVerbAckFunction } from "../../socketEmitVerb";
 
-export const emitAddDeckVerb = (containedCardsMetadata: ICardEntityMetadata[], metadata: IEntityMetadata, positionX: number, positionY: number, rotation: number, ackFunction?: SocketVerbAckFunction): ThunkResult => 
+export const emitAddDeckVerb = (containedCardsMetadata: ICardEntityMetadata[], metadata: IEntityMetadata, positionX: number, positionY: number, rotation: number, ackFunction?: TSocketVerbAckFunction): TThunkResult => 
     dispatch => {
         const verb: IAddDeckVerb = {
             containedCardsMetadata,
@@ -11,7 +11,7 @@ export const emitAddDeckVerb = (containedCardsMetadata: ICardEntityMetadata[], m
             positionX,
             positionY,
             rotation,
-            type: DeckVerbTypes.ADD_DECK
+            type: EDeckVerbTypes.ADD_DECK
         }
         dispatch(socketEmitVerb(verb, ackFunction));
     }

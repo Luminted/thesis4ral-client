@@ -1,14 +1,14 @@
-import { ThunkResult } from "..";
-import { CardVerbTypes, IReorderHandVerb } from "../../../typings";
+import { TThunkResult } from "..";
+import { ECardVerbTypes, IReorderHandVerb } from "../../../typings";
 import { socketEmitVerb } from "../../";
 
-export const emitReorderHandVerb = (order: number[]): ThunkResult => 
+export const emitReorderHandVerb = (order: number[]): TThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IReorderHandVerb = {
             order,
             clientId: clientInfo!.clientId,
-            type: CardVerbTypes.REORDER_HAND
+            type: ECardVerbTypes.REORDER_HAND
         }
         dispatch(socketEmitVerb(verb));
     }

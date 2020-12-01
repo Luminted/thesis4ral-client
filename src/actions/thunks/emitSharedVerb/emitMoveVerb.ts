@@ -1,15 +1,15 @@
-import { ThunkResult } from "../.."
-import { IMoveVerb, SharedVerbTypes } from "../../../typings"
+import { TThunkResult } from "../.."
+import { IMoveVerb, ESharedVerbTypes } from "../../../typings"
 import { socketEmitVerb } from "../../"
 
-export const emitMoveVerb = (positionX: number, positionY: number):ThunkResult => 
+export const emitMoveVerb = (positionX: number, positionY: number):TThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IMoveVerb = {
             positionX,
             positionY,
             clientId: clientInfo!.clientId,
-            type: SharedVerbTypes.MOVE
+            type: ESharedVerbTypes.MOVE
         }
         dispatch(socketEmitVerb(verb));
     }

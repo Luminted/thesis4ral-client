@@ -1,4 +1,4 @@
-export enum SetterActionTypeKeys {
+export enum ESetterActionTypeKeys {
     SET_CLIENT_INFO = 'SET_CLIENT_INFO',
     SET_TABLE_POSITION = 'SET_TABLE_POSITION',
     SET_GAME_STATE = 'SET_GAME_STATE',
@@ -13,7 +13,7 @@ export enum SetterActionTypeKeys {
     SET_GRABBED_ENTITY_INFO = 'SET_GRABBED_ENTITY_INFO'
 }
 
-export enum SocketActionTypeKeys {
+export enum ESocketActionTypeKeys {
     EMIT_VERB = 'socket/EMIT_VERB',
     CONNECT = 'socket/CONNECT',
     DISCONNECT = 'socket/DISCONNECT',

@@ -1,17 +1,17 @@
-import { SerializedGameState, Verb } from "../../typings";
-import { SocketActionTypeKeys } from "../actionTypeKeys";
+import { TSerializedGameState, TVerb } from "../../typings";
+import { ESocketActionTypeKeys } from "../actionTypeKeys";
 
-export type SocketEmitVerbAction = {
-    type: SocketActionTypeKeys.EMIT_VERB,
-    verb: Verb,
+export type TSocketEmitVerbAction = {
+    type: ESocketActionTypeKeys.EMIT_VERB,
+    verb: TVerb,
     ackFunction?: Function
 }
 
-export type SocketVerbAckFunction = (nextGameState: SerializedGameState) => void;
+export type TSocketVerbAckFunction = (nextGameState: TSerializedGameState) => void;
 
-export const socketEmitVerb = (verb: Verb, ackFunction?: SocketVerbAckFunction): SocketEmitVerbAction => {
+export const socketEmitVerb = (verb: TVerb, ackFunction?: TSocketVerbAckFunction): TSocketEmitVerbAction => {
     return {
-        type: SocketActionTypeKeys.EMIT_VERB,
+        type: ESocketActionTypeKeys.EMIT_VERB,
         verb,
         ackFunction
     }

@@ -1,14 +1,14 @@
-import { ClientInfo } from "../../typings"
-import { SetterActionTypeKeys } from "../actionTypeKeys"
+import { TClientInfo } from "../../typings"
+import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
-export type SetClientInfoAction = {
-    type: SetterActionTypeKeys.SET_CLIENT_INFO,
-    clientInfo: ClientInfo
+export type TSetClientInfoAction = {
+    type: ESetterActionTypeKeys.SET_CLIENT_INFO,
+    clientInfo: TClientInfo
 }
 
-export const setClientInfo = (clientInfo: ClientInfo): SetClientInfoAction => {
+export const setClientInfo = (clientInfo: TClientInfo): TSetClientInfoAction => {
     return {
-        type: SetterActionTypeKeys.SET_CLIENT_INFO,
+        type: ESetterActionTypeKeys.SET_CLIENT_INFO,
         clientInfo
     }
 }
