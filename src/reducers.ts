@@ -1,10 +1,10 @@
 import {produce} from 'immer';
 import {TActionTypes, SetterActionTypeKeys} from './actions/';
-import { TGameState, TClientInfo, TMaybeNull, ESocketConnectionStatuses, TRatio} from './typings' 
+import { TClientInfo, TMaybeNull, ESocketConnectionStatuses, TRatio, TSerializedGameState} from './typings' 
 import { TGrabbedEntityInfo } from './actions/setGrabbedEntityInfo';
 
 type State = {
-    gameState: TGameState,
+    gameState: TSerializedGameState,
     clientInfo: TMaybeNull<TClientInfo>,
     tablePosition: {
         x: number,
@@ -26,8 +26,7 @@ const initialState: State = {
         decks: [],
         clients: [],
         hands: [],
-        entityScale: 1,
-        topZIndex: 0
+        entityScale: 1
     },
     clientInfo: null,
     tablePosition: {
