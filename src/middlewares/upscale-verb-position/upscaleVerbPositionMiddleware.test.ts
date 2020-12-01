@@ -7,7 +7,7 @@ import { SocketActionTypeKeys, ActionTypes } from '../../actions';
 import { SocketEmitVerbAction } from '../../actions/socketEmitVerb';
 import { RootState } from '../../store';
 
-describe('Testing upscaleVerbPositionMiddleware', function(){
+describe('Testing upscaleVerbPositionMiddleware', ()=> {
     const horizontalScalingRatio: Ratio = {
         numerator: 4,
         divisor: 12
@@ -21,7 +21,7 @@ describe('Testing upscaleVerbPositionMiddleware', function(){
         verticalScalingRatio
     } as RootState);
 
-    it('should apply upscalePosition to verbs X and Y position', function(){
+    it('should apply upscalePosition to verbs X and Y position', ()=> {
         const positionX = 1;
         const positionY = 2;
         const verb: Verb = {

@@ -8,10 +8,10 @@ import { Verb } from '../../types/verb';
 import { SerializedGameState } from '../../types/dataModelDefinitions';
 import { SocketConnectionStatuses } from '../../types/additionalTypes';
 
-describe('Testing tableModuleMiddleware', function(){
+describe('Testing tableModuleMiddleware', () => {
     
     
-    describe('Outgoing API', function(){
+    describe('Outgoing API', () => {
         
         const socketMock: SocketIOClient.Socket = {
             connect: jest.fn(),
@@ -23,8 +23,8 @@ describe('Testing tableModuleMiddleware', function(){
         const mockMiddleware = createMockMiddleware<ActionTypes>(tableSocketMiddleware);
 
 
-        describe(`Action: ${SocketActionTypeKeys.CONNECT}`, function(){
-            it(`should call sockets connect`, function(){
+        describe(`Action: ${SocketActionTypeKeys.CONNECT}`, () => {
+            it(`should call sockets connect`, () => {
                 const {invoke} = mockMiddleware;
                 const action: ActionTypes = {
                     type: SocketActionTypeKeys.CONNECT
@@ -35,8 +35,8 @@ describe('Testing tableModuleMiddleware', function(){
                 expect(socketMock.connect).toHaveBeenCalled();
             })
         })
-        describe(`Action: ${SocketActionTypeKeys.EMIT_VERB}`, function(){
-            it(`should emit ${TableSocketClientEvents.VERB} event with verb and acknowledgement function of action`, function(){
+        describe(`Action: ${SocketActionTypeKeys.EMIT_VERB}`, () => {
+            it(`should emit ${TableSocketClientEvents.VERB} event with verb and acknowledgement  o => f action`, () => {
                 const {invoke} = mockMiddleware;
                 const action: ActionTypes = {
                     type: SocketActionTypeKeys.EMIT_VERB,
@@ -50,8 +50,8 @@ describe('Testing tableModuleMiddleware', function(){
             })
         })
 
-        describe(`Action: ${SocketActionTypeKeys.JOIN_TABLE}`, function(){
-            it(`should emit ${TableSocketClientEvents.JOIN_TABLE} event with actions ackFunction`, function(){
+        describe(`Action: ${SocketActionTypeKeys.JOIN_TABLE}`, () => {
+            it(`should emit ${TableSocketClientEvents.JOIN_TABLE} event with actions ackFunction`, () => {
                 const {invoke} = mockMiddleware;
                 const action: ActionTypes = {
                     type: SocketActionTypeKeys.JOIN_TABLE,
@@ -65,7 +65,7 @@ describe('Testing tableModuleMiddleware', function(){
         })
     })
 
-    describe('Incoming API', function(){
+    describe('Incoming API', () => {
         const host = 'http://localhost';
         const port = 4002;
         const uri = `${host}:${port}`;
@@ -94,8 +94,8 @@ describe('Testing tableModuleMiddleware', function(){
             socket.disconnect();
         })
 
-        describe(`Event: ${TableSocketServerEvents.SYNC}`, function(){
-            it(`should dispatch ${SetterActionTypeKeys.SET_GAME_STATE} with received gameState on ${TableSocketServerEvents.SYNC} event`, function(done){
+        describe(`Event: ${TableSocketServerEvents.SYNC}`, () => {
+            it(`should dispatch ${SetterActionTypeKeys.SET_GAME_STATE} with received gameState on ${TableSocketServerEvents.SYNC} event`, (done) => {
                 const {store} = mockMiddleware;
                 const gameState = {
                     cards: [],
@@ -112,8 +112,8 @@ describe('Testing tableModuleMiddleware', function(){
             })
         })
 
-        describe(`Event: ${TableSocketServerEvents.CONNECT}`, function(){
-            it(`should dispatch ${SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS} action with status ${SocketConnectionStatuses.CONNECTED}`, function(done){
+        describe(`Event: ${TableSocketServerEvents.CONNECT}`, () => {
+            it(`should dispatch ${SetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS} action with status ${SocketConnectionStatuses.CONNECTED}`, (done) => {
                 const {store} = mockMiddleware;
                 socket.disconnect();
                 socket.connect();

@@ -1,9 +1,9 @@
 import { ThunkResult } from "..";
-import { SerializedGameState } from "../../../types/dataModelDefinitions";
 import { CardVerbTypes, IPutInHandVerb } from "../../../types/verb";
 import { socketEmitVerb } from "../../";
+import { SocketVerbAckFunction } from "../../socketEmitVerb";
 
-export const emitPutInHandVerb = (entityId: string, faceUp: boolean, ackFunction?: (nextGameState: SerializedGameState) => void): ThunkResult => 
+export const emitPutInHandVerb = (entityId: string, faceUp: boolean, ackFunction?: SocketVerbAckFunction): ThunkResult => 
     (dispatch, getState) => {
         const {clientInfo} = getState();
         const verb: IPutInHandVerb = {

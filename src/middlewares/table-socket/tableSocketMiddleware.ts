@@ -5,7 +5,7 @@ import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
 
-export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Middleware<{}, RootState>{
+export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, RootState> => {
     return store => {
         const {dispatch} = store;
 

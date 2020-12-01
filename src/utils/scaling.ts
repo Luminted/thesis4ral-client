@@ -1,11 +1,10 @@
 import { Ratio } from "../types/additionalTypes";
 
 // numerator is assumed to be the actual table size and the divisor to be the virtual size
-export function upscale(ratio: Ratio, value: number){
-    console.log(value)
-    return Math.ceil(value * ratio.divisor / ratio.numerator);
-}
 
-export function downscale(ratio: Ratio, value: number) {
-    return Math.trunc(value * ratio.numerator / ratio.divisor);
-}
+export const upscale = (ratio: Ratio, value: number) => 
+    Math.ceil(value * ratio.divisor / ratio.numerator);
+
+
+export const downscale = (ratio: Ratio, value: number) => 
+    Math.trunc(value * ratio.numerator / ratio.divisor);

@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, BrowserRouter} from "react-router-dom"
 import { TableApp } from "./views/TableApp";
 
-export function App() {
+export const App = () => {
     
     return (
         <BrowserRouter>

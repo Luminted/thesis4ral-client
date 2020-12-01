@@ -8,9 +8,7 @@ export type SocketEmitVerbAction = {
     ackFunction?: Function
 }
 
-
-type SocketVerbAckFunction = (nextGameState: SerializedGameState) => void;
-
+export type SocketVerbAckFunction = (nextGameState: SerializedGameState) => void;
 
 export const socketEmitVerb = (verb: Verb, ackFunction?: SocketVerbAckFunction): SocketEmitVerbAction => {
     return {
