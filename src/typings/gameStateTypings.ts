@@ -68,14 +68,12 @@ export type TGameState = {
     decks: IDeckEntity[],
     clients: TClient[],
     hands: IClientHand[],
-    entityScale: number,
-    topZIndex: number
 }
 
+//TODO: remove
 export type TSerializedGameState = {
     cards: ICardEntity[],
     decks: IDeckEntity[],
     clients: TClient[],
     hands: IClientHand[],
-    entityScale: number
 }

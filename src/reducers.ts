@@ -26,7 +26,6 @@ const initialState: State = {
         decks: [],
         clients: [],
         hands: [],
-        entityScale: 1
     },
     clientInfo: null,
     tablePosition: {
@@ -86,12 +85,11 @@ export const gameState = (state = initialState.gameState, action: TActionTypes) 
     produce(state, draft => {
         switch(action.type){
             case SetterActionTypeKeys.SET_GAME_STATE:
-                const {cards, decks, clients, hands, entityScale} = action.gameState;
+                const {cards, decks, clients, hands} = action.gameState;
                 draft.cards = cards;
                 draft.decks = decks;
                 draft.clients = clients;
                 draft.hands = hands;
-                draft.entityScale = entityScale;
                 break;
             }
     })

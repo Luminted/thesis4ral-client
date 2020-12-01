@@ -46,10 +46,6 @@ export const selectClientId = (state: TRootState) => {
     return state.clientInfo ? state.clientInfo.clientId : null;
 }
 
-export const selectEntityScale = (state: TRootState) => {
-    return state.gameState.entityScale;
-}
-
 export const selectTablePixelDimensions = (state: TRootState) => state.tablePixelDimensions;
 
 export const selectGrabbedEntityInfo = (state: TRootState) => state.grabbedEntityInfo;

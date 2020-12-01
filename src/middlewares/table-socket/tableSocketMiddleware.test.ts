@@ -100,7 +100,6 @@ describe('Testing tableModuleMiddleware', () => {
                     clients: [],
                     decks: [],
                     hands: [],
-                    entityScale: 1
                 } as TSerializedGameState
                 socketServerNamespace.emit(ETableSocketServerEvents.SYNC, gameState);
                 setTimeout(() => {
