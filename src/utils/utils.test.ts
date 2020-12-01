@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {mirrorOnTablePosition, inverseMirrorOnTablePosition} from './utils'
+import {mirrorOnTablePosition, inverseMirrorOnTablePosition} from './mirror'
 
 describe('Testing utility functions', () => {
     describe('mirrorOnTablePosition', () => {
