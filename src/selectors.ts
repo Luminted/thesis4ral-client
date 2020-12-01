@@ -1,8 +1,7 @@
-import {GrabbedEntity, Client, ICardEntity} from './types/dataModelDefinitions';
 import {RootState} from './store'
 import { MaybeNull } from './types/genericTypes';   
 
-export function selectGrabbedEntity(state: RootState): MaybeNull<GrabbedEntity>{ 
+export const selectGrabbedEntity = (state: RootState) =>{ 
     const clientId = state.clientInfo?.clientId;
     if(clientId) {
         return state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntity || null;
@@ -10,12 +9,12 @@ export function selectGrabbedEntity(state: RootState): MaybeNull<GrabbedEntity>{
     return null;
 }
 
-export function selectClients(state: RootState): Client[] {
+export const selectClients = (state: RootState) => {
     return state.gameState.clients;
 }
 
-export function selectClientInfoById(clientId: string) {
-    return function(state: RootState){
+export const selectClientInfoById = (clientId: string) => {
+    return (state: RootState) => {
         const clientInfo = state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.clientInfo;
         return clientInfo ? clientInfo : null;
     }
@@ -24,36 +23,39 @@ export function selectClientInfoById(clientId: string) {
 export const selectClientHandById = (clientId: MaybeNull<string>) =>
     (state: RootState) => state.gameState.hands.find(hand => hand.clientId === clientId) || null;
 
-export function selectTablePosition(state: RootState){
+export const selectTablePosition = (state: RootState) => {
     return state.tablePosition;
 }
 
-export function selectCards(state: RootState): ICardEntity[] {
+export const selectCards = (state: RootState) => {
     return state.gameState.cards;
 }
 
 export const selectDecks = (state: RootState) => state.gameState.decks;
 
 
-export function selectTableConnectionStatus(state: RootState) {
+export const selectTableConnectionStatus = (state: RootState) => {
     return state.tableConnectionStatus;
 }
 
-export function selectOwnClientInfo(state: RootState) {
+export const selectOwnClientInfo = (state: RootState) => {
     return state.clientInfo;
 }
 
-export function selectClientId(state: RootState){
+export const selectClientId = (state: RootState) => {
     return state.clientInfo ? state.clientInfo.clientId : null;
 }
 
-export function selectEntityScale(state: RootState) {
+export const selectEntityScale = (state: RootState) => {
     return state.gameState.entityScale;
 }
-
-export const selectDeckById = (entityId: string) => 
-    (state: RootState) => state.gameState.decks.find(deck => deck.entityId === entityId) || null;
 
 export const selectTablePixelDimensions = (state: RootState) => state.tablePixelDimensions;
 
 export const selectGrabbedEntityInfo = (state: RootState) => state.grabbedEntityInfo;
+
+export const selectClientSeatId = (clientId: MaybeNull<string>) => 
+    (state: RootState) => {
+        const client = state.gameState.clients.find(({clientInfo}) => clientInfo.clientId === clientId );
+        return client ? client.clientInfo.seatId : null;
+    } 

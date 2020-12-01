@@ -1,20 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitDrawFaceUpVerb, emitResetVerb, emitShuffleVerb } from "../../actions";
-import { selectDeckById, selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntity } from "../../selectors";
 import { EntityTypes } from "../../types/dataModelDefinitions";
 import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
+import { getCardDimensions } from "../../utils";
 
-export const DeckEntity = ({entityId}: IProps) => {
+export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, grabbedBy, metadata}: IProps) => {
     
     const dispatch = useDispatch();
 
-    const deckEntityDetails = useSelector(selectDeckById(entityId));
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const isGrabbed = grabbedEntity?.entityId === entityId;
+    const {name, type} = metadata;
+    const {height, width} = getCardDimensions(type)
 
     const onClick = () => {
         if(grabbedEntity === null){
@@ -27,19 +29,20 @@ export const DeckEntity = ({entityId}: IProps) => {
     const onReset =() => dispatch(emitResetVerb(entityId));
     return (
         <>
-       {deckEntityDetails && <Entity 
+       <Entity 
             entityId={entityId} 
             entityType={EntityTypes.DECK} 
             clickPassThrough={isGrabbed} 
-            positionX={deckEntityDetails.positionX}
-            positionY={deckEntityDetails.positionY}
-            width={560}
-            height={880}
-            zIndex={deckEntityDetails.zIndex}
-            rotation={deckEntityDetails.rotation}
+            positionX={positionX}
+            positionY={positionY}
+            width={width}
+            height={height}
+            zIndex={zIndex}
+            rotation={rotation}
             rotationStep={deckRotationStepDegree}
             boundToTable={true}
-            svgEndpoint={`${deckEntityDetails.metadata.type}/${deckEntityDetails.metadata.name}`}
+            grabbedBy={grabbedBy}
+            svgEndpoint={`${type}/${name}`}
 
             eventHandlers={{
                 onClick
@@ -53,6 +56,6 @@ export const DeckEntity = ({entityId}: IProps) => {
                     <button onClick={onReset}>Reset</button>
                 </div>
                 </>}
-            />}
+            />
         </>)
 }

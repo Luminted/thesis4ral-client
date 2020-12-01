@@ -9,6 +9,7 @@ import { downscale } from "../../utils";
 import { setGrabbedEntityInfo } from "../../actions/setterActions/";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
+import { useGetEntityHighlightColor } from "../../hooks/useGetEntityHighlightColor";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
@@ -23,14 +24,17 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     rotationStep, 
     svgEndpoint,
     boundToTable,
+    grabbedBy,
     menuContent,
     eventHandlers
     }, ref) => {
 
     const dispatch = useDispatch();
 
+    const highlightColor = useGetEntityHighlightColor(grabbedBy);
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
+    // TODO: code dupplication
     const horizontalScalingRatio: Ratio = useMemo(() => ({
             numerator: tablePixelDimensions?.width || 0,
             divisor: tableVirtualWidth
@@ -50,8 +54,9 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             rotate: `${rotation}deg`,
             left: downscaledPositionX,
             top: downscaledPositionY,
+            border: highlightColor ? `1px solid ${highlightColor}` : undefined
         }
-    }, [ rotation, downscaledPositionX, downscaledPositionY]) 
+    }, [ rotation, downscaledPositionX, downscaledPositionY, highlightColor]) 
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();

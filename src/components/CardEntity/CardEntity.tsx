@@ -8,7 +8,7 @@ import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
 import { getCardDimensions } from "../../utils";
 
-export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zIndex, rotation = 0 }: IProps) => {
+export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zIndex, grabbedBy, rotation = 0 }: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -17,14 +17,14 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
     const grabbedEntity = useSelector(selectGrabbedEntity);
 
     const isGrabbed = grabbedEntity?.entityId === entityId;
-
-    const {width, height} = getCardDimensions(metadata.type);
+    const {back, type, name} = metadata;
+    const {width, height} = getCardDimensions(type);
 
     const onClick = () => {
         dispatch(emitFlipVerb(entityId));
     }
 
-    const displayedSVG = faceUp ? `${metadata.type}/${metadata.name}` : `${metadata.type}/${metadata.back}`
+    const displayedSVG = faceUp ? `${type}/${name}` : `${type}/${back}`
 
     return (
         <Entity 
@@ -39,6 +39,7 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
             rotationStep={cardRotationStepDegree}
             clickPassThrough={isGrabbed}
             boundToTable={false}
+            grabbedBy={grabbedBy}
             svgEndpoint={displayedSVG}
 
             ref={entityRef}

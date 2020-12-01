@@ -1,19 +1,13 @@
 import { ReactNode } from "react";
-import { EntityTypes } from "../../types/dataModelDefinitions";
+import { IEntity } from "../../types/dataModelDefinitions";
 
-export interface IProps {
-    entityId: string
-    entityType: EntityTypes
-    positionX: number
-    positionY: number
-    width: number,
-    height: number,
-    rotation: number
+export interface IProps extends IEntity {
+    width: number
+    height: number
     rotationStep: number
     clickPassThrough: boolean
     svgEndpoint: string
     boundToTable: boolean
-    zIndex?: number
     menuContent?: ReactNode
     eventHandlers?: {[key in string]: Function}
 }

@@ -41,8 +41,9 @@ export const CardTable = ({isMirrored}: IProps) => {
 
     const renderedDecks = useMemo(() => decks.map(deck =>
         <DeckEntity
-            entityId={deck.entityId}
-            key={deck.entityId}/>
+            key={deck.entityId}
+            {...deck}
+            />
         ), [decks]);
 
     const storeTableDOMInfo = useCallback(() => {
