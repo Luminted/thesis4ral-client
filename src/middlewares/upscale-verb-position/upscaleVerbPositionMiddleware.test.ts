@@ -1,7 +1,7 @@
 import { TVerb, ESharedVerbTypes, TRatio } from '../../typings';
 import {upscale} from '../../utils';
 import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
-import {createMockMiddleware} from '../testutils';
+import {createMockMiddleware} from '../../utils/testutils';
 import { SocketActionTypeKeys, TActionTypes } from '../../actions';
 import { TSocketEmitVerbAction } from '../../actions/socketEmitVerb';
 import { TRootState } from '../../store';

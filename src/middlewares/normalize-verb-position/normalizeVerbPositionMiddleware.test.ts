@@ -2,7 +2,7 @@ import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddlewa
 import { TRootState } from "../../store"
 import { TVerb } from "../../typings"
 import { TActionTypes, SocketActionTypeKeys } from '../../actions'
-import { createMockMiddleware } from "../testutils"
+import { createMockMiddleware } from "../../utils/testutils"
 
 describe('Testing normalizeVerbPositionMiddleware', () => {
       it('should subtract tables position x and y from verbs position x and y', () => {

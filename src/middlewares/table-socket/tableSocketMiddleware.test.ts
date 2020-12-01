@@ -1,7 +1,7 @@
 import SocketIO from 'socket.io';
 import SocketIOClient from 'socket.io-client';
 import { createTableSocketMiddleware } from './tableSocketMiddleware';
-import { createMockMiddleware } from '../testutils';
+import { createMockMiddleware } from '../../utils/testutils';
 import { SocketActionTypeKeys, TActionTypes, SetterActionTypeKeys, setGameState, setTableSocketStatus } from '../../actions/';
 import { ETableSocketClientEvents, ETableSocketServerEvents } from './types';
 import { TGameState, ESocketConnectionStatuses, TVerb} from '../../typings';

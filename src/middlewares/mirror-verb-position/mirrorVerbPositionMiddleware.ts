@@ -1,7 +1,7 @@
 import { TActionTypes, SocketActionTypeKeys } from "../../actions";
 import {Middleware} from 'redux'
 import { TRootState } from "../../store";
-import { mirrorOnTablePosition, isVerbTypeWithPosition } from "../../utils";
+import { isVerbTypeWithPosition, mirrorOnTablePosition } from "../../utils";
 import { ECardVerbTypes } from "../../typings";
 
 export const mirrorVerbPositionMiddleware: Middleware<{}, TRootState> = store => next => (action: TActionTypes) => {

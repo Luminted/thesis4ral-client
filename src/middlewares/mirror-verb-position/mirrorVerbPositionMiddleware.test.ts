@@ -1,4 +1,4 @@
-import { createMockMiddleware } from "../testutils"
+import { createMockMiddleware } from "../../utils/testutils"
 import { TActionTypes, TSocketActionTypes, SocketActionTypeKeys } from "../../actions"
 import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
 import { TVerb } from "../../typings";
