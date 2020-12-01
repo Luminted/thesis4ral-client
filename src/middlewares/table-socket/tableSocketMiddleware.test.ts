@@ -76,7 +76,7 @@ describe('Testing tableModuleMiddleware', function(){
             autoConnect: false,
             forceNew: true,
         });
-        const tableSocketMiddleware = createTableSocketMiddleware();
+        const tableSocketMiddleware = createTableSocketMiddleware(socket);
         let mockMiddleware;
         
         beforeEach(done => {

@@ -1,18 +1,11 @@
-import SocketIOClient from 'socket.io-client';
 import { RootState } from "../../store";
 import { ActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
 import { TableSocketClientEvents, TableSocketServerEvents } from "./types";
 import { GameState } from '../../types/dataModelDefinitions';
 import { Middleware } from 'redux';
 import { SocketConnectionStatuses } from "../../types/additionalTypes";
-import { tableSocketHost, tableSocketPort, tableSocketNamespace } from '../../config/';
 
-export function createTableSocketMiddleware ():  Middleware<{}, RootState>{
-    
-    const serverURL = `http://${tableSocketHost}:${tableSocketPort}/${tableSocketNamespace}`
-    console.log(`connecting to ${serverURL}`);
-    const socket = SocketIOClient(serverURL);
-
+export function createTableSocketMiddleware (socket: SocketIOClient.Socket):  Middleware<{}, RootState>{
     return store => {
         const {dispatch} = store;
 
