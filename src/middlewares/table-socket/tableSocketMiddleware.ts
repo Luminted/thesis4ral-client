@@ -2,14 +2,14 @@ import { TRootState } from "../../store";
 import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
 import { ETableSocketClientEvents, ETableSocketServerEvents } from "./types";
 import { Middleware } from 'redux';
-import { ESocketConnectionStatuses, TGameState } from "../../typings";
+import { ESocketConnectionStatuses, TSerializedGameState } from "../../typings";
 
 export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, TRootState> => {
     return store => {
         const {dispatch} = store;
 
         // Incoming API
-        socket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
+        socket.on(ETableSocketServerEvents.SYNC, (gameState: TSerializedGameState) => {
             dispatch(setGameState(gameState))
             
         })
