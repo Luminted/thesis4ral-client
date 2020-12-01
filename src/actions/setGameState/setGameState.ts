@@ -1,12 +1,12 @@
-import { TSerializedGameState } from "../../typings"
+import { TGameState } from "../../typings"
 import { ESetterActionTypeKeys } from "../actionTypeKeys"
 
 export type TSetGameStateAction = {
     type: ESetterActionTypeKeys.SET_GAME_STATE
-    gameState: TSerializedGameState
+    gameState: TGameState
 }
 
-export const setGameState = (gameState: TSerializedGameState): TSetGameStateAction => {
+export const setGameState = (gameState: TGameState): TSetGameStateAction => {
     return {
          type: ESetterActionTypeKeys.SET_GAME_STATE ,
          gameState

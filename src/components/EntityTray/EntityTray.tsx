@@ -2,23 +2,23 @@ import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitAddDeckVerb, emitGrabVerb, emitRemoveVerb, setGrabbedEntityInfo } from "../../actions";
 import { frenchCardConfig, getDeckCardsMetadata} from "../../entities";
-import { selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntityInfo } from "../../selectors";
 import { EntityCore } from "../EntityCore";
 import {trayDecks} from "../../config";
-import { IEntityMetadata, TSerializedGameState, ECardTypes } from "../../typings";
+import { IEntityMetadata, TGameState, ECardTypes } from "../../typings";
 import { IProps } from "./typings";
 import "./style.css";
 
 export const EntityTray = ({isMirrored}: IProps) => {
     const dispatch = useDispatch();
 
-    const grabbedEntity = useSelector(selectGrabbedEntity);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
     const removeEntity = (e: MouseEvent) => {
-        if(grabbedEntity){
+        if(grabbedEntityInfo){
             e.stopPropagation();
             
-            const {entityType, entityId} = grabbedEntity;
+            const {entityType, entityId} = grabbedEntityInfo;
             dispatch(emitRemoveVerb(entityId, entityType));
         }
     }
@@ -35,7 +35,7 @@ export const EntityTray = ({isMirrored}: IProps) => {
         }
         const cardsMetadata = getDeckCardsMetadata(cards, cardBack);
 
-        const ackFunction = (nextGameState: TSerializedGameState) => {
+        const ackFunction = (nextGameState: TGameState) => {
             const {decks} = nextGameState;
             const addedDeck = decks.pop();
             if(addedDeck){
@@ -44,6 +44,7 @@ export const EntityTray = ({isMirrored}: IProps) => {
                 const relativeGrabbedAtY = clientY - top;
                 dispatch(emitGrabVerb(entityId, entityType, clientX, clientY));
                 dispatch(setGrabbedEntityInfo({
+                    entityId,
                     entityType,
                     height,
                     width,

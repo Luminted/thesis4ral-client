@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { emitFlipVerb } from "../../actions";
 import { EEntityTypes } from "../../typings";
 import {IProps } from "./typings";
-import { selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntityInfo } from "../../selectors";
 import {cardRotationStepDegree} from "../../config";
 import { Entity } from "../Entity";
 import { getCardDimensions } from "../../utils";
@@ -14,9 +14,9 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
 
     const entityRef = useRef<HTMLDivElement>(null);
 
-    const grabbedEntity = useSelector(selectGrabbedEntity);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
-    const isGrabbed = grabbedEntity?.entityId === entityId;
+    const isGrabbed = grabbedEntityInfo?.entityId === entityId;
     const {back, type, name} = metadata;
     const {width, height} = getCardDimensions(type);
 

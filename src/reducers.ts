@@ -1,10 +1,9 @@
 import {produce} from 'immer';
 import {TActionTypes, SetterActionTypeKeys} from './actions/';
-import { TClientInfo, TMaybeNull, ESocketConnectionStatuses, TRatio, TSerializedGameState} from './typings' 
-import { TGrabbedEntityInfo } from './actions/setGrabbedEntityInfo';
+import { TClientInfo, TMaybeNull, ESocketConnectionStatuses, TRatio, TGameState, TGrabbedEntityInfo} from './typings' 
 
 type State = {
-    gameState: TSerializedGameState,
+    gameState: TGameState,
     clientInfo: TMaybeNull<TClientInfo>,
     tablePosition: {
         x: number,

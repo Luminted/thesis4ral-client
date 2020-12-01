@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
 import { emitPutInHandVerb, emitReorderHandVerb, setGrabbedEntityInfo } from "../../actions";
-import { selectClientId, selectGrabbedEntity } from "../../selectors";
+import { selectClientId, selectGrabbedEntityInfo } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
-import { EEntityTypes, TSerializedGameState, EOrientation, TMaybeNull } from "../../typings";
+import { EEntityTypes, EOrientation, TGameState, TMaybeNull } from "../../typings";
 import { cardTiltFactor } from "../../config";
 import "./style.css";
 
@@ -30,19 +30,19 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
 
     const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<TMaybeNull<number>>(null);
 
-    const grabbedEntity = useSelector(selectGrabbedEntity);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
     const ownClientId = useSelector(selectClientId);
 
     const {cards, ordering, clientId} = handDetails;
 
     const getOnMouseEnterHandCard = orderOfCard => () => {
-        if(grabbedEntity && grabbedEntity.entityType === EEntityTypes.CARD){
+        if(grabbedEntityInfo && grabbedEntityInfo.entityType === EEntityTypes.CARD){
             setOrderOfCardBeingHoveredWithGrabbedOne(orderOfCard);
         }
     }
 
     const onMouseLeaveHandCard = () => {
-        if(grabbedEntity && grabbedEntity.entityType === EEntityTypes.CARD){
+        if(grabbedEntityInfo && grabbedEntityInfo.entityType === EEntityTypes.CARD){
             setOrderOfCardBeingHoveredWithGrabbedOne(null);
         }
     }
@@ -71,7 +71,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
                 isMirrored={isMirrored}
                 faceUp={isOwnHand}
                 metadata={metadata}
-                hoverFeedback={!(!!grabbedEntity)}
+                hoverFeedback={!(!!grabbedEntityInfo)}
 
                 key={entityId}
                 
@@ -84,7 +84,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         }
     }, [cards ,handRef, handCurveFunctionRef.current]);
 
-    const chainDispatchReorderVerb = (nextGameState: TSerializedGameState) => {
+    const chainDispatchReorderVerb = (nextGameState: TGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
         if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
             const {ordering} = nextHand;
@@ -98,8 +98,8 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
     }
     
     const onMouseUp = (e: MouseEvent) => {
-        if(grabbedEntity && isOwnHand){
-            const {entityId, entityType} = grabbedEntity;
+        if(grabbedEntityInfo && isOwnHand){
+            const {entityId, entityType} = grabbedEntityInfo;
             
             if(entityType === EEntityTypes.CARD){
                 e.stopPropagation();

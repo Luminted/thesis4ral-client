@@ -21,6 +21,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
         
         dispatch(emitGrabFromHand(entityId, clientX, clientY, inHandOf, isMirrored ? right: left, isMirrored ? bottom : top, false));
         dispatch(setGrabbedEntityInfo({
+            entityId,
             height,
             width,
             entityType: EEntityTypes.CARD,

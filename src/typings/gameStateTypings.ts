@@ -45,16 +45,8 @@ export enum EEntityTypes {
     DECK = 'DECK'
 }
 
-export type TGrabbedEntity = TMaybeNull<{
-    entityId: string,
-    entityType: EEntityTypes
-    grabbedAtX: number,
-    grabbedAtY: number
-}>
-
 export type TClient = {
     clientInfo: TClientInfo,
-    grabbedEntity: TGrabbedEntity
 }
 
 export type TClientInfo ={
@@ -64,14 +56,6 @@ export type TClientInfo ={
 }
 
 export type TGameState = {
-    cards: ICardEntity[],
-    decks: IDeckEntity[],
-    clients: TClient[],
-    hands: IClientHand[],
-}
-
-//TODO: remove
-export type TSerializedGameState = {
     cards: ICardEntity[],
     decks: IDeckEntity[],
     clients: TClient[],

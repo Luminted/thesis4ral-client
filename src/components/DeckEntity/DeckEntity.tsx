@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitDrawFaceUpVerb, emitResetVerb, emitShuffleVerb } from "../../actions";
-import { selectGrabbedEntity } from "../../selectors";
+import { selectGrabbedEntityInfo } from "../../selectors";
 import { EEntityTypes } from "../../typings";
 import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
@@ -12,14 +12,14 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
     
     const dispatch = useDispatch();
 
-    const grabbedEntity = useSelector(selectGrabbedEntity);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
-    const isGrabbed = grabbedEntity?.entityId === entityId;
+    const isGrabbed = grabbedEntityInfo?.entityId === entityId;
     const {name, type} = metadata;
     const {height, width} = getCardDimensions(type)
 
     const onClick = () => {
-        if(grabbedEntity === null){
+        if(grabbedEntityInfo === null){
             dispatch(emitDrawFaceUpVerb(entityId));
         }
     }

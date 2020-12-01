@@ -2,7 +2,7 @@ import React, { MouseEvent as ReactMouseEvent, useCallback, useEffect, useLayout
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
-import { selectGrabbedEntity, selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
+import { selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
 import {emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb, setGrabbedEntityInfo} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
@@ -17,7 +17,6 @@ const listenerThrottleValue = 1000 / 60;
 export const ApplicationViewport = () => {
     const dispatch = useDispatch();
 
-    const grabbedEntity = useSelector(selectGrabbedEntity);
     const clientInfo = useSelector(selectOwnClientInfo);
     const tablePosition = useSelector(selectTablePosition);
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
@@ -35,8 +34,8 @@ export const ApplicationViewport = () => {
     }, [clientInfo]);
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
-        if(grabbedEntity && tablePosition && tablePixelDimensions && grabbedEntityInfo){
-            if(grabbedEntity.entityType === EEntityTypes.DECK){
+        if(tablePosition && tablePixelDimensions && grabbedEntityInfo){
+            if(grabbedEntityInfo.entityType === EEntityTypes.DECK){
                 const entityLeftEdgeOffset = grabbedEntityInfo.relativeGrabbedAtX;
                 const entityRightEdgeOffset = grabbedEntityInfo.width - grabbedEntityInfo.relativeGrabbedAtX;
                 const entityTopEdgeOffset = grabbedEntityInfo.relativeGrabbedAtY;
@@ -59,12 +58,12 @@ export const ApplicationViewport = () => {
 
             }
         }
-    }, listenerThrottleValue), [grabbedEntity]);
+    }, listenerThrottleValue), [grabbedEntityInfo]);
 
     const onMouseUp = useCallback(throttle((e: ReactMouseEvent) => {
-        if(grabbedEntity && grabbedEntityInfo){
+        if(grabbedEntityInfo && grabbedEntityInfo){
             const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
-            const {entityId, entityType} = grabbedEntity;
+            const {entityId, entityType} = grabbedEntityInfo;
 
             if(grabbedFromHand){
                 dispatch(emitPutInHandVerb(entityId, true));
@@ -72,21 +71,21 @@ export const ApplicationViewport = () => {
             else if(originalPositionX && originalPositionY && entityType === EEntityTypes.CARD){
                 dispatch(emitMoveToVerb(entityId, entityType, originalPositionX, originalPositionY));
                 dispatch(emitReleaseVerb(
-                    grabbedEntity.entityId,
-                    grabbedEntity.entityType
+                   entityId,
+                   entityType
                 ));
             }
             else{
                 dispatch(emitReleaseVerb(
-                    grabbedEntity.entityId,
-                    grabbedEntity.entityType
+                   entityId,
+                   entityType
                 ));
             }
 
             
             dispatch(setGrabbedEntityInfo(null));
         }
-    }, listenerThrottleValue), [grabbedEntity]);
+    }, listenerThrottleValue), [grabbedEntityInfo]);
 
     // mirror table if client is sitting on the northern side
     useLayoutEffect(() => {

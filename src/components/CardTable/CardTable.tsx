@@ -1,7 +1,7 @@
 import React, { MouseEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
-import { selectCards, selectDecks, selectGrabbedEntity } from "../../selectors";
+import { selectCards, selectDecks, selectGrabbedEntityInfo } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
 import { DeckEntity } from "../DeckEntity";
@@ -18,13 +18,13 @@ export const CardTable = ({isMirrored}: IProps) => {
 
     const cards = useSelector(selectCards);
     const decks = useSelector(selectDecks);
-    const grabbedEntity = useSelector(selectGrabbedEntity);
+    const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
     const onMouseUp = (e: MouseEvent) => {
         e.stopPropagation();
 
-        if(grabbedEntity){
-            const {entityId, entityType} = grabbedEntity;
+        if(grabbedEntityInfo){
+            const {entityId, entityType} = grabbedEntityInfo;
 
             dispatch(emitReleaseVerb(entityId, entityType));
             dispatch(setGrabbedEntityInfo(null));

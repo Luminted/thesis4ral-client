@@ -1,14 +1,6 @@
 import {TRootState} from './store'
 import { TMaybeNull } from './typings';   
 
-export const selectGrabbedEntity = (state: TRootState) =>{ 
-    const clientId = state.clientInfo?.clientId;
-    if(clientId) {
-        return state.gameState.clients.find(client => client.clientInfo.clientId === clientId)?.grabbedEntity || null;
-    }
-    return null;
-}
-
 export const selectClients = (state: TRootState) => {
     return state.gameState.clients;
 }

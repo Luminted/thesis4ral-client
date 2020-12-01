@@ -72,6 +72,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         
         dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
         dispatch(setGrabbedEntityInfo({
+            entityId,
             entityType,
             height: targetHeight,
             width: targetWidth,

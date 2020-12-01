@@ -4,7 +4,7 @@ import { createTableSocketMiddleware } from './tableSocketMiddleware';
 import { createMockMiddleware } from '../testutils';
 import { SocketActionTypeKeys, TActionTypes, SetterActionTypeKeys, setGameState, setTableSocketStatus } from '../../actions/';
 import { ETableSocketClientEvents, ETableSocketServerEvents } from './types';
-import { TSerializedGameState, ESocketConnectionStatuses, TVerb} from '../../typings';
+import { TGameState, ESocketConnectionStatuses, TVerb} from '../../typings';
 
 describe('Testing tableModuleMiddleware', () => {
     
@@ -100,7 +100,7 @@ describe('Testing tableModuleMiddleware', () => {
                     clients: [],
                     decks: [],
                     hands: [],
-                } as TSerializedGameState
+                } as TGameState
                 socketServerNamespace.emit(ETableSocketServerEvents.SYNC, gameState);
                 setTimeout(() => {
                     expect(store.dispatch).toHaveBeenCalledWith(setGameState(gameState));
