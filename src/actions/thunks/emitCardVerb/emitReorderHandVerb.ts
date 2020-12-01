@@ -1,6 +1,6 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { CardVerbTypes, IReorderHandVerb } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitReorderHandVerb = (order: number[]): ThunkResult => 
     (dispatch, getState) => {

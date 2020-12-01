@@ -1,4 +1,4 @@
-export enum SetActionTypeKeys {
+export enum SetterActionTypeKeys {
     SET_CLIENT_INFO = 'SET_CLIENT_INFO',
     SET_TABLE_POSITION = 'SET_TABLE_POSITION',
     SET_GAME_STATE = 'SET_GAME_STATE',
@@ -11,4 +11,11 @@ export enum SetActionTypeKeys {
     SET_TABLE_VIRTUAL_DIMENSIONS = 'SET_TABLE_VIRTUAL_DIMENSIONS',
     SET_TABLE_PIXEL_DIMENSIONS = 'SET_TABLE_PIXEL_DIMENSIONS',
     SET_GRABBED_ENTITY_INFO = 'SET_GRABBED_ENTITY_INFO'
+}
+
+export enum SocketActionTypeKeys {
+    EMIT_VERB = 'socket/EMIT_VERB',
+    CONNECT = 'socket/CONNECT',
+    DISCONNECT = 'socket/DISCONNECT',
+    JOIN_TABLE = 'socket/JOIN_TABLE',
 }

@@ -1,6 +1,6 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { CardVerbTypes, IGrabFromHandVerb } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import {socketEmitVerb} from "../../"
 
 export const emitGrabFromHand = (entityId: string, grabbedAtX: number, grabbedAtY: number, grabbedFrom: string, positionX: number, positionY: number, faceUp: boolean): ThunkResult =>
     (dispatch, getState) => {

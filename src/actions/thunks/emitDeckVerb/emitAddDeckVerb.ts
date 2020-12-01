@@ -1,7 +1,7 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { IEntityMetadata, ICardEntityMetadata, SerializedGameState } from "../../../types/dataModelDefinitions";
 import { DeckVerbTypes, IAddDeckVerb } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitAddDeckVerb = (containedCardsMetadata: ICardEntityMetadata[], metadata: IEntityMetadata, positionX: number, positionY: number, rotation: number, ackFunction?: (nextGameState: SerializedGameState) => void): ThunkResult => 
     dispatch => {

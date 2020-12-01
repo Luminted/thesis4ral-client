@@ -1,7 +1,7 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { EntityTypes } from "../../../types/dataModelDefinitions";
 import { IRemoveVerb, SharedVerbTypes } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitRemoveVerb = (entityId: string, entityType: EntityTypes): ThunkResult => 
     dispatch => {

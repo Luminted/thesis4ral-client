@@ -1,6 +1,6 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { CardVerbTypes, IPutOnTable } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitPutOnTableVerb = (entityId: string, positionX: number, positionY: number, faceUp: boolean): ThunkResult => 
     (dispatch, getState) => {

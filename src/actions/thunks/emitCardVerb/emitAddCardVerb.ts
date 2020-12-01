@@ -1,7 +1,7 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { ICardEntityMetadata } from "../../../types/dataModelDefinitions";
 import { CardVerbTypes, IAddCardVerb } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitAddCardVerb = (faceUp: boolean, metadata: ICardEntityMetadata, positionX: number, positionY: number, rotation: number): ThunkResult =>
     dispatch => {

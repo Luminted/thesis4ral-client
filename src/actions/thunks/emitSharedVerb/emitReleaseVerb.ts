@@ -1,7 +1,7 @@
-import { ThunkResult } from "../..";
+import { ThunkResult } from "..";
 import { EntityTypes } from "../../../types/dataModelDefinitions";
 import { IReleaseVerb, SharedVerbTypes } from "../../../types/verb";
-import { socketEmitVerb } from "../../socketActions";
+import { socketEmitVerb } from "../../";
 
 export const emitReleaseVerb = (entityId: string, entityType: EntityTypes): ThunkResult =>
     (dispatch, getState) => {

@@ -1,20 +1,34 @@
-import { ThunkAction } from "redux-thunk";
-import { RootState } from "../store";
-import { SocketEmitVerbAction, SocketConnectAction, SocketDisconnectAction, SocketJoinTableAction } from "./socketActions";
-import { SetGameStateAction, SetClientInfoAction, SetTablePositionAction, SetTableConnectionStatusAction, SetTablePixelDimensions, SetTableReadyAction, SetHorizontalScalingRation, SetVerticalScalingRation } from "./setterActions/setterActions";
-import { SetGrabbedEntityInfo } from "./setterActions/setGrabbedEntityInfo/typing";
+import { SetClientInfoAction } from "./setClientInfo";
+import { SetGameStateAction } from "./setGameState";
+import { SetGrabbedEntityInfoAction } from "./setGrabbedEntityInfo";
+import { SetHorizontalScalingRationAction } from "./setHorizontalScalingRatio";
+import { SetTablePixelDimensionsAction } from "./setTablePixelDimensions";
+import { SetTablePositionAction } from "./setTablePosition";
+import { SetTableConnectionStatusAction } from "./setTableSocketStatus";
+import { SetVerticalScalingRationAction } from "./setVerticalScalingRatio";
+import { SocketConnectAction } from "./socketConnect";
+import { SocketEmitVerbAction } from "./socketEmitVerb";
+import { SocketJoinTableAction } from "./socketJoinTable";
 
-export {setClientInfo, setGameState, setTablePosition, setHorizontalScalingRatio, setVerticalScalingRatio, setTableReady, setTableSocketStatus} from './setterActions/setterActions'
-export { SocketActionTypeKeys } from './socketActions'
+export {setClientInfo} from "./setClientInfo"
+export {setGameState} from "./setGameState"
+export {setTablePosition} from "./setTablePosition";
+export { setGrabbedEntityInfo } from "./setGrabbedEntityInfo";
+export {setHorizontalScalingRatio} from "./setHorizontalScalingRatio"
+export { setTablePixelDimensions } from "./setTablePixelDimensions";
+export {setVerticalScalingRatio} from "./setVerticalScalingRatio"
+export {setTableSocketStatus} from "./setTableSocketStatus"
+export {socketEmitVerb} from "./socketEmitVerb";
+export {socketConnect} from "./socketConnect";
+export {socketJoinTable} from "./socketJoinTable"
 
-export type ThunkResult = ThunkAction<void, RootState, null, ActionTypes>
+export { SocketActionTypeKeys, SetterActionTypeKeys } from './actionTypeKeys'
 
 export type ActionTypes = SocketActionTypes | SetterActionTypes;
 
 export type SocketActionTypes = 
     SocketEmitVerbAction |
     SocketConnectAction |
-    SocketDisconnectAction |
     SocketJoinTableAction;
 
 export type SetterActionTypes = 
@@ -22,10 +36,9 @@ export type SetterActionTypes =
     SetClientInfoAction |
     SetTablePositionAction |
     SetTableConnectionStatusAction |
-    SetTableReadyAction |
-    SetVerticalScalingRation |
-    SetHorizontalScalingRation |
-    SetTablePixelDimensions |
-    SetGrabbedEntityInfo;
+    SetVerticalScalingRationAction |
+    SetHorizontalScalingRationAction |
+    SetTablePixelDimensionsAction |
+    SetGrabbedEntityInfoAction;
 
 export * from "./thunks";
