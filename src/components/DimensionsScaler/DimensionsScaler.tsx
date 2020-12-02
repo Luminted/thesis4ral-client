@@ -15,11 +15,9 @@ export const DimensionsScaler = ({width, height, children}: IProps) => {
         divisor: tableVirtualWidth
     }
     
-    const downscaledWidth = downscale(horizontalScalingRatio, width);
     const downscaledHeight = downscale(horizontalScalingRatio, height);
 
     const computedCSS: CSSProperties = {
-        width: downscaledWidth,
         height: downscaledHeight
     }
 

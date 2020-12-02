@@ -53,9 +53,12 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             rotate: `${rotation}deg`,
             left: downscaledPositionX,
             top: downscaledPositionY,
-            border: highlightColor ? `1px solid ${highlightColor}` : undefined
         }
-    }, [ rotation, downscaledPositionX, downscaledPositionY, highlightColor]) 
+    }, [ rotation, downscaledPositionX, downscaledPositionY, highlightColor])
+    
+    const highlightCSS: CSSProperties = {
+        border: highlightColor ? `2px solid ${highlightColor}` : undefined
+    }
 
     const onRightClick = (e: MouseEvent) => {
         e.preventDefault();
@@ -91,6 +94,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             pointerEvents: clickPassThrough ? "none" : "auto",
             ...computedCSS
         }}>
+            <div className="entity__highlight" style={highlightCSS}></div>
             {menuContent && <div className="entity__menu">{menuContent}</div>}
             <EntityCore width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
                 onDragStart,
