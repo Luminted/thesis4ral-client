@@ -3,7 +3,7 @@ import SocketIOClient from 'socket.io-client';
 import { createTableSocketMiddleware } from './tableSocketMiddleware';
 import { createMockMiddleware } from '../../utils/testutils';
 import { SocketActionTypeKeys, TActionTypes, SetterActionTypeKeys, setGameState, setTableSocketStatus } from '../../actions/';
-import { ETableSocketClientEvents, ETableSocketServerEvents } from './types';
+import { ETableSocketClientEvents, ETableSocketServerEvents } from './typings';
 import { TGameState, ESocketConnectionStatuses, TVerb} from '../../typings';
 
 describe('Testing tableModuleMiddleware', () => {

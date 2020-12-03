@@ -1,6 +1,8 @@
 export enum ETableSocketServerEvents {
     SYNC = 'SYNC',
-    CONNECT = 'connect'
+    CONNECT = 'connect',
+    DISCONNECT = 'disconnect',
+    ERROR = 'CUSTOM_ERROR'
 }
 
 export enum ETableSocketClientEvents {
@@ -15,4 +17,9 @@ export enum ETableSocketClientEvents {
         VERB = 'VERB',
         LEAVE_TABLE = 'LEAVE_TABLE',
         KICK_PLAYER = 'KICK_PLAYER',
+}
+
+export type TCustomError = {
+    code: number,
+    message: string
 }

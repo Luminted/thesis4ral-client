@@ -1,6 +1,6 @@
 import { TRootState } from "../../reducers";
 import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
-import { ETableSocketClientEvents, ETableSocketServerEvents } from "./types";
+import { ETableSocketClientEvents, ETableSocketServerEvents, TCustomError } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
 
@@ -15,12 +15,15 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
         })
 
         socket.on(ETableSocketServerEvents.CONNECT, () => {
-            console.log('connected')
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTED))
         })
 
-        socket.on('disconnect', () => {
+        socket.on(ETableSocketServerEvents.DISCONNECT, () => {
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.DISCONNECTED));
+        })
+
+        socket.on(ETableSocketServerEvents.ERROR, (error: TCustomError) => {
+            console.log(error.message);
         })
 
 
