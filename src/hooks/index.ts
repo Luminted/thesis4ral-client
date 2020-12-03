@@ -1,0 +1,1 @@
+export {useGetEntityHighlightColor} from "./useGetEntityHighlightColor";

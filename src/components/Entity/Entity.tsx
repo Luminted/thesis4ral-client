@@ -6,7 +6,7 @@ import { selectHorizontalScalingRation, selectVerticalScalingRation } from "../.
 import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
-import { useGetEntityHighlightColor } from "../../hooks/useGetEntityHighlightColor";
+import { useGetEntityHighlightColor } from "../../hooks";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
