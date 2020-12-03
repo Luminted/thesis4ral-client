@@ -1,4 +1,4 @@
-import React, {MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
@@ -47,8 +47,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         }
     }
 
-    const isOwnHand = useMemo(() => ownClientId === clientId, [ownClientId]);
-    const renderedCards = useMemo(() => {
+    const renderCards = () => {
         if(handRef.current && handCurveFunctionRef.current){
             const {width, height} = handRef.current!.getBoundingClientRect();
             const step = width / (cards.length + 1);
@@ -82,7 +81,9 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         else{
             return [];
         }
-    }, [cards ,handRef, handCurveFunctionRef.current]);
+    }
+
+    const isOwnHand = ownClientId === clientId;
 
     const chainDispatchReorderVerb = (nextGameState: TGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
@@ -130,7 +131,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
         <>
         { <div ref={handRef} onMouseUp={onMouseUp}
          className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
-        {renderedCards}
+        {renderCards()}
         </div>}
         </>
     )

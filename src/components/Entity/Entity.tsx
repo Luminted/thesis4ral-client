@@ -1,4 +1,4 @@
-import React, { CSSProperties, DragEvent, MouseEvent, useMemo } from "react";
+import React, { CSSProperties, DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
@@ -34,27 +34,24 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
     // TODO: code dupplication
-    const horizontalScalingRatio: TRatio = useMemo(() => ({
+    const horizontalScalingRatio: TRatio = {
             numerator: tablePixelDimensions?.width || 0,
             divisor: tableVirtualWidth
-    }), [tablePixelDimensions])
+    }
 
-    const verticalScalingRatio: TRatio = useMemo(() => ({
-            numerator: tablePixelDimensions?.height || 0,
-            divisor: tableVirtualHeight
-
-    }), [tablePixelDimensions])
+    const verticalScalingRatio: TRatio = {
+        numerator: tablePixelDimensions?.height || 0,
+        divisor: tableVirtualHeight
+    }
 
     const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
 
-    const computedCSS: CSSProperties = useMemo(() => {
-        return {
-            rotate: `${rotation}deg`,
-            left: downscaledPositionX,
-            top: downscaledPositionY,
-        }
-    }, [ rotation, downscaledPositionX, downscaledPositionY, highlightColor])
+    const computedCSS: CSSProperties = {
+        rotate: `${rotation}deg`,
+        left: downscaledPositionX,
+        top: downscaledPositionY,
+    }
     
     const highlightCSS: CSSProperties = {
         border: highlightColor ? `2px solid ${highlightColor}` : undefined

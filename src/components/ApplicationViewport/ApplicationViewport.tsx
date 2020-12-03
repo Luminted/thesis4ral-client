@@ -1,4 +1,4 @@
-import React, { MouseEvent as ReactMouseEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { MouseEvent as ReactMouseEvent, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
@@ -24,14 +24,7 @@ export const ApplicationViewport = () => {
 
     const applicationViewportRef = useRef<HTMLDivElement>(null);
 
-    const isMirrored = useMemo(() => {
-        if(clientInfo){
-            return seatIdMapping[clientInfo.seatId].includes("NORTH");
-        }
-        else{
-            return false;
-        }
-    }, [clientInfo]);
+    const isMirrored = clientInfo ? seatIdMapping[clientInfo.seatId].includes("NORTH") : false;
 
     const onMouseMove = useCallback(throttle((e: MouseEvent) => {
         if(tablePosition && tablePixelDimensions && grabbedEntityInfo){

@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { MouseEvent, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
 import { selectCards, selectDecks, selectGrabbedEntityInfo } from "../../selectors";
@@ -31,18 +31,17 @@ export const CardTable = ({isMirrored}: IProps) => {
         }
     }
 
-    const renderedCards = useMemo(() => cards.map(card => 
+    const renderedCards = cards.map(card => 
         <CardEntity
             key={card.entityId}
             {...card}
-             />), [cards]);
+             />);
 
-    const renderedDecks = useMemo(() => decks.map(deck =>
+    const renderedDecks = decks.map(deck =>
         <DeckEntity
             key={deck.entityId}
             {...deck}
-            />
-        ), [decks]);
+            />);
 
     const storeTableDOMInfo = useCallback(() => {
         const tableElement = tableRef.current;
