@@ -81,8 +81,6 @@ export const ApplicationViewport = () => {
                    entityType
                 ));
             }
-
-            
             dispatch(setGrabbedEntityInfo(null));
         }
     }, listenerThrottleValue), [grabbedEntityInfo]);

@@ -20,6 +20,7 @@ export const EntityTray = ({isMirrored}: IProps) => {
             
             const {entityType, entityId} = grabbedEntityInfo;
             dispatch(emitRemoveVerb(entityId, entityType));
+            dispatch(setGrabbedEntityInfo(null));
         }
     }
 
