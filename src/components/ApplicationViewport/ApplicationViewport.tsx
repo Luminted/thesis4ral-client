@@ -1,4 +1,4 @@
-import React, { MouseEvent as ReactMouseEvent, useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
@@ -53,7 +53,7 @@ export const ApplicationViewport = () => {
         }
     }, listenerThrottleValue), [grabbedEntityInfo]);
 
-    const onMouseUp = useCallback(throttle((e: ReactMouseEvent) => {
+    const onMouseUp = () => {
         if(grabbedEntityInfo && grabbedEntityInfo){
             const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
             const {entityId, entityType} = grabbedEntityInfo;
@@ -76,7 +76,7 @@ export const ApplicationViewport = () => {
             }
             dispatch(setGrabbedEntityInfo(null));
         }
-    }, listenerThrottleValue), [grabbedEntityInfo]);
+    }
 
     // mirror table if client is sitting on the northern side
     useLayoutEffect(() => {
