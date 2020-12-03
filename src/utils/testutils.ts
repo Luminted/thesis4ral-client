@@ -1,4 +1,4 @@
-import { TRootState } from "../store"
+import { TRootState } from "../reducers"
 import { Middleware } from "redux"
 
 export type TMockMiddleware<A> = {

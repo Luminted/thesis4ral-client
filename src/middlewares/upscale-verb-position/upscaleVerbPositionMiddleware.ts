@@ -1,5 +1,5 @@
 import { Middleware } from "redux";
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 import { TActionTypes, SocketActionTypeKeys } from "../../actions";
 import { isVerbTypeWithPosition, upscale } from "../../utils";
 import { ECardVerbTypes, EDeckVerbTypes, TRatio } from "../../typings";

@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { TActionTypes } from "..";
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 
 export * from "./emitSharedVerb"
 export * from "./emitDeckVerb"

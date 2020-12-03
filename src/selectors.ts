@@ -1,4 +1,4 @@
-import {TRootState} from './store'
+import {TRootState} from './reducers'
 import { TMaybeNull } from './typings';   
 
 export const selectClients = (state: TRootState) => {
@@ -47,3 +47,6 @@ export const selectClientSeatId = (clientId: TMaybeNull<string>) =>
         const client = state.gameState.clients.find(({clientInfo}) => clientInfo.clientId === clientId );
         return client ? client.clientInfo.seatId : null;
     } 
+
+export const selectHorizontalScalingRation = (state: TRootState) => state.horizontalScalingRatio;
+export const selectVerticalScalingRation = (state: TRootState) => state.verticalScalingRatio

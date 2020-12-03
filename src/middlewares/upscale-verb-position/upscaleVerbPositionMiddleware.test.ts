@@ -4,7 +4,7 @@ import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
 import {createMockMiddleware} from '../../utils/testutils';
 import { SocketActionTypeKeys, TActionTypes } from '../../actions';
 import { TSocketEmitVerbAction } from '../../actions/socketEmitVerb';
-import { TRootState } from '../../store';
+import { TRootState } from '../../reducers';
 
 describe('Testing upscaleVerbPositionMiddleware', ()=> {
     const horizontalScalingRatio: TRatio = {

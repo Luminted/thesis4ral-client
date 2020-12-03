@@ -1,23 +1,10 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import dynamicMiddlewares from 'redux-dynamic-middlewares'
-import {gameState, clientInfo, tablePosition, tableConnectionStatus, horizontalScalingRatio, verticalScalingRatio, tablePixelDimensions, grabbedEntityInfo} from './reducers';
+import dynamicMiddlewares from 'redux-dynamic-middlewares';
 import {createTableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware } from './middlewares/';
 import { tableSocket } from './socket';
-
-const rootReducer = combineReducers({
-    gameState,
-    clientInfo,
-    tablePosition,
-    tableConnectionStatus,
-    horizontalScalingRatio,
-    verticalScalingRatio,
-    tablePixelDimensions,
-    grabbedEntityInfo
-});
-
-export type TRootState = ReturnType<typeof rootReducer>;
+import { rootReducer } from './reducers';
 
 const tableSocketMiddleware = createTableSocketMiddleware(tableSocket);
 

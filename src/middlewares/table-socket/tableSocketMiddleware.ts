@@ -1,4 +1,4 @@
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
 import { ETableSocketClientEvents, ETableSocketServerEvents } from "./types";
 import { Middleware } from 'redux';

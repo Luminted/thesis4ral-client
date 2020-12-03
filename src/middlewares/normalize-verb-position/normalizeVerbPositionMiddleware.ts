@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
 import { ECardVerbTypes } from "../../typings"
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 import { TActionTypes, SocketActionTypeKeys} from "../../actions";
 import { isVerbTypeWithPosition } from "../../utils";
 

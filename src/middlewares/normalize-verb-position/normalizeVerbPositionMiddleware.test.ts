@@ -1,5 +1,5 @@
 import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware"
-import { TRootState } from "../../store"
+import { TRootState } from "../../reducers"
 import { TVerb } from "../../typings"
 import { TActionTypes, SocketActionTypeKeys } from '../../actions'
 import { createMockMiddleware } from "../../utils/testutils"

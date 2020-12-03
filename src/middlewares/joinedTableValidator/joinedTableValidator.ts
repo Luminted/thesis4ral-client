@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
 import { TActionTypes, SocketActionTypeKeys } from "../../actions";
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 
 export const joinedTableValidator: Middleware<{}, TRootState> = store => next => (action: TActionTypes) => {
     if(action.type === SocketActionTypeKeys.EMIT_VERB){

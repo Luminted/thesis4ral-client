@@ -1,6 +1,6 @@
 import { TActionTypes, SocketActionTypeKeys } from "../../actions";
 import {Middleware} from 'redux'
-import { TRootState } from "../../store";
+import { TRootState } from "../../reducers";
 import { isVerbTypeWithPosition, mirrorOnTablePosition } from "../../utils";
 import { ECardVerbTypes } from "../../typings";
 
