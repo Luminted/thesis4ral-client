@@ -2,9 +2,7 @@ import React, { CSSProperties, DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import { TRatio } from "../../typings";
-import { selectTablePixelDimensions } from "../../selectors";
-import { tableVirtualHeight, tableVirtualWidth } from "../../config";
+import { selectHorizontalScalingRation, selectVerticalScalingRation } from "../../selectors";
 import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
@@ -31,18 +29,8 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const dispatch = useDispatch();
 
     const highlightColor = useGetEntityHighlightColor(grabbedBy);
-    const tablePixelDimensions = useSelector(selectTablePixelDimensions);
-
-    // TODO: code dupplication
-    const horizontalScalingRatio: TRatio = {
-            numerator: tablePixelDimensions?.width || 0,
-            divisor: tableVirtualWidth
-    }
-
-    const verticalScalingRatio: TRatio = {
-        numerator: tablePixelDimensions?.height || 0,
-        divisor: tableVirtualHeight
-    }
+    const horizontalScalingRatio = useSelector(selectHorizontalScalingRation);
+    const verticalScalingRatio = useSelector(selectVerticalScalingRation);
 
     const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
