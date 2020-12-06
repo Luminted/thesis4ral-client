@@ -10,7 +10,7 @@ export const emitGrabVerb = (entityId: string, entityType: EEntityTypes, positio
             entityType,
             positionX,
             positionY,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ESharedVerbTypes.GRAB
         }
         dispatch(socketEmitVerb(verb));

@@ -13,7 +13,7 @@ export const emitGrabFromHand = (entityId: string, grabbedAtX: number, grabbedAt
             positionX,
             positionY,
             faceUp,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ECardVerbTypes.GRAB_FROM_HAND
         }
         dispatch(socketEmitVerb(verb));

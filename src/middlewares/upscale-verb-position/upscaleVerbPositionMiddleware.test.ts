@@ -2,7 +2,7 @@ import { TVerb, ESharedVerbTypes, TRatio } from '../../typings';
 import {upscale} from '../../utils';
 import { upscaleVerbPositionMiddleware } from './upscaleVerbPositionMiddleware';
 import {createMockMiddleware} from '../../utils/testutils';
-import { SocketActionTypeKeys, TActionTypes } from '../../actions';
+import { ESocketActionTypeKeys, TActionTypes } from '../../actions';
 import { TSocketEmitVerbAction } from '../../actions/socketEmitVerb';
 import { TRootState } from '../../reducers';
 
@@ -30,7 +30,7 @@ describe('Testing upscaleVerbPositionMiddleware', ()=> {
             type: ESharedVerbTypes.MOVE
         }
         const action: TSocketEmitVerbAction = {
-            type: SocketActionTypeKeys.EMIT_VERB,
+            type: ESocketActionTypeKeys.EMIT_VERB,
             verb
         }
         const expectedAction: TSocketEmitVerbAction = {

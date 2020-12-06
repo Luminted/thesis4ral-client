@@ -7,17 +7,7 @@ import { selectTableConnectionStatus } from "../../selectors";
 
 export const TableApp = () => {
 
-    const dispatch = useDispatch();
-
     const connectionStatus = useSelector(selectTableConnectionStatus);
-
-    useEffect(() => {
-        if(connectionStatus === ESocketConnectionStatuses.CONNECTED)
-        dispatch(socketJoinTable((clientInfo: TClientInfo, serializedGameState: TGameState) => {
-            dispatch(setGameState(serializedGameState));
-            dispatch(setClientInfo(clientInfo));
-        }));
-    }, [connectionStatus])
 
     return (
         <>

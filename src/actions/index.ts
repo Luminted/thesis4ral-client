@@ -22,7 +22,7 @@ export {socketEmitVerb} from "./socketEmitVerb";
 export {socketConnect} from "./socketConnect";
 export {socketJoinTable} from "./socketJoinTable"
 
-export { ESocketActionTypeKeys as SocketActionTypeKeys, ESetterActionTypeKeys as SetterActionTypeKeys } from './actionTypeKeys'
+export { ESocketActionTypeKeys, ESetterActionTypeKeys } from './actionTypeKeys'
 
 export type TActionTypes = TSocketActionTypes | TSetterActionTypes;
 

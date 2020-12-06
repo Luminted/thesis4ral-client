@@ -1,7 +1,7 @@
 import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware"
 import { TRootState } from "../../reducers"
 import { TVerb } from "../../typings"
-import { TActionTypes, SocketActionTypeKeys } from '../../actions'
+import { TActionTypes, ESocketActionTypeKeys } from '../../actions'
 import { createMockMiddleware } from "../../utils/testutils"
 
 describe('Testing normalizeVerbPositionMiddleware', () => {
@@ -21,7 +21,7 @@ describe('Testing normalizeVerbPositionMiddleware', () => {
             positionY: positionY - tablePosition.y
         } as TVerb;
         const action: TActionTypes ={
-            type: SocketActionTypeKeys.EMIT_VERB,
+            type: ESocketActionTypeKeys.EMIT_VERB,
             verb
         }
         const {invoke, next} = createMockMiddleware<TActionTypes>( normalizeVerbPositionMiddleware,{
@@ -30,7 +30,7 @@ describe('Testing normalizeVerbPositionMiddleware', () => {
         
         invoke(action);
         expect(next).toBeCalledWith({
-            type: SocketActionTypeKeys.EMIT_VERB,
+            type: ESocketActionTypeKeys.EMIT_VERB,
             verb: expectedVerb
         })
     })

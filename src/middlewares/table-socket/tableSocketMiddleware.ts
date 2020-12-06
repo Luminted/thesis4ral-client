@@ -1,5 +1,5 @@
 import { TRootState } from "../../reducers";
-import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys } from "../../actions";
+import { TActionTypes, setGameState, setTableSocketStatus, ESocketActionTypeKeys } from "../../actions";
 import { ETableSocketClientEvents, ETableSocketServerEvents, TCustomError } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
@@ -9,7 +9,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
     ({dispatch, getState}) => {
 
         const {clientInfo} = getState();
-        const tableSocket = getTableSocket({clientId: "9d9a9ef5-f1e0-4cf7-b151-b236401136df"})
+        const tableSocket = getTableSocket({clientId: clientInfo?.clientId})
 
         // Incoming API
         tableSocket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
@@ -36,15 +36,15 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                     if(action.type.startsWith('socket/')){
                         //TODO: more if(!tableSocket.connected) to top level
                         switch(action.type){
-                            case SocketActionTypeKeys.JOIN_TABLE:
+                            case ESocketActionTypeKeys.JOIN_TABLE:
                                 if(!tableSocket.connected){
                                     console.log('emitting join: not connected')
                                 }else{
                                     tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, clientInfo?.seatId, action.ackFunction);
                                 }
                                 break;
-                            case SocketActionTypeKeys.EMIT_VERB:
-                                if(!tableSocket.connected){
+                            case ESocketActionTypeKeys.EMIT_VERB:
+                                if(!tableSocket.connected && !clientInfo){
                                     console.log('Middleware: Socket not connected!');
                                     return next(action);
                                 }
@@ -57,7 +57,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                     return next(action);
                                 }
                                 break;
-                            case SocketActionTypeKeys.CONNECT:
+                            case ESocketActionTypeKeys.CONNECT:
                                 if(!tableSocket.connected){
                                     tableSocket.connect();
                                 }else{

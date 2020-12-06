@@ -8,7 +8,7 @@ export const emitReleaseVerb = (entityId: string, entityType: EEntityTypes): TTh
         const verb: IReleaseVerb = {
             entityId,
             entityType,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ESharedVerbTypes.RELEASE
         }
         dispatch(socketEmitVerb(verb));

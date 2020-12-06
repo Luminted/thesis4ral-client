@@ -7,7 +7,7 @@ export const emitReorderHandVerb = (order: number[]): TThunkResult =>
         const {clientInfo} = getState();
         const verb: IReorderHandVerb = {
             order,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ECardVerbTypes.REORDER_HAND
         }
         dispatch(socketEmitVerb(verb));

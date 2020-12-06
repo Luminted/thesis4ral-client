@@ -5,6 +5,7 @@ import dynamicMiddlewares from 'redux-dynamic-middlewares';
 import {tableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware } from './middlewares/';
 import { rootReducer } from './reducers';
 import { loadState, saveState } from './utils/persistState';
+import { observerGateMiddleware } from './middlewares/observerGateMiddleware';
 
 const persistedState = loadState();
 
@@ -12,6 +13,7 @@ export const store = createStore(rootReducer, persistedState, composeWithDevTool
     // Order is important
     applyMiddleware(
         thunk,
+        observerGateMiddleware,
         normalizeVerbPositionMiddleware,
         dynamicMiddlewares,
         upscaleVerbPositionMiddleware,

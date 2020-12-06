@@ -1,4 +1,4 @@
-import { SetterActionTypeKeys, TActionTypes } from "../actions";
+import { ESetterActionTypeKeys, TActionTypes } from "../actions";
 
 const initialState = {
     width: 0,
@@ -7,7 +7,7 @@ const initialState = {
 
 export const tablePixelDimensions = (state: {width: number, height: number} = initialState, action: TActionTypes) => {
     switch(action.type){
-        case SetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
+        case ESetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS:
             return action.dimensions;
         default:
             return state;

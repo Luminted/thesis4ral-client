@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
 import { TRootState } from "../../reducers";
-import { TActionTypes, SocketActionTypeKeys } from "../../actions";
+import { TActionTypes, ESocketActionTypeKeys } from "../../actions";
 import { isVerbTypeWithPosition, upscale } from "../../utils";
 import { ECardVerbTypes, EDeckVerbTypes, TRatio } from "../../typings";
 
@@ -8,7 +8,7 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, TRootState> = store =
     next =>
         (action: TActionTypes) => {
             
-            if(action.type === SocketActionTypeKeys.EMIT_VERB) {
+            if(action.type === ESocketActionTypeKeys.EMIT_VERB) {
                 // these verbs have position fileds
                 console.log(action.verb)
                 if(isVerbTypeWithPosition(action.verb)){

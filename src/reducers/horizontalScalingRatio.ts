@@ -1,4 +1,4 @@
-import { SetterActionTypeKeys, TActionTypes } from "../actions";
+import { ESetterActionTypeKeys, TActionTypes } from "../actions";
 import { TRatio } from "../typings";
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 
 export const horizontalScalingRatio = (state: TRatio = initialState, action: TActionTypes) => {
     switch(action.type){
-        case SetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO:
+        case ESetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO:
             return action.ratio;
         default:
             return state;

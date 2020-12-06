@@ -8,7 +8,7 @@ export const emitMoveVerb = (positionX: number, positionY: number):TThunkResult 
         const verb: IMoveVerb = {
             positionX,
             positionY,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ESharedVerbTypes.MOVE
         }
         dispatch(socketEmitVerb(verb));

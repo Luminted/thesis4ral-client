@@ -1,5 +1,5 @@
 import { createMockMiddleware } from "../../utils/testutils"
-import { TActionTypes, TSocketActionTypes, SocketActionTypeKeys } from "../../actions"
+import { TActionTypes, TSocketActionTypes, ESocketActionTypeKeys } from "../../actions"
 import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
 import { TVerb } from "../../typings";
 import { inverseMirrorOnTablePosition } from "../../utils";
@@ -23,7 +23,7 @@ describe('Testing mirrorPositionMiddleware', () => {
 
         const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
         const action: TSocketActionTypes = {
-            type: SocketActionTypeKeys.EMIT_VERB,
+            type: ESocketActionTypeKeys.EMIT_VERB,
             verb: {
                 positionX,
                 positionY

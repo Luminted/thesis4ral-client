@@ -9,7 +9,7 @@ export const emitPutInHandVerb = (entityId: string, faceUp: boolean, ackFunction
         const verb: IPutInHandVerb = {
             entityId,
             faceUp,
-            clientId: clientInfo!.clientId,
+            clientId: clientInfo?.clientId || "",
             type: ECardVerbTypes.PUT_IN_HAND
         }
         dispatch(socketEmitVerb(verb, ackFunction));

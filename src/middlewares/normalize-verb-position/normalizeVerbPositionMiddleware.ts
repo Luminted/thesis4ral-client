@@ -1,7 +1,7 @@
 import { Middleware } from "redux";
 import { ECardVerbTypes } from "../../typings"
 import { TRootState } from "../../reducers";
-import { TActionTypes, SocketActionTypeKeys} from "../../actions";
+import { TActionTypes, ESocketActionTypeKeys} from "../../actions";
 import { isVerbTypeWithPosition } from "../../utils";
 
 /** 
@@ -10,7 +10,7 @@ import { isVerbTypeWithPosition } from "../../utils";
 export const normalizeVerbPositionMiddleware:  Middleware<{}, TRootState> = store => 
     next => 
         (action: TActionTypes) => {
-            if(action.type === SocketActionTypeKeys.EMIT_VERB){                
+            if(action.type === ESocketActionTypeKeys.EMIT_VERB){                
                 if(isVerbTypeWithPosition(action.verb)){
                     const {positionX, positionY} = action.verb;
                     const {tablePosition} = store.getState();

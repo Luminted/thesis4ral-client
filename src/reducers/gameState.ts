@@ -1,4 +1,4 @@
-import { SetterActionTypeKeys, TActionTypes } from "../actions";
+import { ESetterActionTypeKeys, TActionTypes } from "../actions";
 import { TGameState } from "../typings";
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 
 export const gameState = (state: TGameState = initialState, action: TActionTypes) => {
     switch(action.type){
-        case SetterActionTypeKeys.SET_GAME_STATE:
+        case ESetterActionTypeKeys.SET_GAME_STATE:
             const {cards, decks, clients, hands} = action.gameState;
             return {
                 cards,
