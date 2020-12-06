@@ -37,7 +37,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
     const calculatedCSS: CSSProperties = {
         left: positionX,
         top: positionY,
-        rotate: `${rotation}deg`,
+        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
         zIndex
     }
 

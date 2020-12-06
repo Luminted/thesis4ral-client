@@ -19,8 +19,8 @@ export const style = css`
         position: absolute;
         height: 100%;
         width: ${trayWidthPercentage}%;
-        translate: -100%;
+        transform: translate(-100%);
     }
     .card-table--mirrored{
-        rotate: 180deg;
+        transform: rotate(180deg);
     }`

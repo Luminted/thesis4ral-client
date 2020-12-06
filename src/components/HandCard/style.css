@@ -1,7 +1,6 @@
 
 .hand-card{
     position: absolute;
-    translate: -50% -50%;
 }
 
 .hand-card.hand-card--feedback:hover {

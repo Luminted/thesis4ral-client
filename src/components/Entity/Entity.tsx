@@ -36,7 +36,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
 
     const computedCSS: CSSProperties = {
-        rotate: `${rotation}deg`,
+        transform: `rotate(${rotation}deg)`,
         left: downscaledPositionX,
         top: downscaledPositionY,
     }
