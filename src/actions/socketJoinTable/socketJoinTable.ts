@@ -5,12 +5,14 @@ type SocketJoinTableAckFunction = (clientInfo: TClientInfo, gameState: TGameStat
 
 export type TSocketJoinTableAction = {
     type: ESocketActionTypeKeys.JOIN_TABLE
+    requestedSeatId: string,
     ackFunction?: SocketJoinTableAckFunction
 }
 
-export const socketJoinTable = (ackFunction?: SocketJoinTableAckFunction): TSocketJoinTableAction => {
+export const socketJoinTable = (requestedSeatId: string, ackFunction?: SocketJoinTableAckFunction): TSocketJoinTableAction => {
     return {
         type: ESocketActionTypeKeys.JOIN_TABLE,
+        requestedSeatId,
         ackFunction
     }
 }
