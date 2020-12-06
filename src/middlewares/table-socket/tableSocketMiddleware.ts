@@ -3,26 +3,29 @@ import { TActionTypes, setGameState, setTableSocketStatus, SocketActionTypeKeys 
 import { ETableSocketClientEvents, ETableSocketServerEvents, TCustomError } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
+import { getTableSocket } from "../../socket";
 
-export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Middleware<{}, TRootState> => {
-    return store => {
-        const {dispatch} = store;
+export const tableSocketMiddleware: Middleware<{}, TRootState> = 
+    ({dispatch, getState}) => {
+
+        const {clientInfo} = getState();
+        const tableSocket = getTableSocket({clientId: "9d9a9ef5-f1e0-4cf7-b151-b236401136df"})
 
         // Incoming API
-        socket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
+        tableSocket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
             dispatch(setGameState(gameState))
             
         })
 
-        socket.on(ETableSocketServerEvents.CONNECT, () => {
+        tableSocket.on(ETableSocketServerEvents.CONNECT, () => {
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTED))
         })
 
-        socket.on(ETableSocketServerEvents.DISCONNECT, () => {
+        tableSocket.on(ETableSocketServerEvents.DISCONNECT, () => {
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.DISCONNECTED));
         })
 
-        socket.on(ETableSocketServerEvents.ERROR, (error: TCustomError) => {
+        tableSocket.on(ETableSocketServerEvents.ERROR, (error: TCustomError) => {
             console.log(error.message);
         })
 
@@ -31,22 +34,22 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
             // Outgoing API
             (action: TActionTypes) => {
                     if(action.type.startsWith('socket/')){
-                        //TODO: more if(!socket.connected) to top level
+                        //TODO: more if(!tableSocket.connected) to top level
                         switch(action.type){
                             case SocketActionTypeKeys.JOIN_TABLE:
-                                if(!socket.connected){
+                                if(!tableSocket.connected){
                                     console.log('emitting join: not connected')
                                 }else{
-                                    socket.emit(ETableSocketClientEvents.JOIN_TABLE, action.ackFunction);
+                                    tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, clientInfo?.seatId, action.ackFunction);
                                 }
                                 break;
                             case SocketActionTypeKeys.EMIT_VERB:
-                                if(!socket.connected){
+                                if(!tableSocket.connected){
                                     console.log('Middleware: Socket not connected!');
                                     return next(action);
                                 }
                                 if(action.verb !== null){
-                                    socket.emit(ETableSocketClientEvents.VERB, action.verb, action.ackFunction);
+                                    tableSocket.emit(ETableSocketClientEvents.VERB, action.verb, action.ackFunction);
 
                                     console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
                                 }else{
@@ -55,8 +58,8 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
                                 }
                                 break;
                             case SocketActionTypeKeys.CONNECT:
-                                if(!socket.connected){
-                                    socket.connect();
+                                if(!tableSocket.connected){
+                                    tableSocket.connect();
                                 }else{
                                     console.log('Middleware: Socket already connected');
                                 }
@@ -66,4 +69,3 @@ export const createTableSocketMiddleware = (socket: SocketIOClient.Socket):  Mid
                     return next(action);
                 }
         }
-}

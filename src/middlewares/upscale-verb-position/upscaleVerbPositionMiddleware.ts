@@ -25,7 +25,6 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, TRootState> = store =
                             action.verb.grabbedAtX = upscale(horizontalScalingRatio, grabbedAtX);
                             action.verb.grabbedAtY = upscale(verticalScalingRatio, grabbedAtY);
                         }
-                        // console.log('upscaling', positionX, positionY, action.verb.positionX, action.verb.positionY)
                     }
             }
             next(action);
