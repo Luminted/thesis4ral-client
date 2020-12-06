@@ -2,19 +2,26 @@ import {createStore, applyMiddleware} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import dynamicMiddlewares from 'redux-dynamic-middlewares';
-import {createTableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware } from './middlewares/';
-import { tableSocket } from './socket';
+import {tableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware } from './middlewares/';
 import { rootReducer } from './reducers';
+import { loadState, saveState } from './utils/persistState';
 
-const tableSocketMiddleware = createTableSocketMiddleware(tableSocket);
+const persistedState = loadState();
 
-export const store = createStore(rootReducer, composeWithDevTools(
+export const store = createStore(rootReducer, persistedState, composeWithDevTools(
     // Order is important
     applyMiddleware(
         thunk,
-        // joinedTableValidator,
         normalizeVerbPositionMiddleware,
         dynamicMiddlewares,
         upscaleVerbPositionMiddleware,
         tableSocketMiddleware)
 ));
+
+//persisting state
+store.subscribe(() => {
+    const {clientInfo}  = store.getState();
+    saveState({
+        clientInfo
+    })
+})
