@@ -9,7 +9,8 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
     ({dispatch, getState}) => {
 
         const {clientInfo} = getState();
-        const tableSocket = getTableSocket({clientId: clientInfo?.clientId})
+        const query = clientInfo ? {clientId: clientInfo.clientId} : {};
+        const tableSocket = getTableSocket(query);
 
         // Incoming API
         tableSocket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
@@ -40,7 +41,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                 if(!tableSocket.connected){
                                     console.log('emitting join: not connected')
                                 }else{
-                                    tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, clientInfo?.seatId, action.ackFunction);
+                                    tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.ackFunction);
                                 }
                                 break;
                             case ESocketActionTypeKeys.EMIT_VERB:
