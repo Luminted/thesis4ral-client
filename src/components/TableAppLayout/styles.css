@@ -1,5 +1,6 @@
 .table-app-layout{
     position: relative;
+    overflow: hidden;
 }
 .table-app-layout__leave-button{
     position: absolute;
