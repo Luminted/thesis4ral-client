@@ -1,15 +1,15 @@
-import { TClientInfo, TGameState } from "../../typings"
+import { TClientInfo, TMaybeNull } from "../../typings"
 import { ESocketActionTypeKeys } from "../actionTypeKeys"
 
-type SocketJoinTableAckFunction = (clientInfo: TClientInfo, gameState: TGameState) => void
+type TSocketJoinTableAckFunction = (error: TMaybeNull<string>, clientInfo: TClientInfo) => void
 
 export type TSocketJoinTableAction = {
     type: ESocketActionTypeKeys.JOIN_TABLE
     requestedSeatId: string,
-    ackFunction?: SocketJoinTableAckFunction
+    ackFunction?: TSocketJoinTableAckFunction
 }
 
-export const socketJoinTable = (requestedSeatId: string, ackFunction?: SocketJoinTableAckFunction): TSocketJoinTableAction => {
+export const socketJoinTable = (requestedSeatId: string, ackFunction?: TSocketJoinTableAckFunction): TSocketJoinTableAction => {
     return {
         type: ESocketActionTypeKeys.JOIN_TABLE,
         requestedSeatId,

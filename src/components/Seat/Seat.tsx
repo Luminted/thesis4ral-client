@@ -5,7 +5,7 @@ import { Hand } from "../Hand";
 import { IProps } from "./typings";
 import "./style.css"
 import { seatColors } from "../../config";
-import { setClientInfo, setGameState, socketJoinTable } from "../../actions";
+import { setClientInfo, socketJoinTable } from "../../actions";
 
 export const Seat = ({seatId, isMirrored, clientId = "", orientation}: IProps) => {
 
@@ -14,9 +14,8 @@ export const Seat = ({seatId, isMirrored, clientId = "", orientation}: IProps) =
     const clientHandDetails = useSelector(selectClientHandById(clientId));
 
     const onTakeSeat = () => {
-        dispatch(socketJoinTable(seatId, (clientInfo, gameState) => {
+        dispatch(socketJoinTable(seatId, (err, clientInfo) => {
             dispatch(setClientInfo(clientInfo));
-            dispatch(setGameState(gameState));
         }))
     }
 

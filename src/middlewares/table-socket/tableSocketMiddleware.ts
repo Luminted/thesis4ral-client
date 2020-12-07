@@ -1,35 +1,25 @@
 import { TRootState } from "../../reducers";
 import { TActionTypes, setGameState, setTableSocketStatus, ESocketActionTypeKeys } from "../../actions";
-import { ETableSocketClientEvents, ETableSocketServerEvents, TCustomError } from "./typings";
+import { ETableSocketClientEvents, ETableSocketServerEvents } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
-import { getTableSocket } from "../../socket";
+import { tableSocket } from "../../socket";
 
 export const tableSocketMiddleware: Middleware<{}, TRootState> = 
-    ({dispatch, getState}) => {
-
-        const {clientInfo} = getState();
-        const query = clientInfo ? {clientId: clientInfo.clientId} : {};
-        const tableSocket = getTableSocket(query);
+    ({dispatch}) => {
 
         // Incoming API
         tableSocket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
-            dispatch(setGameState(gameState))
-            
+            dispatch(setGameState(gameState));
         })
 
         tableSocket.on(ETableSocketServerEvents.CONNECT, () => {
-            dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTED))
+            dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTED));
         })
 
         tableSocket.on(ETableSocketServerEvents.DISCONNECT, () => {
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.DISCONNECTED));
         })
-
-        tableSocket.on(ETableSocketServerEvents.ERROR, (error: TCustomError) => {
-            console.log(error.message);
-        })
-
 
         return next => 
             // Outgoing API
@@ -44,8 +34,17 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                     tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.ackFunction);
                                 }
                                 break;
+
+                            case ESocketActionTypeKeys.REJOIN_TABLE:
+                                tableSocket.emit(ETableSocketClientEvents.REJOIN_TABLE, action.clientId, action.ackFunction);
+                                break;
+
+                            case ESocketActionTypeKeys.LEAVE_TABLE:
+                                tableSocket.emit(ETableSocketClientEvents.LEAVE_TABLE, action.clientId, action.ackFunction);
+                                break;
+
                             case ESocketActionTypeKeys.EMIT_VERB:
-                                if(!tableSocket.connected && !clientInfo){
+                                if(!tableSocket.connected){
                                     console.log('Middleware: Socket not connected!');
                                     return next(action);
                                 }
@@ -58,6 +57,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                     return next(action);
                                 }
                                 break;
+
                             case ESocketActionTypeKeys.CONNECT:
                                 if(!tableSocket.connected){
                                     tableSocket.connect();

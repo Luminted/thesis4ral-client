@@ -17,4 +17,6 @@ export enum ESocketActionTypeKeys {
     CONNECT = 'socket/CONNECT',
     DISCONNECT = 'socket/DISCONNECT',
     JOIN_TABLE = 'socket/JOIN_TABLE',
+    REJOIN_TABLE = 'socket/REJOIN_TABLE',
+    LEAVE_TABLE = 'socket/LEAVE_TABLE'
 }

@@ -1,4 +1,4 @@
-import { TGameState, TVerb } from "../../typings";
+import { TGameState, TMaybeNull, TVerb } from "../../typings";
 import { ESocketActionTypeKeys } from "../actionTypeKeys";
 
 export type TSocketEmitVerbAction = {
@@ -7,7 +7,7 @@ export type TSocketEmitVerbAction = {
     ackFunction?: Function
 }
 
-export type TSocketVerbAckFunction = (nextGameState: TGameState) => void;
+export type TSocketVerbAckFunction = (error: TMaybeNull<string>, nextGameState: TGameState) => void;
 
 export const socketEmitVerb = (verb: TVerb, ackFunction?: TSocketVerbAckFunction): TSocketEmitVerbAction => {
     return {

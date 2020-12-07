@@ -2,7 +2,6 @@ export enum ETableSocketServerEvents {
     SYNC = 'SYNC',
     CONNECT = 'connect',
     DISCONNECT = 'disconnect',
-    ERROR = 'CUSTOM_ERROR'
 }
 
 export enum ETableSocketClientEvents {

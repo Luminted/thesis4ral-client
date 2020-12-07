@@ -1,0 +1,8 @@
+.table-app-layout{
+    position: relative;
+}
+.table-app-layout__leave-button{
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+}

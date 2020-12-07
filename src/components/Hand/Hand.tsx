@@ -85,7 +85,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
 
     const isOwnHand = ownClientId === clientId;
 
-    const chainDispatchReorderVerb = (nextGameState: TGameState) => {
+    const chainDispatchReorderVerb = (err: TMaybeNull<string>, nextGameState: TGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
         if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
             const {ordering} = nextHand;

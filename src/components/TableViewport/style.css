@@ -1,11 +1,11 @@
-.application-viewport{
+.table-viewport{
     position: relative;
     width: 100vw;
     height: 100vh;
     background: gray;
 }
 
-.application-viewport__center{
+.table-viewport__center{
     position: absolute;
     left: 50%;
     top: 50%;

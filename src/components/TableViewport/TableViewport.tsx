@@ -14,7 +14,7 @@ import { EEntityTypes, EOrientation } from "../../typings";
 
 const listenerThrottleValue = 1000 / 60;
 
-export const ApplicationViewport = () => {
+export const TableViewport = () => {
     const dispatch = useDispatch();
 
     const clientInfo = useSelector(selectOwnClientInfo);
@@ -22,7 +22,7 @@ export const ApplicationViewport = () => {
     const tablePixelDimensions = useSelector(selectTablePixelDimensions);
     const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
 
-    const applicationViewportRef = useRef<HTMLDivElement>(null);
+    const tableViewportRef = useRef<HTMLDivElement>(null);
 
     const isMirrored = clientInfo ? seatIdMapping[clientInfo.seatId].includes("NORTH") : false;
 
@@ -88,14 +88,19 @@ export const ApplicationViewport = () => {
 
     // Reacts event pooling makes this event choppy
     useEffect(() => {
-        applicationViewportRef.current?.addEventListener("mousemove", onMouseMove);
-        return () => applicationViewportRef.current?.removeEventListener("mousemove", onMouseMove);
+        tableViewportRef.current?.addEventListener("mousemove", onMouseMove);
+        return () => tableViewportRef.current?.removeEventListener("mousemove", onMouseMove);
     }, [onMouseMove]);
     
     return (
         <>
-        <div ref={applicationViewportRef} onMouseUp={onMouseUp} className="application-viewport">
-            <div className="application-viewport__center">
+        <button style={{
+            width: "5vw",
+            height: "10vh",
+            position: "absolute"
+        }}>Leave Table</button>
+        <div ref={tableViewportRef} onMouseUp={onMouseUp} className="table-viewport">
+            <div className="table-viewport__center">
                 <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
                 <CardTable isMirrored={isMirrored}/>
                 <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.NORTH : EOrientation.SOUTH} />

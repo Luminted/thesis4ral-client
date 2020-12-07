@@ -5,7 +5,7 @@ import { frenchCardConfig, getDeckCardsMetadata} from "../../entities";
 import { selectGrabbedEntityInfo } from "../../selectors";
 import { EntityCore } from "../EntityCore";
 import {trayDecks} from "../../config";
-import { IEntityMetadata, TGameState, ECardTypes } from "../../typings";
+import { IEntityMetadata, TGameState, ECardTypes, TMaybeNull } from "../../typings";
 import { IProps } from "./typings";
 import "./style.css";
 
@@ -36,7 +36,7 @@ export const EntityTray = ({isMirrored}: IProps) => {
         }
         const cardsMetadata = getDeckCardsMetadata(cards, cardBack);
 
-        const ackFunction = (nextGameState: TGameState) => {
+        const ackFunction = (err: TMaybeNull<string>, nextGameState: TGameState) => {
             const {decks} = nextGameState;
             const addedDeck = decks.pop();
             if(addedDeck){

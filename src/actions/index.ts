@@ -9,6 +9,8 @@ import { TSetVerticalScalingRationAction } from "./setVerticalScalingRatio";
 import { TSocketConnectAction } from "./socketConnect";
 import { TSocketEmitVerbAction } from "./socketEmitVerb";
 import { TSocketJoinTableAction } from "./socketJoinTable";
+import { TSocketLeaveTableAction } from "./socketLeaveTable/socketLeaveTable";
+import { TSocketRejoinAction } from "./socketRejoinTable/socketRejoinTable";
 
 export {setClientInfo} from "./setClientInfo"
 export {setGameState} from "./setGameState"
@@ -21,6 +23,7 @@ export {setTableSocketStatus} from "./setTableSocketStatus"
 export {socketEmitVerb} from "./socketEmitVerb";
 export {socketConnect} from "./socketConnect";
 export {socketJoinTable} from "./socketJoinTable"
+export {socketRejoinTable} from "./socketRejoinTable";
 
 export { ESocketActionTypeKeys, ESetterActionTypeKeys } from './actionTypeKeys'
 
@@ -29,7 +32,9 @@ export type TActionTypes = TSocketActionTypes | TSetterActionTypes;
 export type TSocketActionTypes = 
     TSocketEmitVerbAction |
     TSocketConnectAction |
-    TSocketJoinTableAction;
+    TSocketJoinTableAction |
+    TSocketRejoinAction |
+    TSocketLeaveTableAction;
 
 export type TSetterActionTypes = 
     TSetGameStateAction |
