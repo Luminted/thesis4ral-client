@@ -5,9 +5,10 @@ const tableWidth = tableHeightPercentage * (tableAspectRatio.numerator / tableAs
 
 export const style = css`
     .card-table{
-    position: relative;
-    height: ${tableHeightPercentage}vh;
-    width: ${tableWidth}vh;
+        position: relative;
+        height: ${tableHeightPercentage}vh;
+        width: ${tableWidth}vh;
+        z-index: 2;
     }
     .card-table__table{
         position: relative;
