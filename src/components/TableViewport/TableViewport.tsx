@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
 import { selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
-import {emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb, setGrabbedEntityInfo} from "../../actions";
+import {emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb, setGrabbedEntityInfo, setIsMirrored} from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
 import { SeatsContainer } from "../SeatsContainer/SeatsContainer";
 import { mirrorVerbPositionMiddleware } from "../../middlewares";
@@ -78,8 +78,8 @@ export const TableViewport = () => {
         }
     }
 
-    // mirror table if client is sitting on the northern side
     useLayoutEffect(() => {
+        dispatch(setIsMirrored(isMirrored));
         if(isMirrored){
             addMiddleware(mirrorVerbPositionMiddleware);
         }
@@ -101,9 +101,9 @@ export const TableViewport = () => {
         }}>Leave Table</button>
         <div ref={tableViewportRef} onMouseUp={onMouseUp} className="table-viewport">
             <div className="table-viewport__center">
-                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
-                <CardTable isMirrored={isMirrored}/>
-                <SeatsContainer isMirrored={isMirrored} orientation={isMirrored ? EOrientation.NORTH : EOrientation.SOUTH} />
+                <SeatsContainer orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
+                <CardTable/>
+                <SeatsContainer orientation={isMirrored ? EOrientation.NORTH : EOrientation.SOUTH} />
             </div>
         </div>
         </>

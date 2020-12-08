@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
 import { emitPutInHandVerb, emitReorderHandVerb, setGrabbedEntityInfo } from "../../actions";
-import { selectClientId, selectGrabbedEntityInfo } from "../../selectors";
+import { selectClientId, selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
@@ -21,7 +21,7 @@ const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [
     return pivotPointX >= cardX ? -tiltAngle : tiltAngle;
 }
 
-export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
+export const Hand = ({ orientation, handDetails}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -32,6 +32,7 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
 
     const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
     const ownClientId = useSelector(selectClientId);
+    const isMirrored = useSelector(selectIsMirrored);
 
     const {cards, ordering, clientId} = handDetails;
 
@@ -67,7 +68,6 @@ export const Hand = ({isMirrored, orientation, handDetails}: IProps) => {
                 zIndex={order}
                 rotation={tiltAngle}
                 inHandOf={clientId}
-                isMirrored={isMirrored}
                 faceUp={isOwnHand}
                 metadata={metadata}
                 hoverFeedback={!(!!grabbedEntityInfo)}

@@ -1,5 +1,5 @@
 import React, { CSSProperties, DragEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { emitGrabFromHand, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
@@ -7,9 +7,12 @@ import { EEntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
 import {getCardDimensions} from "../../utils";
 import "./style.css";
+import { selectIsMirrored } from "../../selectors";
 
-export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, faceUp, rotation, isMirrored, metadata, onMouseEnter, onMouseLeave, hoverFeedback}: IProps) => {
+export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, faceUp, rotation, metadata, onMouseEnter, onMouseLeave, hoverFeedback}: IProps) => {
     const dispatch = useDispatch();
+
+    const isMirrored = useSelector(selectIsMirrored);
 
     const onDragStart = (e: DragEvent) => {
         e.preventDefault();

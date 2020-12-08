@@ -7,7 +7,7 @@ import "./style.css"
 import { seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
 
-export const Seat = ({seatId, isMirrored, clientId = "", orientation}: IProps) => {
+export const Seat = ({seatId, clientId = "", orientation}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ export const Seat = ({seatId, isMirrored, clientId = "", orientation}: IProps) =
         {!clientHandDetails && <button onClick={onTakeSeat}>TAKE SEAT</button>}
         {clientHandDetails && 
             <div className="seat__hand">
-                <Hand handDetails={clientHandDetails} orientation={orientation} isMirrored={isMirrored} />
+                <Hand handDetails={clientHandDetails} orientation={orientation} />
             </div>}
     </div>
 }

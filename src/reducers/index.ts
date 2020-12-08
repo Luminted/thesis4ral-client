@@ -7,6 +7,7 @@ import {tableConnectionStatus} from "./tableConnectionStatus";
 import {tablePixelDimensions} from "./tablePixelDimensions";
 import {tablePosition} from "./tablePosition";
 import {verticalScalingRatio} from "./verticalScalingRatio";
+import {isMirrored} from "./isMirrored";
 
 export const rootReducer = combineReducers({
     gameState,
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
     horizontalScalingRatio,
     verticalScalingRatio,
     tablePixelDimensions,
-    grabbedEntityInfo
+    grabbedEntityInfo,
+    isMirrored
 });
 
 export type TRootState = ReturnType<typeof rootReducer>;
