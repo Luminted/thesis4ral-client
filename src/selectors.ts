@@ -49,4 +49,6 @@ export const selectClientSeatId = (clientId: TMaybeNull<string>) =>
     } 
 
 export const selectHorizontalScalingRation = (state: TRootState) => state.horizontalScalingRatio;
-export const selectVerticalScalingRation = (state: TRootState) => state.verticalScalingRatio
+export const selectVerticalScalingRation = (state: TRootState) => state.verticalScalingRatio;
+
+export const selectIsMirrored = (state: TRootState) => state.isMirrored;

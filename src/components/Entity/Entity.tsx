@@ -2,7 +2,7 @@ import React, { CSSProperties, DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitGrabVerb, emitRotateVerb, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
-import { selectHorizontalScalingRation, selectVerticalScalingRation } from "../../selectors";
+import { selectHorizontalScalingRation, selectIsMirrored, selectVerticalScalingRation } from "../../selectors";
 import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
@@ -31,14 +31,17 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     const highlightColor = useGetEntityHighlightColor(grabbedBy);
     const horizontalScalingRatio = useSelector(selectHorizontalScalingRation);
     const verticalScalingRatio = useSelector(selectVerticalScalingRation);
+    const isMirrored = useSelector(selectIsMirrored);
 
     const downscaledPositionX = downscale(horizontalScalingRatio, positionX);
     const downscaledPositionY = downscale(verticalScalingRatio, positionY);
 
-    const computedCSS: CSSProperties = {
+    const entityCSS: CSSProperties = {
+        zIndex,
         transform: `rotate(${rotation}deg)`,
         left: downscaledPositionX,
         top: downscaledPositionY,
+        pointerEvents: clickPassThrough ? "none" : "auto",
     }
     
     const highlightCSS: CSSProperties = {
@@ -54,7 +57,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         e.preventDefault();
         
         const {clientX, clientY} = e;
-        const {top, left, width: targetWidth, height: targetHeight} = e.currentTarget.getBoundingClientRect();
+        const {top, left, right, bottom, width: targetWidth, height: targetHeight} = e.currentTarget.getBoundingClientRect();
         const relativeMouseX = clientX - left;
         const relativeMouseY = clientY - top;
         
@@ -67,17 +70,15 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
             restricted: boundToTable,
-            originalPositionX: left,
-            originalPositionY: top
+            originalPositionX: isMirrored ? right : left,
+            originalPositionY: isMirrored ? bottom : top
         }));
     }
     
 
     return (
         <div ref={ref} className="entity" style={{
-            zIndex: zIndex || "auto",
-            pointerEvents: clickPassThrough ? "none" : "auto",
-            ...computedCSS
+            ...entityCSS
         }}>
             <div className="entity__highlight" style={highlightCSS}></div>
             {menuContent && <div className="entity__menu">{menuContent}</div>}

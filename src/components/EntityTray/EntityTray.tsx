@@ -2,17 +2,17 @@ import React, { DragEvent, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { emitAddDeckVerb, emitGrabVerb, emitRemoveVerb, setGrabbedEntityInfo } from "../../actions";
 import { frenchCardConfig, getDeckCardsMetadata} from "../../entities";
-import { selectGrabbedEntityInfo } from "../../selectors";
+import { selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import { EntityCore } from "../EntityCore";
 import {trayDecks} from "../../config";
 import { IEntityMetadata, TGameState, ECardTypes, TMaybeNull } from "../../typings";
-import { IProps } from "./typings";
 import "./style.css";
 
-export const EntityTray = ({isMirrored}: IProps) => {
+export const EntityTray = () => {
     const dispatch = useDispatch();
 
     const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
+    const isMirrored = useSelector(selectIsMirrored);
 
     const removeEntity = (e: MouseEvent) => {
         if(grabbedEntityInfo){

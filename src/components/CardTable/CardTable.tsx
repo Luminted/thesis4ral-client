@@ -1,16 +1,15 @@
 import React, { MouseEvent, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import cn from "classnames";
-import { selectCards, selectDecks, selectGrabbedEntityInfo } from "../../selectors";
+import { selectCards, selectDecks, selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import { CardEntity } from "../CardEntity";
 import {style} from "./style";
 import { DeckEntity } from "../DeckEntity";
-import { IProps } from "./typings";
 import { setGrabbedEntityInfo, setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio, emitReleaseVerb, setTablePosition } from "../../actions";
 import { EntityTray } from "../EntityTray";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
 
-export const CardTable = ({isMirrored}: IProps) => {
+export const CardTable = () => {
 
     const dispatch = useDispatch();
 
@@ -19,6 +18,7 @@ export const CardTable = ({isMirrored}: IProps) => {
     const cards = useSelector(selectCards);
     const decks = useSelector(selectDecks);
     const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
+    const isMirrored = useSelector(selectIsMirrored);
 
     const onMouseUp = (e: MouseEvent) => {
         e.stopPropagation();
@@ -73,7 +73,7 @@ export const CardTable = ({isMirrored}: IProps) => {
         <>
         <div className={cn("card-table", {"card-table--mirrored": isMirrored})}>
             <div className="card-table__tray">
-                <EntityTray isMirrored={isMirrored} />
+                <EntityTray />
             </div>
             <div ref={tableRef} className="card-table__table" onMouseUp={onMouseUp}> 
                 {renderedCards}
