@@ -1,15 +1,15 @@
-.entity-drawer{
+.entity-tray{
     width: 100%;
     height: 100%;
 }
-.entity-drawer__content{
+.entity-tray__content{
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: bisque;
 }
 
-.entity-drawer__segment {
+.entity-tray__segment {
     padding: 5%;
     flex-grow: 1;
 }
@@ -23,7 +23,7 @@
     align-items: center;
 }
 
-.entity-drawer__deck{
+.entity-tray__tray{
     margin: 0 10px 10px 0;
     display: inline-block;
 }

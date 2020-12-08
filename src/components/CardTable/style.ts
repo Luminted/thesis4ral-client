@@ -16,7 +16,7 @@ export const style = css`
         height: 100%;
         width: 100%;
     }
-    .card-table__drawer{
+    .card-table__tray{
         position: absolute;
         height: 100%;
         width: ${trayWidthPercentage}%;

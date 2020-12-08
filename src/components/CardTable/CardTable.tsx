@@ -72,7 +72,7 @@ export const CardTable = ({isMirrored}: IProps) => {
     return (
         <>
         <div className={cn("card-table", {"card-table--mirrored": isMirrored})}>
-            <div className="card-table__drawer">
+            <div className="card-table__tray">
                 <EntityTray isMirrored={isMirrored} />
             </div>
             <div ref={tableRef} className="card-table__table" onMouseUp={onMouseUp}> 

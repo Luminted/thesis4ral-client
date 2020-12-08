@@ -66,7 +66,7 @@ export const EntityTray = ({isMirrored}: IProps) => {
             const graphicEndpoint = `${type}/${cardBack}`
 
             return (
-                <div className="entity-drawer__deck">
+                <div className="entity-tray__entity">
                     <EntityCore width={width} height={height} graphicEndpoint={graphicEndpoint} eventHandlerMapping={{
                         onDragStart: getDeckOnDragStart(index)
                     }} />
@@ -75,12 +75,12 @@ export const EntityTray = ({isMirrored}: IProps) => {
         }
     })
 
-    return <div className="entity-drawer">
-        <div className="entity-drawer__content">
-            <div className="entity-drawer__segment">
+    return <div className="entity-tray">
+        <div className="entity-tray__content">
+            <div className="entity-tray__segment">
                 {renderedDecks}
             </div>
-            <div className="entity-drawer__segment">
+            <div className="entity-tray__segment">
                 <div className="remove-entity-zone" onMouseUp={removeEntity}>
                     <div>
                         REMOVE
