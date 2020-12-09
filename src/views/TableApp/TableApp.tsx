@@ -4,6 +4,9 @@ import { ESocketConnectionStatuses} from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setClientInfo, setTableSocketStatus, socketConnect, socketRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import { ESpinnerSize } from "../../components/LoadingSpinner/typings";
+import "./styles.css"
 
 export const TableApp = () => {
 
@@ -33,10 +36,5 @@ export const TableApp = () => {
         }
     }, [])
 
-    return (
-        <>
-            {connectionStatus === ESocketConnectionStatuses.CONNECTING && "CONNECTING"}
-            {connectionStatus === ESocketConnectionStatuses.DISCONNECTED && "DISCONNECTED"}
-            {connectionStatus === ESocketConnectionStatuses.CONNECTED && <TableAppLayout />}
-        </>)
+    return <TableAppLayout connectionStatus={connectionStatus} />
 } 
