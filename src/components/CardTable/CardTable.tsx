@@ -75,9 +75,11 @@ export const CardTable = () => {
             <div className="card-table__tray">
                 <EntityTray />
             </div>
-            <div ref={tableRef} className="card-table__table" onMouseUp={onMouseUp}> 
-                {renderedCards}
-                {renderedDecks}
+            <div className="card-table__table-border">
+                <div ref={tableRef}  className="card-table__table" onMouseUp={onMouseUp}> 
+                    {renderedCards}
+                    {renderedDecks}
+                </div>
             </div>
         </div>
         <style jsx={true}>{style}</style>

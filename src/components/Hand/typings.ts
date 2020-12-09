@@ -1,6 +1,5 @@
-import { IClientHand, EOrientation } from "../../typings";
+import { IClientHand } from "../../typings";
 
 export interface IProps {
     handDetails: IClientHand
-    orientation: EOrientation
 }

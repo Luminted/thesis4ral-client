@@ -4,4 +4,5 @@ export interface IProps {
     seatId: string
     orientation: EOrientation
     clientId?: string
+    name?: string
 }

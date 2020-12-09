@@ -1,5 +1,5 @@
 import css from "styled-jsx/css";
-import {tableHeightPercentage, tableAspectRatio, trayWidthPercentage} from "../../config"
+import {tableHeightPercentage, tableAspectRatio, trayWidthPercentage, tableRimWidth, trayRimWidth, borderRadius} from "../../config"
 
 const tableWidth = tableHeightPercentage * (tableAspectRatio.numerator / tableAspectRatio.divisor);
 
@@ -16,11 +16,24 @@ export const style = css`
         height: 100%;
         width: 100%;
     }
+    .card-table__table-border{
+        border-top: solid darkgreen ${tableRimWidth}vh;
+        border-bottom: solid darkgreen ${tableRimWidth}vh;
+        border-right: solid darkgreen ${tableRimWidth}vh;
+        height: 100%;
+        box-sizing: border-box;
+        border-radius: ${borderRadius}vh;
+    }
     .card-table__tray{
         position: absolute;
-        height: 100%;
+        height: calc(100% - ${2 * tableRimWidth}vh);
         width: ${trayWidthPercentage}%;
-        transform: translate(-100%);
+        transform: translate(-100%, ${tableRimWidth - trayRimWidth}vh);
+        border-left: ${trayRimWidth}vh solid black;
+        border-top: ${trayRimWidth}vh solid black;
+        border-bottom: ${trayRimWidth}vh solid black;
+        border-radius: ${borderRadius}vh 0 0 ${borderRadius}vh;
+
     }
     .card-table--mirrored{
         transform: rotate(180deg);

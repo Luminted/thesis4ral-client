@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
 import { emitPutInHandVerb, emitReorderHandVerb, setGrabbedEntityInfo } from "../../actions";
-import { selectClientId, selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
+import { selectClientId, selectGrabbedEntityInfo } from "../../selectors";
 import {IProps} from "./typings";
 import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
-import { EEntityTypes, EOrientation, TGameState, TMaybeNull } from "../../typings";
+import { EEntityTypes, TGameState, TMaybeNull } from "../../typings";
 import { cardTiltFactor } from "../../config";
 import "./style.css";
 
@@ -21,7 +21,7 @@ const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [
     return pivotPointX >= cardX ? -tiltAngle : tiltAngle;
 }
 
-export const Hand = ({ orientation, handDetails}: IProps) => {
+export const Hand = ({ handDetails}: IProps) => {
 
     const dispatch = useDispatch();
 
@@ -32,9 +32,9 @@ export const Hand = ({ orientation, handDetails}: IProps) => {
 
     const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
     const ownClientId = useSelector(selectClientId);
-    const isMirrored = useSelector(selectIsMirrored);
 
     const {cards, ordering, clientId} = handDetails;
+    const isOwnHand = ownClientId === clientId;
 
     const getOnMouseEnterHandCard = orderOfCard => () => {
         if(grabbedEntityInfo && grabbedEntityInfo.entityType === EEntityTypes.CARD){
@@ -83,8 +83,6 @@ export const Hand = ({ orientation, handDetails}: IProps) => {
         }
     }
 
-    const isOwnHand = ownClientId === clientId;
-
     const chainDispatchReorderVerb = (err: TMaybeNull<string>, nextGameState: TGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
         if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
@@ -125,12 +123,10 @@ export const Hand = ({ orientation, handDetails}: IProps) => {
         return () => window.removeEventListener("resize", calculateHandCurve);
     }, [calculateHandCurve]);
 
-    const isHandMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
-
     return ( 
         <>
         { <div ref={handRef} onMouseUp={onMouseUp}
-         className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand}, {"hand--mirrored": isHandMirrored})}>
+         className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
         {renderCards()}
         </div>}
         </>

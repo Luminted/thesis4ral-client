@@ -14,6 +14,8 @@ export const trayWidthPercentage = 15;
 export const tableVirtualWidth = 10000;
 export const tableVirtualHeight = 10000;
 
+export const trayDecks = [french52SortedRed, french52SortedBlue];
+
 export const seatIdMapping = {
     1: 'NORTH_WEST',
     2: 'NORTH',
@@ -32,4 +34,6 @@ export const seatColors = {
     6: "orange"
 };
 
-export const trayDecks = [french52SortedRed, french52SortedBlue];
+export const tableRimWidth = 3;
+export const trayRimWidth = 1;
+export const borderRadius = 2;

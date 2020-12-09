@@ -70,8 +70,8 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
             relativeGrabbedAtX: relativeMouseX,
             relativeGrabbedAtY: relativeMouseY,
             restricted: boundToTable,
-            originalPositionX: isMirrored ? right : left,
-            originalPositionY: isMirrored ? bottom : top
+            originalPositionX: (isMirrored ? right : left),
+            originalPositionY: (isMirrored ? bottom : top)
         }));
     }
     
