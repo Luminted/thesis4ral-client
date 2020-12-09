@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
@@ -13,14 +13,25 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
 
     const dispatch = useDispatch();
 
+    const [isNameEntryOpen, setNameEntryOpen] = useState(false);
+    const [enteredName, setEnteredName] = useState("");
+
     const clientHandDetails = useSelector(selectClientHandById(clientId));
     const clientInfo = useSelector(selectOwnClientInfo);
     const isMirrored = useSelector(selectIsMirrored);
 
     const isSeatMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
 
-    const onTakeSeat = () => {
-        dispatch(socketJoinTable(seatId, (err, clientInfo) => {
+    const onEmptySeatClick = () => setNameEntryOpen(!isNameEntryOpen);
+    const onNameInputChange = ({currentTarget: {value}}) => setEnteredName(value);
+    
+    const onSubmit = () => {
+        setNameEntryOpen(false);
+        joinTable();
+    }
+
+    const joinTable = () => {
+        dispatch(socketJoinTable(seatId, enteredName, (err, clientInfo) => {
             dispatch(setClientInfo(clientInfo));
         }))
     }
@@ -29,19 +40,31 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
         border: `3px solid ${seatColors[seatId]}`
     }
 
-    return <div className={cn("seat", {"seat--mirrored": isSeatMirrored && clientInfo})}>   
+    return <div className={"seat"}>   
         {!clientHandDetails && !clientInfo &&
-            <div className="seat__empty-state" onClick={onTakeSeat}>
-                Take seat
+            <div className={cn("seat__empty-state", "seat__content")} onClick={onEmptySeatClick}>
+                {isNameEntryOpen ? 
+                <div className="name-input">
+                        <div className="name-input__label">
+                            Enter your name
+                        </div>
+                    <form onSubmit={onSubmit}>
+                        <input 
+                        autoFocus
+                        value={enteredName}
+                        onChange={onNameInputChange}
+                        type="text"/> 
+                </form>
+                </div> : "Take Seat"}
             </div>
         }
         {clientHandDetails && 
-            <>
-            <div className="seat__hand">
-                <Hand handDetails={clientHandDetails} />
+            <div className={cn("seat__content", {"seat--mirrored": isSeatMirrored})}>
+                <div className="seat__hand">
+                    <Hand handDetails={clientHandDetails} />
+                </div>
+                <div className="seat__name" style={coloredBorderCSS}>{name}</div>
             </div>
-            <div className="seat__name" style={coloredBorderCSS}>{name}</div>
-            </>
         }
     </div>
 }

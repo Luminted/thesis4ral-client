@@ -21,7 +21,7 @@ export const SeatsContainer = ({orientation}: IProps) => {
             <div className="seats-container">
                 {orientationsSeatIds.map( seatId => {
                     const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
-                        return <Seat name={"1984 Sports Almanac"} seatId={seatId} orientation={orientation} clientId={clientInfo?.clientId} key={seatId} />
+                        return <Seat name={clientInfo?.name} seatId={seatId} orientation={orientation} clientId={clientInfo?.clientId} key={seatId} />
                 } )}
             </div>
             <style jsx={true}>{style}</style>

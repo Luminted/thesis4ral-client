@@ -31,7 +31,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                 if(!tableSocket.connected){
                                     console.log('emitting join: not connected')
                                 }else{
-                                    tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.ackFunction);
+                                    tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.name, action.ackFunction);
                                 }
                                 break;
 

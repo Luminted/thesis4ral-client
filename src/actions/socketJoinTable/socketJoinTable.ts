@@ -6,13 +6,15 @@ type TSocketJoinTableAckFunction = (error: TMaybeNull<string>, clientInfo: TClie
 export type TSocketJoinTableAction = {
     type: ESocketActionTypeKeys.JOIN_TABLE
     requestedSeatId: string,
+    name: string,
     ackFunction?: TSocketJoinTableAckFunction
 }
 
-export const socketJoinTable = (requestedSeatId: string, ackFunction?: TSocketJoinTableAckFunction): TSocketJoinTableAction => {
+export const socketJoinTable = (requestedSeatId: string, name: string, ackFunction?: TSocketJoinTableAckFunction): TSocketJoinTableAction => {
     return {
         type: ESocketActionTypeKeys.JOIN_TABLE,
         requestedSeatId,
+        name,
         ackFunction
     }
 }

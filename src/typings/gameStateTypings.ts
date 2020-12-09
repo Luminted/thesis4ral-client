@@ -51,7 +51,7 @@ export type TClient = {
 
 export type TClientInfo ={
     clientId: string,
-    clientName?: string,
+    name?: string,
     seatId: string
 }
 
