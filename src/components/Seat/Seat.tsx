@@ -5,9 +5,10 @@ import { selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../
 import { Hand } from "../Hand";
 import { IProps } from "./typings";
 import "./style.css"
-import { seatColors } from "../../config";
+import { getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
 import { EOrientation } from "../../typings";
+import { errorNotification, infoNotification, successNotification } from "../../utils";
 
 export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
 
@@ -31,8 +32,15 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
     }
 
     const joinTable = () => {
+        infoNotification(joinInfoMessage);
         dispatch(socketJoinTable(seatId, enteredName, (err, clientInfo) => {
-            dispatch(setClientInfo(clientInfo));
+            if(err){
+                errorNotification(getJoinErrorMessage(err));
+            }
+            else{
+                dispatch(setClientInfo(clientInfo));
+                successNotification(joinSuccessMessage);
+            }
         }))
     }
 

@@ -93,12 +93,6 @@ export const TableViewport = () => {
     }, [onMouseMove]);
     
     return (
-        <>
-        <button style={{
-            width: "5vw",
-            height: "10vh",
-            position: "absolute"
-        }}>Leave Table</button>
         <div ref={tableViewportRef} onMouseUp={onMouseUp} className="table-viewport">
             <div className="table-viewport__center">
                 <SeatsContainer orientation={isMirrored ? EOrientation.SOUTH : EOrientation.NORTH} />
@@ -106,6 +100,5 @@ export const TableViewport = () => {
                 <SeatsContainer orientation={isMirrored ? EOrientation.NORTH : EOrientation.SOUTH} />
             </div>
         </div>
-        </>
     )
 }

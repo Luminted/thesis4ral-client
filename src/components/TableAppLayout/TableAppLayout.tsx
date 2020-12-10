@@ -1,4 +1,5 @@
 import React from "react";
+import cn from "classnames";
 import { ESocketConnectionStatuses } from "../../typings";
 import { LeaveTableButton } from "../LeaveTableButton/LeaveTableButton";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
@@ -8,8 +9,8 @@ import "./styles.css";
 import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css"
 
-export const TableAppLayout = ({connectionStatus, observing}: IProps) => (
-    <>
+export const TableAppLayout = ({connectionStatus, isObserver}: IProps) => (
+    <div className={cn("app-background", {"app-background--observer": isObserver})} >
         {connectionStatus === ESocketConnectionStatuses.CONNECTING && 
             <div className="status-screen">
             <LoadingSpinner size={ESpinnerSize.LARGE}/>
@@ -38,7 +39,6 @@ export const TableAppLayout = ({connectionStatus, observing}: IProps) => (
             </div>
             <TableViewport/>
         </div>}
-       
-    </>
+    </div>
 )
 

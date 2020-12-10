@@ -4,9 +4,8 @@ import { ESocketConnectionStatuses} from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setClientInfo, setTableSocketStatus, socketConnect, socketRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
-import "./styles.css"
 import { errorNotification, infoNotification, successNotification } from "../../utils/notification";
-import { getRejoinErrorMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
+import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
 
 export const TableApp = () => {
 
@@ -14,6 +13,8 @@ export const TableApp = () => {
 
     const connectionStatus = useSelector(selectTableConnectionStatus);
     const clientInfo = useSelector(selectOwnClientInfo);
+    
+    const isObserving = !clientInfo;
 
     useEffect(() => {
         if(connectionStatus === ESocketConnectionStatuses.CONNECTED){
@@ -37,11 +38,17 @@ export const TableApp = () => {
     }, [connectionStatus]);
 
     useEffect(() => {
+        if(isObserving){
+            infoNotification(observerInfoMessage, false);
+        }
+    }, [isObserving])
+
+    useEffect(() => {
         if(connectionStatus === ESocketConnectionStatuses.DISCONNECTED){
             dispatch(socketConnect());
             dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTING));
         }
     }, [])
 
-    return <TableAppLayout connectionStatus={connectionStatus} />
+    return <TableAppLayout connectionStatus={connectionStatus} isObserver={isObserving} />
 } 

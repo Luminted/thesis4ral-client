@@ -6,5 +6,10 @@ const toastConfig:ToastOptions = {
 }
 
 export const errorNotification = (message: string) => toast.error(message, toastConfig);
-export const infoNotification = (message: string) => toast.info(message, toastConfig);
+
+export const infoNotification = (message: string, autoClose: boolean = true) => toast.info(message, {
+    ...toastConfig,
+    ...autoClose ? {} : {autoClose: false}
+});
+
 export const successNotification = (message: string) => toast.success(message, toastConfig);
