@@ -63,7 +63,7 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
                 <div className="seat__hand">
                     <Hand handDetails={clientHandDetails} />
                 </div>
-                <div className="seat__name" style={coloredBorderCSS}>{name}</div>
+                <div className={cn("seat__name", {"seat--mirrored": isSeatMirrored})} style={coloredBorderCSS}>{name}</div>
             </div>
         }
     </div>
