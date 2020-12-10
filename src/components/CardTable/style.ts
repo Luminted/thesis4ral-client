@@ -8,7 +8,6 @@ export const style = css`
         position: relative;
         height: ${tableHeightPercentage}vh;
         width: ${tableWidth}vh;
-        z-index: 999;
     }
     .card-table__table{
         position: relative;

@@ -9,8 +9,6 @@ export const upscaleVerbPositionMiddleware: Middleware<{}, TRootState> = store =
         (action: TActionTypes) => {
             
             if(action.type === ESocketActionTypeKeys.EMIT_VERB) {
-                // these verbs have position fileds
-                console.log(action.verb)
                 if(isVerbTypeWithPosition(action.verb)){
                         const {positionX, positionY} = action.verb;
                         const {horizontalScalingRatio, verticalScalingRatio} = store.getState();

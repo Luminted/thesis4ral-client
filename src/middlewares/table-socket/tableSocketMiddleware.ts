@@ -4,7 +4,7 @@ import { ETableSocketClientEvents, ETableSocketServerEvents } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
 import { tableSocket } from "../../socket";
-import { errorNotification } from "../../utils";
+import { warningNotification } from "../../utils";
 import { getVerbErrorMessage } from "../../config";
 
 export const tableSocketMiddleware: Middleware<{}, TRootState> = 
@@ -55,14 +55,14 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                     tableSocket.emit(ETableSocketClientEvents.VERB, verb, 
                                         (err: string, nextGameState: TGameState) =>{
                                             if(err){
-                                                errorNotification(getVerbErrorMessage(err, verb.type));
+                                                warningNotification(getVerbErrorMessage(err, verb.type));
                                             }
                                             if(ackFunction){
                                                 ackFunction(err, nextGameState);
                                             }
                                         });
 
-                                    console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
+                                    // console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
                                 }else{
                                     console.log('Middleware: Verb to be emitted is NULL. Aborting emit.');
                                     return next(action);

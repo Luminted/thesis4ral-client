@@ -6,6 +6,8 @@ const toastConfig:ToastOptions = {
     draggable: false
 }
 
+export const warningNotification = (message: string) => toast.warn(message, toastConfig);
+
 export const errorNotification = (message: string) => toast.error(message, toastConfig);
 
 export const infoNotification = (message: string, autoClose: boolean = true) => toast.info(message, {

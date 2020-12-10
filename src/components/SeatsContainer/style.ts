@@ -9,5 +9,6 @@ export const style = css`
         width: 85%;
         height: ${(100 - tableHeightPercentage) / 2}vh;
         margin: auto;
+        z-index: 2;
     }
 `

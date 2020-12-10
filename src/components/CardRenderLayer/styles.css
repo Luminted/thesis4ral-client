@@ -1,0 +1,7 @@
+.card-render-layer{
+    position: absolute;
+    width: 0px;
+}
+.card-render-layer--mirrored{
+    transform: rotate(180deg);
+}
