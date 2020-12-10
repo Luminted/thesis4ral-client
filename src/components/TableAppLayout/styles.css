@@ -13,7 +13,7 @@
     overflow: hidden;
 }
 .app-background--observer{
-    border: red 10px solid;
+    border: red 1.5vh solid;
     border-radius: 10px;
 }
 .status-screen{
