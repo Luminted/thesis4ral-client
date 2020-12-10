@@ -17,7 +17,6 @@ export const SeatsContainer = ({orientation}: IProps) => {
 
     return(
         <>
-            <div style={{position: "absolute"}}>{orientation}</div>
             <div className="seats-container">
                 {orientationsSeatIds.map( seatId => {
                     const {clientInfo} = clients.find(client => client.clientInfo.seatId === seatId) || {};
