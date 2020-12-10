@@ -4,7 +4,6 @@
 }
 .table-app-layout__leave-button{
     position: absolute;
-    right: 0px;
     z-index: 1;
 }
 .app-background{
@@ -12,10 +11,10 @@
     background-color: lightgray;
     box-sizing: border-box;
     overflow: hidden;
-    border-radius: 10px;
 }
 .app-background--observer{
     border: red 10px solid;
+    border-radius: 10px;
 }
 .status-screen{
     display: flex;

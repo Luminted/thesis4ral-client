@@ -5,6 +5,7 @@ import { socketLeaveTable } from "../../actions/socketLeaveTable/socketLeaveTabl
 import { getLeaveTableErrorMessage, leaveTableInfoMessage, leavingTableSuccessMessage } from "../../config";
 import { selectOwnClientInfo } from "../../selectors";
 import { errorNotification, infoNotification, successNotification } from "../../utils";
+import "./styles.css"
 
 export const LeaveTableButton = () => {
     const dispatch = useDispatch();
