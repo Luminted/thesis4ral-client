@@ -1,0 +1,12 @@
+.menu_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vh;
+    height: 3vh;
+    border: 1px solid black;
+    border-radius: 1vh;
+    background: white;
+    margin-bottom: 10%;
+    cursor: pointer;
+}

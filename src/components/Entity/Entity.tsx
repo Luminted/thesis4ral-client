@@ -7,6 +7,7 @@ import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks";
+import { EEntityTypes } from "../../typings";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
@@ -82,7 +83,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         }}>
             <div className="entity__highlight" style={highlightCSS}></div>
             {menuContent && <div className="entity__menu">{menuContent}</div>}
-            <EntityCore width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
+            <EntityCore withBorder={entityType===EEntityTypes.CARD} width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
                 onDragStart,
                 onContextMenu: onRightClick,
                 ...eventHandlers

@@ -2,8 +2,13 @@
     position: absolute;
 }
 .entity__menu{
+    display: none;
     position: absolute;
     transform: translate(-100%);
+    padding-right: 5%;
+}
+.entity:hover .entity__menu{
+    display: block;
 }
 .entity__graphic {
     width: 100%;
@@ -17,5 +22,5 @@
     height: 100%;
     z-index: -1;
     transform: translate(-2px, -2px);
-    border-radius: 2px;
+    border-radius: 0.5vh;
 }

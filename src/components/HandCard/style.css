@@ -1,6 +1,8 @@
 
 .hand-card{
     position: absolute;
+    transition: 0.05s;
+    transition-timing-function: ease-in;
 }
 
 .hand-card.hand-card--feedback:hover {

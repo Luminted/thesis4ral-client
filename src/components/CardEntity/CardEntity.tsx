@@ -27,26 +27,26 @@ export const CardEntity = ({entityId, positionX, positionY, faceUp, metadata, zI
     const displayedSVG = faceUp ? `${type}/${name}` : `${type}/${back}`
 
     return (
-        <Entity 
-            entityId={entityId}
-            entityType={EEntityTypes.CARD}
-            positionX={positionX}
-            positionY={positionY}
-            width={width}
-            height={height}
-            rotation={rotation}
-            zIndex={zIndex}
-            rotationStep={cardRotationStepDegree}
-            clickPassThrough={isGrabbed}
-            boundToTable={false}
-            grabbedBy={grabbedBy}
-            svgEndpoint={displayedSVG}
-
-            ref={entityRef}
-
-            eventHandlers={{
-                onClick
-            }}
-        />
+            <Entity 
+                entityId={entityId}
+                entityType={EEntityTypes.CARD}
+                positionX={positionX}
+                positionY={positionY}
+                width={width}
+                height={height}
+                rotation={rotation}
+                zIndex={zIndex}
+                rotationStep={cardRotationStepDegree}
+                clickPassThrough={isGrabbed}
+                boundToTable={false}
+                grabbedBy={grabbedBy}
+                svgEndpoint={displayedSVG}
+    
+                ref={entityRef}
+    
+                eventHandlers={{
+                    onClick
+                }}
+            />
     )
 }

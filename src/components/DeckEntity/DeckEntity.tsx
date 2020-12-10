@@ -7,6 +7,7 @@ import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
 import { getCardDimensions } from "../../utils";
+import "./styles.css";
 
 export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, grabbedBy, metadata}: IProps) => {
     
@@ -49,11 +50,11 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
             }}
             menuContent={
                 <>
-                <div>
-                    <button onClick={onShuffle}>Shuffle</button>
+                <div onClick={onShuffle} className="menu_button">
+                    <i className="fas fa-random"></i>
                 </div>
-                <div>
-                    <button onClick={onReset}>Reset</button>
+                <div onClick={onReset} className="menu_button">
+                    <i className="fas fa-redo"></i>
                 </div>
                 </>}
             />

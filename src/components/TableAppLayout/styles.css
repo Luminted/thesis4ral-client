@@ -14,7 +14,7 @@
 }
 .app-background--observer{
     border: red 1.5vh solid;
-    border-radius: 10px;
+    border-radius: 2vh;
 }
 .status-screen{
     display: flex;

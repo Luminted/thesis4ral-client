@@ -83,6 +83,7 @@ export const Hand = ({ handDetails}: IProps) => {
         }
     }
 
+    // TODO: handle err
     const chainDispatchReorderVerb = (err: TMaybeNull<string>, nextGameState: TGameState) => {
         const nextHand = nextGameState.hands.find(({clientId}) => clientId === ownClientId);
         if(nextHand && orderOfCardBeingHoveredWithGrabbedOne !== null){
@@ -126,7 +127,7 @@ export const Hand = ({ handDetails}: IProps) => {
     return ( 
         <>
         { <div ref={handRef} onMouseUp={onMouseUp}
-         className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
+                 className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
         {renderCards()}
         </div>}
         </>
