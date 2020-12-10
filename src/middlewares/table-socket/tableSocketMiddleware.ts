@@ -4,6 +4,8 @@ import { ETableSocketClientEvents, ETableSocketServerEvents } from "./typings";
 import { Middleware } from 'redux';
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
 import { tableSocket } from "../../socket";
+import { errorNotification } from "../../utils";
+import { getVerbErrorMessage } from "../../config";
 
 export const tableSocketMiddleware: Middleware<{}, TRootState> = 
     ({dispatch}) => {
@@ -49,7 +51,16 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                     return next(action);
                                 }
                                 if(action.verb !== null){
-                                    tableSocket.emit(ETableSocketClientEvents.VERB, action.verb, action.ackFunction);
+                                    const {verb, ackFunction} = action;
+                                    tableSocket.emit(ETableSocketClientEvents.VERB, verb, 
+                                        (err: string, nextGameState: TGameState) =>{
+                                            if(err){
+                                                errorNotification(getVerbErrorMessage(err, verb.type));
+                                            }
+                                            if(ackFunction){
+                                                ackFunction(err, nextGameState);
+                                            }
+                                        });
 
                                     console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
                                 }else{

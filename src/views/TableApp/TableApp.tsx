@@ -4,9 +4,9 @@ import { ESocketConnectionStatuses} from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setClientInfo, setTableSocketStatus, socketConnect, socketRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { ESpinnerSize } from "../../components/LoadingSpinner/typings";
 import "./styles.css"
+import { errorNotification, infoNotification, successNotification } from "../../utils/notification";
+import { getRejoinErrorMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
 
 export const TableApp = () => {
 
@@ -19,10 +19,17 @@ export const TableApp = () => {
         if(connectionStatus === ESocketConnectionStatuses.CONNECTED){
             if(clientInfo){
                 const {clientId} = clientInfo;
+                infoNotification(rejoinInfoMessage);
                 dispatch(socketRejoinTable(clientId, err => {
                     if(err){
                         console.log("error during reconnection")
                         dispatch(setClientInfo(null));
+                        errorNotification(getRejoinErrorMessage(err));
+                        
+                    }
+                    else{
+                        console.log('Reconnection successful')
+                        successNotification(rejoinSuccessMessag);
                     }
                 }));
             }

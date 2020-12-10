@@ -6,8 +6,9 @@ import { ESpinnerSize } from "../LoadingSpinner/typings";
 import { TableViewport } from "../TableViewport/TableViewport";
 import "./styles.css";
 import { IProps } from "./typings";
+import "react-toastify/dist/ReactToastify.css"
 
-export const TableAppLayout = ({connectionStatus}: IProps) => (
+export const TableAppLayout = ({connectionStatus, observing}: IProps) => (
     <>
         {connectionStatus === ESocketConnectionStatuses.CONNECTING && 
             <div className="status-screen">

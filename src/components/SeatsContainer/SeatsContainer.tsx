@@ -15,7 +15,7 @@ export const SeatsContainer = ({orientation}: IProps) => {
         }
     });
 
-    return (
+    return(
         <>
             <div style={{position: "absolute"}}>{orientation}</div>
             <div className="seats-container">
