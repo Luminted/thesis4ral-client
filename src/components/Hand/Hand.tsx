@@ -126,7 +126,6 @@ export const Hand = ({ handDetails}: IProps) => {
 
     return ( 
         <>
-        {handDetails.clientId}
         { <div ref={handRef} onMouseUp={onMouseUp}
                  className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
         {renderCards()}
