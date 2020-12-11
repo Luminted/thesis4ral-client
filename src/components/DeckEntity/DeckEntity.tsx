@@ -7,7 +7,7 @@ import { IProps } from "./interfaces";
 import {Entity} from "../Entity";
 import {deckRotationStepDegree} from "../../config";
 import { getCardDimensions } from "../../utils";
-import "./styles.css";
+import {styles} from "./styles";
 import { grabEntity } from "../../utils/grabEntity";
 
 export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, grabbedBy, metadata}: IProps) => {
@@ -92,6 +92,7 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
             boundToTable={true}
             grabbedBy={grabbedBy}
             svgEndpoint={`${type}/${name}`}
+            entityCoreClassnames={["deck-entity-illusion"]}
 
             eventHandlers={{
                 onClick,
@@ -107,5 +108,6 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
                 </div>
                 </>}
             />
+            <style jsx={true}>{styles}</style>
         </>)
 }

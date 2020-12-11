@@ -9,7 +9,7 @@ export const tableAspectRatio: TRatio = {
 export const cardTiltFactor = 1;
 
 export const tableHeightPercentage = 55;
-export const trayWidthPercentage = 15;
+export const trayWidthPercentage = 20;
 
 export const tableVirtualWidth = 10000;
 export const tableVirtualHeight = 10000;

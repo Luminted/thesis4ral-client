@@ -1,7 +1,10 @@
-export default 
+import { TDeckConfig } from "../../typings"
+
+export const french52SortedRed: TDeckConfig = 
 {
     type: "french",
     cardBack: "rcb",
+    preview: "sa",
     cards:
     [{"name":"ca","type":"french"},
     {"name":"c2","type":"french"},

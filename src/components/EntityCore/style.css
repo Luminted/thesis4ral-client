@@ -1,5 +1,6 @@
 .entity-core{
     height: 100%;
+    width: max-content;
 }
 .entity-core--bordered{
     border: 1.5px black solid;
