@@ -78,8 +78,12 @@ export const CardTable = () => {
             </div>
             <div className="card-table__table-border">
                 <div ref={tableRef}  className="card-table__table" onMouseUp={onMouseUp}>
-                    <CardRenderLayer><>{renderedCards}</></CardRenderLayer>
-                    {renderedDecks}
+                    <CardRenderLayer>
+                        <>
+                            {renderedCards}
+                            {renderedDecks}
+                        </>
+                    </CardRenderLayer>
                 </div>
             </div>
         </div>
