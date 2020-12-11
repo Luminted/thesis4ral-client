@@ -103,7 +103,7 @@ export const Hand = ({ handDetails}: IProps) => {
             
             if(entityType === EEntityTypes.CARD){
                 e.stopPropagation();
-                dispatch(emitPutInHandVerb(entityId, false, chainDispatchReorderVerb));
+                dispatch(emitPutInHandVerb(entityId, clientId, false, chainDispatchReorderVerb));
                 dispatch(setGrabbedEntityInfo(null));
                 setOrderOfCardBeingHoveredWithGrabbedOne(null);
             }
@@ -126,6 +126,7 @@ export const Hand = ({ handDetails}: IProps) => {
 
     return ( 
         <>
+        {handDetails.clientId}
         { <div ref={handRef} onMouseUp={onMouseUp}
                  className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
         {renderCards()}

@@ -54,12 +54,12 @@ export const TableViewport = () => {
     }, listenerThrottleValue), [grabbedEntityInfo]);
 
     const onMouseUp = () => {
-        if(grabbedEntityInfo && grabbedEntityInfo){
+        if(grabbedEntityInfo){
             const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
             const {entityId, entityType} = grabbedEntityInfo;
 
             if(grabbedFromHand){
-                dispatch(emitPutInHandVerb(entityId, true));
+                dispatch(emitPutInHandVerb(entityId, grabbedFromHand, true));
             }
             else if(originalPositionX && originalPositionY && entityType === EEntityTypes.CARD){
                 dispatch(emitMoveToVerb(entityId, entityType, originalPositionX, originalPositionY));
