@@ -2,13 +2,19 @@
     position: relative;
     width: 100%;
     height: 100%;
-    box-sizing: border-box;
+    border-radius: 0.5vh;
+    box-shadow: 0 0 8px 1px black;
 }
-
 .hand--own-hand{
-    background: cyan;
+    box-sizing: border-box;
+    background: rgba(50, 123, 123, 0.2);
+    box-sizing: border-box;
+    border: gray ridge 2px;
 }
-
+.hand--own-hand:hover{
+    background: rgba(50, 123, 123, 0.3);
+    border: gray ridge 2px;
+}
 .hand--partner-hand{
-    background: purple;
+    background: rgba(50, 50, 123, 0.1);
 }

@@ -30,6 +30,13 @@ export interface ICardEntityMetadata extends IEntityMetadata {
     back: string
 }
 
+export type TDeckConfig = {
+    type: string,
+    cardBack: string,
+    preview: string,
+    cards: IEntityMetadata[]
+}
+
 export interface IHandCard extends Pick<ICardEntity, "entityId" | "metadata" | "ownerDeck" | "faceUp"> {}
 
 export interface IDeckCard extends Pick<ICardEntity, "entityId" | "metadata"> {}

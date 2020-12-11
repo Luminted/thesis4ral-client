@@ -33,13 +33,14 @@
 .seat__hand {
     height: 60%;
     width: 100%;
+    margin-top: 2%;
 }
 .seat__name {
     text-align: center;
     background-color: white;
     width: fit-content;
     padding: 5%;
-    margin-top: 8%;
+    margin-top: 2%;
     border-radius: 2.5vh;
     font-size: 1.5vh;
     font-weight: bold;
