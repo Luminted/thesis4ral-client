@@ -63,12 +63,12 @@ export const CardTable = () => {
 
     useLayoutEffect(() => {
         storeTableDOMInfo();
-    }, [storeTableDOMInfo]);
+    }, [storeTableDOMInfo, isMirrored]);
 
     useEffect(() => {
         window.addEventListener("resize", storeTableDOMInfo);
         return () => window.removeEventListener("resize", storeTableDOMInfo);
-    }, [])
+    }, [storeTableDOMInfo])
 
     return (
         <>

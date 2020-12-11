@@ -9,12 +9,20 @@
 .app-background{
     height: 100vh;
     background-color: lightgray;
-    box-sizing: border-box;
+    box-sizing: content-box;
     overflow: hidden;
 }
-.app-background--observer{
+.app_background__observer-border{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
     border: red 1.5vh solid;
     border-radius: 2vh;
+    box-sizing: border-box;
+}
+.app_background__observer-border--hidden{
+    display: none;
 }
 .status-screen{
     display: flex;

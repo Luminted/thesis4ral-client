@@ -10,7 +10,8 @@ import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css"
 
 export const TableAppLayout = ({connectionStatus, isObserver}: IProps) => (
-    <div className={cn("app-background", {"app-background--observer": isObserver})} >
+    <div className="app-background">
+        <div className={cn("app_background__observer-border", {"app_background__observer-border--hidden": !isObserver})} />
         {connectionStatus === ESocketConnectionStatuses.CONNECTING && 
             <div className="status-screen">
             <LoadingSpinner size={ESpinnerSize.LARGE}/>
