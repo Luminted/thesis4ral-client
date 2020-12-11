@@ -9,7 +9,7 @@ import {getCardDimensions} from "../../utils";
 import "./style.css";
 import { selectIsMirrored } from "../../selectors";
 
-const onHoverTranslatePercentageX = -60;
+const onHoverTranslatePercentageX = -50;
 const onHoverTranslatePercentageY = -70;
 
 export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, faceUp, rotation, metadata, onMouseEnter, onMouseLeave, hoverFeedback}: IProps) => {
@@ -20,6 +20,8 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
     const [isHovered, setIsHovered] = useState(false);
 
     const isMirrored = useSelector(selectIsMirrored);
+
+    const {width, height} = getCardDimensions(metadata.type);
 
     const onDragStart = (e: DragEvent) => {
         e.preventDefault();
@@ -45,9 +47,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
         }
     }
 
-    const {width, height} = getCardDimensions(metadata.type);
-
-    const transformCSS = isHovered ? `translate(${onHoverTranslatePercentageX}%, ${onHoverTranslatePercentageY}%) scale(1.1)` : `translate(-50%, -60%)`
+    const transformCSS = isHovered ? `translate(${onHoverTranslatePercentageX}%, ${onHoverTranslatePercentageY}%)` : `translate(-50%, -60%)`
     const rotationCSS: CSSProperties = {
         transform: `rotate(${rotation}deg)`
     } 
