@@ -5,6 +5,13 @@
     transition-timing-function: ease-in;
 }
 
+.hand-card__entity-core{
+    border: 2px solid black;
+    border-radius: 0.5vh;
+    box-shadow: 1vh 1vh 5px black;
+    box-sizing: border-box;
+}
+
 .hand-card.hand-card--feedback:hover {
     z-index: 99 !important;
 }

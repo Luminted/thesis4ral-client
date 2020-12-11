@@ -3,5 +3,5 @@ export interface IProps {
     width: number
     height: number
     eventHandlerMapping: {[key in string]: (event?: any) => void}
-    withBorder?: boolean
+    classnames?: string[]
 }

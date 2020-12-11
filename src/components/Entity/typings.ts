@@ -8,6 +8,7 @@ export interface IProps extends IEntity {
     clickPassThrough: boolean
     svgEndpoint: string
     boundToTable: boolean
+    entityCoreClassnames?: string[]
     menuContent?: ReactNode
     eventHandlers?: {[key in string]: Function}
 }

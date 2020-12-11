@@ -76,7 +76,7 @@ export const HandCard = ({entityId, inHandOf, positionX, positionY, zIndex, face
                         onMouseEnter,
                         onMouseLeave
                     }}
-                    withBorder={true}
+                    classnames={["hand-card__entity-core"]}
                     graphicEndpoint={svgUrl} />
             </div>
         </div>

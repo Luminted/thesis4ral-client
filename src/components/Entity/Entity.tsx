@@ -7,7 +7,6 @@ import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks";
-import { EEntityTypes } from "../../typings";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
@@ -22,6 +21,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     rotationStep, 
     svgEndpoint,
     boundToTable,
+    entityCoreClassnames,
     grabbedBy,
     menuContent,
     eventHandlers
@@ -43,10 +43,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         left: downscaledPositionX,
         top: downscaledPositionY,
         pointerEvents: clickPassThrough ? "none" : "auto",
-    }
-    
-    const highlightCSS: CSSProperties = {
-        border: highlightColor ? `2px solid ${highlightColor}` : undefined
+        boxShadow: highlightColor ? `0 0 0.5vh 0.5vh ${highlightColor}` : undefined
     }
 
     const onRightClick = (e: MouseEvent) => {
@@ -81,9 +78,8 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         <div ref={ref} className="entity" style={{
             ...entityCSS
         }}>
-            <div className="entity__highlight" style={highlightCSS}></div>
             {menuContent && <div className="entity__menu">{menuContent}</div>}
-            <EntityCore withBorder={entityType===EEntityTypes.CARD} width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
+            <EntityCore classnames={entityCoreClassnames} width={width} height={height} graphicEndpoint={svgEndpoint} eventHandlerMapping={{
                 onDragStart,
                 onContextMenu: onRightClick,
                 ...eventHandlers
