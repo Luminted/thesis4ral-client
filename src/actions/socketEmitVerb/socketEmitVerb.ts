@@ -7,7 +7,7 @@ export type TSocketEmitVerbAction = {
     ackFunction?: Function
 }
 
-export type TSocketVerbAckFunction = (error: TMaybeNull<string>, nextGameState: TGameState) => void;
+export type TSocketVerbAckFunction = (error: TMaybeNull<string>, nextGameState: TGameState, result?: any) => void;
 
 export const socketEmitVerb = (verb: TVerb, ackFunction?: TSocketVerbAckFunction): TSocketEmitVerbAction => {
     return {

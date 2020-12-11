@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useState } from "react";
+import React, { ChangeEvent, CSSProperties, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
@@ -24,7 +24,7 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
     const isSeatMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
 
     const onEmptySeatClick = () => setNameEntryOpen(!isNameEntryOpen);
-    const onNameInputChange = ({currentTarget: {value}}) => setEnteredName(value);
+    const onNameInputChange = ({target: {value}}: ChangeEvent<HTMLInputElement>) => setEnteredName(value);
     
     const onSubmit = () => {
         setNameEntryOpen(false);

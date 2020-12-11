@@ -1,5 +1,6 @@
 import React, {MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// @ts-ignore
 import interpolatingPolynomial from "interpolating-polynomial";
 import cn from "classnames";
 import { emitPutInHandVerb, emitReorderHandVerb, setGrabbedEntityInfo } from "../../actions";
@@ -36,7 +37,7 @@ export const Hand = ({ handDetails}: IProps) => {
     const {cards, ordering, clientId} = handDetails;
     const isOwnHand = ownClientId === clientId;
 
-    const getOnMouseEnterHandCard = orderOfCard => () => {
+    const getOnMouseEnterHandCard = (orderOfCard: number) => () => {
         if(grabbedEntityInfo && grabbedEntityInfo.entityType === EEntityTypes.CARD){
             setOrderOfCardBeingHoveredWithGrabbedOne(orderOfCard);
         }

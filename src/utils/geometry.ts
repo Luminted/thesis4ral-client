@@ -1,4 +1,4 @@
-export const calculateAdjacentAngle = (adjacent, hypotenuse) => {
+export const calculateAdjacentAngle = (adjacent: number, hypotenuse: number) => {
     return radianToDegrees(Math.acos(adjacent / hypotenuse));
   }
 

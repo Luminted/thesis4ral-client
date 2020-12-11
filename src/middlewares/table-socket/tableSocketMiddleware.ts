@@ -53,12 +53,12 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> =
                                 if(action.verb !== null){
                                     const {verb, ackFunction} = action;
                                     tableSocket.emit(ETableSocketClientEvents.VERB, verb, 
-                                        (err: string, nextGameState: TGameState) =>{
+                                        (err: string, nextGameState: TGameState, handlerResult: any) =>{
                                             if(err){
                                                 warningNotification(getVerbErrorMessage(err, verb.type));
                                             }
                                             if(ackFunction){
-                                                ackFunction(err, nextGameState);
+                                                ackFunction(err, nextGameState, handlerResult);
                                             }
                                         });
 

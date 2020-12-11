@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {throttle} from "lodash";
+// @ts-ignore
 import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
 import { selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
 import {emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb, setGrabbedEntityInfo, setIsMirrored} from "../../actions";
@@ -55,6 +56,7 @@ export const TableViewport = () => {
 
     const onMouseUp = () => {
         if(grabbedEntityInfo){
+            console.log("release")
             const {grabbedFromHand, originalPositionX, originalPositionY} = grabbedEntityInfo;
             const {entityId, entityType} = grabbedEntityInfo;
 

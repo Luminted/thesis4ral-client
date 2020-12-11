@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+// @ts-ignore
 import dynamicMiddlewares from 'redux-dynamic-middlewares';
 import {tableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware } from './middlewares/';
 import { rootReducer } from './reducers';

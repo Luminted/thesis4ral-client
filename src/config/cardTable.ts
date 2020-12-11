@@ -16,7 +16,7 @@ export const tableVirtualHeight = 10000;
 
 export const trayDecks = [french52SortedRed, french52SortedBlue];
 
-export const seatIdMapping = {
+export const seatIdMapping: {[key in string]: string} = {
     1: 'NORTH_WEST',
     2: 'NORTH',
     3: 'NORTH_EAST',
@@ -25,7 +25,7 @@ export const seatIdMapping = {
     6: 'SOUTH_EAST'
 }
 
-export const seatColors = { 
+export const seatColors: {[key in string]: string} = { 
     1: "red",
     2: "blue",
     3: "yellow",
@@ -37,3 +37,4 @@ export const seatColors = {
 export const tableRimWidth = 3;
 export const trayRimWidth = 1;
 export const borderRadius = 2;
+export const entityClientHighlightThickness = 4;

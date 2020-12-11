@@ -7,6 +7,7 @@ import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks";
+import { grabEntity } from "../../utils/grabEntity";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
     entityId,
@@ -58,19 +59,19 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(({
         const {top, left, right, bottom, width: targetWidth, height: targetHeight} = e.currentTarget.getBoundingClientRect();
         const relativeMouseX = clientX - left;
         const relativeMouseY = clientY - top;
-        
-        dispatch(emitGrabVerb(entityId, entityType, e.clientX, e.clientY));
-        dispatch(setGrabbedEntityInfo({
+        grabEntity(dispatch,
             entityId,
             entityType,
-            height: targetHeight,
-            width: targetWidth,
-            relativeGrabbedAtX: relativeMouseX,
-            relativeGrabbedAtY: relativeMouseY,
-            restricted: boundToTable,
-            originalPositionX: (isMirrored ? right : left),
-            originalPositionY: (isMirrored ? bottom : top)
-        }));
+            clientX,
+            clientY,
+            targetWidth,
+            targetHeight,
+            relativeMouseX,
+            relativeMouseY,
+            boundToTable,
+            (isMirrored ? right : left),
+            (isMirrored ? bottom : top)
+            )
     }
     
 
