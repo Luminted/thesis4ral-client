@@ -15,6 +15,7 @@ export const styles = css`
     background: white;
     margin-bottom: 10%;
     cursor: pointer;
+    font-size: 2vh;
 }
 
 :global(.deck-entity-illusion) {
