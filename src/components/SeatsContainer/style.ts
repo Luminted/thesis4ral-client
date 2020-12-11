@@ -6,7 +6,7 @@ export const style = css`
         position: relative;
         display: flex;
         justify-content: space-between;
-        width: 85%;
+        width: 95%;
         height: ${(100 - tableHeightPercentage) / 2}vh;
         margin: auto;
         z-index: 2;
