@@ -26,7 +26,7 @@ export const EntityRenderLayer = ({ children }: IProps) => {
     return () => {
       document.querySelector(".table-viewport")?.appendChild(element);
     };
-  }, [isMirrored]);
+  }, [isMirrored, element]);
 
   return ReactDOM.createPortal(children, element);
 };

@@ -9,11 +9,7 @@ import { Seat } from "../Seat";
 export const SeatsContainer = ({ orientation }: IProps) => {
   const clients = useSelector(selectClients);
 
-  const orientationsSeatIds = Object.keys(seatIdMapping).filter((id) => {
-    if (seatIdMapping[id]) {
-      return seatIdMapping[id].includes(orientation);
-    }
-  });
+  const orientationsSeatIds = Object.keys(seatIdMapping).filter((id) =>  seatIdMapping[id]?.includes(orientation));
 
   return (
     <>

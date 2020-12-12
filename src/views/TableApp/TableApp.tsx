@@ -34,6 +34,7 @@ export const TableApp = () => {
         );
       }
     }
+    // eslint-disable-next-line
   }, [connectionStatus]);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export const TableApp = () => {
       dispatch(socketConnect());
       dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTING));
     }
+    // eslint-disable-next-line
   }, []);
 
   return <TableAppLayout connectionStatus={connectionStatus} isObserver={isObserving} />;

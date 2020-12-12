@@ -54,7 +54,7 @@ export const CardTable = () => {
         }),
       );
     }
-  }, [tableRef]);
+  }, [tableRef, dispatch]);
 
   useLayoutEffect(() => {
     storeTableDOMInfo();

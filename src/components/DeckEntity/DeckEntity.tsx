@@ -27,6 +27,8 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
     relativeGrabbedAtY: number,
     originalPositionX: number,
     originalPositionY: number,
+    cardWidth: number,
+    cardHeight: number
   ) => (err: TMaybeNull<string>, nextGameState: TGameState, drawnCardId: string) => {
     if (!err) {
       const { cards } = nextGameState;
@@ -38,6 +40,8 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
           setGrabbedEntityInfo({
             entityId: drawnCardId,
             restricted: false,
+            width: cardWidth,
+            height: cardHeight,
             entityType,
             relativeGrabbedAtX,
             relativeGrabbedAtY,
@@ -62,12 +66,12 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
     const relativeMouseY = clientY - top;
     const originalPositionX = isMirrored ? right : left;
     const originalPositionY = isMirrored ? bottom : top;
-    const ackFunction = getDrawFaceUpAckFunction(clientX, clientY, relativeMouseX, relativeMouseY, originalPositionX, originalPositionY);
+    const ackFunction = getDrawFaceUpAckFunction(clientX, clientY, relativeMouseX, relativeMouseY, originalPositionX, originalPositionY, width, height);
 
     if (shiftKey) {
       dispatch(emitDrawFaceDownVerb(entityId, ackFunction));
     } else {
-      grabEntity(dispatch, entityId, EEntityTypes.DECK, clientX, clientY, width, height, relativeMouseX, relativeMouseY, false, originalPositionX, originalPositionY);
+      grabEntity(dispatch, entityId, EEntityTypes.DECK, clientX, clientY, width, height, relativeMouseX, relativeMouseY, true, originalPositionX, originalPositionY);
     }
   };
 

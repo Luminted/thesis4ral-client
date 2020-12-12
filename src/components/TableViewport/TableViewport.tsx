@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { throttle } from "lodash";
 // @ts-ignore
@@ -54,9 +54,9 @@ export const TableViewport = () => {
 
   const isMirrored = clientInfo ? seatIdMapping[clientInfo.seatId].includes("NORTH") : false;
 
-  const onMouseMove = useCallback(
-    throttle((e: MouseEvent) => {
+  const onMouseMove = useCallback((e: MouseEvent) => {
       if (tablePosition && tablePixelDimensions && grabbedEntityInfo && grabbedEntityInfo.width && grabbedEntityInfo.height) {
+        const {clientX, clientY} = e;
         if (grabbedEntityInfo.restricted) {
           const { width, height, relativeGrabbedAtX, relativeGrabbedAtY } = grabbedEntityInfo;
           const [topClampBorder, rightClampBorder, bottomClampBorder, leftClampBorder] = getClampBorders(
@@ -71,14 +71,14 @@ export const TableViewport = () => {
             isMirrored,
             trayWidthPercentage,
           );
-          dispatch(emitMoveVerb(clamp(e.clientX, leftClampBorder, rightClampBorder), clamp(e.clientY, topClampBorder, bottomClampBorder)));
+          dispatch(emitMoveVerb(clamp(clientX, leftClampBorder, rightClampBorder), clamp(clientY, topClampBorder, bottomClampBorder)));
         } else {
-          dispatch(emitMoveVerb(e.clientX, e.clientY));
+          dispatch(emitMoveVerb(clientX, clientY));
         }
       }
-    }, listenerThrottleValue),
-    [grabbedEntityInfo],
-  );
+    }, [grabbedEntityInfo, tablePosition, isMirrored, tablePixelDimensions, dispatch]);
+
+  const throttledOnMouseMove = useMemo(() => throttle(onMouseMove, listenerThrottleValue), [onMouseMove]);
 
   const onMouseUp = () => {
     if (grabbedEntityInfo) {
@@ -104,13 +104,14 @@ export const TableViewport = () => {
       addMiddleware(mirrorVerbPositionMiddleware);
     }
     return () => removeMiddleware(mirrorVerbPositionMiddleware);
-  }, [isMirrored]);
+  }, [isMirrored, dispatch]);
 
   // Reacts event pooling makes this event choppy
   useEffect(() => {
-    tableViewportRef.current?.addEventListener("mousemove", onMouseMove);
-    return () => tableViewportRef.current?.removeEventListener("mousemove", onMouseMove);
-  }, [onMouseMove]);
+    const tableViewport = tableViewportRef.current;
+    tableViewport?.addEventListener("mousemove", throttledOnMouseMove);
+    return () => tableViewport?.removeEventListener("mousemove", throttledOnMouseMove);
+  }, [throttledOnMouseMove]);
 
   return (
     <div ref={tableViewportRef} onMouseUp={onMouseUp} className="table-viewport">

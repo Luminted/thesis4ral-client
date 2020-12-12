@@ -6,5 +6,5 @@ import { IProps } from "./typings";
 export const ImageLoader = ({ resourceRoute }: IProps) => {
   const resourceURL = `http://localhost:${serverPort}/${resourceRoute}.svg`;
 
-  return <img className="svg-container" src={resourceURL} />;
+  return <img alt="" className="svg-container" src={resourceURL} />;
 };
