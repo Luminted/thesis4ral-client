@@ -1,44 +1,44 @@
-import { createMockMiddleware } from "../../utils/testutils"
-import { TActionTypes, TSocketActionTypes, ESocketActionTypeKeys } from "../../actions"
-import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware"
+import { createMockMiddleware } from "../../utils/testutils";
+import { TActionTypes, TSocketActionTypes, ESocketActionTypeKeys } from "../../actions";
+import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware";
 import { TVerb } from "../../typings";
 import { inverseMirrorOnTablePosition } from "../../utils";
 
-describe('Testing mirrorPositionMiddleware', () => {
+describe("Testing mirrorPositionMiddleware", () => {
+  const tableWidth = 1200;
+  const tableHeight = 1000;
 
-    const tableWidth = 1200;
-    const tableHeight = 1000;
+  const mockMiddleware = createMockMiddleware<TActionTypes>(mirrorVerbPositionMiddleware, {
+    tablePixelDimensions: {
+      width: tableWidth,
+      height: tableHeight,
+    },
+  });
 
-    const mockMiddleware = createMockMiddleware<TActionTypes>(mirrorVerbPositionMiddleware, {
-        tablePixelDimensions: {
-            width: tableWidth,
-            height: tableHeight
-        }
-    });
-    
-    it('should apply inverseMirrorOnTablePosition on verb', () => {
-        const {invoke, next} = mockMiddleware;
-        const positionX = 111;
-        const positionY = 333;
+  it("should apply inverseMirrorOnTablePosition on verb", () => {
+    const { invoke, next } = mockMiddleware;
+    const positionX = 111;
+    const positionY = 333;
 
-        const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
-        const action: TSocketActionTypes = {
-            type: ESocketActionTypeKeys.EMIT_VERB,
-            verb: {
-                positionX,
-                positionY
-            } as TVerb,
-        }
-        const expectedTransformedAction = {
-            ...action,
-            verb: {
-                positionX: transformedPosition[0],
-                positionY: transformedPosition[1]
-            } as TVerb
-        }
+    const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
+    /* tslint:disable */
+    const action: TSocketActionTypes = {
+      type: ESocketActionTypeKeys.EMIT_VERB,
+      verb: {
+        positionX,
+        positionY,
+      } as TVerb,
+    };
+    /* tslint:enable */
+    const expectedTransformedAction = {
+      ...action,
+      verb: {
+        positionX: transformedPosition[0],
+        positionY: transformedPosition[1],
+      },
+    };
 
-        // jest.spyOn(mockMiddleware, 'next')
-        invoke(action);
-        expect(next).toHaveBeenCalledWith(expectedTransformedAction)
-    })
-})
+    invoke(action);
+    expect(next).toHaveBeenCalledWith(expectedTransformedAction);
+  });
+});

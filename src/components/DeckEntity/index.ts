@@ -1,1 +1,1 @@
-export {DeckEntity} from "./DeckEntity";
+export { DeckEntity } from "./DeckEntity";

@@ -1,9 +1,9 @@
 export interface IProps {
-    size?: ESpinnerSize
+  size?: ESpinnerSize;
 }
 
 export enum ESpinnerSize {
-    SMALL,
-    MEDIUM,
-    LARGE
+  SMALL,
+  MEDIUM,
+  LARGE,
 }

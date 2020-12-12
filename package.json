@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/styled-jsx": "^2.2.8",
     "classnames": "^2.2.6",
     "interpolating-polynomial": "^1.1.2",
     "lodash": "^4.17.20",
@@ -13,7 +12,8 @@
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.3.1",
+    "react-scripts": "4.0.1",
+    "react-toastify": "^6.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-dynamic-middlewares": "^2.0.0",
@@ -27,7 +27,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "serve": "node -r dotenv/config server.js"
+    "serve": "node -r dotenv/config server.js",
+    "lint": "tslint --fix -c tslint.json -p ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +49,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/classnames": "^2.2.11",
     "@types/enzyme": "^3.10.5",
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.150",
@@ -56,17 +58,23 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router": "^5.1.7",
     "@types/react-router-dom": "^5.1.6",
+    "@types/react-toastify": "^4.1.0",
     "@types/redux-mock-store": "^1.0.2",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
+    "@types/styled-jsx": "^2.2.8",
+    "tslint": "^6.1.3",
     "customize-cra": "^1.0.0",
     "dotenv": "^8.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "express": "^4.17.1",
-    "react-app-rewired": "^2.1.6",
-    "redux-mock-store": "^1.5.4",
+    "prettier": "^2.2.1",
     "socket.io": "^2.3.0",
-    "ts-node": "^8.8.1"
+    "ts-node": "^8.8.1",
+    "tslint-config-airbnb": "^5.11.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^9.0.0",
+    "tslint-no-unused": "^0.2.0-alpha.1",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-react": "^4.1.0"
   }
 }

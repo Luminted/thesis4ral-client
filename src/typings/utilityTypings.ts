@@ -1,6 +1,6 @@
-export type TMaybeNull<T> = T | null
+export type TMaybeNull<T> = T | null;
 
 export type TRatio = {
-    numerator: number
-    divisor: number,
-}
+  numerator: number;
+  divisor: number;
+};

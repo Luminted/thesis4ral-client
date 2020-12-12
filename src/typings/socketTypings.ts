@@ -1,10 +1,10 @@
 export enum ESocketConnectionStatuses {
-    CONNECTED,
-    DISCONNECTED,
-    CONNECTING,
+  CONNECTED,
+  DISCONNECTED,
+  CONNECTING,
 }
 
 export enum EClientConnectionStatuses {
-    CONNECTED = 'CONNECTED',
-    DISCONNECTED = 'DISCONNECTED',
+  CONNECTED = "CONNECTED",
+  DISCONNECTED = "DISCONNECTED",
 }

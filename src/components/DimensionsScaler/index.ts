@@ -1,1 +1,1 @@
-export {DimensionsScaler} from "./DimensionsScaler"
+export { DimensionsScaler } from "./DimensionsScaler";

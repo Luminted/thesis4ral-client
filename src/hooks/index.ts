@@ -1,1 +1,1 @@
-export {useGetEntityHighlightColor} from "./useGetEntityHighlightColor";
+export { useGetEntityHighlightColor } from "./useGetEntityHighlightColor";

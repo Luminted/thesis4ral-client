@@ -1,8 +1,8 @@
 import { EOrientation } from "../../typings";
 
 export interface IProps {
-    seatId: string
-    orientation: EOrientation
-    clientId?: string
-    name?: string
+  seatId: string;
+  orientation: EOrientation;
+  clientId?: string;
+  name?: string;
 }

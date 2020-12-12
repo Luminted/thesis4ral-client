@@ -1,1 +1,1 @@
-export {HandCard} from "./HandCard";
+export { HandCard } from "./HandCard";

@@ -1,12 +1,12 @@
 import { frenchCardConfig } from "../entities";
-import {ECardTypes} from "../typings";
+import { ECardTypes } from "../typings";
 
-export const getCardDimensions = (type: string) => {
-    switch(type){
-        case ECardTypes.FRENCH:
-            const {height, width} = frenchCardConfig;
-            return {width, height};
-        default:
-            throw new Error("Type of card not found.");
-    }
-}
+export const getCardHeight = (type: string) => {
+  switch (type) {
+    case ECardTypes.FRENCH:
+      const { height } = frenchCardConfig;
+      return height;
+    default:
+      throw new Error("Type of card not found.");
+  }
+};

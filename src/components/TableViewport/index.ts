@@ -1,1 +1,1 @@
-export {TableViewport} from "./TableViewport";
+export { TableViewport } from "./TableViewport";

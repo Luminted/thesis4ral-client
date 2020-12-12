@@ -1,3 +1,3 @@
 export interface IProps {
-    resourceRoute: string
+  resourceRoute: string;
 }

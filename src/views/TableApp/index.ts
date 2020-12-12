@@ -1,1 +1,1 @@
-export {TableApp} from "./TableApp";
+export { TableApp } from "./TableApp";

@@ -1,1 +1,1 @@
-export {EntityCore} from "./EntityCore";
+export { EntityCore } from "./EntityCore";

@@ -1,6 +1,6 @@
 import { ESocketConnectionStatuses } from "../../typings";
 
 export interface IProps {
-    connectionStatus: ESocketConnectionStatuses
-    isObserver: boolean
+  connectionStatus: ESocketConnectionStatuses;
+  isObserver: boolean;
 }

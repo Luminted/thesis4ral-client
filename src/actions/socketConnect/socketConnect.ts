@@ -1,12 +1,12 @@
-import { ESocketActionTypeKeys } from "../actionTypeKeys"
+import { ESocketActionTypeKeys } from "../actionTypeKeys";
 
 export type TSocketConnectAction = {
-    type: ESocketActionTypeKeys.CONNECT
-}
+  type: ESocketActionTypeKeys.CONNECT;
+};
 
-//TODO: remove if auto connection stays in use
+// TODO: remove if auto connection stays in use
 export const socketConnect = (): TSocketConnectAction => {
-    return {
-        type: ESocketActionTypeKeys.CONNECT
-    }
-}
+  return {
+    type: ESocketActionTypeKeys.CONNECT,
+  };
+};

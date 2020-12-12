@@ -1,1 +1,1 @@
-export {EntityTray} from "./EntityTray";
+export { EntityTray } from "./EntityTray";

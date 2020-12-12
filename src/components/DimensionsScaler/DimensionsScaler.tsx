@@ -6,22 +6,19 @@ import { TRatio } from "../../typings";
 import { downscale } from "../../utils";
 import { IProps } from "./typings";
 
-export const DimensionsScaler = ({width, height, children}: IProps) => {
+export const DimensionsScaler = ({ height, children }: IProps) => {
+  const tablePixelDimensions = useSelector(selectTablePixelDimensions);
 
-    const tablePixelDimensions = useSelector(selectTablePixelDimensions);
+  const horizontalScalingRatio: TRatio = {
+    numerator: tablePixelDimensions?.width || 0,
+    divisor: tableVirtualWidth,
+  };
 
-    const horizontalScalingRatio: TRatio = {
-        numerator: tablePixelDimensions?.width || 0,
-        divisor: tableVirtualWidth
-    }
-    
-    const downscaledHeight = downscale(horizontalScalingRatio, height);
+  const downscaledHeight = downscale(horizontalScalingRatio, height);
 
-    const computedCSS: CSSProperties = {
-        height: downscaledHeight
-    }
+  const computedCSS: CSSProperties = {
+    height: downscaledHeight,
+  };
 
-    return <div style={computedCSS}>
-        {children}
-    </div>
-}
+  return <div style={computedCSS}>{children}</div>;
+};
