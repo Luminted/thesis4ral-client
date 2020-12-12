@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { deckSide } = colors;
+const { deckSide, shadow } = colors;
 
 export const style = css`
   .entity-tray-deck {
@@ -23,7 +23,7 @@ export const style = css`
     border-bottom: 0.5vh solid ${deckSide};
     border-right: 0.5vh solid ${deckSide};
     border-radius: 0.5vh;
-    box-shadow: 2px 2px 2px black;
+    box-shadow: 2px 2px 2px ${shadow};
     background: ${deckSide};
   }
   :global(.entity-tray-tray-deck-illusion:hover) {

@@ -19,6 +19,8 @@ export interface ICardEntity extends IEntity {
 
 export interface IDeckEntity extends IEntity {
   metadata: IEntityMetadata;
+  numberOfCards: number,
+  drawIndex: number
 }
 
 export interface IEntityMetadata {

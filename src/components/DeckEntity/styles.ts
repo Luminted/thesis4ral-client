@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { deckSide, buttonBackground, buttonBackgroundHighlight, buttonBackgroundActive } = colors;
+const { shadow, deckSide, buttonBackground, buttonBackgroundHighlight, buttonBackgroundActive } = colors;
 
 export const styles = css`
   .menu-button {
@@ -23,11 +23,17 @@ export const styles = css`
   .menu-button:active {
     background-color: ${buttonBackgroundActive} !important;
   }
-  :global(.deck-entity-illusion) {
+  :global(.deck-entity-full) {
     border-bottom: 0.5vh solid ${deckSide};
     border-right: 0.5vh solid ${deckSide};
     border-radius: 0.5vh;
-    box-shadow: 2px 2px 2px black;
+    box-shadow: 2px 2px 2px ${shadow};
     background: ${deckSide};
   }
+  :global(.deck-entity-empty) {
+    filter: opacity(50%) saturate(150%);
+    box-shadow: 2px 2px 2px ${shadow};
+    border-radius: 0.5vh;
+  }
+
 `;

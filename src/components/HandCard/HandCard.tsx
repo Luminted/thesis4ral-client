@@ -6,7 +6,7 @@ import { IProps } from "./typings";
 import { EEntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
 import { getCardHeight } from "../../utils";
-import "./style.css";
+import {style} from "./style";
 import { selectIsMirrored } from "../../selectors";
 
 const onHoverTranslatePercentageX = -50;
@@ -63,6 +63,7 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
   const svgUrl = faceUp ? `${metadata.type}/${metadata.name}` : `${metadata.type}/${metadata.back}`;
 
   return (
+    <>
     <div
       ref={handCardRef}
       onMouseEnter={() => setIsHovered(true)}
@@ -83,5 +84,7 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
         />
       </div>
     </div>
+    <style jsx={true}>{style}</style>
+    </>
   );
 };

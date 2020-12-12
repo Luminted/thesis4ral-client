@@ -17,4 +17,5 @@ export const colors = {
   buttonBackground: "#581c2165",
   buttonBackgroundHighlight: "#581c2195",
   buttonBackgroundActive: "#501a1e",
+  shadow: "#443c3c"
 };

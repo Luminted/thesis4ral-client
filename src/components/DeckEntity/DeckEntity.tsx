@@ -10,7 +10,7 @@ import { getCardHeight } from "../../utils";
 import { styles } from "./styles";
 import { grabEntity } from "../../utils/grabEntity";
 
-export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, grabbedBy, metadata }: IProps) => {
+export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, grabbedBy, drawIndex, numberOfCards, metadata }: IProps) => {
   const dispatch = useDispatch();
 
   const grabbedEntityInfo = useSelector(selectGrabbedEntityInfo);
@@ -18,6 +18,8 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
 
   const isGrabbed = grabbedEntityInfo?.entityId === entityId;
   const { name, type } = metadata;
+  const isEmpty = drawIndex > numberOfCards - 1;
+  const entityCoreClassnames = isEmpty ? ["deck-entity-empty"] : ["deck-entity-full"];
   const baseHeight = getCardHeight(type);
 
   const getDrawFaceUpAckFunction = (
@@ -78,6 +80,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
   const onShuffle = () => dispatch(emitShuffleVerb(entityId));
 
   const onReset = () => dispatch(emitResetVerb(entityId));
+
   return (
     <>
       <Entity
@@ -93,16 +96,17 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
         boundToTable={true}
         grabbedBy={grabbedBy}
         svgEndpoint={`${type}/${name}`}
-        entityCoreClassnames={["deck-entity-illusion"]}
+        entityCoreClassnames={entityCoreClassnames}
         eventHandlers={{
           onClick,
           onDragStart,
         }}
         menuContent={
           <>
+          {!isEmpty &&
             <div onClick={onShuffle} className="menu-button">
               <i className="fas fa-random" />
-            </div>
+            </div>}
             <div onClick={onReset} className="menu-button">
               <i className="fas fa-redo" />
             </div>

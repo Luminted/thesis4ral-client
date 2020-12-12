@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { ownHand, opponentHand, ownHandHovered } = colors;
+const { shadow, ownHand, opponentHand, ownHandHovered } = colors;
 
 export const style = css`
   .hand {
@@ -9,7 +9,7 @@ export const style = css`
     width: 100%;
     height: 100%;
     border-radius: 0.5vh;
-    box-shadow: 0 0 8px 1px black;
+    box-shadow: 0 0 8px 1px ${shadow};
   }
   .hand--own-hand {
     box-sizing: border-box;

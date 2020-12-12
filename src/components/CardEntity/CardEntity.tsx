@@ -7,7 +7,7 @@ import { selectGrabbedEntityInfo } from "../../selectors";
 import { cardRotationStepDegree } from "../../config";
 import { Entity } from "../Entity";
 import { getCardHeight } from "../../utils";
-import "./styles.css";
+import {style} from "./style";
 
 export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, zIndex, grabbedBy, rotation = 0 }: IProps) => {
   const dispatch = useDispatch();
@@ -28,6 +28,7 @@ export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, z
   const highlightClass = grabbedBy ? "card-entity__drag-highlight" : "card-entity__mouse-highlight";
 
   return (
+    <>
     <Entity
       entityId={entityId}
       entityType={EEntityTypes.CARD}
@@ -47,5 +48,7 @@ export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, z
         onClick,
       }}
     />
+    <style jsx={true}>{style}</style>
+    </>
   );
 };
