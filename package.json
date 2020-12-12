@@ -28,7 +28,7 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "serve": "node -r dotenv/config server.js",
-    "lint": "tslint --fix -c tslint.json -p ."
+    "lint": "tslint --fix -c tslint.json -p ./tsconfig.build.json"
   },
   "eslintConfig": {
     "extends": "react-app"
