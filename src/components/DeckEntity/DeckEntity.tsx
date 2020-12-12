@@ -100,10 +100,10 @@ export const DeckEntity = ({entityId, positionX, positionY, zIndex, rotation, gr
             }}
             menuContent={
                 <>
-                <div onClick={onShuffle} className="menu_button">
+                <div onClick={onShuffle} className="menu-button">
                     <i className="fas fa-random"></i>
                 </div>
-                <div onClick={onReset} className="menu_button">
+                <div onClick={onReset} className="menu-button">
                     <i className="fas fa-redo"></i>
                 </div>
                 </>}

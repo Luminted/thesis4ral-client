@@ -14,10 +14,9 @@ export const style = css`
 .entity-tray-deck__preview{
     position: absolute;
     transform-origin: center;
+    transform: rotate(20deg) scale(0.85);
     height: 100%;
-    rotate: 20deg;
     width: 100%;
-    scale: 0.85;
     pointer-events: none;
 }
 :global(.entity-tray-tray-deck-illusion){

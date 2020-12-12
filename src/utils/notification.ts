@@ -3,7 +3,8 @@ import { toast, ToastOptions } from "react-toastify"
 
 const toastConfig:ToastOptions = {
     position: "top-right",
-    draggable: false
+    draggable: false,
+    
 }
 
 export const warningNotification = (message: string) => toast.warn(message, toastConfig);

@@ -5,12 +5,17 @@ import { LeaveTableButton } from "../LeaveTableButton/LeaveTableButton";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { ESpinnerSize } from "../LoadingSpinner/typings";
 import { TableViewport } from "../TableViewport/TableViewport";
-import "./styles.css";
+import {style} from "./styles";
 import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css"
+import { BackgroundPattern } from "./BackgroundPattern";
 
 export const TableAppLayout = ({connectionStatus, isObserver}: IProps) => (
-    <div className="app-background">
+    <>
+    <div className="table-app-layout">
+        <div className="app-background">
+            <BackgroundPattern/>
+        </div>
         <div className={cn("app_background__observer-border", {"app_background__observer-border--hidden": !isObserver})} />
         {connectionStatus === ESocketConnectionStatuses.CONNECTING && 
             <div className="status-screen">
@@ -40,6 +45,7 @@ export const TableAppLayout = ({connectionStatus, isObserver}: IProps) => (
             </div>
             <TableViewport/>
         </div>}
-    </div>
-)
+        </div>
+        <style jsx={true}>{style}</style>
+        </>)
 

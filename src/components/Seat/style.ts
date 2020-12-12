@@ -1,3 +1,9 @@
+import css from "styled-jsx/css";
+import {colors} from "../../config";
+
+const {backgroundPattern, buttonBackground, buttonBackgroundHighlight} = colors;
+
+export const style = css`
 .seat{
     position: relative;
     width: 30%;
@@ -21,13 +27,14 @@
     justify-content: center;
     align-items: center;
     margin: 10%;
-    background: wheat;
+    background: ${buttonBackground};
     border: 1px black dashed;
     cursor: pointer;
     font-size: 2vh;
+    font-weight: 600;
 }
 .seat__empty-state:hover{
-    background: white;
+    background: ${buttonBackgroundHighlight};
     border: 1px black solid;
 }
 .seat__hand {
@@ -37,7 +44,7 @@
 }
 .seat__name {
     text-align: center;
-    background-color: white;
+    background-color: ${backgroundPattern};
     width: fit-content;
     padding: 5%;
     margin-top: 2%;
@@ -52,4 +59,4 @@
     font-size: 2vh;
     font-weight: 500;
     margin-bottom: 5%;
-}
+}`

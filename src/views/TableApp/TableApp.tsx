@@ -4,7 +4,7 @@ import { ESocketConnectionStatuses} from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setClientInfo, setTableSocketStatus, socketConnect, socketRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
-import { errorNotification, infoNotification, successNotification } from "../../utils/notification";
+import { errorNotification, infoNotification, successNotification, warningNotification } from "../../utils/notification";
 import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
 
 export const TableApp = () => {
@@ -25,7 +25,7 @@ export const TableApp = () => {
                     if(err){
                         console.log("error during reconnection")
                         dispatch(setClientInfo(null));
-                        errorNotification(getRejoinErrorMessage(err));
+                        warningNotification(getRejoinErrorMessage(err));
                         
                     }
                     else{

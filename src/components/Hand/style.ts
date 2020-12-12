@@ -1,3 +1,9 @@
+import css from "styled-jsx/css";
+import {colors} from "../../config";
+
+const {ownHand, opponentHand, ownHandHovered} = colors;
+
+export const style = css`
 .hand {
     position: relative;
     width: 100%;
@@ -7,14 +13,14 @@
 }
 .hand--own-hand{
     box-sizing: border-box;
-    background: rgba(50, 123, 123, 0.2);
+    background: ${ownHand};
     box-sizing: border-box;
     border: gray ridge 2px;
 }
 .hand--own-hand:hover{
-    background: rgba(50, 123, 123, 0.3);
+    background: ${ownHandHovered};
     border: gray ridge 2px;
 }
 .hand--partner-hand{
-    background: rgba(50, 50, 123, 0.1);
-}
+    background: ${opponentHand};
+}`

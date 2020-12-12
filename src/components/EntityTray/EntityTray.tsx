@@ -89,8 +89,8 @@ export const EntityTray = () => {
             </div>
             <div className="entity-tray__segment">
                 <div className="remove-entity-zone" onMouseUp={removeEntity}>
-                    <div>
-                        REMOVE
+                    <div className="remove-entity-zone__icon">
+                        <i className="fas fa-trash"></i>
                     </div>
                 </div>
             </div>

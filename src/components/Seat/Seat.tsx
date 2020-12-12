@@ -4,7 +4,7 @@ import cn from "classnames";
 import { selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
 import { Hand } from "../Hand";
 import { IProps } from "./typings";
-import "./style.css"
+import {style} from "./style";
 import { getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
 import { EOrientation } from "../../typings";
@@ -48,7 +48,9 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
         border: `3px solid ${seatColors[seatId]}`
     }
 
-    return <div className={"seat"}>   
+    return (
+    <>
+    <div className={"seat"}>   
         {!clientHandDetails && !clientInfo &&
             <div className={cn("seat__empty-state", "seat__content")} onClick={onEmptySeatClick}>
                 {isNameEntryOpen ? 
@@ -75,4 +77,6 @@ export const Seat = ({seatId, clientId = "", orientation, name}: IProps) => {
             </div>
         }
     </div>
+    <style jsx={true}>{style}</style>
+    </>)
 }

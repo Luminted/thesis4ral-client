@@ -10,7 +10,7 @@ import { calculateAdjacentAngle, calculateDistance } from "../../utils"
 import { HandCard } from "../HandCard";
 import { EEntityTypes, TGameState, TMaybeNull } from "../../typings";
 import { cardTiltFactor } from "../../config";
-import "./style.css";
+import {style} from "./style";
 
 const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [number, number], tiltFactor: number) => {
     const [cardX, cardY] = cardPosition;
@@ -131,6 +131,7 @@ export const Hand = ({ handDetails}: IProps) => {
                  className={cn("hand", {"hand--own-hand": isOwnHand}, {"hand--partner-hand": !isOwnHand})}>
         {renderCards()}
         </div>}
+    <style jsx={true}>{style}</style>
         </>
     )
 }

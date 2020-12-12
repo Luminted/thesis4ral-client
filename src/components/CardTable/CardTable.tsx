@@ -8,7 +8,7 @@ import { DeckEntity } from "../DeckEntity";
 import { setGrabbedEntityInfo, setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio, emitReleaseVerb, setTablePosition } from "../../actions";
 import { EntityTray } from "../EntityTray";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
-import { CardRenderLayer } from "../CardRenderLayer/CardRenderLayer";
+import { EntityRenderLayer } from "../EntityRenderLayer/EntityRenderLayer";
 
 export const CardTable = () => {
 
@@ -78,12 +78,12 @@ export const CardTable = () => {
             </div>
             <div className="card-table__table-border">
                 <div ref={tableRef}  className="card-table__table" onMouseUp={onMouseUp}>
-                    <CardRenderLayer>
+                    <EntityRenderLayer>
                         <>
                             {renderedCards}
                             {renderedDecks}
                         </>
-                    </CardRenderLayer>
+                    </EntityRenderLayer>
                 </div>
             </div>
         </div>
