@@ -7,7 +7,7 @@ export const colors = {
   alert: "#f5484e",
   alertDepressed: "#ea0c15",
   text: "white",
-  info: "#0FA3B1",
+  observerBorder: "#0FA3B1",
   backgroundPattern: "#4a3965",
   background: "#d99292",
   ownHand: "#327b7b33",

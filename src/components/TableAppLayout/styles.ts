@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { background, info } = colors;
+const { background, observerBorder } = colors;
 
 export const style = css`
   .table-app-layout {
@@ -9,9 +9,13 @@ export const style = css`
     overflow: hidden;
     color: white;
   }
-  .table-app-layout__leave-button {
+  .table-app-layout__menu {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
+    text-align: center;
+  }
+  .table-app-layout__menu--hidden{
+    display: none;
   }
   .app-background {
     position: absolute;
@@ -27,7 +31,7 @@ export const style = css`
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    border: ${info} 1.5vh solid;
+    border: ${observerBorder} 1.5vh solid;
     border-radius: 2vh;
     box-sizing: border-box;
   }

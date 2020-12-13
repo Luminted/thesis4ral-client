@@ -1,5 +1,4 @@
 import React from "react";
-import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { setClientInfo } from "../../actions";
 import { socketLeaveTable } from "../../actions/socketLeaveTable/socketLeaveTable";
@@ -16,7 +15,6 @@ export const LeaveTableButton = () => {
   const onClick = () => {
     if (clientId) {
       infoNotification(leaveTableInfoMessage);
-      console.log("leaving table");
       dispatch(
         socketLeaveTable(clientId, (err) => {
           if (err) {
@@ -33,11 +31,9 @@ export const LeaveTableButton = () => {
   return (
     <>
       <div
-        className={cn("leave-table-button", {
-          "leave-table-button--hidden": !clientId,
-        })}
+        className="leave-table-button"
       >
-        <button className="leave-table-button__button" onClick={onClick} disabled={!clientId}>
+        <button className="leave-table-button__button" onClick={onClick}>
           Leave Table
         </button>
       </div>

@@ -9,6 +9,7 @@ import { style } from "./styles";
 import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css";
 import { BackgroundPattern } from "./BackgroundPattern";
+import { Help } from "../Help/Help";
 
 export const TableAppLayout = ({ connectionStatus, isObserver }: IProps) => (
   <>
@@ -40,8 +41,9 @@ export const TableAppLayout = ({ connectionStatus, isObserver }: IProps) => (
 
       {connectionStatus === ESocketConnectionStatuses.CONNECTED && (
         <div className="table-app-layout">
-          <div className="table-app-layout__leave-button">
+          <div className={cn("table-app-layout__menu", {"table-app-layout__menu--hidden": isObserver})}>
             <LeaveTableButton />
+            <Help />
           </div>
           <TableViewport />
         </div>
