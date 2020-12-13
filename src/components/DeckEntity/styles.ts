@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { shadow, deckSide, buttonBackground, buttonBackgroundHighlight, buttonBackgroundActive } = colors;
+const { shadow, deckSide, interfaceBackgroundLight: buttonBackground, interfaceBackground: buttonBackgroundHighlight, interfaceBackgroundDark: buttonBackgroundActive } = colors;
 
 export const styles = css`
   .menu-button {
@@ -35,5 +35,4 @@ export const styles = css`
     box-shadow: 2px 2px 2px ${shadow};
     border-radius: 0.5vh;
   }
-
 `;

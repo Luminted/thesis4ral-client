@@ -1,4 +1,5 @@
 import { TMaybeNull } from "./utilityTypings";
+import { EClientConnectionStatuses } from "./";
 
 export interface IEntity {
   entityType: EEntityTypes;
@@ -19,8 +20,8 @@ export interface ICardEntity extends IEntity {
 
 export interface IDeckEntity extends IEntity {
   metadata: IEntityMetadata;
-  numberOfCards: number,
-  drawIndex: number
+  numberOfCards: number;
+  drawIndex: number;
 }
 
 export interface IEntityMetadata {
@@ -56,6 +57,7 @@ export enum EEntityTypes {
 
 export type TClient = {
   clientInfo: TClientInfo;
+  status: EClientConnectionStatuses;
 };
 
 export type TClientInfo = {

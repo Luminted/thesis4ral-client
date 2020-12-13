@@ -49,3 +49,5 @@ export const selectHorizontalScalingRation = (state: TRootState) => state.horizo
 export const selectVerticalScalingRation = (state: TRootState) => state.verticalScalingRatio;
 
 export const selectIsMirrored = (state: TRootState) => state.isMirrored;
+
+export const selectClientById = (clientId: string) => (state: TRootState) => state.gameState.clients.find(({ clientInfo }) => clientInfo.clientId === clientId) || null;

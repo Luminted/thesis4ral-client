@@ -4,7 +4,8 @@ export const colors = {
   tableRimLong: "#CCB149",
   tableBackground: "#62C3D6",
   tableTrayBackground: "#B5E2FA",
-  alert: "red",
+  alert: "#f5484e",
+  alertDepressed: "#ea0c15",
   text: "white",
   info: "#0FA3B1",
   backgroundPattern: "#4a3965",
@@ -14,8 +15,8 @@ export const colors = {
   opponentHand: "#32327b1a",
   removeEntityBackground: "#c86060",
   removeEntityBackgroundHighlight: "#d48585",
-  buttonBackground: "#581c2165",
-  buttonBackgroundHighlight: "#581c2195",
-  buttonBackgroundActive: "#501a1e",
-  shadow: "#443c3c"
+  interfaceBackgroundLight: "#581c2165",
+  interfaceBackground: "#581c2195",
+  interfaceBackgroundDark: "#501a1e",
+  shadow: "#443c3c",
 };

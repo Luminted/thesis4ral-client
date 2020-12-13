@@ -1,13 +1,14 @@
 import React, { ChangeEvent, CSSProperties, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
+import { selectClientById, selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
 import { Hand } from "../Hand";
+import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay/SeatDisconnectionOverlay";
 import { IProps } from "./typings";
 import { style } from "./style";
 import { getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
-import { EOrientation } from "../../typings";
+import { EClientConnectionStatuses, EOrientation } from "../../typings";
 import { errorNotification, infoNotification, successNotification } from "../../utils";
 
 export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
@@ -17,7 +18,9 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
   const [enteredName, setEnteredName] = useState("");
 
   const clientHandDetails = useSelector(selectClientHandById(clientId));
-  const clientInfo = useSelector(selectOwnClientInfo);
+  const { status } = useSelector(selectClientById(clientId)) || {};
+  const isDisconnected = status === EClientConnectionStatuses.DISCONNECTED;
+  const ownClientInfo = useSelector(selectOwnClientInfo);
   const isMirrored = useSelector(selectIsMirrored);
 
   const isSeatMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
@@ -45,13 +48,13 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
   };
 
   const coloredBorderCSS: CSSProperties = {
-    border: `3px solid ${seatColors[seatId]}`,
+    border: `1vh solid ${seatColors[seatId]}`,
   };
 
   return (
     <>
       <div className={"seat"}>
-        {!clientHandDetails && !clientInfo && (
+        {!clientHandDetails && !ownClientInfo && (
           <div className={cn("seat__empty-state", "seat__content")} onClick={onEmptySeatClick}>
             {isNameEntryOpen ? (
               <div className="name-input">
@@ -71,7 +74,7 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
               "seat--mirrored": isSeatMirrored,
             })}
           >
-            <div className="seat__hand">
+            <div className={cn("seat__hand", { "seat__hand--disconnected": isDisconnected })}>
               <Hand handDetails={clientHandDetails} />
             </div>
             <div className={cn("seat__name", { "seat--mirrored": isSeatMirrored })} style={coloredBorderCSS}>
@@ -79,6 +82,7 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
             </div>
           </div>
         )}
+        {status === EClientConnectionStatuses.DISCONNECTED && <SeatDisconnectionOverlay clientId={clientId} isSeatMirrored={isSeatMirrored} />}
       </div>
       <style jsx={true}>{style}</style>
     </>

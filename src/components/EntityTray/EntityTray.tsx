@@ -74,18 +74,12 @@ export const EntityTray = () => {
 
       return (
         <div className="entity-tray__entity">
-          <EntityTrayDeck
-            onDragStart={getDeckOnDragStart(index)}
-            height={baseHeight}
-            previewGraphicEndpoint={previewGraphicEndpoint}
-            deckGraphicEndpoint={deckGraphicEndpoint}
-          />
+          <EntityTrayDeck onDragStart={getDeckOnDragStart(index)} height={baseHeight} previewGraphicEndpoint={previewGraphicEndpoint} deckGraphicEndpoint={deckGraphicEndpoint} />
         </div>
       );
     }
-    else{
-      return null;
-    }
+
+    return null;
   });
 
   return (

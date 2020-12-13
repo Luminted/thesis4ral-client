@@ -8,9 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./store";
 import * as serviceWorker from "./serviceWorker";
 
-
-// reportWebVitals()
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

@@ -7,7 +7,7 @@ import { selectGrabbedEntityInfo } from "../../selectors";
 import { cardRotationStepDegree } from "../../config";
 import { Entity } from "../Entity";
 import { getCardHeight } from "../../utils";
-import {style} from "./style";
+import { style } from "./style";
 
 export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, zIndex, grabbedBy, rotation = 0 }: IProps) => {
   const dispatch = useDispatch();
@@ -29,26 +29,26 @@ export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, z
 
   return (
     <>
-    <Entity
-      entityId={entityId}
-      entityType={EEntityTypes.CARD}
-      positionX={positionX}
-      positionY={positionY}
-      height={baseHeight}
-      rotation={rotation}
-      zIndex={zIndex}
-      rotationStep={cardRotationStepDegree}
-      clickPassThrough={isGrabbed}
-      boundToTable={false}
-      grabbedBy={grabbedBy}
-      svgEndpoint={displayedSVG}
-      entityCoreClassnames={["card-entity", highlightClass]}
-      ref={entityRef}
-      eventHandlers={{
-        onClick,
-      }}
-    />
-    <style jsx={true}>{style}</style>
+      <Entity
+        entityId={entityId}
+        entityType={EEntityTypes.CARD}
+        positionX={positionX}
+        positionY={positionY}
+        height={baseHeight}
+        rotation={rotation}
+        zIndex={zIndex}
+        rotationStep={cardRotationStepDegree}
+        clickPassThrough={isGrabbed}
+        boundToTable={false}
+        grabbedBy={grabbedBy}
+        svgEndpoint={displayedSVG}
+        entityCoreClassnames={["card-entity", highlightClass]}
+        ref={entityRef}
+        eventHandlers={{
+          onClick,
+        }}
+      />
+      <style jsx={true}>{style}</style>
     </>
   );
 };

@@ -6,7 +6,7 @@ import { IProps } from "./typings";
 import { EEntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
 import { getCardHeight } from "../../utils";
-import {style} from "./style";
+import { style } from "./style";
 import { selectIsMirrored } from "../../selectors";
 
 const onHoverTranslatePercentageX = -50;
@@ -64,27 +64,27 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
 
   return (
     <>
-    <div
-      ref={handCardRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={cn("hand-card", { "hand-card--feedback": hoverFeedback })}
-      style={calculatedCSS}
-    >
-      <div style={rotationCSS}>
-        <EntityCore
-          height={baseHeight}
-          eventHandlerMapping={{
-            onDragStart,
-            onMouseEnter,
-            onMouseLeave,
-          }}
-          classnames={["hand-card__entity-core"]}
-          graphicEndpoint={svgUrl}
-        />
+      <div
+        ref={handCardRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={cn("hand-card", { "hand-card--feedback": hoverFeedback })}
+        style={calculatedCSS}
+      >
+        <div style={rotationCSS}>
+          <EntityCore
+            height={baseHeight}
+            eventHandlerMapping={{
+              onDragStart,
+              onMouseEnter,
+              onMouseLeave,
+            }}
+            classnames={["hand-card__entity-core"]}
+            graphicEndpoint={svgUrl}
+          />
+        </div>
       </div>
-    </div>
-    <style jsx={true}>{style}</style>
+      <style jsx={true}>{style}</style>
     </>
   );
 };

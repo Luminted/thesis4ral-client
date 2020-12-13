@@ -1,7 +1,7 @@
 import css from "styled-jsx/css";
 import { colors } from "../../config";
 
-const { backgroundPattern, buttonBackground, buttonBackgroundHighlight } = colors;
+const { backgroundPattern, interfaceBackgroundLight: buttonBackground, interfaceBackground: buttonBackgroundHighlight } = colors;
 
 export const style = css`
   .seat {
@@ -41,6 +41,10 @@ export const style = css`
     height: 60%;
     width: 85%;
     margin-top: 2%;
+  }
+  .seat__hand--disconnected {
+    filter: blur(3px) grayscale(50%) brightness(60%);
+    pointer-events: none;
   }
   .seat__name {
     text-align: center;

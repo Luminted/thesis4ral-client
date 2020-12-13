@@ -30,7 +30,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
     originalPositionX: number,
     originalPositionY: number,
     cardWidth: number,
-    cardHeight: number
+    cardHeight: number,
   ) => (err: TMaybeNull<string>, nextGameState: TGameState, drawnCardId: string) => {
     if (!err) {
       const { cards } = nextGameState;
@@ -103,10 +103,11 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
         }}
         menuContent={
           <>
-          {!isEmpty &&
-            <div onClick={onShuffle} className="menu-button">
-              <i className="fas fa-random" />
-            </div>}
+            {!isEmpty && (
+              <div onClick={onShuffle} className="menu-button">
+                <i className="fas fa-random" />
+              </div>
+            )}
             <div onClick={onReset} className="menu-button">
               <i className="fas fa-redo" />
             </div>

@@ -54,9 +54,10 @@ export const TableViewport = () => {
 
   const isMirrored = clientInfo ? seatIdMapping[clientInfo.seatId].includes("NORTH") : false;
 
-  const onMouseMove = useCallback((e: MouseEvent) => {
+  const onMouseMove = useCallback(
+    (e: MouseEvent) => {
       if (tablePosition && tablePixelDimensions && grabbedEntityInfo && grabbedEntityInfo.width && grabbedEntityInfo.height) {
-        const {clientX, clientY} = e;
+        const { clientX, clientY } = e;
         if (grabbedEntityInfo.restricted) {
           const { width, height, relativeGrabbedAtX, relativeGrabbedAtY } = grabbedEntityInfo;
           const [topClampBorder, rightClampBorder, bottomClampBorder, leftClampBorder] = getClampBorders(
@@ -76,7 +77,9 @@ export const TableViewport = () => {
           dispatch(emitMoveVerb(clientX, clientY));
         }
       }
-    }, [grabbedEntityInfo, tablePosition, isMirrored, tablePixelDimensions, dispatch]);
+    },
+    [grabbedEntityInfo, tablePosition, isMirrored, tablePixelDimensions, dispatch],
+  );
 
   const throttledOnMouseMove = useMemo(() => throttle(onMouseMove, listenerThrottleValue), [onMouseMove]);
 
