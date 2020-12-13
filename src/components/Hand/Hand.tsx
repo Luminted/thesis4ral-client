@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // @ts-ignore
 import interpolatingPolynomial from "interpolating-polynomial";
@@ -25,8 +25,10 @@ const getCardTiltAngle = (handWidth: number, handHeight: number, cardPosition: [
 export const Hand = ({ handDetails }: IProps) => {
   const dispatch = useDispatch();
 
+  const [handCurveFunction, setHandCurveFunction] = useState<null | ((y: number) => number)>(null);
+
   const handRef = useRef<HTMLDivElement>(null);
-  const handCurveFunctionRef = useRef<(y: number) => number>();
+  const ref = useRef<Function>();
 
   const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<TMaybeNull<number>>(null);
 
@@ -48,8 +50,21 @@ export const Hand = ({ handDetails }: IProps) => {
     }
   };
 
+  const calculateHandCurve = () => {
+    const handElement = handRef.current;
+    if (handElement) {
+      const { height, width } = handElement.getBoundingClientRect();
+      const curveFunction = interpolatingPolynomial([
+        [0, height],
+        [width / 2, height / 2],
+        [width, height],
+      ]);
+      setHandCurveFunction(() => curveFunction);
+    }
+  }
+
   const renderCards = () => {
-    if (handRef.current && handCurveFunctionRef.current) {
+    if (handRef.current && handCurveFunction) {
       const { width, height } = handRef.current!.getBoundingClientRect();
       const step = width / (cards.length + 1);
 
@@ -58,7 +73,7 @@ export const Hand = ({ handDetails }: IProps) => {
         const positionXFactor = orderOfCardBeingHoveredWithGrabbedOne !== null && orderOfCardBeingHoveredWithGrabbedOne < order ? order + 1.2 : order + 1;
         const positionX = step * positionXFactor;
         const { entityId, metadata } = card;
-        const positionY = handCurveFunctionRef.current!(positionX);
+        const positionY = handCurveFunction(positionX);
         const tiltAngle = getCardTiltAngle(width, height, [positionX, positionY], cardTiltFactor);
 
         return (
@@ -83,7 +98,6 @@ export const Hand = ({ handDetails }: IProps) => {
     return [];
   };
 
-  // TODO: handle err
   const chainDispatchReorderVerb = (err: TMaybeNull<string>, nextGameState: TGameState) => {
     if (!err) {
       const nextHand = nextGameState.hands.find(({ clientId: handClientId }) => handClientId === ownClientId);
@@ -112,23 +126,11 @@ export const Hand = ({ handDetails }: IProps) => {
     }
   };
 
-  const calculateHandCurve = useCallback(() => {
-    const handElement = handRef.current;
-    if (handElement) {
-      const { height, width } = handElement.getBoundingClientRect();
-      handCurveFunctionRef.current = interpolatingPolynomial([
-        [0, height],
-        [width / 2, height / 2],
-        [width, height],
-      ]);
-    }
-  }, [handRef]);
-
   useEffect(() => {
     calculateHandCurve();
     window.addEventListener("resize", calculateHandCurve);
     return () => window.removeEventListener("resize", calculateHandCurve);
-  }, [calculateHandCurve]);
+  }, []);
 
   return (
     <>
