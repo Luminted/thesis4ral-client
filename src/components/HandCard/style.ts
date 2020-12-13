@@ -11,10 +11,9 @@ export const style = css`
   }
 
   :global(.hand-card__entity-core) {
-    border: 2px solid black;
+    border: 0.5vh solid black;
     border-radius: 0.5vh;
     box-shadow: 1vh 1vh 5px ${shadow};
-    box-sizing: border-box;
   }
 
   .hand-card.hand-card--feedback:hover {

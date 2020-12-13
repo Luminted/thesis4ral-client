@@ -5,9 +5,8 @@ const { shadow } = colors;
 
 export const style = css`
   :global(.card-entity) {
-    border: 2px solid black;
+    border: 0.5vh solid black;
     border-radius: 0.5vh;
-    box-sizing: border-box;
   }
   :global(.card-entity__mouse-highlight) {
     transition-duration: 50ms;
