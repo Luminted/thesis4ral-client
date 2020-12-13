@@ -41,7 +41,7 @@ export const TableAppLayout = ({ connectionStatus, isObserver }: IProps) => (
 
       {connectionStatus === ESocketConnectionStatuses.CONNECTED && (
         <div className="table-app-layout">
-          <div className={cn("table-app-layout__menu", {"table-app-layout__menu--hidden": isObserver})}>
+          <div className={cn("table-app-layout__menu", { "table-app-layout__menu--hidden": isObserver })}>
             <LeaveTableButton />
             <Help />
           </div>

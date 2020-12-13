@@ -28,7 +28,6 @@ export const Hand = ({ handDetails }: IProps) => {
   const [handCurveFunction, setHandCurveFunction] = useState<null | ((y: number) => number)>(null);
 
   const handRef = useRef<HTMLDivElement>(null);
-  const ref = useRef<Function>();
 
   const [orderOfCardBeingHoveredWithGrabbedOne, setOrderOfCardBeingHoveredWithGrabbedOne] = useState<TMaybeNull<number>>(null);
 
@@ -61,7 +60,7 @@ export const Hand = ({ handDetails }: IProps) => {
       ]);
       setHandCurveFunction(() => curveFunction);
     }
-  }
+  };
 
   const renderCards = () => {
     if (handRef.current && handCurveFunction) {

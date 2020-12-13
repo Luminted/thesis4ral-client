@@ -14,7 +14,7 @@ export const style = css`
     z-index: 2;
     text-align: center;
   }
-  .table-app-layout__menu--hidden{
+  .table-app-layout__menu--hidden {
     display: none;
   }
   .app-background {

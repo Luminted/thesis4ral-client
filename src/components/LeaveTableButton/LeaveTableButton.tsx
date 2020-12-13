@@ -30,9 +30,7 @@ export const LeaveTableButton = () => {
 
   return (
     <>
-      <div
-        className="leave-table-button"
-      >
+      <div className="leave-table-button">
         <button className="leave-table-button__button" onClick={onClick}>
           Leave Table
         </button>
