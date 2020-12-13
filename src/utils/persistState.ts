@@ -1,9 +1,9 @@
-const localStorageEntryName = "card-table-state";
+import {localStoragePersistedStateName} from "../config";
 
 export const saveState = (state: object) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem(localStorageEntryName, serializedState);
+    localStorage.setItem(localStoragePersistedStateName, serializedState);
   } catch (e) {
     console.error(e.message);
   }
@@ -11,7 +11,7 @@ export const saveState = (state: object) => {
 
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem(localStorageEntryName);
+    const serializedState = localStorage.getItem(localStoragePersistedStateName);
     if (serializedState === null) {
       return undefined;
     }
