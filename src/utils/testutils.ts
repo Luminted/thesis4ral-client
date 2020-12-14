@@ -25,7 +25,6 @@ export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<
   const applyMiddleware = () => {
     const boundMiddleware = middleware(store);
     invoke = (action: A) => {
-      console.log("applied invoke");
       return boundMiddleware(next)(action);
     };
   };

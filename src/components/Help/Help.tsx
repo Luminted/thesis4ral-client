@@ -5,25 +5,23 @@ import { style } from "./style";
 export const Help = () => {
   const [isOpen, setOpen] = useState(false);
 
-  useEffect(() =>{
-      try{
-        const serializedPopupHelpFlag = localStorage.getItem(localStoragePersistedHelpFlagName);
-        if(serializedPopupHelpFlag === null){
-            setOpen(true);
-            localStorage.setItem(localStoragePersistedHelpFlagName, "true");
-        }
-        else{
-            const popupHelp = JSON.parse(serializedPopupHelpFlag);
-            if(!popupHelp){
-                setOpen(true);
-                localStorage.setItem(localStoragePersistedHelpFlagName, "true");
-            }
+  useEffect(() => {
+    try {
+      const serializedPopupHelpFlag = localStorage.getItem(localStoragePersistedHelpFlagName);
+      if (serializedPopupHelpFlag === null) {
+        setOpen(true);
+        localStorage.setItem(localStoragePersistedHelpFlagName, "true");
+      } else {
+        const popupHelp = JSON.parse(serializedPopupHelpFlag);
+        if (!popupHelp) {
+          setOpen(true);
+          localStorage.setItem(localStoragePersistedHelpFlagName, "true");
         }
       }
-      catch(e){
-          console.log(e.message);
-      }
-  }, [])
+    } catch (e) {
+      console.log(e.message);
+    }
+  }, []);
 
   return (
     <>

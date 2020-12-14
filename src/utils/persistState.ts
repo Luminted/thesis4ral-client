@@ -1,4 +1,4 @@
-import {localStoragePersistedStateName} from "../config";
+import { localStoragePersistedStateName } from "../config";
 
 export const saveState = (state: object) => {
   try {

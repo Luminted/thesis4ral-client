@@ -25,14 +25,9 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
     // Outgoing API
     (action: TActionTypes) => {
       if (action.type.startsWith("socket/")) {
-        // TODO: more if(!tableSocket.connected) to top level
         switch (action.type) {
           case ESocketActionTypeKeys.JOIN_TABLE:
-            if (!tableSocket.connected) {
-              console.log("emitting join: not connected");
-            } else {
-              tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.name, action.ackFunction);
-            }
+            tableSocket.emit(ETableSocketClientEvents.JOIN_TABLE, action.requestedSeatId, action.name, action.ackFunction);
             break;
 
           case ESocketActionTypeKeys.REJOIN_TABLE:
@@ -44,34 +39,19 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
             break;
 
           case ESocketActionTypeKeys.EMIT_VERB:
-            if (!tableSocket.connected) {
-              console.log("Middleware: Socket not connected!");
-              return next(action);
-            }
-            if (action.verb !== null) {
-              const { verb, ackFunction } = action;
-              tableSocket.emit(ETableSocketClientEvents.VERB, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
-                if (err) {
-                  warningNotification(getVerbErrorMessage(err, verb.type));
-                }
-                if (ackFunction) {
-                  ackFunction(err, nextGameState, handlerResult);
-                }
-              });
-
-              // console.log(`Middleware: socket event emitted: type=${ETableSocketClientEvents.VERB}, verb type=${action.verb.type}`, action.verb);
-            } else {
-              console.log("Middleware: Verb to be emitted is NULL. Aborting emit.");
-              return next(action);
-            }
+            const { verb, ackFunction } = action;
+            tableSocket.emit(ETableSocketClientEvents.VERB, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
+              if (err) {
+                warningNotification(getVerbErrorMessage(err, verb.type));
+              }
+              if (ackFunction) {
+                ackFunction(err, nextGameState, handlerResult);
+              }
+            });
             break;
 
           case ESocketActionTypeKeys.CONNECT:
-            if (!tableSocket.connected) {
-              tableSocket.connect();
-            } else {
-              console.log("Middleware: Socket already connected");
-            }
+            tableSocket.connect();
             break;
         }
       }

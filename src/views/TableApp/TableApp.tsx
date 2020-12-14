@@ -23,11 +23,9 @@ export const TableApp = () => {
         dispatch(
           socketRejoinTable(clientId, (err) => {
             if (err) {
-              console.log("error during reconnection");
               dispatch(setClientInfo(null));
               warningNotification(getRejoinErrorMessage(err));
             } else {
-              console.log("Reconnection successful");
               successNotification(rejoinSuccessMessag);
             }
           }),

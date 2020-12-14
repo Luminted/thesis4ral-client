@@ -6,8 +6,7 @@ import { ToastContainer } from "react-toastify";
 export const App = () => {
   return (
     <>
-      {/* TODO: move toast config here */}
-      <ToastContainer />
+      <ToastContainer draggable={false} />
       <BrowserRouter>
         <Switch>
           <Route exact={true} path={"/"} component={TableApp} />

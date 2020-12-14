@@ -13,7 +13,6 @@ export const mirrorVerbPositionMiddleware: Middleware<{}, TRootState> = (store) 
 
       action.verb.positionX = transformedPosition[0];
       action.verb.positionY = transformedPosition[1];
-      console.log("mirrored ", action.verb.positionX, action.verb.positionY);
 
       // GrabbedAt position needs to be mirrored too
       if (action.verb.type === ECardVerbTypes.GRAB_FROM_HAND) {

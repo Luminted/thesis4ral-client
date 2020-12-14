@@ -85,7 +85,6 @@ export const TableViewport = () => {
 
   const onMouseUp = () => {
     if (grabbedEntityInfo) {
-      console.log("release");
       const { grabbedFromHand, originalPositionX, originalPositionY } = grabbedEntityInfo;
       const { entityId, entityType } = grabbedEntityInfo;
 
