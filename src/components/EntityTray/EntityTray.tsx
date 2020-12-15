@@ -6,7 +6,7 @@ import { trayDecks } from "../../config";
 import { IEntityMetadata, TGameState, ECardTypes, TMaybeNull, ICardEntityMetadata } from "../../typings";
 import { style } from "./style";
 import { EntityTrayDeck } from "../EntityTrayDeck/EntityTrayDeck";
-import { getCardHeight } from "../../utils";
+import { getCardDimensions } from "../../utils";
 
 export const EntityTray = () => {
   const dispatch = useDispatch();
@@ -68,13 +68,13 @@ export const EntityTray = () => {
 
   const renderedDecks = trayDecks.map(({ cardBack, type, preview }, index) => {
     if (type === ECardTypes.FRENCH) {
-      const baseHeight = getCardHeight(type);
+      const {width: baseWidth, height: baseHeight} = getCardDimensions(type);
       const deckGraphicEndpoint = `${type}/${cardBack}`;
       const previewGraphicEndpoint = `${type}/${preview}`;
 
       return (
         <div key={index} className="entity-tray__entity">
-          <EntityTrayDeck onDragStart={getDeckOnDragStart(index)} height={baseHeight} previewGraphicEndpoint={previewGraphicEndpoint} deckGraphicEndpoint={deckGraphicEndpoint} />
+          <EntityTrayDeck onDragStart={getDeckOnDragStart(index)} width={baseWidth} height={baseHeight} previewGraphicEndpoint={previewGraphicEndpoint} deckGraphicEndpoint={deckGraphicEndpoint} />
         </div>
       );
     }

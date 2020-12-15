@@ -6,6 +6,7 @@ export enum ECardTypes {
 
 export interface ICardConfig {
   height: number;
+  width: number;
 }
 
 export enum EOrientation {

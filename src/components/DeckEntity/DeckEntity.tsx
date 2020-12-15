@@ -6,7 +6,7 @@ import { EEntityTypes, TGameState, TMaybeNull } from "../../typings";
 import { IProps } from "./interfaces";
 import { Entity } from "../Entity";
 import { deckRotationStepDegree } from "../../config";
-import { getCardHeight } from "../../utils";
+import { getCardDimensions } from "../../utils";
 import { styles } from "./styles";
 import { grabEntity } from "../../utils/grabEntity";
 
@@ -20,7 +20,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
   const { name, type } = metadata;
   const isEmpty = drawIndex > numberOfCards - 1;
   const entityCoreClassnames = isEmpty ? ["deck-entity-empty"] : ["deck-entity-full"];
-  const baseHeight = getCardHeight(type);
+  const {width: baseWidth, height: baseHeight} = getCardDimensions(type);
 
   const getDrawFaceUpAckFunction = (
     mouseX: number,
@@ -89,6 +89,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
         clickPassThrough={isGrabbed}
         positionX={positionX}
         positionY={positionY}
+        width={baseWidth}
         height={baseHeight}
         zIndex={zIndex}
         rotation={rotation}

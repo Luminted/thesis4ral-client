@@ -16,6 +16,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(
       entityType,
       positionX,
       positionY,
+      width,
       height,
       rotation,
       zIndex,
@@ -88,6 +89,7 @@ export const Entity = React.forwardRef<HTMLDivElement, IProps>(
         {menuContent && <div className="entity__menu">{menuContent}</div>}
         <EntityCore
           classnames={entityCoreClassnames}
+          width={width}
           height={height}
           graphicEndpoint={svgEndpoint}
           eventHandlerMapping={{

@@ -5,7 +5,7 @@ import { ImageLoader } from "../ImageLoader";
 import { IProps } from "./typings";
 import { style } from "./style";
 
-export const EntityTrayDeck = ({ height, deckGraphicEndpoint, previewGraphicEndpoint, onDragStart }: IProps) => (
+export const EntityTrayDeck = ({ width, height, deckGraphicEndpoint, previewGraphicEndpoint, onDragStart }: IProps) => (
   <>
     <div className="entity-tray-deck">
       <div className="entity-tray-deck__preview">
@@ -14,6 +14,7 @@ export const EntityTrayDeck = ({ height, deckGraphicEndpoint, previewGraphicEndp
         </DimensionsScaler>
       </div>
       <EntityCore
+        width={width}
         height={height}
         graphicEndpoint={deckGraphicEndpoint}
         eventHandlerMapping={{

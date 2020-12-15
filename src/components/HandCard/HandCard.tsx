@@ -5,7 +5,7 @@ import { emitGrabFromHand, setGrabbedEntityInfo } from "../../actions";
 import { IProps } from "./typings";
 import { EEntityTypes } from "../../typings";
 import { EntityCore } from "../EntityCore";
-import { getCardHeight } from "../../utils";
+import { getCardDimensions } from "../../utils";
 import { style } from "./style";
 import { selectIsMirrored } from "../../selectors";
 
@@ -21,7 +21,7 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
 
   const isMirrored = useSelector(selectIsMirrored);
 
-  const baseHeight = getCardHeight(metadata.type);
+  const {width: baseWidth, height: baseHeight} = getCardDimensions(metadata.type);
 
   const onDragStart = (e: DragEvent) => {
     e.preventDefault();
@@ -73,6 +73,7 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
       >
         <div style={rotationCSS}>
           <EntityCore
+            width={baseWidth}
             height={baseHeight}
             eventHandlerMapping={{
               onDragStart,
