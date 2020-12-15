@@ -20,7 +20,7 @@ export const ImageLoader = ({ resourceRoute }: IProps) => {
       }
     };
     importIcon();
-  }, []);
+  }, [resourceRoute]);
 
   return <>
     {!loading && importedImageRef.current && <img alt="" className="svg-container" src={importedImageRef.current} />}

@@ -32,6 +32,7 @@ export const style = css`
     background: ${interfaceBackground};
     border-radius: 2vh;
     font-weight: 500;
+    text-align: left;
   }
   .help__title {
     text-align: center;

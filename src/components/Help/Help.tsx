@@ -59,9 +59,9 @@ export const Help = () => {
             <h3>Flipping cards</h3>
             <p> Left clicking on cards flips them</p>
             <h3>Shuffling decks</h3>
-            <p> Hoven over deck and click on the *shuffle* icon to shuffle it.</p>
+            <p> Hoven over deck and click on the <i className="fas fa-random" /> icon to shuffle it.</p>
             <h3>Resetting card</h3>
-            <p> Hover over deck and click on the *reset* icon to reset deck. This will also restore the original order of cards in the deck.</p>
+            <p> Hover over deck and click on the <i className="fas fa-redo" /> icon to reset deck. This will also restore the original order of cards in the deck.</p>
             <h3>Kicking player</h3>
             <p> Disconnected players can be kicked. Their cards will be placed on the table face down.</p>
           </div>

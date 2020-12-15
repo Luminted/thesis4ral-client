@@ -82,7 +82,7 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
             </div>
           </div>
         )}
-        {status === EClientConnectionStatuses.DISCONNECTED && <SeatDisconnectionOverlay clientId={clientId} isSeatMirrored={isSeatMirrored} />}
+        {ownClientInfo && status === EClientConnectionStatuses.DISCONNECTED && <SeatDisconnectionOverlay clientId={clientId} isSeatMirrored={isSeatMirrored} />}
       </div>
       <style jsx={true}>{style}</style>
     </>
