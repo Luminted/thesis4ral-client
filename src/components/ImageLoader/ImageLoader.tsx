@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import "./style.css";
 import { IProps } from "./typings";
 
-export const ImageLoader = ({ resourceRoute}: IProps) => {
+export const ImageLoader = ({ resourceRoute }: IProps) => {
   const importedImageRef = useRef<any>(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,8 +22,5 @@ export const ImageLoader = ({ resourceRoute}: IProps) => {
     importIcon();
   }, [resourceRoute]);
 
-  return <>
-    {!loading && importedImageRef.current && <img alt="" className="svg-container" src={importedImageRef.current} />}
-  </>
-
+  return <>{!loading && importedImageRef.current && <img alt="" className="svg-container" src={importedImageRef.current} />}</>;
 };

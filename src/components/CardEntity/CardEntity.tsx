@@ -18,7 +18,7 @@ export const CardEntity = ({ entityId, positionX, positionY, faceUp, metadata, z
 
   const isGrabbed = grabbedEntityInfo?.entityId === entityId;
   const { back, type, name } = metadata;
-  const {width: baseWidth, height: baseHeight} = getCardDimensions(type);
+  const { width: baseWidth, height: baseHeight } = getCardDimensions(type);
 
   const onClick = () => {
     dispatch(emitFlipVerb(entityId));

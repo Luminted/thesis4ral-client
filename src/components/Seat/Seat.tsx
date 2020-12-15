@@ -6,8 +6,7 @@ import { Hand } from "../Hand";
 import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay/SeatDisconnectionOverlay";
 import { IProps } from "./typings";
 import { style } from "./style";
-import {seatIdMapping} from "../../config";
-import { getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
+import { seatIdMapping, getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
 import { EClientConnectionStatuses, EOrientation } from "../../typings";
 import { errorNotification, infoNotification, successNotification } from "../../utils";
@@ -24,11 +23,11 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
   const ownClientInfo = useSelector(selectOwnClientInfo);
   const isMirrored = useSelector(selectIsMirrored);
   const clients = useSelector(selectClients);
-  
+
   const isSeatMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
-  const isTableFullAndAllDisconnected = clients.length === Object.keys(seatIdMapping).length 
-    && clients.every(({status}) => status === EClientConnectionStatuses.DISCONNECTED);
-  const showDisconnectionOwerlay = ownClientInfo && status === EClientConnectionStatuses.DISCONNECTED || isTableFullAndAllDisconnected;
+  const isTableFullAndAllDisconnected =
+    clients.length === Object.keys(seatIdMapping).length && clients.every(({ status: connectionStatus }) => connectionStatus === EClientConnectionStatuses.DISCONNECTED);
+  const showDisconnectionOwerlay = (ownClientInfo && status === EClientConnectionStatuses.DISCONNECTED) || isTableFullAndAllDisconnected;
 
   const onEmptySeatClick = () => setNameEntryOpen(!isNameEntryOpen);
   const onNameInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => setEnteredName(value);

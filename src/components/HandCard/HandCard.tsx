@@ -21,7 +21,7 @@ export const HandCard = ({ entityId, inHandOf, positionX, positionY, zIndex, fac
 
   const isMirrored = useSelector(selectIsMirrored);
 
-  const {width: baseWidth, height: baseHeight} = getCardDimensions(metadata.type);
+  const { width: baseWidth, height: baseHeight } = getCardDimensions(metadata.type);
 
   const onDragStart = (e: DragEvent) => {
     e.preventDefault();

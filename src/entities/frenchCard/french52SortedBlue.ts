@@ -1,7 +1,7 @@
-import { TDeckConfig } from "../../typings";
+import { ECardTypes, TDeckConfig } from "../../typings";
 
 export const french52SortedBlue: TDeckConfig = {
-  type: "french",
+  type: ECardTypes.FRENCH,
   cardBack: "bcb",
   preview: "sa",
   cards: [

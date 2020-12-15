@@ -2,6 +2,7 @@ import { EEntityTypes } from "./gameStateTypings";
 
 export enum ECardTypes {
   FRENCH = "french",
+  SET = "set",
 }
 
 export interface ICardConfig {

@@ -20,7 +20,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
   const { name, type } = metadata;
   const isEmpty = drawIndex > numberOfCards - 1;
   const entityCoreClassnames = isEmpty ? ["deck-entity-empty"] : ["deck-entity-full"];
-  const {width: baseWidth, height: baseHeight} = getCardDimensions(type);
+  const { width: baseWidth, height: baseHeight } = getCardDimensions(type);
 
   const getDrawFaceUpAckFunction = (
     mouseX: number,

@@ -1,5 +1,5 @@
 import { TRatio } from "../typings";
-import { french52SortedBlue, french52SortedRed } from "../entities";
+import { french52SortedBlue, french52SortedRed, setDeck } from "../entities";
 
 export const tableAspectRatio: TRatio = {
   numerator: 7,
@@ -14,7 +14,7 @@ export const trayWidthPercentage = 20;
 export const tableVirtualWidth = 10000;
 export const tableVirtualHeight = 10000;
 
-export const trayDecks = [french52SortedRed, french52SortedBlue];
+export const trayDecks = [french52SortedRed, french52SortedBlue, setDeck];
 
 export const seatIdMapping: { [key in string]: string } = {
   1: "NORTH_WEST",

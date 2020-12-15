@@ -15,7 +15,6 @@ export const style = css`
     background-color: ${alert};
     color: inherit;
     cursor: pointer;
-
   }
   .leave-table-button--hidden {
     display: none;

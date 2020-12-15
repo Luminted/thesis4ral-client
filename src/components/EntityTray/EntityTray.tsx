@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { emitAddDeckVerb, emitGrabVerb, emitRemoveVerb, setGrabbedEntityInfo } from "../../actions";
 import { selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import { trayDecks } from "../../config";
-import { IEntityMetadata, TGameState, ECardTypes, TMaybeNull, ICardEntityMetadata } from "../../typings";
+import { IEntityMetadata, TGameState, TMaybeNull, ICardEntityMetadata } from "../../typings";
 import { style } from "./style";
 import { EntityTrayDeck } from "../EntityTrayDeck/EntityTrayDeck";
 import { getCardDimensions } from "../../utils";
@@ -67,17 +67,21 @@ export const EntityTray = () => {
   };
 
   const renderedDecks = trayDecks.map(({ cardBack, type, preview }, index) => {
-    if (type === ECardTypes.FRENCH) {
-      const {width: baseWidth, height: baseHeight} = getCardDimensions(type);
-      const deckGraphicEndpoint = `${type}/${cardBack}`;
-      const previewGraphicEndpoint = `${type}/${preview}`;
+    const { width: baseWidth, height: baseHeight } = getCardDimensions(type);
+    const deckGraphicEndpoint = `${type}/${cardBack}`;
+    const previewGraphicEndpoint = `${type}/${preview}`;
 
-      return (
-        <div key={index} className="entity-tray__entity">
-          <EntityTrayDeck onDragStart={getDeckOnDragStart(index)} width={baseWidth} height={baseHeight} previewGraphicEndpoint={previewGraphicEndpoint} deckGraphicEndpoint={deckGraphicEndpoint} />
-        </div>
-      );
-    }
+    return (
+      <div key={index} className="entity-tray__entity">
+        <EntityTrayDeck
+          onDragStart={getDeckOnDragStart(index)}
+          width={baseWidth}
+          height={baseHeight}
+          previewGraphicEndpoint={previewGraphicEndpoint}
+          deckGraphicEndpoint={deckGraphicEndpoint}
+        />
+      </div>
+    );
 
     return null;
   });

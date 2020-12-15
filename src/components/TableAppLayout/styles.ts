@@ -10,7 +10,7 @@ export const style = css`
     color: white;
     cursor: grab;
   }
-  .table-app-layout:active{
+  .table-app-layout:active {
     cursor: grabbing;
   }
   .table-app-layout__menu {
