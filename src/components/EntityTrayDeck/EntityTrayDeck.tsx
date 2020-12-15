@@ -9,7 +9,7 @@ export const EntityTrayDeck = ({ width, height, deckGraphicEndpoint, previewGrap
   <>
     <div className="entity-tray-deck">
       <div className="entity-tray-deck__preview">
-        <DimensionsScaler height={height}>
+        <DimensionsScaler width={width} height={height}>
           <ImageLoader resourceRoute={previewGraphicEndpoint} />
         </DimensionsScaler>
       </div>
