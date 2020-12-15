@@ -8,6 +8,10 @@ export const style = css`
     position: relative;
     overflow: hidden;
     color: white;
+    cursor: grab;
+  }
+  .table-app-layout:active{
+    cursor: grabbing;
   }
   .table-app-layout__menu {
     position: absolute;

@@ -14,6 +14,8 @@ export const style = css`
     border-radius: 2vh;
     background-color: ${alert};
     color: inherit;
+    cursor: pointer;
+
   }
   .leave-table-button--hidden {
     display: none;
