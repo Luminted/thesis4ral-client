@@ -1,11 +1,12 @@
 import React, { ChangeEvent, CSSProperties, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { selectClientById, selectClientHandById, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
+import { selectClientById, selectClientHandById, selectClients, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
 import { Hand } from "../Hand";
 import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay/SeatDisconnectionOverlay";
 import { IProps } from "./typings";
 import { style } from "./style";
+import {seatIdMapping} from "../../config";
 import { getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
 import { setClientInfo, socketJoinTable } from "../../actions";
 import { EClientConnectionStatuses, EOrientation } from "../../typings";
@@ -22,8 +23,12 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
   const isDisconnected = status === EClientConnectionStatuses.DISCONNECTED;
   const ownClientInfo = useSelector(selectOwnClientInfo);
   const isMirrored = useSelector(selectIsMirrored);
-
+  const clients = useSelector(selectClients);
+  
   const isSeatMirrored = (isMirrored && orientation === EOrientation.SOUTH) || (!isMirrored && orientation === EOrientation.NORTH);
+  const isTableFullAndAllDisconnected = clients.length === Object.keys(seatIdMapping).length 
+    && clients.every(({status}) => status === EClientConnectionStatuses.DISCONNECTED);
+  const showDisconnectionOwerlay = ownClientInfo && status === EClientConnectionStatuses.DISCONNECTED || isTableFullAndAllDisconnected;
 
   const onEmptySeatClick = () => setNameEntryOpen(!isNameEntryOpen);
   const onNameInputChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => setEnteredName(value);
@@ -82,7 +87,7 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
             </div>
           </div>
         )}
-        {ownClientInfo && status === EClientConnectionStatuses.DISCONNECTED && <SeatDisconnectionOverlay clientId={clientId} isSeatMirrored={isSeatMirrored} />}
+        {showDisconnectionOwerlay && <SeatDisconnectionOverlay clientId={clientId} isSeatMirrored={isSeatMirrored} />}
       </div>
       <style jsx={true}>{style}</style>
     </>
