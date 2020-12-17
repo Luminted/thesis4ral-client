@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="63mm"
-   height="88mm"
-   viewBox="0 0 63 88"
+   width="888.18896"
+   height="1360.63"
+   viewBox="0 0 888.18896 1360.63"
    version="1.1"
    id="svg4259"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="119.05512"
-     inkscape:cy="166.2992"
+     inkscape:zoom="0.64169155"
+     inkscape:cx="371.22592"
+     inkscape:cy="836.98299"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -58,7 +58,7 @@
      transform="translate(-74.333333,-104.16667)">
     <g
        id="g12852"
-       transform="translate(74.333333,104.16667)"
+       transform="matrix(14.098238,0,0,15.461704,74.333333,104.16667)"
        style="fill:#00cbc6;fill-opacity:1">
       <rect
          transform="translate(0,-209)"
@@ -82,7 +82,7 @@
       <path
          id="path12850"
          d="M 7.6708589,7.317421 C 17.117227,36.713832 25.28632,55.333195 31.5,65.692127 37.71368,55.333195 45.882773,36.713832 55.329141,7.317421 M 43.415274,8.6305452 C 38.730911,15.704658 34.777319,22.601018 31.5,29.117379 28.222681,22.601018 24.269089,15.704658 19.584726,8.6305452 M 7.6708589,80.682579 C 17.117227,51.286168 25.28632,32.666805 31.5,22.307873 37.71368,32.666805 45.882773,51.286168 55.329141,80.682579 M 43.415274,79.369455 C 38.730911,72.295342 34.777319,65.398982 31.5,58.882621 28.222681,65.398982 24.269089,72.295342 19.584726,79.369455"
-         style="fill:#00cbc6;stroke:#ffffff;stroke-width:0.965;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+         style="fill:#00cbc6;fill-opacity:1;stroke:#ffffff;stroke-width:0.965;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:connector-curvature="0" />
     </g>
   </g>
