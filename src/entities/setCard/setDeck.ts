@@ -3,7 +3,7 @@ import { ECardTypes, TDeckConfig } from "../../typings";
 export const setDeck: TDeckConfig = {
   type: ECardTypes.SET,
   cardBack: "bck",
-  preview: "2SrS",
+  preview: "3HrD",
   cards: [
     { name: "1HgD", type: "set" },
     { name: "1HgP", type: "set" },
