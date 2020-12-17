@@ -1,5 +1,5 @@
-import { TGameState, TMaybeNull, TVerb } from "../../typings";
-import { ESocketActionTypeKeys } from "../actionTypeKeys";
+import { TGameState, TMaybeNull, TVerb } from "../typings";
+import { ESocketActionTypeKeys } from "./actionTypeKeys";
 
 export type TSocketEmitVerbAction = {
   type: ESocketActionTypeKeys.VERB;

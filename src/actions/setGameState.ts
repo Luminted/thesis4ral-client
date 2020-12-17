@@ -1,5 +1,5 @@
-import { TGameState } from "../../typings";
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { TGameState } from "../typings";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetGameStateAction = {
   type: ESetterActionTypeKeys.SET_GAME_STATE;

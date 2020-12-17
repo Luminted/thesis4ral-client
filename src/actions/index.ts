@@ -10,8 +10,8 @@ import { TSetVerticalScalingRationAction } from "./setVerticalScalingRatio";
 import { TSocketEmitConnectAction } from "./socketEmitConnect";
 import { TSocketEmitVerbAction } from "./socketEmitVerb";
 import { TSocketEmitJoinTableAction } from "./socketEmitJoinTable";
-import { TSocketEmitLeaveTableAction } from "./socketEmitLeaveTable/socketEmitLeaveTable";
-import { TSocketEmitRejoinAction } from "./socketEmitRejoinTable/socketEmitRejoinTable";
+import { TSocketEmitLeaveTableAction } from "./socketEmitLeaveTable";
+import { TSocketEmitRejoinAction } from "./socketEmitRejoinTable";
 
 export { setClientInfo } from "./setClientInfo";
 export { setGameState } from "./setGameState";
@@ -25,7 +25,7 @@ export { setIsMirrored } from "./setIsMirrored";
 export { socketEmitVerb } from "./socketEmitVerb";
 export { socketEmitConnect as socketConnect } from "./socketEmitConnect";
 export { socketEmitJoinTable as socketJoinTable } from "./socketEmitJoinTable";
-export { socketRejoinTable } from "./socketEmitRejoinTable";
+export { socketEmitRejoinTable } from "./socketEmitRejoinTable";
 
 export { ESocketActionTypeKeys, ESetterActionTypeKeys } from "./actionTypeKeys";
 

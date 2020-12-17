@@ -1,5 +1,5 @@
-import { TClientInfo, TMaybeNull } from "../../typings";
-import { ESocketActionTypeKeys } from "../actionTypeKeys";
+import { TClientInfo, TMaybeNull } from "../typings";
+import { ESocketActionTypeKeys } from "./actionTypeKeys";
 
 type TSocketEmitJoinTableAckFunction = (error: TMaybeNull<string>, clientInfo: TClientInfo) => void;
 

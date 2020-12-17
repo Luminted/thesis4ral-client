@@ -1,4 +1,4 @@
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetIsMirroredAction = {
   type: ESetterActionTypeKeys.SET_IS_MIRRORED;

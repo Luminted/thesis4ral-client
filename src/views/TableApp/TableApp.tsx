@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ESocketConnectionStatuses } from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
-import { setTableSocketStatus, socketConnect, socketRejoinTable } from "../../actions";
+import { setTableSocketStatus, socketConnect, socketEmitRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
 import { infoNotification, successNotification, warningNotification } from "../../utils/notification";
 import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
@@ -21,7 +21,7 @@ export const TableApp = () => {
         const { clientId } = clientInfo;
         infoNotification(rejoinInfoMessage);
         dispatch(
-          socketRejoinTable(clientId, (err) => {
+          socketEmitRejoinTable(clientId, (err) => {
             if (err) {
               warningNotification(getRejoinErrorMessage(err));
             } else {

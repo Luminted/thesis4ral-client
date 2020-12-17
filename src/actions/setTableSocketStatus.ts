@@ -1,5 +1,5 @@
-import { ESocketConnectionStatuses } from "../../typings";
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { ESocketConnectionStatuses } from "../typings";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetTableConnectionStatusAction = {
   type: ESetterActionTypeKeys.SET_TABLE_CONNECTION_STATUS;

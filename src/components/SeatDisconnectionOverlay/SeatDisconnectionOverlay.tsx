@@ -3,7 +3,7 @@ import cn from "classnames";
 import { IProps } from "./typings";
 import { style } from "./style";
 import { useDispatch } from "react-redux";
-import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable/socketEmitLeaveTable";
+import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable";
 
 export const SeatDisconnectionOverlay = ({ isSeatMirrored, clientId }: IProps) => {
   const dispatch = useDispatch();

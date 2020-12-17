@@ -1,4 +1,4 @@
-import { ESocketActionTypeKeys } from "../actionTypeKeys";
+import { ESocketActionTypeKeys } from "./actionTypeKeys";
 
 export type TSocketEmitLeaveTableAction = {
   type: ESocketActionTypeKeys.LEAVE_TABLE;

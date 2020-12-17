@@ -1,5 +1,5 @@
-import { TClientInfo, TMaybeNull } from "../../typings";
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { TClientInfo, TMaybeNull } from "../typings";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetClientInfoAction = {
   type: ESetterActionTypeKeys.SET_CLIENT_INFO;

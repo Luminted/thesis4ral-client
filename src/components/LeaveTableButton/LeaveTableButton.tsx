@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setClientInfo } from "../../actions";
-import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable/socketEmitLeaveTable";
+import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable";
 import { getLeaveTableErrorMessage, leaveTableInfoMessage, leavingTableSuccessMessage } from "../../config";
 import { selectOwnClientInfo } from "../../selectors";
 import { errorNotification, infoNotification, successNotification } from "../../utils";

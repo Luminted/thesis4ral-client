@@ -1,5 +1,5 @@
-import { TRatio } from "../../typings";
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { TRatio } from "../typings";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetHorizontalScalingRationAction = {
   type: ESetterActionTypeKeys.SET_HORIZONTAL_SCALING_RATIO;

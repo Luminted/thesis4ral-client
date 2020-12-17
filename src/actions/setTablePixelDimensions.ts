@@ -1,4 +1,4 @@
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetTablePixelDimensionsAction = {
   type: ESetterActionTypeKeys.SET_TABLE_PIXEL_DIMENSIONS;

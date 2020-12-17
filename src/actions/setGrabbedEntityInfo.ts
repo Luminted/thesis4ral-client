@@ -1,5 +1,5 @@
-import { TGrabbedEntityInfo, TMaybeNull } from "../../typings";
-import { ESetterActionTypeKeys } from "../actionTypeKeys";
+import { TGrabbedEntityInfo, TMaybeNull } from "../typings";
+import { ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TSetGrabbedEntityInfoAction = {
   type: ESetterActionTypeKeys.SET_GRABBED_ENTITY_INFO;

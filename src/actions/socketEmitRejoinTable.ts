@@ -1,4 +1,4 @@
-import { ESocketActionTypeKeys } from "../actionTypeKeys";
+import { ESocketActionTypeKeys } from "./actionTypeKeys";
 
 export type TSocketEmitRejoinAction = {
   type: ESocketActionTypeKeys.REJOIN_TABLE;
