@@ -5,3 +5,6 @@ export * from "./entity";
 export * from "./clamp";
 export * from "./mirror";
 export * from "./notification";
+export * from "./grabEntity";
+export * from "./persistState"
+export * from "./testutils"

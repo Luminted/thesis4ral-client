@@ -4,7 +4,7 @@ import { ESocketConnectionStatuses } from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setTableSocketStatus, socketConnect, socketEmitRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout";
-import { infoNotification, successNotification, warningNotification } from "../../utils/notification";
+import { infoNotification, successNotification, warningNotification } from "../../utils";
 import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
 
 export const TableApp = () => {

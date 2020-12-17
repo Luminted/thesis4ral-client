@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import dynamicMiddlewares from "redux-dynamic-middlewares";
 import { tableSocketMiddleware, normalizeVerbPositionMiddleware, upscaleVerbPositionMiddleware, observerGateMiddleware } from "./middlewares/";
 import { rootReducer } from "./reducers";
-import { loadState, saveState } from "./utils/persistState";
+import { loadState, saveState } from "./utils";
 
 const persistedState = loadState();
 

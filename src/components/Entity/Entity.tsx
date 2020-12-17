@@ -7,7 +7,7 @@ import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks";
-import { grabEntity } from "../../utils/grabEntity";
+import { grabEntity } from "../../utils";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(
   (
