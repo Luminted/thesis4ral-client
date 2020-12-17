@@ -22,7 +22,7 @@ describe("Testing normalizeVerbPositionMiddleware", () => {
       positionY: positionY - tablePosition.y,
     };
     const action: TActionTypes = {
-      type: ESocketActionTypeKeys.EMIT_VERB,
+      type: ESocketActionTypeKeys.VERB,
       verb,
     };
     const { invoke, next } = createMockMiddleware<TActionTypes>(normalizeVerbPositionMiddleware, {
@@ -31,7 +31,7 @@ describe("Testing normalizeVerbPositionMiddleware", () => {
 
     invoke(action);
     expect(next).toBeCalledWith({
-      type: ESocketActionTypeKeys.EMIT_VERB,
+      type: ESocketActionTypeKeys.VERB,
       verb: expectedVerb,
     });
   });

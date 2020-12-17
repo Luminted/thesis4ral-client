@@ -23,7 +23,7 @@ describe("Testing mirrorPositionMiddleware", () => {
     const transformedPosition = inverseMirrorOnTablePosition(positionX, positionY, tableWidth, tableHeight);
     /* tslint:disable */
     const action: TSocketActionTypes = {
-      type: ESocketActionTypeKeys.EMIT_VERB,
+      type: ESocketActionTypeKeys.VERB,
       verb: {
         positionX,
         positionY,

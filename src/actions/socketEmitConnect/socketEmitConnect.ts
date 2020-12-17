@@ -1,10 +1,10 @@
 import { ESocketActionTypeKeys } from "../actionTypeKeys";
 
-export type TSocketConnectAction = {
+export type TSocketEmitConnectAction = {
   type: ESocketActionTypeKeys.CONNECT;
 };
 
-export const socketConnect = (): TSocketConnectAction => {
+export const socketEmitConnect = (): TSocketEmitConnectAction => {
   return {
     type: ESocketActionTypeKeys.CONNECT,
   };

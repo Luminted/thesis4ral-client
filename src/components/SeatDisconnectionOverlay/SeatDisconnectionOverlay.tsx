@@ -3,7 +3,7 @@ import cn from "classnames";
 import { IProps } from "./typings";
 import { style } from "./style";
 import { useDispatch } from "react-redux";
-import { socketLeaveTable } from "../../actions/socketLeaveTable/socketLeaveTable";
+import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable/socketEmitLeaveTable";
 
 export const SeatDisconnectionOverlay = ({ isSeatMirrored, clientId }: IProps) => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const SeatDisconnectionOverlay = ({ isSeatMirrored, clientId }: IProps) =
 
   const decline = () => setShowConfirmationPrompt(false);
   const openConfirmation = () => setShowConfirmationPrompt(true);
-  const kickClient = () => dispatch(socketLeaveTable(clientId));
+  const kickClient = () => dispatch(socketEmitLeaveTable(clientId));
 
   return (
     <>

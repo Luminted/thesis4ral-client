@@ -7,11 +7,11 @@ import { TSetTablePixelDimensionsAction } from "./setTablePixelDimensions";
 import { TSetTablePositionAction } from "./setTablePosition";
 import { TSetTableConnectionStatusAction } from "./setTableSocketStatus";
 import { TSetVerticalScalingRationAction } from "./setVerticalScalingRatio";
-import { TSocketConnectAction } from "./socketConnect";
+import { TSocketEmitConnectAction } from "./socketEmitConnect";
 import { TSocketEmitVerbAction } from "./socketEmitVerb";
-import { TSocketJoinTableAction } from "./socketJoinTable";
-import { TSocketLeaveTableAction } from "./socketLeaveTable/socketLeaveTable";
-import { TSocketRejoinAction } from "./socketRejoinTable/socketRejoinTable";
+import { TSocketEmitJoinTableAction } from "./socketEmitJoinTable";
+import { TSocketEmitLeaveTableAction } from "./socketEmitLeaveTable/socketEmitLeaveTable";
+import { TSocketEmitRejoinAction } from "./socketEmitRejoinTable/socketEmitRejoinTable";
 
 export { setClientInfo } from "./setClientInfo";
 export { setGameState } from "./setGameState";
@@ -23,15 +23,15 @@ export { setVerticalScalingRatio } from "./setVerticalScalingRatio";
 export { setTableSocketStatus } from "./setTableSocketStatus";
 export { setIsMirrored } from "./setIsMirrored";
 export { socketEmitVerb } from "./socketEmitVerb";
-export { socketConnect } from "./socketConnect";
-export { socketJoinTable } from "./socketJoinTable";
-export { socketRejoinTable } from "./socketRejoinTable";
+export { socketEmitConnect as socketConnect } from "./socketEmitConnect";
+export { socketEmitJoinTable as socketJoinTable } from "./socketEmitJoinTable";
+export { socketRejoinTable } from "./socketEmitRejoinTable";
 
 export { ESocketActionTypeKeys, ESetterActionTypeKeys } from "./actionTypeKeys";
 
 export type TActionTypes = TSocketActionTypes | TSetterActionTypes;
 
-export type TSocketActionTypes = TSocketEmitVerbAction | TSocketConnectAction | TSocketJoinTableAction | TSocketRejoinAction | TSocketLeaveTableAction;
+export type TSocketActionTypes = TSocketEmitVerbAction | TSocketEmitConnectAction | TSocketEmitJoinTableAction | TSocketEmitRejoinAction | TSocketEmitLeaveTableAction;
 
 export type TSetterActionTypes =
   | TSetGameStateAction

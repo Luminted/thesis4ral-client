@@ -2,7 +2,7 @@ import { Middleware } from "redux";
 import { ESetterActionTypeKeys, ESocketActionTypeKeys, TActionTypes } from "../actions";
 import { TRootState } from "../reducers";
 
-const actionsGatedFromObserver: (ESetterActionTypeKeys | ESocketActionTypeKeys)[] = [ESetterActionTypeKeys.SET_GRABBED_ENTITY_INFO, ESocketActionTypeKeys.EMIT_VERB];
+const actionsGatedFromObserver: (ESetterActionTypeKeys | ESocketActionTypeKeys)[] = [ESetterActionTypeKeys.SET_GRABBED_ENTITY_INFO, ESocketActionTypeKeys.VERB];
 
 export const observerGateMiddleware: Middleware<{}, TRootState> = ({ getState }) => (next) => (action: TActionTypes) => {
   const { clientInfo } = getState();

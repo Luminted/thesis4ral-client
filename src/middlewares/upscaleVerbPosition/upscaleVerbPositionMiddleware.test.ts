@@ -30,7 +30,7 @@ describe("Testing upscaleVerbPositionMiddleware", () => {
       type: ESharedVerbTypes.MOVE,
     };
     const action: TSocketEmitVerbAction = {
-      type: ESocketActionTypeKeys.EMIT_VERB,
+      type: ESocketActionTypeKeys.VERB,
       verb,
     };
     const expectedAction: TSocketEmitVerbAction = {

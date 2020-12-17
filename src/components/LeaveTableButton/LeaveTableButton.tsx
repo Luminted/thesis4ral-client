@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setClientInfo } from "../../actions";
-import { socketLeaveTable } from "../../actions/socketLeaveTable/socketLeaveTable";
+import { socketEmitLeaveTable } from "../../actions/socketEmitLeaveTable/socketEmitLeaveTable";
 import { getLeaveTableErrorMessage, leaveTableInfoMessage, leavingTableSuccessMessage } from "../../config";
 import { selectOwnClientInfo } from "../../selectors";
 import { errorNotification, infoNotification, successNotification } from "../../utils";
@@ -16,7 +16,7 @@ export const LeaveTableButton = () => {
     if (clientId) {
       infoNotification(leaveTableInfoMessage);
       dispatch(
-        socketLeaveTable(clientId, (err) => {
+        socketEmitLeaveTable(clientId, (err) => {
           if (err) {
             errorNotification(getLeaveTableErrorMessage(err));
           } else {

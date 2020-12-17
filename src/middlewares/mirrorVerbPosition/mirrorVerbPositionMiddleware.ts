@@ -5,7 +5,7 @@ import { isVerbTypeWithPosition, mirrorOnTablePosition } from "../../utils";
 import { ECardVerbTypes } from "../../typings";
 
 export const mirrorVerbPositionMiddleware: Middleware<{}, TRootState> = (store) => (next) => (action: TActionTypes) => {
-  if (action.type === ESocketActionTypeKeys.EMIT_VERB) {
+  if (action.type === ESocketActionTypeKeys.VERB) {
     if (isVerbTypeWithPosition(action.verb)) {
       const { positionX, positionY } = action.verb;
       const { tablePixelDimensions } = store.getState();

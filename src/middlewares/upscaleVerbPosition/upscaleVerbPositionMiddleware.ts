@@ -5,7 +5,7 @@ import { isVerbTypeWithPosition, upscale } from "../../utils";
 import { ECardVerbTypes } from "../../typings";
 
 export const upscaleVerbPositionMiddleware: Middleware<{}, TRootState> = (store) => (next) => (action: TActionTypes) => {
-  if (action.type === ESocketActionTypeKeys.EMIT_VERB) {
+  if (action.type === ESocketActionTypeKeys.VERB) {
     if (isVerbTypeWithPosition(action.verb)) {
       const { positionX, positionY } = action.verb;
       const { horizontalScalingRatio, verticalScalingRatio } = store.getState();

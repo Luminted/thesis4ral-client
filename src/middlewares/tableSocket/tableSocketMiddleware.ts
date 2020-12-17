@@ -38,7 +38,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
             tableSocket.emit(ETableSocketClientEvents.LEAVE_TABLE, action.clientId, action.ackFunction);
             break;
 
-          case ESocketActionTypeKeys.EMIT_VERB:
+          case ESocketActionTypeKeys.VERB:
             const { verb, ackFunction } = action;
             tableSocket.emit(ETableSocketClientEvents.VERB, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
               if (err) {

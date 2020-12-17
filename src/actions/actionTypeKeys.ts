@@ -14,7 +14,7 @@ export enum ESetterActionTypeKeys {
 }
 
 export enum ESocketActionTypeKeys {
-  EMIT_VERB = "socket/EMIT_VERB",
+  VERB = "socket/VERB",
   CONNECT = "socket/CONNECT",
   DISCONNECT = "socket/DISCONNECT",
   JOIN_TABLE = "socket/JOIN_TABLE",
