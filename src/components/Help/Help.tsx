@@ -53,7 +53,12 @@ export const Help = () => {
               placed as the next one in your hand.
             </p>
             <h3>Removing cards/decks</h3>
-            <p> To remove a card/deck, drag it to the red area with the *TRASH* icon.</p>
+            <p>
+              {" "}
+              To remove a card/deck, drag it to the red area with the
+              <i className="fas fa-trash" />
+              icon.
+            </p>
             <h3>Rotating</h3>
             <p> Cards and decks can be rotated by right clicking.</p>
             <h3>Flipping cards</h3>
