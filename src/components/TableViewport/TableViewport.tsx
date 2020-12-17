@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 
 import { useDispatch, useSelector } from "react-redux";
 import { throttle } from "lodash";
 // @ts-ignore
-import { addMiddleware, removeMiddleware } from "redux-dynamic-middlewares";
+import { addMiddleware, resetMiddlewares } from "redux-dynamic-middlewares";
 import { selectGrabbedEntityInfo, selectOwnClientInfo, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
 import { emitMoveToVerb, emitMoveVerb, emitPutInHandVerb, emitReleaseVerb, setGrabbedEntityInfo, setIsMirrored } from "../../actions";
 import { CardTable } from "../CardTable/CardTable";
@@ -105,7 +105,7 @@ export const TableViewport = () => {
     if (isMirrored) {
       addMiddleware(mirrorVerbPositionMiddleware);
     }
-    return () => removeMiddleware(mirrorVerbPositionMiddleware);
+    return () => resetMiddlewares();
   }, [isMirrored, dispatch]);
 
   // Reacts event pooling makes this event choppy
