@@ -5,7 +5,7 @@ import { selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import { trayDecks } from "../../config";
 import { IEntityMetadata, TGameState, TMaybeNull, ICardEntityMetadata } from "../../typings";
 import { style } from "./style";
-import { EntityTrayDeck } from "../EntityTrayDeck/EntityTrayDeck";
+import { EntityTrayDeck } from "../EntityTrayDeck";
 import { getCardDimensions } from "../../utils";
 
 export const EntityTray = () => {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { selectClientById, selectClientHandById, selectClients, selectIsMirrored, selectOwnClientInfo } from "../../selectors";
 import { Hand } from "../Hand";
-import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay/SeatDisconnectionOverlay";
+import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay";
 import { IProps } from "./typings";
 import { style } from "./style";
 import { seatIdMapping, getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";

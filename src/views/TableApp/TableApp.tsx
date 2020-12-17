@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ESocketConnectionStatuses } from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
 import { setTableSocketStatus, socketConnect, socketEmitRejoinTable } from "../../actions";
-import { TableAppLayout } from "../../components/TableAppLayout/TableAppLayout";
+import { TableAppLayout } from "../../components/TableAppLayout";
 import { infoNotification, successNotification, warningNotification } from "../../utils/notification";
 import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
 

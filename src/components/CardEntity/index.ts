@@ -1,1 +1,1 @@
-export { CardEntity } from "./CardEntity";
+export {CardEntity} from "./CardEntity";

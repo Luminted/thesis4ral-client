@@ -8,7 +8,7 @@ import { DeckEntity } from "../DeckEntity";
 import { setGrabbedEntityInfo, setHorizontalScalingRatio, setTablePixelDimensions, setVerticalScalingRatio, emitReleaseVerb, setTablePosition } from "../../actions";
 import { EntityTray } from "../EntityTray";
 import { tableVirtualHeight, tableVirtualWidth } from "../../config";
-import { EntityRenderLayer } from "../EntityRenderLayer/EntityRenderLayer";
+import { EntityRenderLayer } from "../EntityRenderLayer";
 
 export const CardTable = () => {
   const dispatch = useDispatch();

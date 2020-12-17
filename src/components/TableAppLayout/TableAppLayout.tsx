@@ -1,15 +1,14 @@
 import React from "react";
 import cn from "classnames";
 import { ESocketConnectionStatuses } from "../../typings";
-import { LeaveTableButton } from "../LeaveTableButton/LeaveTableButton";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
-import { ESpinnerSize } from "../LoadingSpinner/typings";
-import { TableViewport } from "../TableViewport/TableViewport";
+import { LoadingSpinner, ESpinnerSize } from "../LoadingSpinner/";
+import { TableViewport } from "../TableViewport";
 import { style } from "./style";
 import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css";
 import { BackgroundPattern } from "./BackgroundPattern";
-import { Help } from "../Help/Help";
+import { Help } from "../Help";
+import { LeaveTableButton } from "../LeaveTableButton";
 
 export const TableAppLayout = ({ connectionStatus, isObserver }: IProps) => (
   <>
