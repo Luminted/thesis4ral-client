@@ -5,7 +5,7 @@ import { LeaveTableButton } from "../LeaveTableButton/LeaveTableButton";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { ESpinnerSize } from "../LoadingSpinner/typings";
 import { TableViewport } from "../TableViewport/TableViewport";
-import { style } from "./styles";
+import { style } from "./style";
 import { IProps } from "./typings";
 import "react-toastify/dist/ReactToastify.css";
 import { BackgroundPattern } from "./BackgroundPattern";

@@ -1,6 +1,6 @@
 import React from "react";
 import { ESpinnerSize, IProps } from "./typings";
-import "./styles.css";
+import "./style.css";
 
 const sizeMapping = {
   [ESpinnerSize.SMALL]: 2,

@@ -3,7 +3,7 @@ import { colors } from "../../config";
 
 const { shadow, deckSide, interfaceBackgroundLight: buttonBackground, interfaceBackground: buttonBackgroundHighlight, interfaceBackgroundDark: buttonBackgroundActive } = colors;
 
-export const styles = css`
+export const style = css`
   .menu-button {
     display: flex;
     justify-content: center;

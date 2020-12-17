@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
 import { selectIsMirrored, selectTablePixelDimensions, selectTablePosition } from "../../selectors";
 import { IProps } from "./typings";
-import "./styles.css";
+import "./style.css";
 
 export const EntityRenderLayer = ({ children }: IProps) => {
   const { x, y } = useSelector(selectTablePosition);

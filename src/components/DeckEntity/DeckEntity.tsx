@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { emitDrawFaceDownVerb, emitDrawFaceUpVerb, emitGrabVerb, emitResetVerb, emitShuffleVerb, setGrabbedEntityInfo } from "../../actions";
 import { selectGrabbedEntityInfo, selectIsMirrored } from "../../selectors";
 import { EEntityTypes, TGameState, TMaybeNull } from "../../typings";
-import { IProps } from "./interfaces";
+import { IProps } from "./typings";
 import { Entity } from "../Entity";
 import { deckRotationStepDegree } from "../../config";
 import { getCardDimensions } from "../../utils";
-import { styles } from "./styles";
+import { style } from "./style";
 import { grabEntity } from "../../utils/grabEntity";
 
 export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, grabbedBy, drawIndex, numberOfCards, metadata }: IProps) => {
@@ -115,7 +115,7 @@ export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, g
           </>
         }
       />
-      <style jsx={true}>{styles}</style>
+      <style jsx={true}>{style}</style>
     </>
   );
 };
