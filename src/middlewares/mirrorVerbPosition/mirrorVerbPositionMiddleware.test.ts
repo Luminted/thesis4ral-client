@@ -4,7 +4,7 @@ import { mirrorVerbPositionMiddleware } from "./mirrorVerbPositionMiddleware";
 import { TVerb } from "../../typings";
 import { inverseMirrorOnTablePosition } from "../../utils";
 
-describe("Testing mirrorPositionMiddleware", () => {
+describe("mirrorPositionMiddleware", () => {
   const tableWidth = 1200;
   const tableHeight = 1000;
 

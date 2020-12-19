@@ -5,7 +5,7 @@ import { createMockMiddleware } from "../../utils";
 import { ESocketActionTypeKeys, TActionTypes } from "../../actions";
 import { TSocketEmitVerbAction } from "../../actions/socketEmitVerb";
 
-describe("Testing upscaleVerbPositionMiddleware", () => {
+describe("upscaleVerbPositionMiddleware", () => {
   const horizontalScalingRatio: TRatio = {
     numerator: 4,
     divisor: 12,

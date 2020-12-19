@@ -3,7 +3,7 @@ import { TVerb } from "../../typings";
 import { TActionTypes, ESocketActionTypeKeys } from "../../actions";
 import { createMockMiddleware } from "../../utils";
 
-describe("Testing normalizeVerbPositionMiddleware", () => {
+describe("normalizeVerbPositionMiddleware", () => {
   it("should subtract tables position x and y from verbs position x and y", () => {
     const tablePosition = {
       x: 10,
