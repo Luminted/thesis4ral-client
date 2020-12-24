@@ -86,6 +86,5 @@ export const setDeck: TDeckConfig = {
     { name: "3SrD", type: "set" },
     { name: "3SrP", type: "set" },
     { name: "3SrS", type: "set" },
-    { name: "bck", type: "set" },
   ],
 };
