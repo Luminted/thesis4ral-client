@@ -5,7 +5,6 @@ import { Middleware } from "redux";
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
 import { tableSocket } from "../../socket";
 import { warningNotification } from "../../utils";
-import { getVerbErrorMessage } from "../../config";
 
 export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) => {
   // Incoming API
@@ -42,7 +41,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
             const { verb, ackFunction } = action;
             tableSocket.emit(ETableSocketClientEvents.VERB, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
               if (err) {
-                warningNotification(getVerbErrorMessage(err, verb.type));
+                warningNotification(err);
               }
               if (ackFunction) {
                 ackFunction(err, nextGameState, handlerResult);
