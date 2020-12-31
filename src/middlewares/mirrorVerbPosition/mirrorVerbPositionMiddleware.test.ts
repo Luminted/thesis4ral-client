@@ -12,7 +12,7 @@ describe("mirrorPositionMiddleware", () => {
     tablePixelDimensions: {
       width: tableWidth,
       height: tableHeight,
-    },
+    }
   });
 
   it("should apply inverseMirrorOnTablePosition on verb", () => {

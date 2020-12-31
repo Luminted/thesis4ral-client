@@ -25,7 +25,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "serve": "node -r dotenv/config server.js",
     "lint": "tslint --fix -c tslint.json -p ./tsconfig.build.json"

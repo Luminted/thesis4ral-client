@@ -26,7 +26,7 @@ export { socketEmitVerb } from "./socketEmitVerb";
 export { socketEmitConnect as socketConnect } from "./socketEmitConnect";
 export { socketEmitJoinTable as socketJoinTable } from "./socketEmitJoinTable";
 export { socketEmitRejoinTable } from "./socketEmitRejoinTable";
-export {socketEmitLeaveTable} from "./socketEmitLeaveTable"
+export { socketEmitLeaveTable } from "./socketEmitLeaveTable";
 
 export { ESocketActionTypeKeys, ESetterActionTypeKeys } from "./actionTypeKeys";
 

@@ -1,1 +1,1 @@
-export {EntityRenderLayer} from "./EntityRenderLayer"
+export { EntityRenderLayer } from "./EntityRenderLayer";

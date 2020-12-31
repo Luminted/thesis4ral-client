@@ -6,9 +6,8 @@ import { EEntityTypes, TGameState, TMaybeNull } from "../../typings";
 import { IProps } from "./typings";
 import { Entity } from "../Entity";
 import { deckRotationStepDegree } from "../../config";
-import { getCardDimensions } from "../../utils";
+import { getCardDimensions, grabEntity } from "../../utils";
 import { style } from "./style";
-import { grabEntity } from "../../utils";
 
 export const DeckEntity = ({ entityId, positionX, positionY, zIndex, rotation, grabbedBy, drawIndex, numberOfCards, metadata }: IProps) => {
   const dispatch = useDispatch();

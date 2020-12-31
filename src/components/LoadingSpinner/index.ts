@@ -1,3 +1,3 @@
-export {LoadingSpinner} from "./LoadingSpinner"
+export { LoadingSpinner } from "./LoadingSpinner";
 
-export {ESpinnerSize} from "./typings";
+export { ESpinnerSize } from "./typings";

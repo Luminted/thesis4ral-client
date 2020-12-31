@@ -1,1 +1,1 @@
-export {EntityTrayDeck} from "./EntityTrayDeck";
+export { EntityTrayDeck } from "./EntityTrayDeck";

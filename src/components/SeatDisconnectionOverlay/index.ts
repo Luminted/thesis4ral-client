@@ -1,1 +1,1 @@
-export {SeatDisconnectionOverlay} from "./SeatDisconnectionOverlay"
+export { SeatDisconnectionOverlay } from "./SeatDisconnectionOverlay";

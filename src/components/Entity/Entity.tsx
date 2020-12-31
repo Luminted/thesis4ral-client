@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { emitRotateVerb } from "../../actions";
 import { IProps } from "./typings";
 import { selectHorizontalScalingRation, selectIsMirrored, selectVerticalScalingRation } from "../../selectors";
-import { downscale } from "../../utils";
 import "./style.css";
 import { EntityCore } from "../EntityCore";
 import { useGetEntityHighlightColor } from "../../hooks";
-import { grabEntity } from "../../utils";
+import { grabEntity, downscale } from "../../utils";
 
 export const Entity = React.forwardRef<HTMLDivElement, IProps>(
   (

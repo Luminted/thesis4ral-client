@@ -1,1 +1,1 @@
-export {SeatsContainer} from "./SeatsContainer";
+export { SeatsContainer } from "./SeatsContainer";

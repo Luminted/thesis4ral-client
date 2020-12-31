@@ -1,1 +1,1 @@
-export {TableAppLayout} from "./TableAppLayout";
+export { TableAppLayout } from "./TableAppLayout";

@@ -1,1 +1,1 @@
-export {LeaveTableButton} from "./LeaveTableButton"
+export { LeaveTableButton } from "./LeaveTableButton";
