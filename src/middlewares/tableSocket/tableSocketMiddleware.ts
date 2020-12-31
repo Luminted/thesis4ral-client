@@ -4,9 +4,10 @@ import { ETableSocketClientEvents, ETableSocketServerEvents } from "./typings";
 import { Middleware } from "redux";
 import { ESocketConnectionStatuses, TGameState } from "../../typings";
 import { tableSocket } from "../../socket";
-import { warningNotification } from "../../utils";
+import { infoNotification, warningNotification } from "../../utils";
+import { observerInfoMessage } from "../../config";
 
-export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) => {
+export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch, getState }) => {
   // Incoming API
   tableSocket.on(ETableSocketServerEvents.SYNC, (gameState: TGameState) => {
     dispatch(setGameState(gameState));
@@ -23,6 +24,8 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
   return (next) =>
     // Outgoing API
     (action: TActionTypes) => {
+      const {clientInfo} = getState();
+
       if (action.type.startsWith("socket/")) {
         switch (action.type) {
           case ESocketActionTypeKeys.JOIN_TABLE:
@@ -39,14 +42,18 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch }) 
 
           case ESocketActionTypeKeys.VERB:
             const { verb, ackFunction } = action;
-            tableSocket.emit(ETableSocketClientEvents.VERB, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
-              if (err) {
-                warningNotification(err);
-              }
-              if (ackFunction) {
-                ackFunction(err, nextGameState, handlerResult);
-              }
-            });
+            if(clientInfo){
+              tableSocket.emit(ETableSocketClientEvents.VERB, clientInfo?.clientId, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
+                if (err) {
+                  warningNotification(err);
+                }
+                if (ackFunction) {
+                  ackFunction(err, nextGameState, handlerResult);
+                }
+              });
+            }else{
+              infoNotification(observerInfoMessage);
+            }
             break;
 
           case ESocketActionTypeKeys.CONNECT:
