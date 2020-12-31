@@ -15,7 +15,7 @@ export type TMockMiddleware<A> = {
 
 export const createMockMiddleware = <A>(middleware: Middleware, state?: Partial<TRootState>): TMockMiddleware<A> => {
   const store = {
-    getState: jest.fn(() => ({ ...state })),
+    getState: () => ({ ...state }),
     dispatch: jest.fn(),
   };
   const next = jest.fn();
