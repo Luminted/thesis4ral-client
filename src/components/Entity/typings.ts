@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { IEntity } from "../../typings";
 
-export interface IProps extends IEntity {
+export interface IProps extends Omit<IEntity, "metadata"> {
   width: number;
   height: number;
   rotationStep: number;

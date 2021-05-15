@@ -1,9 +1,9 @@
-import { normalizeVerbPositionMiddleware } from "./normalizeVerbPositionMiddleware";
+import { translateVerbPositionMiddleware } from "./translateVerbPositionMiddleware";
 import { TVerb } from "../../typings";
 import { TActionTypes, ESocketActionTypeKeys } from "../../actions";
 import { createMockMiddleware } from "../../utils";
 
-describe("normalizeVerbPositionMiddleware", () => {
+describe("translateVerbPositionMiddleware", () => {
   it("should subtract tables position x and y from verbs position x and y", () => {
     const tablePosition = {
       x: 10,
@@ -25,7 +25,7 @@ describe("normalizeVerbPositionMiddleware", () => {
       type: ESocketActionTypeKeys.VERB,
       verb,
     };
-    const { invoke, next } = createMockMiddleware<TActionTypes>(normalizeVerbPositionMiddleware, {
+    const { invoke, next } = createMockMiddleware<TActionTypes>(translateVerbPositionMiddleware, {
       tablePosition,
     });
 

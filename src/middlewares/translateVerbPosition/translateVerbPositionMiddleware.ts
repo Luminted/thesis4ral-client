@@ -5,9 +5,9 @@ import { TActionTypes, ESocketActionTypeKeys } from "../../actions";
 import { isVerbTypeWithPosition } from "../../utils";
 
 /**
- * Normalizes coordinates so that tables top right corner is the origo
+ * translates coordinates so that tables top right corner is the origo
  */
-export const normalizeVerbPositionMiddleware: Middleware<{}, TRootState> = (store) => (next) => (action: TActionTypes) => {
+export const translateVerbPositionMiddleware: Middleware<{}, TRootState> = (store) => (next) => (action: TActionTypes) => {
   if (action.type === ESocketActionTypeKeys.VERB) {
     if (isVerbTypeWithPosition(action.verb)) {
       const { positionX, positionY } = action.verb;

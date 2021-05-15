@@ -1,4 +1,4 @@
 export { tableSocketMiddleware } from "./tableSocket/tableSocketMiddleware";
-export { normalizeVerbPositionMiddleware } from "./normalizeVerbPosition/normalizeVerbPositionMiddleware";
+export { translateVerbPositionMiddleware } from "./translateVerbPosition/translateVerbPositionMiddleware";
 export { mirrorVerbPositionMiddleware } from "./mirrorVerbPosition/mirrorVerbPositionMiddleware";
 export { upscaleVerbPositionMiddleware } from "./upscaleVerbPosition/upscaleVerbPositionMiddleware";

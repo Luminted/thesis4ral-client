@@ -23,8 +23,8 @@ export { setVerticalScalingRatio } from "./setVerticalScalingRatio";
 export { setTableSocketStatus } from "./setTableSocketStatus";
 export { setIsMirrored } from "./setIsMirrored";
 export { socketEmitVerb } from "./socketEmitVerb";
-export { socketEmitConnect as socketConnect } from "./socketEmitConnect";
-export { socketEmitJoinTable as socketJoinTable } from "./socketEmitJoinTable";
+export { socketEmitConnect } from "./socketEmitConnect";
+export { socketEmitJoinTable } from "./socketEmitJoinTable";
 export { socketEmitRejoinTable } from "./socketEmitRejoinTable";
 export { socketEmitLeaveTable } from "./socketEmitLeaveTable";
 

@@ -7,7 +7,7 @@ import { SeatDisconnectionOverlay } from "../SeatDisconnectionOverlay";
 import { IProps } from "./typings";
 import { style } from "./style";
 import { seatIdMapping, getJoinErrorMessage, joinInfoMessage, joinSuccessMessage, seatColors } from "../../config";
-import { setClientInfo, socketJoinTable } from "../../actions";
+import { setClientInfo, socketEmitJoinTable } from "../../actions";
 import { EClientConnectionStatuses, EOrientation } from "../../typings";
 import { errorNotification, infoNotification, successNotification } from "../../utils";
 
@@ -40,7 +40,7 @@ export const Seat = ({ seatId, clientId = "", orientation, name }: IProps) => {
   const joinTable = () => {
     infoNotification(joinInfoMessage);
     dispatch(
-      socketJoinTable(seatId, enteredName, (err, receivedClientInfo) => {
+      socketEmitJoinTable(seatId, enteredName, (err, receivedClientInfo) => {
         if (err) {
           errorNotification(getJoinErrorMessage(err));
         } else {

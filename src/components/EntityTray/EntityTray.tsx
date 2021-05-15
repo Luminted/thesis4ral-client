@@ -82,8 +82,6 @@ export const EntityTray = () => {
         />
       </div>
     );
-
-    return null;
   });
 
   return (

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ESocketConnectionStatuses } from "../../typings";
 import { selectOwnClientInfo, selectTableConnectionStatus } from "../../selectors";
-import { setClientInfo, setTableSocketStatus, socketConnect, socketEmitRejoinTable } from "../../actions";
+import { setClientInfo, setTableSocketStatus, socketEmitConnect, socketEmitRejoinTable } from "../../actions";
 import { TableAppLayout } from "../../components/TableAppLayout";
 import { infoNotification, successNotification, warningNotification } from "../../utils";
 import { getRejoinErrorMessage, observerInfoMessage, rejoinInfoMessage, rejoinSuccessMessag } from "../../config";
@@ -43,7 +43,7 @@ export const TableApp = () => {
 
   useEffect(() => {
     if (connectionStatus === ESocketConnectionStatuses.DISCONNECTED) {
-      dispatch(socketConnect());
+      dispatch(socketEmitConnect());
       dispatch(setTableSocketStatus(ESocketConnectionStatuses.CONNECTING));
     }
     // eslint-disable-next-line
