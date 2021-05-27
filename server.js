@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 
-const serverPort = process.env.REACT_APP_SERVER_PORT;
+const serverPort = process.env.PORT;
 
 app.use(express.static(path.join(__dirname, "build")));
 
