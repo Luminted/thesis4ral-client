@@ -1,4 +1,4 @@
-import { EEntityTypes } from "./gameStateTypings";
+import { EEntityTypes, IEntityMetadata } from "./gameStateTypings";
 
 export enum ECardTypes {
   FRENCH = "french",
@@ -9,6 +9,13 @@ export interface ICardConfig {
   height: number;
   width: number;
 }
+
+export type TDeckConfig = {
+  type: ECardTypes;
+  cardBack: string;
+  preview: string;
+  cards: IEntityMetadata[];
+};
 
 export enum EOrientation {
   SOUTH = "SOUTH",

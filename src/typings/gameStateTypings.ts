@@ -1,6 +1,5 @@
 import { TMaybeNull } from "./utilityTypings";
 import { EClientConnectionStatuses } from "./";
-import { ECardTypes } from "./cardTableTypings";
 
 export interface IEntity {
   entityType: EEntityTypes;
@@ -33,13 +32,6 @@ export interface IEntityMetadata {
 export interface ICardEntityMetadata extends IEntityMetadata {
   back: string;
 }
-
-export type TDeckConfig = {
-  type: ECardTypes;
-  cardBack: string;
-  preview: string;
-  cards: IEntityMetadata[];
-};
 
 export interface IHandCard extends Pick<ICardEntity, "entityId" | "metadata" | "ownerDeck" | "faceUp"> {}
 
