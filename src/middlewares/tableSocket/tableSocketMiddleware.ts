@@ -24,7 +24,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch, ge
   return (next) =>
     // Outgoing API
     (action: TActionTypes) => {
-      const {clientInfo} = getState();
+      const { clientInfo } = getState();
 
       if (action.type.startsWith("socket/")) {
         switch (action.type) {
@@ -42,7 +42,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch, ge
 
           case ESocketActionTypeKeys.VERB:
             const { verb, ackFunction } = action;
-            if(clientInfo){
+            if (clientInfo) {
               tableSocket.emit(ETableSocketClientEvents.VERB, clientInfo?.clientId, verb, (err: string, nextGameState: TGameState, handlerResult: any) => {
                 if (err) {
                   warningNotification(err);
@@ -51,7 +51,7 @@ export const tableSocketMiddleware: Middleware<{}, TRootState> = ({ dispatch, ge
                   ackFunction(err, nextGameState, handlerResult);
                 }
               });
-            }else{
+            } else {
               infoNotification(observerInfoMessage);
             }
             break;
